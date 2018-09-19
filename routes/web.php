@@ -1,0 +1,35 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+/*=================================\Pagina inicio/======================================================*/
+Route::get('/', 'IndexController@index'); //pagina donde se vende
+
+
+
+/*=================================\- API- /======================================================*/
+Route::get('/facturacion', 'IndexController@store');// api para mandar datos de factura
+Route::get('actualizar/producto', 'ApisController@actualizarp'); // api para actualizar los productos
+
+
+
+/*=================================\Productos/======================================================*/
+Route::resource('/productos', 'ProductsController'); // controller de manejo de los productos
+
+/*=================================\CAJA/======================================================*/
+Route::get('/caja', 'CajasController@index'); // controller para la caja
+Route::get('/caja/apertura', 'CajasController@store');// api para mandar datos de factura
+Route::get('/cierre/caja', 'CajasController@cierrecaja');//cierre de caja
+Route::get('/cierrecaja', 'CajasController@cerrarcaja');
+
+
+
+
