@@ -36,7 +36,7 @@
                         <div class="col-6">
                             <label for="impuesto" class="control-label mb-1">Impuesto</label>
                             <div class="input-group">
-                                <input id="impuesto" min="0" name="impuesto" type="number" class="form-control cc-cvc" value="" data-val="true" data-val-required="Ingrese el impuesto del producto" data-val-cc-cvc="Ingrese el impuesto del producto">
+                                <input id="impuesto" min="0" name="impuesto" type="number" class="form-control cc-cvc" value="">
                             </div>
                         </div>
                     </div>

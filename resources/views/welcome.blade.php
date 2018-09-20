@@ -381,24 +381,29 @@
 
                 facturar:function () {
 
-                    $.ajax({
-                        url: '/facturacion',
-                        method: 'GET',
-                        data: {
-                            cliente:this.campocliente,
-                            devuelta:this.devuelta,
-                            preciop:this.facturatotal,
-                            tipop:this.campotipop,
-                            dinero:this.campodinero,
-                            detalle: this.list
-                        },
-                        success:function (dato) {
-                            toastr.success('Gracias por la compra');
-                            setTimeout('document.location.reload()',2000);
-                        }
+                    if (this.campodinero < this.facturatotal){
+                        alert('El dinero no puede ser menor que precio a pagar');
+                    }else {
 
-                    });
+                        $.ajax({
+                            url: '/facturacion',
+                            method: 'GET',
+                            data: {
+                                cliente:this.campocliente,
+                                devuelta:this.devuelta,
+                                preciop:this.facturatotal,
+                                tipop:this.campotipop,
+                                dinero:this.campodinero,
+                                detalle: this.list
+                            },
+                            success:function (dato) {
+                                toastr.success('Gracias por la compra');
+                                setTimeout('document.location.reload()',2000);
+                            }
 
+                        });
+
+                    }
                 }
             },
             computed:{

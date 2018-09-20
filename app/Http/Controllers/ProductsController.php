@@ -41,7 +41,7 @@ class ProductsController extends Controller
 //            'precio' => 'required',
 //        ]);
         $product = new Product;
-        if (!$request->has('Cbarra') and $request->has('existencia') and $request->has('impuesto')){
+        if ($request->has('Cbarra') and $request->has('existencia') and $request->has('impuesto')){
 
             if ($request->hasFile('img')){
                 $file = $request->file('img');
@@ -53,7 +53,6 @@ class ProductsController extends Controller
                 $product->existence = $request->input('existencia');
                 $product->impost = $request->input('impuesto');
                 $product->status = 1;
-//            $product->unity_id = 1;
                 $product->save();
 
             }else{

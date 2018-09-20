@@ -50,7 +50,8 @@ class IndexController extends Controller
     {
 
         $facture = new Facture;
-        $facture->date = now();
+        $facture->date = date('Y-m-d');
+//        $facture->time = date('h:m:s');
         $facture->box = 1;
         $facture->cashier = 0;
         $facture->client = $request->cliente;
@@ -78,50 +79,7 @@ class IndexController extends Controller
             $detalle->facture_id = $idfacture->last()->id;
             $detalle->save();
         }
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -320,6 +320,7 @@ class ComposerStaticInit62a30cf19ea6414b78dce72efec91c3c
         'App\\Detail' => __DIR__ . '/../..' . '/app/Detail.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Facture' => __DIR__ . '/../..' . '/app/Facture.php',
+        'App\\Http\\Controllers\\ApisController' => __DIR__ . '/../..' . '/app/Http/Controllers/ApisController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',

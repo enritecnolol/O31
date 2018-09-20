@@ -101,7 +101,7 @@ class CajasController extends Controller
 //
 
         return view('caja.cierrecaja', compact('ventas', $ventas), compact('caja', $caja))->with(compact('total', $total))->with(compact('valor_apertura', $valor_apertura));
-//        return $caja;
+//        return $totalcierre;
 
     }
     public function cerrarcaja(){
