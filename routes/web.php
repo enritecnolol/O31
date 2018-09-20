@@ -18,6 +18,8 @@ Route::get('/', 'IndexController@index'); //pagina donde se vende
 /*=================================\- API- /======================================================*/
 Route::get('/facturacion', 'IndexController@store');// api para mandar datos de factura
 Route::get('actualizar/producto', 'ApisController@actualizarp'); // api para actualizar los productos
+Route::get('/cierrecaja', 'CajasController@cerrarcaja');// api para cerrar la caja en BD
+Route::get('/historico/venta', 'ApisController@historico');// api para cerrar la caja en BD
 
 
 
@@ -28,7 +30,8 @@ Route::resource('/productos', 'ProductsController'); // controller de manejo de 
 Route::get('/caja', 'CajasController@index'); // controller para la caja
 Route::get('/caja/apertura', 'CajasController@store');// api para mandar datos de factura
 Route::get('/cierre/caja', 'CajasController@cierrecaja');//cierre de caja
-Route::get('/cierrecaja', 'CajasController@cerrarcaja');
+Route::get('/caja/historico/ventas', 'CajasController@historico');//
+
 
 
 

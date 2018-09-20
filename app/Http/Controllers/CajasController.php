@@ -127,4 +127,7 @@ class CajasController extends Controller
         return 'Actualizado';
 
     }
+    public function historico(){
+        return view('caja.historicoventa');
+    }
 }

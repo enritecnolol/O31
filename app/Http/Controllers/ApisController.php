@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use App\Facture;
 
 class ApisController extends Controller
 {
@@ -23,5 +24,9 @@ class ApisController extends Controller
         $producto->update();
         return 'Actualizado';
 
+    }
+
+    public function historico(){
+        return datatables(Facture::all())->toJson();
     }
 }

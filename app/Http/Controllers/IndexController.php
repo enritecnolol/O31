@@ -52,14 +52,14 @@ class IndexController extends Controller
         $facture = new Facture;
         $facture->date = date('Y-m-d');
 //        $facture->time = date('h:m:s');
-        $facture->box = 1;
+        $facture->box = 'Caja No.1';
         $facture->cashier = 0;
         $facture->client = $request->cliente;
         $facture->brute = 0;
         $facture->desc = 0;
         $facture->itbis = 0;
         $facture->total_facture = $request->preciop;
-        $facture->status = 0;
+        $facture->status = 'Pago';
         $facture->type_sale = 'contado';
         $facture->impost = 0;
         $facture->save();

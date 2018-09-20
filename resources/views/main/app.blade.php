@@ -29,7 +29,7 @@
     <link href="{{ URL::asset('slick/slick.css')}}" rel="stylesheet" media="all">
     <link href="{{ URL::asset('select2/select2.min.css')}}" rel="stylesheet" media="all">
     <link href="{{ URL::asset('perfect-scrollbar/perfect-scrollbar.css')}}" rel="stylesheet" media="all">
-
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('DataTables/datatables.min.css') }}"/>
     <!-- Main CSS-->
     <link href="{{ URL::asset('css/theme.css')}}" rel="stylesheet" media="all">
     @yield('style')
@@ -42,7 +42,7 @@
     <!-- PAGE CONTAINER-->
     <div class="page-container">
         <!-- HEADER DESKTOP-->
-        <header class="header-desktop">
+        <header class="header-desktop2">
             <div class="section__content section__content--p30">
                 <div class="container-fluid">
                     <div class="header-wrap">
@@ -59,7 +59,7 @@
                                         <img src="{{ URL::asset('imagenes/User.png')}}" alt="John Doe" />
                                     </div>
                                     <div class="content">
-                                        <a class="js-acc-btn" href="#">Opciones</a>
+                                        <a class="js-acc-btn" href="#" style="color: white">Opciones</a>
                                     </div>
                                     <div class="account-dropdown js-dropdown">
                                         <div class="account-dropdown__body">
@@ -94,10 +94,10 @@
         <!-- HEADER DESKTOP-->
         <!-- MENU SIDEBAR-->
         <div id="Vue">
-            <aside class="menu-sidebar d-none d-lg-block">
+            <aside class="menu-sidebar2 d-none d-lg-block" style="background: #4272d7">
                 <div class="logo">
                     <a href="/">
-                        <img style="width: 100px" src="imagenes/logo.png" alt="Logo" /> Cafeteria
+                        <img style="width: 100px" src="{{ URL::asset('imagenes/logo.png')}}" alt="Logo" /> <span style="color: white; font-size: x-large">Cafeteria</span>
                     </a>
                 </div>
                 @yield('aside')
@@ -105,7 +105,7 @@
             <!-- END MENU SIDEBAR-->
 
             <!-- MAIN CONTENT-->
-            <div class="main-content">
+            <div class="main-content"style="background: url({{ URL::asset('fondo2.png')}});">
                 <!--datos-->
                 @yield('content')
 

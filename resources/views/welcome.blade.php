@@ -67,7 +67,7 @@
 
     <div class="container">
         <div class="card-title">
-            <h3 class="text-center title-2" style="padding-top: 10px">Factura</h3>
+            <h3 class="text-center title-2" style="padding-top: 10px; color: white">Factura</h3>
         </div>
 
         <form action="" method="post" novalidate="novalidate">
@@ -76,18 +76,18 @@
                     <table class="table table-sm">
                         <thead>
                         <tr>
-                            <th>Prod.</th>
-                            <th>Cantidad</th>
-                            <th>Total</th>
-                            <th></th>
+                            <th style="color: white">Prod.</th>
+                            <th style="color: white">Cantidad</th>
+                            <th style="color: white">Total</th>
+                            <th style="color: white"></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="item in list">
-                            <th>@{{item.name}}</th>
-                            <td>@{{item.count}}</td>
-                            <td>@{{item.price}}</td>
-                            <td><button type="button" class="far fa-trash-alt" @click="eliminarp(item.id)"></button></td>
+                            <th style="color: white">@{{item.name}}</th>
+                            <td style="color: white">@{{item.count}}</td>
+                            <td style="color: white">@{{item.price}}</td>
+                            <td><button type="button" class="far fa-trash-alt" style="color: #ffc30e" @click="eliminarp(item.id)"></button></td>
                         </tr>
                         </tbody>
                     </table>
@@ -111,8 +111,8 @@
 @endsection
 @section('content')
     <div id="p">
-        <div class="text-center">
-            <h1>Productos</h1>
+        <div class="text-center" style="padding-bottom: 20px">
+            <h1 class="title-2"><strong>Productos</strong></h1>
         </div>
         <div class="section__content section__content--p30">
             <div class="container-fluid">
@@ -120,7 +120,7 @@
 
                     <template v-for="p in productos" v-if="cerrada == 'A'">
                         <div class="col-md-3">
-                            <div class="card" style="height: auto" @click="pfactura(p.id)">
+                            <div class="card" style="height: auto;background: #c8f1ff" @click="pfactura(p.id)">
                                 <div class="card-header">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span class="badge badge-success pull-right"></span>

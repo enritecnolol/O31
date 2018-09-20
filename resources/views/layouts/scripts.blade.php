@@ -20,5 +20,7 @@
 <script src="{{ URL::asset('select2/select2.min.js')}}">
 </script>
 
+<script type="text/javascript" src="{{ URL::asset('DataTables/datatables.min.js')}}"></script>
+
 <!-- Main JS-->
 <script src="{{ URL::asset('js/main.js')}}"></script>
