@@ -3,38 +3,38 @@
 
 @section('aside')
     <div>
-        <div class="card">
+        <div class="card" style="background: #4272d7">
 
             <div class="card-body">
                 <div class="card-title">
-                    <h3 class="text-center title-2">Nuevo Producto</h3>
+                    <h3 class="text-center title-2" style="color: white">Nuevo Producto</h3>
                 </div>
-                <hr>
+                <hr style="color: white">
                 <form action="productos" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="form-group">
-                        <label for="cc-payment" class="control-label mb-1">Nombre</label>
+                        <label for="cc-payment" class="control-label mb-1" style="color: white">Nombre</label>
                         <input id="cc-pament" name="nombre" minlength="0" required type="text" class="form-control" aria-required="true" aria-invalid="false" value="">
                     </div>
                     <div class="form-group">
-                        <label for="precio" class="control-label mb-1">Precio</label>
+                        <label for="precio" class="control-label mb-1" style="color: white">Precio</label>
                         <input type="number" id="precio" min="0" name="precio" required placeholder="$:" class="input-sm form-control-sm form-control">
                     </div>
                     <div class="form-group">
-                        <label for="Cbarra" class="control-label mb-1">Codigo de barra</label>
+                        <label for="Cbarra" class="control-label mb-1" style="color: white">Codigo de barra</label>
                         <input type="text" id="Cbarra"  name="Cbarra" placeholder="" class="input-sm form-control-sm form-control">
                     </div>
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="existencia" class="control-label mb-1">Existencia</label>
+                                <label for="existencia" class="control-label mb-1" style="color: white">Existencia</label>
                                 <input id="existencia" min="0" name="existencia" type="number" class="form-control cc-exp" value="" data-val="true" data-val-required="Es necesario es te dato"
                                        data-val-cc-exp="Please enter a valid month and year" placeholder="" >
                                 <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
                             </div>
                         </div>
                         <div class="col-6">
-                            <label for="impuesto" class="control-label mb-1">Impuesto</label>
+                            <label for="impuesto" class="control-label mb-1" style="color: white">Impuesto</label>
                             <div class="input-group">
                                 <input id="impuesto" min="0" name="impuesto" type="number" class="form-control cc-cvc" value="">
                             </div>
@@ -42,7 +42,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3">
-                            <label for="file-input" class=" form-control-label">Imagen</label>
+                            <label for="file-input" class=" form-control-label" style="color: white">Imagen</label>
                         </div>
                         <div class="col-12 col-md-9">
                             <input type="file" id="file-input"  name="img" class="form-control-file">
@@ -139,8 +139,12 @@
                             data: this.datos
                         },
                         success:function (dato) {
+                            $('#largeModal').modal('hide');
                             toastr.success('El producto se a Actualizado');
                             setTimeout('document.location.reload()',2000);
+                        },
+                        error:function () {
+                            toastr.error('Sea producido un error')
                         }
                     });
                 }

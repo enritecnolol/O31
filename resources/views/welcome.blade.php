@@ -62,7 +62,7 @@
         }
     </style>
 @endsection
-@section('tittle',' Cafeteria| Productos')
+@section('tittle',' Cafeteria| Facturacion')
 @section('aside')
 
     <div class="container">
@@ -76,8 +76,8 @@
                     <table class="table table-sm">
                         <thead>
                         <tr>
-                            <th style="color: white">Prod.</th>
-                            <th style="color: white">Cantidad</th>
+                            <th style="color: white">Producto</th>
+                            <th style="color: white">Cant.</th>
                             <th style="color: white">Total</th>
                             <th style="color: white"></th>
                         </tr>
@@ -85,8 +85,8 @@
                         <tbody>
                         <tr v-for="item in list">
                             <th style="color: white">@{{item.name}}</th>
-                            <td style="color: white">@{{item.count}}</td>
-                            <td style="color: white">@{{item.price}}</td>
+                            <td class="text-center" style="color: white">@{{item.count}}</td>
+                            <td class="text-center" style="color: white">@{{item.price}}</td>
                             <td><button type="button" class="far fa-trash-alt" style="color: #ffc30e" @click="eliminarp(item.id)"></button></td>
                         </tr>
                         </tbody>
@@ -121,7 +121,7 @@
                     <template v-for="p in productos" v-if="cerrada == 'A'">
                         <div class="col-md-3">
                             <div class="card" style="height: auto;background: #c8f1ff" @click="pfactura(p.id)">
-                                <div class="card-header">
+                                <div class="card-header" style="color: #2db3ff">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span class="badge badge-success pull-right"></span>
                                 </div>
@@ -129,7 +129,7 @@
                                     <div class="mx-auto d-block">
                                         <img class="rounded-circle mx-auto d-block image1" style=" height: 100px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
                                         <h5 class="text-sm-center mt-2 mb-1">@{{ p.name }}</h5>
-                                        <div class="location text-sm-center">
+                                        <div class="location text-sm-center" style="color: #2db3ff">
                                             <i class="fa fa-money-bill-alt"></i> @{{p.price}}</div>
                                     </div>
                                 </div>
@@ -258,9 +258,11 @@
 @endsection
 @section('scriptp')
     <script !src="">
+
         $(function () {
             $('#myModal').modal('show');
         })
+        toastr.options.newestOnTop = false;
     </script>
 
     <script>
@@ -274,7 +276,6 @@
                 rv[arr[i].id] = arr[i];
             return rv;
         }
-
 
         var app = new Vue({
             el: '#Vue',
@@ -397,8 +398,13 @@
                                 detalle: this.list
                             },
                             success:function (dato) {
+                                $('#pago').modal('hide');
+                                toastr.options.newestOnTop = false;
                                 toastr.success('Gracias por la compra');
                                 setTimeout('document.location.reload()',2000);
+                            },
+                            error:function () {
+                                toastr.error('A ocurrido un error al realizar la venta');
                             }
 
                         });

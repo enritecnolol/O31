@@ -47,10 +47,10 @@
                 <div class="container-fluid">
                     <div class="header-wrap">
                         <form class="form-header" action="" method="POST">
-                            <input class="au-input au-input--xl" type="text" disabled name="search" placeholder="Search for datas &amp; reports..." />
-                            <button class="au-btn--submit" disabled type="submit">
-                                <i class="zmdi zmdi-search"></i>
-                            </button>
+                            {{--<input class="au-input au-input--xl" type="text" disabled name="search" placeholder="Search for datas &amp; reports..." />--}}
+                            {{--<button class="au-btn--submit" disabled type="submit">--}}
+                                {{--<i class="zmdi zmdi-search"></i>--}}
+                            {{--</button>--}}
                         </form>
                         <div class="header-button">
                             <div class="account-wrap">
@@ -97,7 +97,7 @@
             <aside class="menu-sidebar2 d-none d-lg-block" style="background: #4272d7">
                 <div class="logo">
                     <a href="/">
-                        <img style="width: 100px" src="{{ URL::asset('imagenes/logo.png')}}" alt="Logo" /> <span style="color: white; font-size: x-large">Cafeteria</span>
+                        <img style="width: 80px" src="{{ URL::asset('imagenes/logo.png')}}" alt="Logo" /> <span style="color: white; font-size: x-large">Cafeteria</span>
                     </a>
                 </div>
                 @yield('aside')

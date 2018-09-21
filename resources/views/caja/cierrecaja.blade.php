@@ -40,7 +40,7 @@
                         <strong>Almacen:</strong> General
                     </div>
                     <div class="col-md-3">
-                        <strong>Total de Ventas:</strong> @{{ ventas }}
+                        <strong>Total de Ventas:</strong> @{{ ventas }}  - @{{ total }}
                     </div>
                 </div>
                 <div v-else class="text-center">
