@@ -28,7 +28,7 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="existencia" class="control-label mb-1" style="color: white">Existencia</label>
-                                <input id="existencia" min="0" name="existencia" type="number" class="form-control cc-exp" value="" data-val="true" data-val-required="Es necesario es te dato"
+                                <input id="existencia" min="0" name="existencia" type="number" class="form-control cc-exp" value="0" data-val="true" data-val-required="Es necesario es te dato"
                                        data-val-cc-exp="Please enter a valid month and year" placeholder="" >
                                 <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
                             </div>
@@ -36,7 +36,7 @@
                         <div class="col-6">
                             <label for="impuesto" class="control-label mb-1" style="color: white">Impuesto</label>
                             <div class="input-group">
-                                <input id="impuesto" min="0" name="impuesto" type="number" class="form-control cc-cvc" value="">
+                                <input id="impuesto" min="0" name="impuesto" type="number" class="form-control cc-cvc" value="0">
                             </div>
                         </div>
                     </div>

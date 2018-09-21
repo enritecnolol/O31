@@ -22,7 +22,7 @@ class CreateTableCaja extends Migration
             $table->integer('valor_apertura');
             $table->integer('total_venta');
             $table->integer('total_cierre');
-            $table->integer('usuario');
+            $table->string('usuario');
             $table->string('status');
             $table->integer('caja_num');
             $table->timestamps();

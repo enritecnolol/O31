@@ -16,17 +16,20 @@ class CreateTableFacture extends Migration
         Schema::create('factures', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date');
-            $table->time('time');
-            $table->integer('box');
+            $table->string('box');
             $table->integer('cashier');
             $table->string('client');
             $table->integer('brute');
             $table->integer('desc');
             $table->integer('itbis');
             $table->integer('total_facture');
+            $table->integer('returns');
             $table->string('status');
             $table->string('type_sale');
-            $table->integer('impost');
+            $table->string('type_tarject');
+            $table->string('Numbertar');
+            $table->string('Banco');
+            $table->string('auth');
             $table->timestamps();
         });
     }

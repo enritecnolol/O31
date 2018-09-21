@@ -6,15 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="36db0169-46d5-4b5f-8434-9fc78297d702" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/vue/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/theme.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/imagenes/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/imagenes/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/components/ExampleComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/components/ExampleComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/caja/cierrecaja.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/caja/cierrecaja.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/caja/siderbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/caja/siderbar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/main/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/main/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/IndexController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2018_09_20_081759_create_table_facture.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2018_09_20_081759_create_table_facture.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/productos/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/productos/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
     </list>
@@ -112,17 +106,17 @@
           <entry key="css" value="1" />
           <entry key="js" value="4" />
           <entry key="json" value="2" />
-          <entry key="php" value="71" />
+          <entry key="php" value="84" />
           <entry key="vue" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Blade" value="26" />
+          <entry key="Blade" value="29" />
           <entry key="CSS" value="1" />
           <entry key="JSON" value="2" />
           <entry key="JavaScript" value="4" />
-          <entry key="PHP" value="45" />
+          <entry key="PHP" value="55" />
           <entry key="Vue.js" value="1" />
         </counts>
       </usages-collector>
@@ -130,26 +124,34 @@
         <counts>
           <entry key="css" value="10" />
           <entry key="js" value="1" />
-          <entry key="php" value="1668" />
+          <entry key="php" value="2423" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Blade" value="1143" />
+          <entry key="Blade" value="1579" />
           <entry key="CSS" value="10" />
           <entry key="JavaScript" value="1" />
-          <entry key="PHP" value="525" />
+          <entry key="PHP" value="844" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CajasController.php">
+        <entry file="file://$PROJECT_DIR$/resources/views/welcome.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="113" column="48" lean-forward="true" selection-start-line="113" selection-start-column="48" selection-end-line="113" selection-end-column="48" />
+            <state relative-caret-position="195">
+              <caret line="433" column="57" lean-forward="true" selection-start-line="433" selection-start-column="57" selection-end-line="433" selection-end-column="57" />
+              <folding>
+                <element signature="e#3658#3695#0#HTML" expanded="true" />
+                <element signature="e#10641#10659#0#HTML" expanded="true" />
+                <element signature="e#12176#12194#0#HTML" expanded="true" />
+                <element signature="e#12791#12809#0#HTML" expanded="true" />
+                <element signature="e#13359#13377#0#HTML" expanded="true" />
+                <element signature="e#13632#13650#0#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -220,12 +222,9 @@
         <option value="$PROJECT_DIR$/resources/views/productos/edit.blade.php" />
         <option value="$PROJECT_DIR$/database/migrations/2018_09_20_081205_create_table_products.php" />
         <option value="$PROJECT_DIR$/database/migrations/2018_09_20_082016_create_table_detail.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ProductsController.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2018_09_20_081759_create_table_facture.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CajasController.php" />
         <option value="$PROJECT_DIR$/resources/views/layouts/scripts.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/IndexController.php" />
         <option value="$PROJECT_DIR$/config/app.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/FacturesController.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
@@ -233,12 +232,15 @@
         <option value="$PROJECT_DIR$/resources/views/caja/historicoventa.blade.php" />
         <option value="$PROJECT_DIR$/public/css/theme.css" />
         <option value="$PROJECT_DIR$/resources/views/caja/siderbar.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/productos/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/assets/js/components/ExampleComponent.vue" />
         <option value="$PROJECT_DIR$/resources/assets/js/app.js" />
         <option value="$PROJECT_DIR$/resources/views/caja/cierrecaja.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/welcome.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/main/app.blade.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php" />
+        <option value="$PROJECT_DIR$/resources/views/productos/index.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/IndexController.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2018_09_20_081759_create_table_facture.php" />
+        <option value="$PROJECT_DIR$/resources/views/welcome.blade.php" />
       </list>
     </option>
   </component>
@@ -380,6 +382,17 @@
             <path>
               <item name="puntocafeteria" type="b2602c69:ProjectViewProjectNode" />
               <item name="puntocafeteria" type="462c0819:PsiDirectoryNode" />
+              <item name="database" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="puntocafeteria" type="b2602c69:ProjectViewProjectNode" />
+              <item name="puntocafeteria" type="462c0819:PsiDirectoryNode" />
+              <item name="database" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="puntocafeteria" type="b2602c69:ProjectViewProjectNode" />
+              <item name="puntocafeteria" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -387,20 +400,6 @@
               <item name="puntocafeteria" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="puntocafeteria" type="b2602c69:ProjectViewProjectNode" />
-              <item name="puntocafeteria" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="caja" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="puntocafeteria" type="b2602c69:ProjectViewProjectNode" />
-              <item name="puntocafeteria" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="puntocafeteria" type="b2602c69:ProjectViewProjectNode" />
@@ -494,12 +493,12 @@
       <workItem from="1537474391917" duration="5119000" />
       <workItem from="1537480275528" duration="82000" />
       <workItem from="1537531730978" duration="188000" />
-      <workItem from="1537532357112" duration="1450000" />
+      <workItem from="1537532357112" duration="7635000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="191553000" />
+    <option name="totallyTimeSpent" value="197738000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -514,7 +513,7 @@
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25530303" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1719697" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -645,13 +644,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="26" column="37" lean-forward="true" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DetailsController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-204" />
@@ -662,13 +654,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/composer.json">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_20_081759_create_table_facture.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="28" column="38" lean-forward="true" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_20_081205_create_table_products.php">
       <provider selected="true" editor-type-id="text-editor">
@@ -695,20 +680,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-9">
           <caret line="198" column="45" selection-start-line="198" selection-start-column="45" selection-end-line="198" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ProductsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="43" column="12" selection-start-line="43" selection-start-column="12" selection-end-line="43" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/IndexController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="855">
-          <caret line="62" column="40" lean-forward="true" selection-start-line="62" selection-start-column="40" selection-end-line="62" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -761,13 +732,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/productos/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1072">
-          <caret line="141" column="42" selection-start-line="141" selection-start-column="42" selection-end-line="141" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/notificaciones/toastr.min.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -798,17 +762,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/welcome.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="63" column="11" selection-start-line="63" selection-start-column="11" selection-end-line="63" selection-end-column="11" />
-          <folding>
-            <element signature="e#2471#2491#0#HTML" expanded="true" />
-            <element signature="e#4276#4316#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/main/app.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -823,6 +776,56 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
           <caret line="113" column="48" lean-forward="true" selection-start-line="113" selection-start-column="48" selection-end-line="113" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/productos/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="38" column="127" selection-start-line="38" selection-start-column="127" selection-end-line="38" selection-end-column="127" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ProductsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="42" column="31" lean-forward="true" selection-start-line="42" selection-start-column="31" selection-end-line="42" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="23" column="44" lean-forward="true" selection-start-line="23" selection-start-column="44" selection-end-line="23" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/IndexController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-143">
+          <caret line="57" column="49" lean-forward="true" selection-start-line="57" selection-start-column="49" selection-end-line="57" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_20_081759_create_table_facture.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/welcome.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="433" column="57" lean-forward="true" selection-start-line="433" selection-start-column="57" selection-end-line="433" selection-end-column="57" />
+          <folding>
+            <element signature="e#3658#3695#0#HTML" expanded="true" />
+            <element signature="e#10641#10659#0#HTML" expanded="true" />
+            <element signature="e#12176#12194#0#HTML" expanded="true" />
+            <element signature="e#12791#12809#0#HTML" expanded="true" />
+            <element signature="e#13359#13377#0#HTML" expanded="true" />
+            <element signature="e#13632#13650#0#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

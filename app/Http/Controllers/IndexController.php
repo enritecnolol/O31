@@ -48,21 +48,48 @@ class IndexController extends Controller
      */
     public function store(Request $request)
     {
-
         $facture = new Facture;
-        $facture->date = date('Y-m-d');
-//        $facture->time = date('h:m:s');
-        $facture->box = 'Caja No.1';
-        $facture->cashier = 0;
-        $facture->client = $request->cliente;
-        $facture->brute = 0;
-        $facture->desc = 0;
-        $facture->itbis = 0;
-        $facture->total_facture = $request->preciop;
-        $facture->status = 'Pago';
-        $facture->type_sale = 'contado';
-        $facture->impost = 0;
-        $facture->save();
+        if ($request->tipop == 'efectivo'){
+            //Pago con efectivo
+
+            $facture->date = date('Y-m-d');
+            $facture->box = 'Caja No.1';
+            $facture->cashier = 0;
+            $facture->client = $request->cliente;
+            $facture->brute = 0;
+            $facture->desc = 0;
+            $facture->itbis = 0;
+            $facture->total_facture = $request->preciop;
+            $facture->returns = $request->devuelta;
+            $facture->status = 'Pago';
+            $facture->type_sale = $request->tipop;
+            $facture->type_tarject = 'NaN';
+            $facture->Numbertar = 'NaN';
+            $facture->banco = 'NaN';
+            $facture->auth = 'NaN';
+            $facture->save();
+        }
+        else{
+            //Pago tarjeta
+            $facture->date = date('Y-m-d');
+            $facture->box = 'Caja No.1';
+            $facture->cashier = 0;
+            $facture->client = $request->cliente;
+            $facture->brute = 0;
+            $facture->desc = 0;
+            $facture->itbis = 0;
+            $facture->total_facture = $request->preciop;
+            $facture->returns = 0;
+            $facture->status = 'Pago';
+            $facture->type_sale = $request->tipop;
+            $facture->type_tarject = $request->tipotarjeta;
+            $facture->Numbertar = $request->Numtarjeta;
+            $facture->banco = $request->banco;
+            $facture->auth = $request->auth;
+            $facture->save();
+
+        }
+
 
         $idfacture = Facture::all();
 
