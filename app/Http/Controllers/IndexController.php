@@ -23,9 +23,10 @@ class IndexController extends Controller
         if ($caja == '[]'){
             $cerrada = 'C';
         }else{
-            $cerrada = $caja[0]["status"];
+            foreach ($caja as $cerrada){
+                $cerrada = $cerrada["status"];
+            }
         }
-//        return $cerrada;
 
         return view('welcome', ['productos' => json_encode($productos)], ['caja' => json_encode($caja)])->with(compact('cerrada', $cerrada));
     }
@@ -48,48 +49,67 @@ class IndexController extends Controller
      */
     public function store(Request $request)
     {
+//        return $request;
+//        $facture = new Facture;
+//        if ($request->tipop == 'efectivo'){
+//            //Pago con efectivo
+//
+//            $facture->date = date('Y-m-d');
+//            $facture->box = 'Caja No.1';
+//            $facture->cashier = 0;
+//            $facture->client = $request->cliente;
+//            $facture->brute = 0;
+//            $facture->desc = 0;
+//            $facture->itbis = 0;
+//            $facture->total_facture = $request->preciop;
+//            $facture->returns = $request->devuelta;
+//            $facture->status = 'Pago';
+//            $facture->type_sale = $request->tipop;
+//            $facture->type_tarject = 'NaN';
+//            $facture->Numbertar = 'NaN';
+//            $facture->banco = 'NaN';
+//            $facture->auth = 'NaN';
+//            $facture->save();
+//        }
+//        else{
+//            //Pago tarjeta
+//            $facture->date = date('Y-m-d');
+//            $facture->box = 'Caja No.1';
+//            $facture->cashier = 0;
+//            $facture->client = $request->cliente;
+//            $facture->brute = 0;
+//            $facture->desc = 0;
+//            $facture->itbis = 0;
+//            $facture->total_facture = $request->preciop;
+//            $facture->returns = 0;
+//            $facture->status = 'Pago';
+//            $facture->type_sale = $request->tipop;
+//            $facture->type_tarject = $request->tipotarjeta;
+//            $facture->Numbertar = $request->Numtarjeta;
+//            $facture->banco = $request->banco;
+//            $facture->auth = $request->auth;
+//            $facture->save();
+//
+//        }
         $facture = new Facture;
-        if ($request->tipop == 'efectivo'){
-            //Pago con efectivo
 
-            $facture->date = date('Y-m-d');
-            $facture->box = 'Caja No.1';
-            $facture->cashier = 0;
-            $facture->client = $request->cliente;
-            $facture->brute = 0;
-            $facture->desc = 0;
-            $facture->itbis = 0;
-            $facture->total_facture = $request->preciop;
-            $facture->returns = $request->devuelta;
-            $facture->status = 'Pago';
-            $facture->type_sale = $request->tipop;
-            $facture->type_tarject = 'NaN';
-            $facture->Numbertar = 'NaN';
-            $facture->banco = 'NaN';
-            $facture->auth = 'NaN';
-            $facture->save();
-        }
-        else{
-            //Pago tarjeta
-            $facture->date = date('Y-m-d');
-            $facture->box = 'Caja No.1';
-            $facture->cashier = 0;
-            $facture->client = $request->cliente;
-            $facture->brute = 0;
-            $facture->desc = 0;
-            $facture->itbis = 0;
-            $facture->total_facture = $request->preciop;
-            $facture->returns = 0;
-            $facture->status = 'Pago';
-            $facture->type_sale = $request->tipop;
-            $facture->type_tarject = $request->tipotarjeta;
-            $facture->Numbertar = $request->Numtarjeta;
-            $facture->banco = $request->banco;
-            $facture->auth = $request->auth;
-            $facture->save();
-
-        }
-
+        $facture->date = date('Y-m-d');
+        $facture->box = 'Caja No.1';
+        $facture->cashier = 0;
+        $facture->client = $request->cliente;
+        $facture->brute = 0;
+        $facture->desc = 0;
+        $facture->itbis = 0;
+        $facture->total_facture = $request->preciop;
+        $facture->Monto_tarjeta = $request->montotarjeta;
+        $facture->Monto_efectivo = $request->dinero;
+        $facture->returns = $request->devuelta;
+        $facture->status = 'Pago';
+        $facture->type_tarject = $request->tipotarjeta;
+        $facture->Numbertar = $request->Numtarjeta;
+        $facture->banco = $request->banco;
+        $facture->auth = $request->auth;
+        $facture->save();
 
         $idfacture = Facture::all();
 

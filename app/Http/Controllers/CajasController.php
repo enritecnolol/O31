@@ -21,13 +21,17 @@ class CajasController extends Controller
     public function index()
     {
         $fecha = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"));
+
         if ($fecha == '[]'){
             $cerrada = 'no tiene';
         }else{
-            $cerrada = $fecha[0]["status"];
+            foreach ($fecha as $cerrada){
+                $cerrada = $cerrada["status"];
+            }
+
         }
 
-        return view('caja.iniciocaja', compact('fecha'), compact('cerrada'));
+        return view('caja.iniciocaja', compact('fecha', $fecha), compact('cerrada', $cerrada));
     }
 
     /**
@@ -129,5 +133,46 @@ class CajasController extends Controller
     }
     public function historico(){
         return view('caja.historicoventa');
+    }
+    public function cuadrecaja(){
+        $fecha = date('Y-m-d');
+
+        $ventastotal = DB::table('factures')->select(DB::raw('SUM(total_facture) as total'))->where("date",$fecha)->get();
+        $ventasmonto_tarjeta = DB::table('factures')->select(DB::raw('SUM(Monto_tarjeta) as total_tarjeta'))->where("date",$fecha)->get();
+        $ventasmonto_efectivo = DB::table('factures')->select(DB::raw('SUM(Monto_efectivo) as total_efectivo'))->where("date",$fecha)->get();
+        $caja = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"))->where('status', '==', 'C');
+
+
+        if ($ventastotal == '[{"total":null}]'){
+            $total = 00;
+        }else{
+            $total = $ventastotal[0]->total;
+        }
+
+        if ($ventasmonto_tarjeta == '[{"total_tarjeta":null}]'){
+            $total_tarjeta = 00;
+        }else{
+            $total_tarjeta = $ventasmonto_tarjeta[0]->total_tarjeta;
+        }
+
+        if ($ventasmonto_efectivo == '[{"total_efectivo":null}]'){
+            $total_efectivo = 00;
+        }else{
+            $total_efectivo = $ventasmonto_efectivo[0]->total_efectivo;
+        }
+
+        if ($caja == '[]'){
+            $caja = 'Abierta';
+        }else{
+            $caja = $caja;
+        }
+
+
+        return view('caja.cuadrecaja',
+            compact('total'),
+            compact('total_tarjeta'))
+            ->with(compact('total_efectivo'))
+            ->with(compact('fecha'))->with(compact('caja'));
+
     }
 }

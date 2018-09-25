@@ -20,7 +20,10 @@
                         <strong>Apertura de Caja</strong>
                     </div>
                     <div class="card-body text-center">
-                        <h1 style="margin: 10%">La caja ya esta <span style="color: red">Cerrada</span></h1>
+                        <h1 style="margin: 10%">La caja ya<span style="color: red">Cerrada</span></h1>
+                        <br>
+                        <hr>
+                        <a href="/caja/cuadre">Si quiere Cuadrar su caja presione aqui</a>
                     </div>
                 </div>
 

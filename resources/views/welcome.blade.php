@@ -85,7 +85,7 @@
                     <div v-if="cerrada == 'A'" style="position: fixed;bottom:10px; width: 250px">
                         <button data-toggle="modal" data-target="#pago" type="button" class="btn btn-lg btn-info btn-block">
                             <i class="fa fa-money-bill-alt fa-lg"></i>&nbsp;
-                            <span id="payment-button-amount">Pagar </span>
+                            <span id="payment-button-amount">Pagar $: @{{ facturatotal }}</span>
                             <span id="payment-button-sending" style="display:none;">Sending…</span>
                         </button>
                     </div>
@@ -199,82 +199,70 @@
                 </div>
                 <div class="modal-body">
                     <form action="" method="post" novalidate="novalidate">
-                        <div class="form-group">
-                            <label for="cc-number" class="control-label mb-1">Tipo de Pago</label>
-                            <select name="selectSm" id="SelectLm" v-model="campotipop" class="form-control-sm form-control">
-                                <option value="efectivo">Efectivo</option>
-                                <option value="tarjeta" >Tarjeta</option>
-                            </select>
-                            <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
+                        <div class="text-center" style="margin-bottom: 20px">
+                            <h3>Neto a Pagar $: <span style="font-size: 50px; color: red">@{{ facturatotal }} </span></h3>
                         </div>
-                        <div class="form-group">
-                            <label for="ppagar" class="control-label mb-1">Precio a pagar</label>
-                            <input id="ppagar" name="ppagar" type="text" disabled
-                                   class="input-sm form-control-sm form-control" aria-required="true" aria-invalid="false"
-                                   :value="facturatotal">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="cc-exp" class="control-label mb-1">Efectivo<span style="color: red">*</span></label>
+                                    <input id="dinero" name="dinero" type="number" class="form-control cc-exp"  v-model="campodinero">
+                                </div>
+                            </div>
                         </div>
-
-                        <template v-if="campotipop == 'efectivo'">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="cc-exp" class="control-label mb-1">Dinero<span style="color: red">*</span></label>
-                                        <input id="dinero" name="dinero" type="number" class="form-control cc-exp" min="0"  v-model="campodinero" data-val="true" data-val-required="Please enter the card expiration" >
-                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <label for="x_card_code" class="control-label mb-1">Devuelta</label>
-                                    <div class="input-group">
-                                        <input id="devuelta" name="devuelta" disabled :value="devuelta" type="number" class="form-control cc-cvc"  data-val="true" data-val-required="Please enter the security code" >
-                                    </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="cc-exp" class="control-label mb-1">Tarjeta<span style="color: red">*</span></label>
+                                    <input id="dinero" name="dinero" type="number" class="form-control cc-exp"  v-model="montotarjeta">
                                 </div>
                             </div>
-                        </template>
-                        <template v-else>
-                            <div class="form-group">
-                                <label for="cc-number" class="control-label mb-1">Tipo de tarjeta</label>
-                                <select name="selectSm" id="SelectLm" v-model="tipotarjeta" class="form-control-sm form-control">
-                                    <option value="">--Selecciona--</option>
-                                    <option value="visa">Visa</option>
-                                    <option value="mastercard">MasteCard</option>
-                                    <option value="americanexpress">AmericanExpress</option>
-                                </select>
-                                <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="numtarjeta" class="control-label mb-1">Num.Tarjeta <span style="color: red">*</span></label>
-                                        <input id="numtarjeta" name="numtarjeta" type="text" class="form-control cc-exp" maxlength="20"  v-model="Numtarjeta" data-val="true" data-val-required="Please enter the card expiration" >
-                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <label for="auth" class="control-label mb-1">Auth<span style="color: red">*</span></label>
-                                    <div class="input-group">
-                                        <input id="auth" name="auth" v-model="auth" maxlength="20" type="text" class="form-control cc-cvc"  data-val="true" data-val-required="Please enter the security code" >
-                                    </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="cc-number" class="control-label mb-1">Tipo de tarjeta</label>
+                                    <select name="selectSm" id="SelectLm" v-model="tipotarjeta" class="form-control-sm form-control">
+                                        <option value="">--Selecciona--</option>
+                                        <option value="visa">Visa</option>
+                                        <option value="mastercard">MasteCard</option>
+                                        <option value="americanexpress">AmericanExpress</option>
+                                    </select>
+                                    <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="banco" class="control-label mb-1">Banco<span style="color: red">*</span></label>
-                                <input id="banco" name="banco" v-model="banco" type="text" required class="input-sm form-control-sm form-control" aria-required="true" aria-invalid="false" placeholder="">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="banco" class="control-label mb-1">Banco</label>
+                                    <input id="banco" name="banco" v-model="banco" class="form-control cc-exp" type="text">
+                                </div>
                             </div>
-                        </template>
-
-                        <div class="form-group">
-                            <label for="cliente" class="control-label mb-1">Cliente<span style="color: red">*</span></label>
-                            <input id="cliente" name="cliente" v-model="campocliente" type="text" required class="input-sm form-control-sm form-control" aria-required="true" aria-invalid="false" placeholder="">
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="numtarjeta" class="control-label mb-1">Num.Tarjeta <span style="color: red">*</span></label>
+                                    <input id="numtarjeta" name="numtarjeta" type="text" class="form-control cc-exp" maxlength="16"  v-model="Numtarjeta" data-val="true" data-val-required="Please enter the card expiration" >
+                                    <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label for="auth" class="control-label mb-1">Autorización<span style="color: red">*</span></label>
+                                <div class="input-group">
+                                    <input id="auth" name="auth" v-model="auth" maxlength="20" type="text" class="form-control cc-cvc">
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
+                            <div class="" style="margin-right: 55%">
+                                <h4>Devuelta:<span> @{{ devuelta }} </span></h4>
+                            </div>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" @click="facturar()" class="btn btn-primary">&nbsp;Pagar</button>
+                            <button v-if="suma >= facturatotal" type="button" @click="facturar()" class="btn btn-primary">&nbsp;Pagar</button>
+                            <button v-else disabled type="button" @click="facturar()" class="btn btn-primary">&nbsp;Pagar</button>
                         </div>
                     </form>
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -304,6 +292,7 @@
         var app = new Vue({
             el: '#Vue',
             data: {
+                montotarjeta:0,
                 tipotarjeta:'',
                 banco:'',
                 auth: '',
@@ -322,7 +311,6 @@
             watch:{
 
                 facturatotal:function(valor){
-
                     this.campodinero = valor
                 }
 
@@ -409,11 +397,40 @@
                 },
 
                 facturar:function () {
+                    if (this.montotarjeta > 0){
+                        if (this.tipotarjeta == '' ||  this.auth == '' || this.Numtarjeta == ''){
+                            alert('Faltan Datos por Llenar')
+                        }else {
+                            $.ajax({
+                                url: '/facturacion',
+                                method: 'GET',
+                                data: {
+                                    cliente:this.campocliente,
+                                    devuelta:this.devuelta,
+                                    preciop:this.facturatotal,
+                                    tipop:this.campotipop,
+                                    banco:this.banco,
+                                    auth: this.auth,
+                                    tipotarjeta: this.tipotarjeta,
+                                    Numtarjeta: this.Numtarjeta,
+                                    montotarjeta:this.montotarjeta,
+                                    dinero:this.campodinero,
+                                    detalle: this.list
+                                },
+                                success:function (dato) {
+                                    $('#pago').modal('hide');
+                                    toastr.options.newestOnTop = false;
+                                    toastr.success('Gracias por la compra');
+                                    setTimeout('document.location.reload()',1500);
+                                },
+                                error:function () {
+                                    toastr.error('A ocurrido un error al realizar la venta');
+                                }
 
-                    if (this.campodinero < this.facturatotal){
-                        alert('El dinero no puede ser menor que precio a pagar');
-                    }else {
+                            });
+                        }
 
+                    }else{
                         $.ajax({
                             url: '/facturacion',
                             method: 'GET',
@@ -426,6 +443,7 @@
                                 auth: this.auth,
                                 tipotarjeta: this.tipotarjeta,
                                 Numtarjeta: this.Numtarjeta,
+                                montotarjeta:this.montotarjeta,
                                 dinero:this.campodinero,
                                 detalle: this.list
                             },
@@ -433,15 +451,19 @@
                                 $('#pago').modal('hide');
                                 toastr.options.newestOnTop = false;
                                 toastr.success('Gracias por la compra');
-                                setTimeout('document.location.reload()',2000);
+                                setTimeout('document.location.reload()',1500);
                             },
                             error:function () {
                                 toastr.error('A ocurrido un error al realizar la venta');
                             }
 
                         });
-
                     }
+
+
+
+
+
                 }
             },
             computed:{
@@ -457,9 +479,16 @@
                     return suma;
                 },
 
-                devuelta:function () {
+                suma:function () {
 
-                    var devuelta = this.campodinero - this.facturatotal
+                    var suma = (parseFloat(this.campodinero) + parseFloat(this.montotarjeta))
+
+                    return suma;
+                },
+
+                devuelta:function () {
+                    // var devuelta = suma - this.facturatotal
+                    var devuelta = this.suma - this.facturatotal
 
                     return devuelta;
                 },

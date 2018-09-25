@@ -45,6 +45,10 @@
                 </div>
                 <div v-else class="text-center">
                     <h1>La caja esta <strong style="color: red">Cerrada</strong></h1>
+                    <br>
+                    <br>
+                    <hr>
+                    <a href="/caja/cuadre">Si quiere Cuadrar su caja presione <strong style="color: red">AQUI</strong></a>
                 </div>
             </div>
         </div>

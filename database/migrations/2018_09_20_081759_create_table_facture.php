@@ -23,6 +23,8 @@ class CreateTableFacture extends Migration
             $table->integer('desc');
             $table->integer('itbis');
             $table->integer('total_facture');
+            $table->integer('Monto_tarjeta');
+            $table->integer('Monto_efectivo');
             $table->integer('returns');
             $table->string('status');
             $table->string('type_sale');
