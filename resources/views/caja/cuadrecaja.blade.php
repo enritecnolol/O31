@@ -15,18 +15,31 @@
 
 
 @section('content')
+    <div  v-if="nose == 'cuadrada'" class="section__content section__content--p30">
+        <div class="container-fluid">
 
-    <div class="section__content section__content--p30">
+            <div class="card">
+                <div class="card-header">
+                    <strong style="color: #007bff">Caja Cuadrada</strong>
+                </div>
+                <div class="card-body text-center">
+                    <h1 style="margin: 10%;">La Caja ya ha sido cuadrada,<br>Despues de que la caja se cuadre esta no se puede editar <span style="color: red"><i class="fas fa-lock"></i></span></h1>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div v-else class="section__content section__content--p30">
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header">
                     <strong style="color: #007bff">Caja</strong>
-                    <button v-if="caja != 'Abierta'" @click="cuadrar()" class="btn btn-warning btn-sm pull-right"  type="button"><i class="fas fa-lock">&nbsp; Cuadrar Caja</i></button>
+                    <button v-if="nose != 'Abierta'" @click="confimar()" class="btn btn-warning btn-sm pull-right"  type="button"><i class="fas fa-lock">&nbsp; Cuadrar Caja</i></button>
                     <button v-else class="btn btn-warning btn-sm pull-right" disabled type="button"><i class="fas fa-lock">&nbsp; Cuadrar Caja</i></button>
                 </div>
                 <div class="card-body">
 
-                    <div class="row" v-if="caja != 'Abierta'">
+                    <div class="row" v-if="nose != 'Abierta'">
                         <div class="col-md-3">
                             <strong>Cierre de caja:</strong> No.1
                         </div>
@@ -56,7 +69,7 @@
                     <h3 v-else style="color:red;"  class="text-center"> Para poder cuadrar la caja es necesario cerrarla </h3>
                 </div>
             </div>
-            <div class="row" v-if="caja != 'Abierta'">
+            <div class="row" v-if="nose != 'Abierta'">
                 <div class="col-lg-4">
                     <div class="card" style="height: 600px">
                         <div class="card-header"><strong style="color: #007bff">Billetes</strong></div>
@@ -296,7 +309,7 @@
         var cajatarjeta = '{!! $total_tarjeta !!}';
         var fecha = '{!! $fecha !!}';
         var caja = JSON.parse('{!! $caja !!}');
-        var cerrada = '{!! $cerrada !!}';
+        var nose = '{!! $nose !!}';
 
         function toObject(arr) {
             var rv = {};
@@ -310,7 +323,7 @@
         new Vue({
             el: '#Vue',
             data:{
-                cerrada: cerrada,
+                nose: nose,
                 deposito:0,
                 egresos:0,
                 caja: Object.values(caja),
@@ -351,7 +364,13 @@
                                 caja:       this.caja,
                                 fecha:      this.fecha,
                                 totalcaja:  this.totalcaja,
+
                                 encaja:{
+                                    segunsistema:{
+                                        efectivo:this.cajaefectivo,
+                                        tarjeta:this.cajatarjeta,
+                                        total: this.totalcaja
+                                    },
                                     efectivocaja: this.efectivocaja,
                                     cajatarjeta: this.cajatarjeta,
                                     deposito:   this.deposito,
@@ -446,7 +465,6 @@
                         parseFloat(this.cincuentatotal) +
                         parseFloat(this.ventecincototal) +
                         parseFloat(this.dieztotal) +
-                        parseFloat(this.cincototal) +
                         parseFloat(this.cincototal) +
                         parseFloat(this.unototal)
                     return total;

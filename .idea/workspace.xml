@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36db0169-46d5-4b5f-8434-9fc78297d702" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CajasController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CajasController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/IndexController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2018_09_20_081759_create_table_facture.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2018_09_20_081759_create_table_facture.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/caja/cuadrecaja.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/caja/cuadrecaja.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/productos/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/productos/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -107,7 +103,7 @@
           <entry key="css" value="1" />
           <entry key="js" value="4" />
           <entry key="json" value="2" />
-          <entry key="php" value="138" />
+          <entry key="php" value="139" />
           <entry key="vue" value="1" />
         </counts>
       </usages-collector>
@@ -117,7 +113,7 @@
           <entry key="CSS" value="1" />
           <entry key="JSON" value="2" />
           <entry key="JavaScript" value="4" />
-          <entry key="PHP" value="76" />
+          <entry key="PHP" value="77" />
           <entry key="Vue.js" value="1" />
         </counts>
       </usages-collector>
@@ -125,28 +121,33 @@
         <counts>
           <entry key="css" value="10" />
           <entry key="js" value="1" />
-          <entry key="php" value="9243" />
+          <entry key="php" value="9957" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Blade" value="6877" />
+          <entry key="Blade" value="7268" />
           <entry key="CSS" value="10" />
           <entry key="JavaScript" value="1" />
-          <entry key="PHP" value="2366" />
+          <entry key="PHP" value="2689" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/caja/cuadrecaja.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="9" selection-end-line="466" />
+            <state relative-caret-position="78">
+              <caret line="17" column="34" lean-forward="true" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
               <folding>
+                <element signature="e#525#547#0#HTML" expanded="true" />
+                <element signature="e#533#553#0#HTML" expanded="true" />
+                <element signature="e#760#778#0#HTML" expanded="true" />
                 <element signature="e#498#520#0#HTML" expanded="true" />
+                <element signature="e#918#2349#0#HTML" />
+                <element signature="e#2381#2399#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -155,8 +156,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CajasController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="173" column="32" selection-start-line="173" selection-start-column="24" selection-end-line="173" selection-end-column="32" />
+            <state relative-caret-position="408">
+              <caret line="159" column="66" lean-forward="true" selection-start-line="159" selection-start-column="66" selection-end-line="159" selection-end-column="66" />
+              <folding>
+                <element signature="e#40#53#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="28" column="25" lean-forward="true" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -179,11 +192,13 @@
       <find>cajaabierta</find>
       <find>productos</find>
       <find>fec</find>
-      <find>fecha_apertura</find>
       <find>totalcierre</find>
       <find>table-data3 thead</find>
       <find>toast</find>
       <find>example</find>
+      <find>$cerrada</find>
+      <find>cerrada</find>
+      <find>fecha_apertura</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/resources/views</dir>
@@ -238,14 +253,14 @@
         <option value="$PROJECT_DIR$/resources/views/main/app.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/caja/cierrecaja.blade.php" />
         <option value="$PROJECT_DIR$/database/migrations/2018_09_25_101958_create_table_cuadre.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php" />
         <option value="$PROJECT_DIR$/resources/views/productos/index.blade.php" />
         <option value="$PROJECT_DIR$/database/migrations/2018_09_20_081759_create_table_facture.php" />
         <option value="$PROJECT_DIR$/resources/views/welcome.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/IndexController.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/CajasController.php" />
         <option value="$PROJECT_DIR$/resources/views/caja/cuadrecaja.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/CajasController.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php" />
       </list>
     </option>
   </component>
@@ -349,10 +364,9 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="75" />
-    <option name="y" value="27" />
-    <option name="width" value="1356" />
-    <option name="height" value="743" />
+    <option name="y" value="25" />
+    <option name="width" value="1680" />
+    <option name="height" value="1025" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -509,12 +523,12 @@
       <workItem from="1537532357112" duration="7635000" />
       <workItem from="1537621499993" duration="14117000" />
       <workItem from="1537876970255" duration="6478000" />
-      <workItem from="1537883564401" duration="12762000" />
+      <workItem from="1537883564401" duration="19365000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="248265000" />
+    <option name="totallyTimeSpent" value="254868000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -529,7 +543,7 @@
     <frame x="0" y="25" width="1680" height="1025" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19828641" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2129743" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -793,13 +807,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="33" column="30" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/productos/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -855,20 +862,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CajasController.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/caja/cuadrecaja.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="173" column="32" selection-start-line="173" selection-start-column="24" selection-end-line="173" selection-end-column="32" />
+        <state relative-caret-position="78">
+          <caret line="17" column="34" lean-forward="true" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+          <folding>
+            <element signature="e#525#547#0#HTML" expanded="true" />
+            <element signature="e#533#553#0#HTML" expanded="true" />
+            <element signature="e#760#778#0#HTML" expanded="true" />
+            <element signature="e#498#520#0#HTML" expanded="true" />
+            <element signature="e#918#2349#0#HTML" />
+            <element signature="e#2381#2399#0#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/caja/cuadrecaja.blade.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CajasController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="9" selection-end-line="466" />
+        <state relative-caret-position="408">
+          <caret line="159" column="66" lean-forward="true" selection-start-line="159" selection-start-column="66" selection-end-line="159" selection-end-column="66" />
           <folding>
-            <element signature="e#498#520#0#HTML" expanded="true" />
+            <element signature="e#40#53#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="28" column="25" lean-forward="true" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="25" />
         </state>
       </provider>
     </entry>

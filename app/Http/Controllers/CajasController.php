@@ -88,7 +88,7 @@ class CajasController extends Controller
 //
         $ventas = Facture::all()->where('date','==',date("Y-m-d"))->count();
         $totalcierre = DB::table('factures')->select(DB::raw('SUM(total_facture) as total'))->where("date",$fecha)->get();
-        $caja = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"));
+        $caja = DB::table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num')->where('fecha_apertura', date("Y-m-d"))->get();
 
         if ($totalcierre == '[{"total":null}]'){
             $total = 0;
@@ -141,7 +141,8 @@ class CajasController extends Controller
         $ventastotal = DB::table('factures')->select(DB::raw('SUM(total_facture) as total'))->where("date",$fecha)->get();
         $ventasmonto_tarjeta = DB::table('factures')->select(DB::raw('SUM(Monto_tarjeta) as total_tarjeta'))->where("date",$fecha)->get();
         $ventasmonto_efectivo = DB::table('factures')->select(DB::raw('SUM(Monto_efectivo) as total_efectivo'))->where("date",$fecha)->get();
-        $caja = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"))->where('status', '==', 'C');
+//        $caja = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"))->where('status', '==', 'C');
+        $caja = DB::table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num')->where('fecha_apertura', date("Y-m-d"))->where('status', 'C')->get();
 
 
         if ($ventastotal == '[{"total":null}]'){
@@ -162,17 +163,16 @@ class CajasController extends Controller
             $total_efectivo = $ventasmonto_efectivo[0]->total_efectivo;
         }
 
-        if ($caja == '[]'){
-            $caja = 'Abierta';
-        }else{
+        if ($caja == '[]') {
+            $nose = 'Abierta';
             $caja = $caja;
         }
-
-        if ($caja[0]->cuadre == 'JSON'){
-            $cerrada = 'No cuadrada';
-        }else{
-            $cerrada = 'Cuadrada';
+        else{
+            $caja = $caja;
+            $nose = 'cuadrada';
         }
+
+//        return $caja;
 
         return view('caja.cuadrecaja',
             compact('total'),
@@ -180,7 +180,7 @@ class CajasController extends Controller
             ->with(compact('total_efectivo'))
             ->with(compact('fecha'))
             ->with(compact('caja'))
-            ->with(compact('cerrada'));
+            ->with(compact('cerrada'))->with(compact('nose'));
 
     }
 
@@ -195,7 +195,7 @@ class CajasController extends Controller
         $caja->cuadre = json_encode($cuadre);
         $caja->update();
 
-        return 'update';
+        return 'guardado';
     }
 
 }
