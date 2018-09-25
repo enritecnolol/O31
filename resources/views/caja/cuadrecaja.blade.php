@@ -58,7 +58,7 @@
             </div>
             <div class="row" v-if="caja != 'Abierta'">
                 <div class="col-lg-4">
-                    <div class="card" style="height: 500px">
+                    <div class="card" style="height: 600px">
                         <div class="card-header"><strong style="color: #007bff">Billetes</strong></div>
                         <div class="card-body">
                             <table class="table table-hover table-sm">
@@ -136,7 +136,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="card" style="height: 500px">
+                    <div class="card" style="height: 600px">
                         <div class="card-header"><strong style="color: #007bff">Monedas</strong></div>
                         <div class="card-body">
                             <table class="table table-hover table-responsive table-sm">
@@ -192,12 +192,11 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="card" style="height: 500px">
+                    <div class="card" style="height: 600px">
                         <div class="card-header">
                             <strong style="color: #007bff">Cuadre segun ventas</strong>
                         </div>
                         <div class="card-body">
-
                             <div class="form-group">
                                 <label  class="pr-1  form-control-label"> +&emsp;&emsp;<i class="fas fa-money-bill-alt"></i> Efectivo &emsp;= </label>
                                 <label  class="pr-1  form-control-label">&emsp;@{{ cajaefectivo }}</label>
@@ -210,39 +209,69 @@
                                 <label  class="pr-1  form-control-label">+&emsp;&emsp;<i class="fas fa-suitcase"></i> Total  &emsp;&emsp;= </label>
                                 <label  class="pr-1  form-control-label">&emsp;@{{ totalcaja }}</label>
                             </div>
-                            <hr>
-                            <div class="text-center">
-                                <h4 style="color: #007bff">Fondo en caja</h4>
-                            </div>
-                            <br>
-                            <div class="form-group">
-                                <label  class="pr-1  form-control-label"><i class="fas fa-money-bill-alt"></i> Efectivo</label>
-                                <label  class="pr-1  form-control-label text center">= </label>
-                                <label  class="pr-1  form-control-label">@{{ efectivocaja }}</label>
-                            </div>
-                            <div class="form-group">
-                                <label class="pr-1  form-control-label"><i class="fas fa-credit-card"></i> Tarjeta</label>
-                                <label class="pr-1  form-control-label"> = </label>
-                                <label class="pr-1  form-control-label" >@{{ cajatarjeta }}</label>
-                                <label class="pr-1  form-control-label" ><button type="button" disabled class="btn btn-secondary btn-sm">...</button></label>
-                            </div>
+                        </div>
 
+                        <div class="card-header">
+                            <h4 style="color: #007bff">Fondo en caja</h4>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-horizontal">
+                                <div class="row form-group">
+                                    <div class="col col-md-4">
+                                        <label for="text-input" class=" form-control-label"><i class="fas fa-money-bill-alt"></i> Efectivo</label>
+                                    </div>
+                                    <div class="col-5 col-md-7">
+                                        <input type="number" min="0" disabled class="form-control form-control-sm" :value="efectivocaja">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-horizontal">
+                                <div class="row form-group">
+                                    <div class="col col-md-4">
+                                        <label for="text-input" class=" form-control-label"><i class="fas fa-credit-card"></i> Tarjeta</label>
+                                    </div>
+                                    <div class="col-4 col-md-6">
+                                        <input type="number" min="0" disabled :value="cajatarjeta" class="form-control form-control-sm">
+                                    </div>
+                                    <div class="col-5 col-md-2">
+                                        <button disabled class="btn btn-dark btn-sm">...</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-horizontal">
+                                <div class="row form-group">
+                                    <div class="col col-md-4">
+                                        <label for="text-input" class=" form-control-label">Deposito</label>
+                                    </div>
+                                    <div class="col-5 col-md-7">
+                                        <input type="number" min="0" v-model="deposito" class="form-control form-control-sm">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-horizontal">
+                                <div class="row form-group">
+                                    <div class="col col-md-4">
+                                        <label for="text-input" class=" form-control-label">Egresos</label>
+                                    </div>
+                                    <div class="col-5 col-md-7">
+                                        <input type="number" min="0" v-model="egresos" class="form-control form-control-sm">
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="pr-1  form-control-label"><i class="fas fa-suitcase"></i> Total Cuadre</label>
                                 <label class="pr-1  form-control-label">= </label>
                                 <label v-if="totalcuadre == cajatarjeta" class="pr-1  form-control-label">0</label>
                                 <label v-else class="pr-1  form-control-label">@{{ totalcuadre }}</label>
                             </div>
-
-                            <hr>
-
                             <div class="form-group" v-if="sobrantecaja == 0">
                                 <label class="pr-1  form-control-label"><i class="fas fa-briefcase"></i> Caja Cuadrada</label>
                                 <label class="pr-1  form-control-label">:</label>
                                 <label class="pr-1  form-control-label" style="color: green"> @{{ sobrantecaja }}</label>
                             </div>
                             <div class="form-group" v-else-if="sobrantecaja < 0">
-                                <label class="pr-1  form-control-label">Faltante:</label>
+                                <label class="pr-1  form-control-label">Faltante</label>
                                 <label class="pr-1  form-control-label">:</label>
                                 <label class="pr-1  form-control-label" style="color: red"><strong>@{{ sobrantecaja }}</strong></label>
                             </div>
@@ -251,7 +280,6 @@
                                 <label class="pr-1  form-control-label">:</label>
                                 <label  class="pr-1  form-control-label" style="color: orange"> @{{ sobrantecaja }}</label>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -282,6 +310,8 @@
         new Vue({
             el: '#Vue',
             data:{
+                deposito:0,
+                egresos:0,
                 caja:Object.values(caja),
                 dosk:0,
                 unok:0,
@@ -359,7 +389,7 @@
                     return total;
                 },
                 totalcuadre:function () {
-                    var total = parseFloat(this.efectivocaja) + parseFloat(this.cajatarjeta)
+                    var total = parseFloat(this.efectivocaja) + parseFloat(this.cajatarjeta) + parseFloat(this.egresos) + parseFloat(this.deposito)
                     return total;
                 },
                 sobrantecaja:function () {

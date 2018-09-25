@@ -3,15 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="36db0169-46d5-4b5f-8434-9fc78297d702" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CajasController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CajasController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/IndexController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2018_09_20_081759_create_table_facture.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2018_09_20_081759_create_table_facture.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/caja/cierrecaja.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/caja/cierrecaja.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/caja/iniciocaja.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/caja/iniciocaja.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/caja/siderbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/caja/siderbar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/main/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/main/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2018_09_25_101958_create_table_cuadre.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/caja/cuadrecaja.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/caja/cuadrecaja.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -110,17 +104,17 @@
           <entry key="css" value="1" />
           <entry key="js" value="4" />
           <entry key="json" value="2" />
-          <entry key="php" value="125" />
+          <entry key="php" value="127" />
           <entry key="vue" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Blade" value="56" />
+          <entry key="Blade" value="57" />
           <entry key="CSS" value="1" />
           <entry key="JSON" value="2" />
           <entry key="JavaScript" value="4" />
-          <entry key="PHP" value="69" />
+          <entry key="PHP" value="70" />
           <entry key="Vue.js" value="1" />
         </counts>
       </usages-collector>
@@ -128,26 +122,40 @@
         <counts>
           <entry key="css" value="10" />
           <entry key="js" value="1" />
-          <entry key="php" value="7529" />
+          <entry key="php" value="7887" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Blade" value="5642" />
+          <entry key="Blade" value="5986" />
           <entry key="CSS" value="10" />
           <entry key="JavaScript" value="1" />
-          <entry key="PHP" value="1887" />
+          <entry key="PHP" value="1901" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_25_101958_create_table_cuadre.php">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/caja/cuadrecaja.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+            <state relative-caret-position="573">
+              <caret line="391" column="146" selection-start-line="391" selection-start-column="146" selection-end-line="391" selection-end-column="146" />
+              <folding>
+                <element signature="e#2651#2672#0#HTML" expanded="true" />
+                <element signature="e#6732#6753#0#HTML" expanded="true" />
+                <element signature="e#9715#9736#0#HTML" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="32" column="7" lean-forward="true" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -223,7 +231,6 @@
         <option value="$PROJECT_DIR$/public/css/theme.css" />
         <option value="$PROJECT_DIR$/resources/assets/js/components/ExampleComponent.vue" />
         <option value="$PROJECT_DIR$/resources/assets/js/app.js" />
-        <option value="$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php" />
         <option value="$PROJECT_DIR$/resources/views/productos/index.blade.php" />
         <option value="$PROJECT_DIR$/database/migrations/2018_09_20_081759_create_table_facture.php" />
         <option value="$PROJECT_DIR$/resources/views/nose.blade.php" />
@@ -235,8 +242,9 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/IndexController.php" />
         <option value="$PROJECT_DIR$/resources/views/caja/cierrecaja.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CajasController.php" />
-        <option value="$PROJECT_DIR$/resources/views/caja/cuadrecaja.blade.php" />
         <option value="$PROJECT_DIR$/database/migrations/2018_09_25_101958_create_table_cuadre.php" />
+        <option value="$PROJECT_DIR$/resources/views/caja/cuadrecaja.blade.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php" />
       </list>
     </option>
   </component>
@@ -456,12 +464,12 @@
       <workItem from="1537532357112" duration="7635000" />
       <workItem from="1537621499993" duration="14117000" />
       <workItem from="1537876970255" duration="6478000" />
-      <workItem from="1537883564401" duration="1798000" />
+      <workItem from="1537883564401" duration="5930000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="237301000" />
+    <option name="totallyTimeSpent" value="241433000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -697,13 +705,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="23" column="44" lean-forward="true" selection-start-line="23" selection-start-column="44" selection-end-line="23" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_20_081759_create_table_facture.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
@@ -790,15 +791,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/caja/cuadrecaja.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="52" column="90" selection-start-line="52" selection-start-column="90" selection-end-line="52" selection-end-column="90" />
+        <state relative-caret-position="573">
+          <caret line="391" column="146" selection-start-line="391" selection-start-column="146" selection-end-line="391" selection-end-column="146" />
+          <folding>
+            <element signature="e#2651#2672#0#HTML" expanded="true" />
+            <element signature="e#6732#6753#0#HTML" expanded="true" />
+            <element signature="e#9715#9736#0#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_25_101958_create_table_cuadre.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
-          <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+          <caret line="17" column="32" lean-forward="true" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="32" column="7" lean-forward="true" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
         </state>
       </provider>
     </entry>
