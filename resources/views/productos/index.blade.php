@@ -1,6 +1,9 @@
 @extends('main.app')
 @section('tittle','Cafeteria | Nuevo Producto')
 
+@section('titulo')
+    <h3 style="color: white">Productos</h3>
+@endsection
 @section('aside')
     <div>
         <div class="card" style="background: #4272d7">

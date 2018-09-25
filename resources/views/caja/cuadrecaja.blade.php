@@ -20,8 +20,8 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header">
-                    <strong>Caja</strong>
-                    <button v-if="caja != 'Abierta'" class="btn btn-warning btn-sm pull-right"  type="button"><i class="fas fa-lock">&nbsp; Cuadrar Caja</i></button>
+                    <strong style="color: #007bff">Caja</strong>
+                    <button v-if="caja != 'Abierta'" @click="cuadrar()" class="btn btn-warning btn-sm pull-right"  type="button"><i class="fas fa-lock">&nbsp; Cuadrar Caja</i></button>
                     <button v-else class="btn btn-warning btn-sm pull-right" disabled type="button"><i class="fas fa-lock">&nbsp; Cuadrar Caja</i></button>
                 </div>
                 <div class="card-body">
@@ -284,7 +284,6 @@
                     </div>
                 </div>
             </div>
-            <div></div>
         </div>
     </div>
 
@@ -297,6 +296,7 @@
         var cajatarjeta = '{!! $total_tarjeta !!}';
         var fecha = '{!! $fecha !!}';
         var caja = JSON.parse('{!! $caja !!}');
+        var cerrada = '{!! $cerrada !!}';
 
         function toObject(arr) {
             var rv = {};
@@ -310,9 +310,10 @@
         new Vue({
             el: '#Vue',
             data:{
+                cerrada: cerrada,
                 deposito:0,
                 egresos:0,
-                caja:Object.values(caja),
+                caja: Object.values(caja),
                 dosk:0,
                 unok:0,
                 quinientos:0,
@@ -326,7 +327,68 @@
                 fecha: fecha,
                 totalcaja: cajatotal,
                 cajaefectivo: cajaefectivo,
-                cajatarjeta: cajatarjeta,
+                cajatarjeta: cajatarjeta
+            },
+            methods:{
+                //Cuadrar caja
+                confimar: function (){
+                    var txt;
+                    var r = confirm("Estas Seguro que quieres cuadrar la caja?");
+                    if (r == true){
+                        txt = this.cuadrar();
+                    }
+                },
+
+                cuadrar:function () {
+
+                    if (this.sobrantecaja < 0){
+                        toastr.warning('No puedo cuadrar la caja, Hay un descuadre!!');
+                    }else{
+                        $.ajax({
+                            url: '/caja/cuadrarcaja',
+                            method: 'GET',
+                            data: {
+                                caja:       this.caja,
+                                fecha:      this.fecha,
+                                totalcaja:  this.totalcaja,
+                                encaja:{
+                                    efectivocaja: this.efectivocaja,
+                                    cajatarjeta: this.cajatarjeta,
+                                    deposito:   this.deposito,
+                                    egresos:    this.egresos,
+                                    desglose:{
+                                        billetes:{
+                                            dosmil:       this.dosk,
+                                            mil:       this.unok,
+                                            quinientos: this.quinientos,
+                                            dociento:   this.dociento,
+                                            cien:       this.cien,
+                                            cincuenta:  this.cincuenta,
+                                        },
+                                        monedas:{
+                                            veinticinco:this.veinticinco,
+                                            diez:       this.diez,
+                                            cinco:      this.cinco,
+                                            uno:        this.uno,
+                                        }
+                                    }
+                                }
+
+                            },
+                            success:function (dato) {
+                                toastr.success('La caja ha sido Cuadrada');
+                                setTimeout('document.location.reload()',1500);
+                            },
+                            error:function () {
+                                toastr.error('Ha ocurrido un error en el cuadre');
+                                setTimeout('document.location.reload()',1500);
+                            }
+                        });
+
+                    }
+
+                }
+
             },
             computed:{
                 //Billetes
@@ -384,6 +446,7 @@
                         parseFloat(this.cincuentatotal) +
                         parseFloat(this.ventecincototal) +
                         parseFloat(this.dieztotal) +
+                        parseFloat(this.cincototal) +
                         parseFloat(this.cincototal) +
                         parseFloat(this.unototal)
                     return total;

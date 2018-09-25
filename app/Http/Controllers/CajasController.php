@@ -53,6 +53,7 @@ class CajasController extends Controller
         $cajaapertura->usuario = 'general';
         $cajaapertura->status = 'A';
         $cajaapertura->caja_num = 1;
+        $cajaapertura->cuadre = 'JSON';
         $cajaapertura->save();
         return 'Guardado';
     }
@@ -167,12 +168,34 @@ class CajasController extends Controller
             $caja = $caja;
         }
 
+        if ($caja[0]->cuadre == 'JSON'){
+            $cerrada = 'No cuadrada';
+        }else{
+            $cerrada = 'Cuadrada';
+        }
 
         return view('caja.cuadrecaja',
             compact('total'),
             compact('total_tarjeta'))
             ->with(compact('total_efectivo'))
-            ->with(compact('fecha'))->with(compact('caja'));
+            ->with(compact('fecha'))
+            ->with(compact('caja'))
+            ->with(compact('cerrada'));
 
     }
+
+    public function cuadrarcj()
+    {
+        $data = Input::all();
+        $cuadre = $data["encaja"];
+        $id = $data["caja"][0]["id"];
+
+
+        $caja = Caja::where('id', $id)->first();
+        $caja->cuadre = json_encode($cuadre);
+        $caja->update();
+
+        return 'update';
+    }
+
 }
