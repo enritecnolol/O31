@@ -18,6 +18,8 @@
                             <th></th>
                             <th>Caja</th>
                             <th>Cliente</th>
+                            <th>Monto Efectivo</th>
+                            <th>Monto Tarjeta</th>
                             <th>Total de Factura</th>
                             <th>Estado</th>
                             <th>Fecha</th>
@@ -41,6 +43,8 @@
                     {data: "id"},
                     {data: "box"},
                     {data: "client"},
+                    {data:"Monto_efectivo"},
+                    {data:"Monto_tarjeta"},
                     {data: "total_facture"},
                     {data: "status"},
                     {data: "date"}

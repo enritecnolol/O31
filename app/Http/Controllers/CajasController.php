@@ -54,6 +54,7 @@ class CajasController extends Controller
         $cajaapertura->status = 'A';
         $cajaapertura->caja_num = 1;
         $cajaapertura->cuadre = 'JSON';
+        $cajaapertura->cuadreconf = 'No';
         $cajaapertura->save();
         return 'Guardado';
     }
@@ -142,7 +143,7 @@ class CajasController extends Controller
         $ventasmonto_tarjeta = DB::table('factures')->select(DB::raw('SUM(Monto_tarjeta) as total_tarjeta'))->where("date",$fecha)->get();
         $ventasmonto_efectivo = DB::table('factures')->select(DB::raw('SUM(Monto_efectivo) as total_efectivo'))->where("date",$fecha)->get();
 //        $caja = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"))->where('status', '==', 'C');
-        $caja = DB::table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num')->where('fecha_apertura', date("Y-m-d"))->where('status', 'C')->get();
+        $caja = DB::table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num', 'cuadreconf')->where('fecha_apertura', date("Y-m-d"))->where('status', 'C')->get();
 
 
         if ($ventastotal == '[{"total":null}]'){
@@ -166,6 +167,8 @@ class CajasController extends Controller
         if ($caja == '[]') {
             $nose = 'Abierta';
             $caja = $caja;
+        }elseif ($caja[0]->cuadreconf == 'No'){
+            $nose = 'NoCuadrada';
         }
         else{
             $caja = $caja;
@@ -193,9 +196,10 @@ class CajasController extends Controller
 
         $caja = Caja::where('id', $id)->first();
         $caja->cuadre = json_encode($cuadre);
+        $caja->cuadreconf = 'Si';
         $caja->update();
 
-        return 'guardado';
+        return 'actulizado';
     }
 
 }
