@@ -50,10 +50,27 @@
             width: 100%;
             height: auto;
         }
+        #buscador{
+            width: 100%;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: white;
+            background-image: url('searchicon.png');
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            padding: 12px 20px 12px 40px;
+        }
 
     </style>
 @endsection
 @section('tittle',' Cafeteria| Facturacion')
+
+@section('titulo')
+    <h3 style="color: white">Es Hora de Vender!!</h3>
+@endsection
+
 @section('aside')
 
     <div class="container">
@@ -81,8 +98,15 @@
                         </tr>
                         </tbody>
                     </table>
-                    <div v-if="cerrada == 'A'" style="position: fixed;bottom:10px; width: 250px">
+                    <div v-if="cerrada == 'A' && facturatotal > 0" style="position: fixed;bottom:10px; width: 250px">
                         <button data-toggle="modal" data-target="#pago" type="button" class="btn btn-lg btn-info btn-block">
+                            <i class="fa fa-money-bill-alt fa-lg"></i>&nbsp;
+                            <span id="payment-button-amount">Pagar $: @{{ facturatotal }}</span>
+                            <span id="payment-button-sending" style="display:none;">Sending…</span>
+                        </button>
+                    </div>
+                    <div v-else-if="cerrada == 'A' && facturatotal == 0" style="position: fixed;bottom:10px; width: 250px">
+                        <button data-toggle="modal" disabled data-target="#pago" type="button" class="btn btn-lg btn-info btn-block">
                             <i class="fa fa-money-bill-alt fa-lg"></i>&nbsp;
                             <span id="payment-button-amount">Pagar $: @{{ facturatotal }}</span>
                             <span id="payment-button-sending" style="display:none;">Sending…</span>
@@ -106,6 +130,7 @@
                 <a class="navbar-brand" href="#"><strong style="color: whitesmoke">Productos</strong></a>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crear"><i class="fas fa-plus"></i> Nuevo Producto</button>
                 <input type="search" class="form-control col-md-2 pull-right right" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
+
             </nav>
         </div>
         @include('productos.newproduct')
@@ -125,8 +150,9 @@
                                     <div class="mx-auto d-block">
                                         <img class="rounded-circle mx-auto d-block image1" style=" height: 100px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
                                         <h5 class="text-sm-center mt-2 mb-1">@{{ p.name }}</h5>
-                                        <div class="location text-sm-center" style="color: #2db3ff">
-                                            <i class="fa fa-money-bill-alt"></i> @{{p.price}}</div>
+                                        <div class="location text-sm-center" style="color: #0062cc">
+                                            <i class="fa fa-money-bill-alt"></i> @{{p.price}}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="overlay1">
@@ -147,7 +173,7 @@
                                     <div class="mx-auto d-block">
                                         <img class="rounded-circle mx-auto d-block image1" style=" height: 100px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
                                         <h5 class="text-sm-center mt-2 mb-1">@{{ p.name }}</h5>
-                                        <div class="location text-sm-center" style="color: #2db3ff">
+                                        <div class="location text-sm-center" style="color: #0062cc">
                                             <i class="fa fa-money-bill-alt"></i> @{{p.price}}</div>
                                     </div>
                                 </div>
@@ -233,7 +259,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="cc-exp" class="control-label mb-1">Efectivo<span style="color: red">*</span></label>
-                                    <input id="efectivom" name="dinero" v-on:keypress.enter="facturar()" type="number" class="form-control cc-exp"  v-model="campodinero">
+                                    <input id="efectivom" name="dinero"  v-on:keypress.enter="facturar()" type="number" class="form-control cc-exp"  v-model="campodinero">
                                 </div>
                             </div>
                         </div>
@@ -297,15 +323,15 @@
 @endsection
 @section('scriptp')
     <script !src="">
-        // $(function() {
-        //     $('#busca').keyboard({
-        //         usePreview: false,
-        //     });
-        // });
-
-        $(document).keypress(function (e) {
-            if (e.which == 13) {
+        $('body').keyup(function(e) {
+            if(e.which == 16){
                 $('#pago').modal('show');
+            }
+            if(e.which == 17){
+                $('#crear').modal('show');
+            }
+            if(e.which == 192){
+                location.href ="/caja";
             }
         });
         $(function () {
@@ -461,7 +487,7 @@
                             alert('El Monto de la Tarjeta no puede ser mayor al precio a pagar')
                         }if (this.montotarjeta > this.facturatotal - this.campodinero){
                             alert('La tarjeta no puede ser mayor al precio a pagar');
-                        }else {
+                        }else{
                             $.ajax({
                                 url: '/facturacion',
                                 method: 'GET',
@@ -482,7 +508,7 @@
                                     $('#pago').modal('hide');
                                     toastr.options.newestOnTop = false;
                                     toastr.success('Gracias por la compra');
-                                    setTimeout('document.location.reload()',1500);
+                                    setTimeout('document.location.reload()',1000);
                                 },
                                 error:function () {
                                     toastr.error('A ocurrido un error al realizar la venta');
@@ -496,7 +522,7 @@
                             alert('El Monto de la Tarjeta no puede ser mayor al precio a pagar')
                         }if (this.montotarjeta == 0 && this.campodinero == 0){
                             alert('No puedes hacer una compra de valor 0');
-                        }else {
+                        }else{
                             $.ajax({
                                 url: '/facturacion',
                                 method: 'GET',
@@ -517,7 +543,7 @@
                                     $('#pago').modal('hide');
                                     toastr.options.newestOnTop = false;
                                     toastr.success('Gracias por la compra');
-                                    setTimeout('document.location.reload()',1500);
+                                    setTimeout('document.location.reload()',1000);
                                 },
                                 error:function () {
                                     toastr.error('A ocurrido un error al realizar la venta');

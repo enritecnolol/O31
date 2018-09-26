@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\String_;
 
-class CajasController extends Controller
+class   CajasController extends Controller
 {
     /**
      * Display a listing of the resource.

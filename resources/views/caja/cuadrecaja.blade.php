@@ -60,7 +60,7 @@
                             <strong>Almacen:</strong> General
                         </div>
                         <div class="col-md-3">
-                            <strong>Total de Ventas:</strong> @{{ caja[0].total_venta }}  - @{{ caja[0].total_cierre }}
+                            <strong>Total de Ventas:</strong> @{{ caja[0].total_venta }}  - @{{ totalcaja }}
                         </div>
                         <div class="col-md-3">
                             <strong>Total de Apertura:</strong> @{{ caja[0].valor_apertura }}
@@ -330,7 +330,7 @@
                             <strong>Almacen:</strong> General
                         </div>
                         <div class="col-md-3">
-                            <strong>Total de Ventas:</strong> @{{ caja[0].total_venta }}  - @{{ caja[0].total_cierre }}
+                            <strong>Total de Ventas:</strong> @{{ caja[0].total_venta }}  - @{{ totalcaja }}
                         </div>
                         <div class="col-md-3">
                             <strong>Total de Apertura:</strong> @{{ caja[0].valor_apertura }}
