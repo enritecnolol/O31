@@ -60,7 +60,6 @@
         <div class="card-title">
             <h3 class="text-center title-2" style="padding-top: 10px; color: white">Factura</h3>
         </div>
-
         <form action="" method="post" novalidate="novalidate">
             <div class="form-group has-success">
                 <div class="table-responsive" style="margin-bottom: 5px">
@@ -102,14 +101,20 @@
 @endsection
 @section('content')
     <div id="p">
-        <div class="text-center" style="padding-bottom: 20px">
-            <h1 class="title-2"><strong>Productos</strong></h1>
+        <div class="container">
+            <nav class="navbar navbar-light" style="background-color: #0069d9;">
+                <a class="navbar-brand" href="#"><strong style="color: whitesmoke">Productos</strong></a>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crear"><i class="fas fa-plus"></i> Nuevo Producto</button>
+                <input type="search" class="form-control col-md-2 pull-right right" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
+            </nav>
         </div>
+        @include('productos.newproduct')
+        <br>
         <div class="section__content section__content--p30">
             <div class="container-fluid">
                 <div class="row">
 
-                    <template v-for="p in productos" v-if="cerrada == 'A'">
+                    <template v-for="p in productos" v-if="cerrada == 'A' && productosbuscados == ''">
                         <div class="col-md-3">
                             <div class="card" style="height: auto;background: #c8f1ff" @click="pfactura(p.id)">
                                 <div class="card-header" style="color: #2db3ff">
@@ -131,7 +136,29 @@
                         </div>
                     </template>
 
-                    <template v-for="p in productos" v-else>
+                    <template v-for="p in productosbuscados" v-if="cerrada == 'A' && productosbuscados != ''">
+                        <div class="col-md-3">
+                            <div class="card" style="height: auto;background: #c8f1ff" @click="pfactura(p.id)">
+                                <div class="card-header" style="color: #2db3ff">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <span class="badge badge-success pull-right"></span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mx-auto d-block">
+                                        <img class="rounded-circle mx-auto d-block image1" style=" height: 100px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
+                                        <h5 class="text-sm-center mt-2 mb-1">@{{ p.name }}</h5>
+                                        <div class="location text-sm-center" style="color: #2db3ff">
+                                            <i class="fa fa-money-bill-alt"></i> @{{p.price}}</div>
+                                    </div>
+                                </div>
+                                <div class="overlay1">
+                                    <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template v-for="p in productos" v-else-if="cerrada == 'C'">
                         <div class="col-md-3">
                             <div class="card" style="height: auto">
                                 <div class="card-header">
@@ -206,7 +233,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="cc-exp" class="control-label mb-1">Efectivo<span style="color: red">*</span></label>
-                                    <input id="dinero" name="dinero" type="number" class="form-control cc-exp"  v-model="campodinero">
+                                    <input id="efectivom" name="dinero" v-on:keypress.enter="facturar()" type="number" class="form-control cc-exp"  v-model="campodinero">
                                 </div>
                             </div>
                         </div>
@@ -214,7 +241,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="cc-exp" class="control-label mb-1">Tarjeta<span style="color: red">*</span></label>
-                                    <input id="dinero" name="dinero" type="number" class="form-control cc-exp"  v-model="montotarjeta">
+                                    <input id="tarjetam" name="dinero" type="number" class="form-control cc-exp"  v-model="montotarjeta">
                                 </div>
                             </div>
                         </div>
@@ -270,11 +297,23 @@
 @endsection
 @section('scriptp')
     <script !src="">
+        // $(function() {
+        //     $('#busca').keyboard({
+        //         usePreview: false,
+        //     });
+        // });
 
+        $(document).keypress(function (e) {
+            if (e.which == 13) {
+                $('#pago').modal('show');
+            }
+        });
         $(function () {
             $('#myModal').modal('show');
         })
         toastr.options.newestOnTop = false;
+        $(document).ready();
+
     </script>
 
     <script>
@@ -292,6 +331,7 @@
         var app = new Vue({
             el: '#Vue',
             data: {
+                buscador:'',
                 montotarjeta:0,
                 tipotarjeta:'',
                 banco:'',
@@ -305,17 +345,34 @@
                 count: 0,
                 list: [],
                 productos: toObject(productos),
-                carrito: {}
+                carrito: {},
+                productosbuscados:''
 
             },
             watch:{
 
                 facturatotal:function(valor){
                     this.campodinero = valor
-                }
+                },
+
 
             },
             methods:{
+                buscadorp:function () {
+                    var _this = this
+                    $.ajax({
+                        url: '/buscar/producto',
+                        method: 'GET',
+                        data: {
+                            producto: this.buscador
+                        },
+                        success:function (data) {
+                            _this.productosbuscados = data;
+                        }
+
+                    });
+                },
+
 
                 pfactura: function (id) {
 
@@ -400,6 +457,10 @@
                     if (this.montotarjeta > 0){
                         if (this.tipotarjeta == '' ||  this.auth == '' || this.Numtarjeta == ''){
                             alert('Faltan Datos por Llenar')
+                        }if (this.montotarjeta > this.facturatotal){
+                            alert('El Monto de la Tarjeta no puede ser mayor al precio a pagar')
+                        }if (this.montotarjeta > this.facturatotal - this.campodinero){
+                            alert('La tarjeta no puede ser mayor al precio a pagar');
                         }else {
                             $.ajax({
                                 url: '/facturacion',
@@ -431,33 +492,39 @@
                         }
 
                     }else{
-                        $.ajax({
-                            url: '/facturacion',
-                            method: 'GET',
-                            data: {
-                                cliente:this.campocliente,
-                                devuelta:this.devuelta,
-                                preciop:this.facturatotal,
-                                tipop:this.campotipop,
-                                banco:this.banco,
-                                auth: this.auth,
-                                tipotarjeta: this.tipotarjeta,
-                                Numtarjeta: this.Numtarjeta,
-                                montotarjeta:this.montotarjeta,
-                                dinero:this.campodinero,
-                                detalle: this.list
-                            },
-                            success:function (dato) {
-                                $('#pago').modal('hide');
-                                toastr.options.newestOnTop = false;
-                                toastr.success('Gracias por la compra');
-                                setTimeout('document.location.reload()',1500);
-                            },
-                            error:function () {
-                                toastr.error('A ocurrido un error al realizar la venta');
-                            }
+                        if (this.montotarjeta > this.facturatotal){
+                            alert('El Monto de la Tarjeta no puede ser mayor al precio a pagar')
+                        }if (this.montotarjeta == 0 && this.campodinero == 0){
+                            alert('No puedes hacer una compra de valor 0');
+                        }else {
+                            $.ajax({
+                                url: '/facturacion',
+                                method: 'GET',
+                                data: {
+                                    cliente:this.campocliente,
+                                    devuelta:this.devuelta,
+                                    preciop:this.facturatotal,
+                                    tipop:this.campotipop,
+                                    banco:this.banco,
+                                    auth: this.auth,
+                                    tipotarjeta: this.tipotarjeta,
+                                    Numtarjeta: this.Numtarjeta,
+                                    montotarjeta:this.montotarjeta,
+                                    dinero:this.campodinero,
+                                    detalle: this.list
+                                },
+                                success:function (dato) {
+                                    $('#pago').modal('hide');
+                                    toastr.options.newestOnTop = false;
+                                    toastr.success('Gracias por la compra');
+                                    setTimeout('document.location.reload()',1500);
+                                },
+                                error:function () {
+                                    toastr.error('A ocurrido un error al realizar la venta');
+                                }
 
-                        });
+                            });
+                        }
                     }
 
 

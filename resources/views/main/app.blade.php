@@ -32,6 +32,8 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('DataTables/datatables.min.css') }}"/>
     <!-- Main CSS-->
     <link href="{{ URL::asset('css/theme.css')}}" rel="stylesheet" media="all">
+    <link href="{{ URL::asset('teclado/jquery.numpad.css')}}" rel="stylesheet" media="all">
+    <link href="{{ URL::asset('teclado/keyboard.css')}}" rel="stylesheet" media="all">
     @yield('style')
 
 </head>

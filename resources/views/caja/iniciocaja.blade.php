@@ -66,7 +66,7 @@
                                     <label for="" class=" form-control-label">Valor Apertura</label>
                                 </div>
                                 <div class="col-12 col-md-6">
-                                    <input type="number" name="valor_apertura" placeholder="" min="0" value="0"  class="form-control" required v-model="valortotal" title="El numero tiene que se mayor a 0">
+                                    <input type="number" name="valor_apertura" v-on:keyup.enter="abrircaja()" placeholder="" min="0" value="0"  class="form-control" required v-model="valortotal" title="El numero tiene que se mayor a 0">
                                 </div>
                             </div>
 

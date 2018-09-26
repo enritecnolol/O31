@@ -21,6 +21,8 @@ Route::get('actualizar/producto', 'ApisController@actualizarp'); // api para act
 Route::get('/cierrecaja', 'CajasController@cerrarcaja');// api para cerrar la caja en BD
 Route::get('/historico/venta', 'ApisController@historico');// api para cerrar la caja en BD
 Route::get('/caja/cuadrarcaja', 'CajasController@cuadrarcj');//api para guardar el cuadre de la casa
+Route::get('/buscar/producto', 'ApisController@buscarproducto'); // api para buscar producto
+Route::get('/buscar', 'ApisController@buscarp'); // api para buscar producto
 
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\Facture;
 
@@ -29,4 +30,19 @@ class ApisController extends Controller
     public function historico(){
         return datatables(Facture::all()->where('date', '==', date('Y-m-d')))->toJson();
     }
+    public function buscarproducto(){
+            $data = Input::all();
+            $producto = $data["producto"];
+//            $productos = Product::all()->where('name', 'LIKE', '%' . $producto . '%');
+            $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->get();
+            return $productos;
+    }
+    public function buscarp(){
+            $data = Input::all();
+            $producto = $data["producto"];
+//            $productos = Product::all()->where('name', 'LIKE', '%' . $producto . '%');
+            $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->get();
+            return $productos;
+    }
+
 }

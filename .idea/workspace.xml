@@ -3,10 +3,19 @@
   <component name="ChangeListManager">
     <list default="true" id="36db0169-46d5-4b5f-8434-9fc78297d702" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ApisController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ApisController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CajasController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CajasController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/caja/cuadrecaja.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/caja/cuadrecaja.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/caja/historicoventa.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/caja/historicoventa.blade.php" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/node_modules/vue/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/imagenes/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/imagenes/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/components/ExampleComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/components/ExampleComponent.vue" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -105,13 +114,21 @@
           <entry key="css" value="1" />
           <entry key="js" value="4" />
           <entry key="json" value="2" />
+<<<<<<< Updated upstream
           <entry key="php" value="142" />
+=======
+          <entry key="php" value="72" />
+>>>>>>> Stashed changes
           <entry key="vue" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
+<<<<<<< Updated upstream
           <entry key="Blade" value="63" />
+=======
+          <entry key="Blade" value="27" />
+>>>>>>> Stashed changes
           <entry key="CSS" value="1" />
           <entry key="JSON" value="2" />
           <entry key="JavaScript" value="4" />
@@ -138,6 +155,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< Updated upstream
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/caja/cuadrecaja.blade.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -186,6 +204,13 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="390">
               <caret line="29" column="73" selection-start-line="29" selection-start-column="73" selection-end-line="29" selection-end-column="73" />
+=======
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/welcome.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="224" selection-start-line="224" selection-end-line="224" />
+>>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
@@ -222,6 +247,11 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop" />
+      </map>
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -419,30 +449,44 @@
               <item name="puntocafeteria" type="b2602c69:ProjectViewProjectNode" />
               <item name="puntocafeteria" type="462c0819:PsiDirectoryNode" />
               <item name="database" type="462c0819:PsiDirectoryNode" />
+<<<<<<< Updated upstream
             </path>
             <path>
               <item name="puntocafeteria" type="b2602c69:ProjectViewProjectNode" />
               <item name="puntocafeteria" type="462c0819:PsiDirectoryNode" />
               <item name="database" type="462c0819:PsiDirectoryNode" />
               <item name="migrations" type="462c0819:PsiDirectoryNode" />
+=======
+>>>>>>> Stashed changes
+            </path>
+            <path>
+              <item name="puntocafeteria" type="b2602c69:ProjectViewProjectNode" />
+              <item name="puntocafeteria" type="462c0819:PsiDirectoryNode" />
+<<<<<<< Updated upstream
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="database" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
+>>>>>>> Stashed changes
             </path>
             <path>
               <item name="puntocafeteria" type="b2602c69:ProjectViewProjectNode" />
               <item name="puntocafeteria" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
+<<<<<<< Updated upstream
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+=======
+>>>>>>> Stashed changes
             </path>
             <path>
               <item name="puntocafeteria" type="b2602c69:ProjectViewProjectNode" />
               <item name="puntocafeteria" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="puntocafeteria" type="b2602c69:ProjectViewProjectNode" />
-              <item name="puntocafeteria" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
+<<<<<<< Updated upstream
               <item name="caja" type="462c0819:PsiDirectoryNode" />
+=======
+>>>>>>> Stashed changes
             </path>
             <path>
               <item name="puntocafeteria" type="b2602c69:ProjectViewProjectNode" />
@@ -544,7 +588,11 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< Updated upstream
     <option name="totallyTimeSpent" value="255745000" />
+=======
+    <option name="totallyTimeSpent" value="191559000" />
+>>>>>>> Stashed changes
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -714,8 +762,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/css/theme.css">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="192">
           <caret line="4662" column="30" selection-start-line="4662" selection-start-column="30" selection-end-line="4662" selection-end-column="30" />
+=======
+        <state relative-caret-position="753">
+          <caret line="85" lean-forward="true" selection-start-line="85" selection-end-line="85" />
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
@@ -854,6 +907,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/database/migrations/2018_09_20_082311_create_table_caja.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
@@ -872,6 +926,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ApisController.php">
+=======
+    <entry file="file://$PROJECT_DIR$/resources/views/main/app.blade.php">
+>>>>>>> Stashed changes
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
           <caret line="29" column="73" selection-start-line="29" selection-start-column="73" selection-end-line="29" selection-end-column="73" />
@@ -912,6 +969,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="688">
           <caret line="46" column="40" selection-start-line="46" selection-start-column="40" selection-end-line="46" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/welcome.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="224" selection-start-line="224" selection-end-line="224" />
         </state>
       </provider>
     </entry>

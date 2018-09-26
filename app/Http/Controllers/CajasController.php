@@ -175,7 +175,6 @@ class CajasController extends Controller
             $nose = 'cuadrada';
         }
 
-//        return $caja;
 
         return view('caja.cuadrecaja',
             compact('total'),
