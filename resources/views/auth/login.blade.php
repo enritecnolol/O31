@@ -14,7 +14,7 @@
                         <form class="" method="POST" action="{{ route('login') }}">
                             {{ csrf_field() }}
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label>Email Address</label>
+                                <label>Email</label>
                                 <input value="{{ old('email') }}" required autofocus class="au-input au-input--full" type="email" name="email" placeholder="Email">
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -23,7 +23,7 @@
                                 @endif
                             </div>
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label>Password</label>
+                                <label>Contraseña</label>
                                 <input class="au-input au-input--full" type="password" name="password" placeholder="Password">
                                 @if ($errors->has('password'))
                                     <span class="help-block">
@@ -33,13 +33,13 @@
                             </div>
                             <div class="login-checkbox">
                                 <label>
-                                    <input type="checkbox" name="remember"{{ old('remember') ? 'checked' : '' }}>Remember Me
+                                    <input type="checkbox" name="remember"{{ old('remember') ? 'checked' : '' }}>Recordar
                                 </label>
                                 <label>
                                     <a href="#"></a>
                                 </label>
                             </div>
-                            <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
+                            <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">Iniciar Sesion</button>
                         </form>
                     </div>
                 </div>
