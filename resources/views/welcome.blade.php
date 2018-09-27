@@ -505,10 +505,14 @@
                                     detalle: this.list
                                 },
                                 success:function (dato) {
-                                    $('#pago').modal('hide');
-                                    toastr.options.newestOnTop = false;
-                                    toastr.success('Gracias por la compra');
-                                    setTimeout('document.location.reload()',1000);
+                                    if (dato == 'bien'){
+                                        console.log('bien');
+                                        $('#pago').modal('hide');
+                                        toastr.options.newestOnTop = false;
+                                        toastr.success('Gracias por la compra');
+                                        setTimeout('document.location.reload()',1000);
+                                    }
+
                                 },
                                 error:function () {
                                     toastr.error('A ocurrido un error al realizar la venta');
@@ -540,10 +544,13 @@
                                     detalle: this.list
                                 },
                                 success:function (dato) {
-                                    $('#pago').modal('hide');
-                                    toastr.options.newestOnTop = false;
-                                    toastr.success('Gracias por la compra');
-                                    setTimeout('document.location.reload()',1000);
+                                    if (dato == 'bien'){
+                                        console.log('bien');
+                                        $('#pago').modal('hide');
+                                        toastr.options.newestOnTop = false;
+                                        toastr.success('Gracias por la compra');
+                                        setTimeout('document.location.reload()',1000);
+                                    }
                                 },
                                 error:function () {
                                     toastr.error('A ocurrido un error al realizar la venta');
