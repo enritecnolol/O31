@@ -27,6 +27,7 @@ class CreateTableCaja extends Migration
             $table->integer('caja_num');
             $table->longText('cuadre');
             $table->string('cuadreconf');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

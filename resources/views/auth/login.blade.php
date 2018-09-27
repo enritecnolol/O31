@@ -36,7 +36,7 @@
                                     <input type="checkbox" name="remember"{{ old('remember') ? 'checked' : '' }}>Recordar
                                 </label>
                                 <label>
-                                    <a href="#"></a>
+                                    <a href="/register">No tienes Cuenta?</a>
                                 </label>
                             </div>
                             <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">Iniciar Sesion</button>

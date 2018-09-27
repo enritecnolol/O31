@@ -58,8 +58,7 @@ class IndexController extends Controller
      */
     public function store(Request $request)
     {
-
-//        return $request;
+        $idcaja = Caja::all();
         $facture = new Facture;
 
         $facture->date = date('Y-m-d');
@@ -79,6 +78,7 @@ class IndexController extends Controller
         $facture->Numbertar = $request->Numtarjeta;
         $facture->banco = $request->banco;
         $facture->auth = $request->auth;
+        $facture->caja_id = $idcaja->last()->id;
         $facture->save();
 
         $idfacture = Facture::all();
