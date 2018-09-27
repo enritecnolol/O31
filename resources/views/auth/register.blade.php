@@ -1,77 +1,77 @@
-@extends('layouts.app')
+@include('layouts.header')
+<body class="animsition">
+<div class="page-wrapper">
+    <div class="page-content--bge5">
+        <div class="container">
+            <div class="login-wrap">
+                <div class="login-content">
+                    <div class="login-logo">
+                        <a href="#">
+                            <img src="{{ URL::asset('imagenes/logo.png')}}" style="width: 200px" alt="CoolAdmin">
+                        </a>
+                    </div>
+                    <div class="login-form">
+                        <form class="form-horizontal" method="POST" action="{{ route('register') }}">
+                            {{ csrf_field() }}
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
-
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
-
+                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                <label>Nombre</label>
+                                <input class="au-input au-input--full" required autofocus type="text" value="{{ old('name') }}" name="name" placeholder="Nombre">
                                 @if ($errors->has('name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                 @endif
                             </div>
-                        </div>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
+                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                <label>Email Address</label>
+                                <input class="au-input au-input--full" type="email" name="email" value="{{ old('email') }}" required placeholder="Email">
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
                             </div>
-                        </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
+                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                <label>Contrasena</label>
+                                <input class="au-input au-input--full" type="password" name="password" placeholder="Password" required>
                                 @if ($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            <div class="form-group">
+                                <label>Confirmar Contrasena</label>
+                                <input class="au-input au-input--full" type="password" name="password_confirmation" placeholder="Password" required>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Register
-                                </button>
+                            <div class="login-checkbox">
+                                <label>
+                                    <input type="checkbox" name="aggree">Agree the terms and policy
+                                </label>
                             </div>
+                            <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit" style="background: #0062cc">Registrar</button>
+                        </form>
+                        <div class="register-link">
+                            <p>
+                                <a href="#"></a>
+                            </p>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
-@endsection
+
+@include('layouts.scripts')
+
+</body>
+
+</html>
+<!-- end document-->

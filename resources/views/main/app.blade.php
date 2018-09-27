@@ -63,6 +63,19 @@
                                         <a class="js-acc-btn" href="#" style="color: white">Opciones</a>
                                     </div>
                                     <div class="account-dropdown js-dropdown">
+                                        <div class="info clearfix">
+                                            <div class="image">
+                                                <a href="#">
+                                                    <img src="{{ URL::asset('imagenes/User.png')}}" alt="usuario" />
+                                                </a>
+                                            </div>
+                                            <div class="content">
+                                                <h5 class="name">
+                                                    <a href="#">{{ Auth::user()->name }}</a>
+                                                </h5>
+                                                <span class="email">{{ Auth::user()->email }}</span>
+                                            </div>
+                                        </div>
                                         <div class="account-dropdown__body">
                                             <div class="account-dropdown__item">
                                                 <a href="/productos">
@@ -89,6 +102,7 @@
                                                      document.getElementById('logout-form').submit();">
                                                 <i class="zmdi zmdi-power"></i>Logout
                                             </a>
+                                            {{--{{ Auth::user()->name }}--}}
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                                 {{ csrf_field() }}
                                             </form>

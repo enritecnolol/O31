@@ -128,7 +128,6 @@
         <div class="container">
             <nav class="navbar navbar-light" style="background-color: #0069d9;">
                 <a class="navbar-brand" href="#"><strong style="color: whitesmoke">Productos</strong></a>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crear"><i class="fas fa-plus"></i> Nuevo Producto</button>
                 <input type="search" class="form-control col-md-2 pull-right right" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
 
             </nav>
