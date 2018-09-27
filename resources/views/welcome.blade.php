@@ -144,7 +144,7 @@
                             <div class="card" style="height: auto;background: #c8f1ff" @click="pfactura(p.id)">
                                 <div class="card-header" style="color: #2db3ff">
                                     <i class="fa fa-shopping-cart"></i>
-                                    <span class="badge badge-success pull-right"></span>
+                                    <span class="badge badge-success pull-right">@{{ p.existence }}</span>
                                 </div>
                                 <div class="card-body">
                                     <div class="mx-auto d-block">
@@ -167,7 +167,7 @@
                             <div class="card" style="height: auto;background: #c8f1ff" @click="pfactura(p.id)">
                                 <div class="card-header" style="color: #2db3ff">
                                     <i class="fa fa-shopping-cart"></i>
-                                    <span class="badge badge-success pull-right"></span>
+                                    <span class="badge badge-success pull-right">@{{ p.existence }}</span>
                                 </div>
                                 <div class="card-body">
                                     <div class="mx-auto d-block">
@@ -320,18 +320,21 @@
         </div>
     </div>
     <!--/Modal para configurar el Pago-->
+    @include('productos.buscarmodal')
 @endsection
 @section('scriptp')
     <script !src="">
         $('body').keyup(function(e) {
-            if(e.which == 16){
+            if(e.which == 35){
                 $('#pago').modal('show');
             }
-            if(e.which == 17){
+            if(e.which == 36){
                 $('#crear').modal('show');
+            }if(e.which == 187){
+                $('#buscarp').modal('show');
             }
             if(e.which == 192){
-                location.href ="/caja";
+                location.href ="/caja/cuadre";
             }
         });
         $(function () {
@@ -357,6 +360,7 @@
         var app = new Vue({
             el: '#Vue',
             data: {
+                referencia:'',
                 buscador:'',
                 montotarjeta:0,
                 tipotarjeta:'',
@@ -372,7 +376,8 @@
                 list: [],
                 productos: toObject(productos),
                 carrito: {},
-                productosbuscados:''
+                productosbuscados:'',
+                productosreferencia:'',
 
             },
             watch:{
@@ -399,48 +404,90 @@
                     });
                 },
 
+                buscarreferencia:function () {
+                    var _this = this
+                    $.ajax({
+                        url: '/buscar/producto/referencia',
+                        method: 'GET',
+                        data: {
+                            referenciah: this.referencia
+                        },
+                        success:function (data) {
+                            _this.productosreferencia = data;
+                        }
+
+                    });
+                },
+
 
                 pfactura: function (id) {
-
-                    var producto = Object.entries(this.productos)[id-1]
+                    var producto = Object.entries(this.productos)[id-1];
 
                     this.carrito = {
                         id : producto[1].id,
                         name : producto[1].name,
                         price : producto[1].price,
+
                         count : 1
                     }
+
+
 
                     var idp = producto[1].id
 
                     function buscaid(prod) {
                         return prod.id == idp;
                     }
-
+                    var cantidad = producto[1].existence;
+                    var bar = producto[1].barcode;
                     if (this.list.find(buscaid)){
 
                         var count = this.list.find(buscaid).count;
                         var contador = count + 1;
+                        var cant = producto[1].existence - count;
+
+                        console.log(cant)
+
                         var listid = this.list.find(buscaid).id
                         var total = contador * producto[1].price;
 
-                        this.list.map(function(dato) {
+                        if(cant > 0){
 
-                            if (dato.id == listid){
-                                dato.count = contador
-                                dato.price = total
-                            }
-                            return dato
-                        });
+                            this.list.map(function (dato){
+                                if (dato.id == listid) {
+                                    dato.count = contador
+                                    dato.price = total
+                                }
+                                return dato
+                            });
+
+                        }if(cant < 0 && bar == 'no'){
+
+                            this.list.map(function (dato) {
+                                if (dato.id == listid) {
+                                    dato.count = contador
+                                    dato.price = total
+                                }
+                                return dato
+                            });
+
+                        }if(cant < 0 && bar != 'no'){
+
+                            alert('no tiene mas producto de este');
+                        }
 
                     }else{
-                        this.list.push(this.carrito)
+                        if(cantidad == 0 && bar == 'no'){
+                            this.list.push(this.carrito)
+                        }
+                        if(cantidad == 0){
+                            alert('no tenemos mas de este producto O es un producto compuesto')
+                        }else{
+                            this.list.push(this.carrito)
+                        }
 
                     }
 
-                    // this.total= this.list.price.reduce(function(a, b){
-                    //     return a + b
-                    // });
 
                 },
 

@@ -38,6 +38,14 @@ class ApisController extends Controller
             $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->get();
             return $productos;
     }
+    public function buscarproductoreferencia(){
+            $data = Input::all();
+            $referencia = $data["referenciah"];
+//            $productos = Product::all()->where('name', 'LIKE', '%' . $producto . '%');
+            $product = DB::table('products')->where('barcode', 'like', '%'.$referencia.'%')->get();
+            return $product;
+    }
+
     public function buscarp(){
             $data = Input::all();
             $producto = $data["producto"];
