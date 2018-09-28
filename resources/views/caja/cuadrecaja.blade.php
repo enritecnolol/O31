@@ -285,7 +285,7 @@
                                 <label class="pr-1  form-control-label" style="color: green"> @{{ sobrantecaja }}</label>
                             </div>
                             <div class="form-group" v-else-if="sobrantecaja < 0">
-                                <label class="pr-1  form-control-label">Faltante</label>
+                                <label class="pr-1  form-control-label"><i class="fas fa-hand-holding-usd"></i>Faltante</label>
                                 <label class="pr-1  form-control-label">:</label>
                                 <label class="pr-1  form-control-label" style="color: red"><strong>@{{ sobrantecaja }}</strong></label>
                             </div>
@@ -556,7 +556,7 @@
                                 <label class="pr-1  form-control-label" style="color: green"> @{{ sobrantecaja }}</label>
                             </div>
                             <div class="form-group" v-else-if="sobrantecaja < 0">
-                                <label class="pr-1  form-control-label">Faltante</label>
+                                <label class="pr-1  form-control-label"><i class="fas fa-hand-holding-usd"></i> Faltante</label>
                                 <label class="pr-1  form-control-label">:</label>
                                 <label class="pr-1  form-control-label" style="color: red"><strong>@{{ sobrantecaja }}</strong></label>
                             </div>

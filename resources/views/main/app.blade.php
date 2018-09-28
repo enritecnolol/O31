@@ -93,8 +93,8 @@
                                                 </a>
                                             </div>
                                             <div class="account-dropdown__item">
-                                                <a data-toggle="modal" data-target="#proxima" href="#proxima">
-                                                    <i class="zmdi zmdi-settings"></i>Configuracion
+                                                <a id="#proximamente" href="#">
+                                                    <i class="zmdi zmdi-settings"></i>Configuracion <span class="badge badge-info">Proximamente</span>
                                                 </a>
                                             </div>
                                         </div>
@@ -116,6 +116,7 @@
                 </div>
             </div>
         </header>
+    @include('mantenimiento.proxima')
         <!-- HEADER DESKTOP-->
         <!-- MENU SIDEBAR-->
         <div id="Vue">
@@ -139,12 +140,15 @@
         <!-- END MAIN CONTENT-->
         <!-- END PAGE CONTAINER-->
     </div>
-    @include('mantenimiento.proxima')
-
 </div>
 
 @include('layouts.scripts')
 @yield('scriptp')
+<script !src="">
+    $(document).on('click', '#proximamente', function() {
+        $('#proxima').modal('show');
+    });
+</script>
 </body>
 </html>
 <!-- end document-->

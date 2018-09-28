@@ -32,8 +32,26 @@
             background-color: #2dba50;
 
         }
+        .overlay2 {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            transition: .5s ease;
+            background-color: #ba0004;
+
+        }
 
         .card:hover .overlay1{
+            opacity: 0.8;
+            cursor: pointer;
+            box-shadow: 5px 10px 18px #888888
+        }
+        .card:hover .overlay2{
             opacity: 0.8;
             cursor: pointer;
             box-shadow: 5px 10px 18px #888888
@@ -154,8 +172,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="overlay1">
+                                <div class="overlay1" v-if="p.existence > 0">
                                     <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
+                                </div>
+                                <div class="overlay1" v-else-if="p.existence == 0 && p.barcode =='no'">
+                                    <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
+                                </div>
+                                <div class="overlay2" v-else-if="p.existence == 0 && p.barcode !='no'">
+                                    <div class="text1"><i class="fas fa-times fa-3x" id="plus"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -176,8 +200,14 @@
                                             <i class="fa fa-money-bill-alt"></i> @{{p.price}}</div>
                                     </div>
                                 </div>
-                                <div class="overlay1">
+                                <div class="overlay1" v-if="p.existence > 0">
                                     <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
+                                </div>
+                                <div class="overlay1" v-else-if="p.existence == 0 && p.barcode =='no'">
+                                    <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
+                                </div>
+                                <div class="overlay2" v-else-if="p.existence == 0 && p.barcode !='no'">
+                                    <div class="text1"><i class="fas fa-times fa-3x" id="plus"></i></div>
                                 </div>
                             </div>
                         </div>
