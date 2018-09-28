@@ -623,6 +623,69 @@
                         txt = this.cuadrar();
                     }
                 },
+                confimarfaltante: function (){
+                    var txt;
+                    var r = confirm("Tu caja esta DESCUADRADA!! Estas seguro de querer Cuadrar?");
+                    if (r == true){
+                        txt = this.cuadrarfaltante();
+                    }
+                },
+                cuadrarfaltante:function () {
+
+                    if (isNaN(this.totalcuadre) || isNaN(this.efectivocaja) ){
+                        alert('LLenar todos los espacio en blanco con 0 ')
+                    }else{
+
+                        $.ajax({
+                            url: '/caja/cuadrarcaja',
+                            method: 'GET',
+                            data: {
+                                caja:       this.caja,
+                                fecha:      this.fecha,
+                                totalcaja:  this.totalcaja,
+
+                                encaja:{
+                                    segunsistema:{
+                                        efectivo:this.cajaefectivo,
+                                        tarjeta:this.cajatarjeta,
+                                        total: this.totalcaja
+                                    },
+                                    efectivocaja: this.efectivocaja,
+                                    cajatarjeta: this.cajatarjeta,
+                                    deposito:   this.deposito,
+                                    egresos:    this.egresos,
+                                    desglose:{
+                                        billetes:{
+                                            dosmil:       this.dosk,
+                                            mil:       this.unok,
+                                            quinientos: this.quinientos,
+                                            dociento:   this.dociento,
+                                            cien:       this.cien,
+                                            cincuenta:  this.cincuenta,
+                                        },
+                                        monedas:{
+                                            veinticinco:this.veinticinco,
+                                            diez:       this.diez,
+                                            cinco:      this.cinco,
+                                            uno:        this.uno,
+                                        }
+                                    }
+                                }
+
+                            },
+                            success:function (dato) {
+                                toastr.success('La caja ha sido Cuadrada');
+                                setTimeout('document.location.reload()',1500);
+                            },
+                            error:function () {
+                                toastr.error('Ha ocurrido un error en el cuadre');
+                                setTimeout('document.location.reload()',1500);
+                            }
+                        });
+
+                    }
+
+                },
 
                 cuadrar:function () {
 
@@ -630,7 +693,7 @@
                         alert('LLenar todos los espacio en blanco con 0 ')
                     }else{
                         if (this.sobrantecaja < 0) {
-                            alert('No puedo cuadrar la caja, Hay un descuadre!!');
+                            this.confimarfaltante();
                         }else {
                             $.ajax({
                                 url: '/caja/cuadrarcaja',
