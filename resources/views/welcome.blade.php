@@ -560,8 +560,6 @@
                     if (this.montotarjeta > 0){
                         if (this.tipotarjeta == '' ||  this.auth == '' || this.Numtarjeta == ''){
                             alert('Faltan Datos por Llenar')
-                        }if (this.montotarjeta > this.facturatotal){
-                            alert('El Monto de la Tarjeta no puede ser mayor al precio a pagar')
                         }if (this.montotarjeta > this.facturatotal - this.campodinero){
                             alert('La tarjeta no puede ser mayor al precio a pagar');
                         }else{
