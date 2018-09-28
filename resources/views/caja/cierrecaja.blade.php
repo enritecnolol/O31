@@ -12,7 +12,22 @@
         <div class="text-center" style="margin-bottom: 25px">
             <h1>Cierre de Caja</h1>
         </div>
-        <div class="card" style="width: 100%;">
+        <div  class="card" v-if="caja[0].cuadreconf == 'Si'">
+            <div class="card-header">
+                <strong>Caja</strong>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <div class="alert alert-warning" role="alert" style="width: 500px; margin-left: 30%">
+                        <h4 class="alert-heading">No hay una caja abierta!!</h4>
+                        <p>Para poder cerrar la caja debes hacer una apertura, luego Vender.</p>
+                        <hr>
+                        <p class="mb-0">Luego de vender debe cuadrar la caja, si la naja no esta cuadrada no se le permitira abrir otra caja.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div v-else class="card" style="width: 100%;">
             <div class="card-header">
                 <strong>Cierre</strong>
                 <button v-if="caja[0].total_cierre == 0" class="btn btn-success btn-sm pull-right" @click="confimar()" type="button"><i class="fas fa-lock">&nbsp; Cerrar Caja</i></button>

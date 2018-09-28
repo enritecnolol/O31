@@ -20,15 +20,16 @@
 
             <div class="card">
                 <div class="card-header">
-                    <strong style="color: #007bff">Caja Cuadrada</strong>
+                    <strong style="color: #007bff">Caja</strong>
                 </div>
                 <div class="card-body text-center">
-                    <h1 style="margin: 10%;">La Caja ya ha sido cuadrada,<br>Despues de que la caja se cuadre esta no se puede editar <span style="color: red"><i class="fas fa-lock"></i></span></h1>
+                    <h1 style="margin: 10%;">Abra una Nueva Caja y luego Cierre la para poder Cuadrar<span style="color: red"> <i class="fas fa-lock"></i></span></h1>
                     <br>
                 </div>
             </div>
         </div>
     </div>
+
     <div v-else-if="nose == 'NoCuadrada'" class="section__content section__content--p30">
         <div class="container-fluid">
             <div class="card">
@@ -87,7 +88,7 @@
                                     <th scope="row">2000</th>
                                     <td class="text-center">
                                         <div class="col col-sm-8 ">
-                                            <input type="number" min="0" v-model="dosk" class="form-control">
+                                            <input type="number" min="0" required v-model="dosk" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ dosktotal }}</td>
@@ -96,7 +97,7 @@
                                     <th scope="row">1000</th>
                                     <td class="text-center">
                                         <div class="col col-sm-8">
-                                            <input type="number" min="0" v-model="unok" class="form-control">
+                                            <input type="number" min="0" required v-model="unok" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ unoktotal }}</td>
@@ -106,7 +107,7 @@
                                     <th scope="row">500</th>
                                     <td class="text-center">
                                         <div class="col col-sm-8">
-                                            <input type="number" min="0" v-model="quinientos" class="form-control">
+                                            <input type="number" min="0" required v-model="quinientos" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ quinientostotal }}</td>
@@ -116,7 +117,7 @@
                                     <th scope="row">200</th>
                                     <td class="text-center">
                                         <div class="col col-sm-8">
-                                            <input type="number" min="0" v-model="dociento" class="form-control">
+                                            <input type="number" min="0" required v-model="dociento" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ docientototal }}</td>
@@ -136,7 +137,7 @@
                                     <th scope="row">50</th>
                                     <td class="text-center">
                                         <div class="col col-sm-8">
-                                            <input type="number" min="0" v-model="cincuenta" class="form-control">
+                                            <input type="number" min="0" required v-model="cincuenta" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ cincuentatotal }}</td>
@@ -165,7 +166,7 @@
                                     <th scope="row">25</th>
                                     <td class="text-center">
                                         <div class="col ">
-                                            <input type="number" min="0" v-model="veinticinco" class="form-control">
+                                            <input type="number" min="0" required v-model="veinticinco" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ ventecincototal }}</td>
@@ -174,7 +175,7 @@
                                     <th scope="row">10</th>
                                     <td class="text-center">
                                         <div class="col">
-                                            <input type="number" min="0" v-model="diez" class="form-control">
+                                            <input type="number" min="0" required v-model="diez" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ dieztotal }}</td>
@@ -184,7 +185,7 @@
                                     <th scope="row">5</th>
                                     <td class="text-center">
                                         <div class="col">
-                                            <input type="number" min="0" v-model="cinco" class="form-control">
+                                            <input type="number" min="0" required v-model="cinco" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ cincototal }}</td>
@@ -194,7 +195,7 @@
                                     <th scope="row">1</th>
                                     <td class="text-center">
                                         <div class="col">
-                                            <input type="number" min="0"  v-model="uno" class="form-control">
+                                            <input type="number" min="0"  required v-model="uno" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ unototal }}</td>
@@ -245,7 +246,7 @@
                                         <label for="text-input" class=" form-control-label"><i class="fas fa-credit-card"></i> Tarjeta</label>
                                     </div>
                                     <div class="col-4 col-md-6">
-                                        <input type="number" min="0" disabled :value="cajatarjeta" class="form-control form-control-sm">
+                                        <input type="number" min="0" required disabled :value="cajatarjeta" class="form-control form-control-sm">
                                     </div>
                                     <div class="col-5 col-md-2">
                                         <button disabled class="btn btn-dark btn-sm">...</button>
@@ -258,7 +259,7 @@
                                         <label for="text-input" class=" form-control-label">Deposito</label>
                                     </div>
                                     <div class="col-5 col-md-7">
-                                        <input type="number" min="0" v-model="deposito" class="form-control form-control-sm">
+                                        <input type="number" min="0" required v-model="deposito" class="form-control form-control-sm">
                                     </div>
                                 </div>
                             </div>
@@ -268,7 +269,7 @@
                                         <label for="text-input" class=" form-control-label">Egresos</label>
                                     </div>
                                     <div class="col-5 col-md-7">
-                                        <input type="number" min="0" v-model="egresos" class="form-control form-control-sm">
+                                        <input type="number" min="0" required v-model="egresos" class="form-control form-control-sm">
                                     </div>
                                 </div>
                             </div>
@@ -299,6 +300,7 @@
             </div>
         </div>
     </div>
+
     <div v-else class="section__content section__content--p30">
         <div class="container-fluid">
             <div class="card">
@@ -357,7 +359,7 @@
                                     <th scope="row">2000</th>
                                     <td class="text-center">
                                         <div class="col col-sm-8 ">
-                                            <input type="number" min="0" v-model="dosk" class="form-control">
+                                            <input type="number" min="0" required v-model="dosk" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ dosktotal }}</td>
@@ -366,7 +368,7 @@
                                     <th scope="row">1000</th>
                                     <td class="text-center">
                                         <div class="col col-sm-8">
-                                            <input type="number" min="0" v-model="unok" class="form-control">
+                                            <input type="number" min="0" required v-model="unok" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ unoktotal }}</td>
@@ -376,7 +378,7 @@
                                     <th scope="row">500</th>
                                     <td class="text-center">
                                         <div class="col col-sm-8">
-                                            <input type="number" min="0" v-model="quinientos" class="form-control">
+                                            <input type="number" min="0" required v-model="quinientos" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ quinientostotal }}</td>
@@ -386,7 +388,7 @@
                                     <th scope="row">200</th>
                                     <td class="text-center">
                                         <div class="col col-sm-8">
-                                            <input type="number" min="0" v-model="dociento" class="form-control">
+                                            <input type="number" min="0" required v-model="dociento" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ docientototal }}</td>
@@ -396,7 +398,7 @@
                                     <th scope="row">100</th>
                                     <td class="text-center">
                                         <div class="col col-sm-8">
-                                            <input type="number" min="0" v-model="cien" class="form-control">
+                                            <input type="number" min="0" required v-model="cien" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ cientotal }}</td>
@@ -406,7 +408,7 @@
                                     <th scope="row">50</th>
                                     <td class="text-center">
                                         <div class="col col-sm-8">
-                                            <input type="number" min="0" v-model="cincuenta" class="form-control">
+                                            <input type="number" min="0" required v-model="cincuenta" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ cincuentatotal }}</td>
@@ -435,7 +437,7 @@
                                     <th scope="row">25</th>
                                     <td class="text-center">
                                         <div class="col ">
-                                            <input type="number" min="0" v-model="veinticinco" class="form-control">
+                                            <input type="number" min="0" required v-model="veinticinco" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ ventecincototal }}</td>
@@ -444,7 +446,7 @@
                                     <th scope="row">10</th>
                                     <td class="text-center">
                                         <div class="col">
-                                            <input type="number" min="0" v-model="diez" class="form-control">
+                                            <input type="number" min="0" required v-model="diez" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ dieztotal }}</td>
@@ -454,7 +456,7 @@
                                     <th scope="row">5</th>
                                     <td class="text-center">
                                         <div class="col">
-                                            <input type="number" min="0" v-model="cinco" class="form-control">
+                                            <input type="number" min="0" required v-model="cinco" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ cincototal }}</td>
@@ -464,7 +466,7 @@
                                     <th scope="row">1</th>
                                     <td class="text-center">
                                         <div class="col">
-                                            <input type="number" min="0"  v-model="uno" class="form-control">
+                                            <input type="number" min="0" required v-model="uno" class="form-control">
                                         </div>
                                     </td>
                                     <td>@{{ unototal }}</td>
@@ -528,7 +530,7 @@
                                         <label for="text-input" class=" form-control-label">Deposito</label>
                                     </div>
                                     <div class="col-5 col-md-7">
-                                        <input type="number" min="0" v-model="deposito" class="form-control form-control-sm">
+                                        <input type="number" min="0" required v-model="deposito" class="form-control form-control-sm">
                                     </div>
                                 </div>
                             </div>
@@ -538,7 +540,7 @@
                                         <label for="text-input" class=" form-control-label">Egresos</label>
                                     </div>
                                     <div class="col-5 col-md-7">
-                                        <input type="number" min="0" v-model="egresos" class="form-control form-control-sm">
+                                        <input type="number" min="0" required v-model="egresos" class="form-control form-control-sm">
                                     </div>
                                 </div>
                             </div>
@@ -624,56 +626,59 @@
 
                 cuadrar:function () {
 
-                    if (this.sobrantecaja < 0){
-                        toastr.warning('No puedo cuadrar la caja, Hay un descuadre!!');
+                    if (isNaN(this.totalcuadre) || isNaN(this.efectivocaja) ){
+                        alert('LLenar todos los espacio en blanco con 0 ')
                     }else{
-                        $.ajax({
-                            url: '/caja/cuadrarcaja',
-                            method: 'GET',
-                            data: {
-                                caja:       this.caja,
-                                fecha:      this.fecha,
-                                totalcaja:  this.totalcaja,
+                        if (this.sobrantecaja < 0) {
+                            alert('No puedo cuadrar la caja, Hay un descuadre!!');
+                        }else {
+                            $.ajax({
+                                url: '/caja/cuadrarcaja',
+                                method: 'GET',
+                                data: {
+                                    caja:       this.caja,
+                                    fecha:      this.fecha,
+                                    totalcaja:  this.totalcaja,
 
-                                encaja:{
-                                    segunsistema:{
-                                        efectivo:this.cajaefectivo,
-                                        tarjeta:this.cajatarjeta,
-                                        total: this.totalcaja
-                                    },
-                                    efectivocaja: this.efectivocaja,
-                                    cajatarjeta: this.cajatarjeta,
-                                    deposito:   this.deposito,
-                                    egresos:    this.egresos,
-                                    desglose:{
-                                        billetes:{
-                                            dosmil:       this.dosk,
-                                            mil:       this.unok,
-                                            quinientos: this.quinientos,
-                                            dociento:   this.dociento,
-                                            cien:       this.cien,
-                                            cincuenta:  this.cincuenta,
+                                    encaja:{
+                                        segunsistema:{
+                                            efectivo:this.cajaefectivo,
+                                            tarjeta:this.cajatarjeta,
+                                            total: this.totalcaja
                                         },
-                                        monedas:{
-                                            veinticinco:this.veinticinco,
-                                            diez:       this.diez,
-                                            cinco:      this.cinco,
-                                            uno:        this.uno,
+                                        efectivocaja: this.efectivocaja,
+                                        cajatarjeta: this.cajatarjeta,
+                                        deposito:   this.deposito,
+                                        egresos:    this.egresos,
+                                        desglose:{
+                                            billetes:{
+                                                dosmil:       this.dosk,
+                                                mil:       this.unok,
+                                                quinientos: this.quinientos,
+                                                dociento:   this.dociento,
+                                                cien:       this.cien,
+                                                cincuenta:  this.cincuenta,
+                                            },
+                                            monedas:{
+                                                veinticinco:this.veinticinco,
+                                                diez:       this.diez,
+                                                cinco:      this.cinco,
+                                                uno:        this.uno,
+                                            }
                                         }
                                     }
+
+                                },
+                                success:function (dato) {
+                                    toastr.success('La caja ha sido Cuadrada');
+                                    setTimeout('document.location.reload()',1500);
+                                },
+                                error:function () {
+                                    toastr.error('Ha ocurrido un error en el cuadre');
+                                    setTimeout('document.location.reload()',1500);
                                 }
-
-                            },
-                            success:function (dato) {
-                                toastr.success('La caja ha sido Cuadrada');
-                                setTimeout('document.location.reload()',1500);
-                            },
-                            error:function () {
-                                toastr.error('Ha ocurrido un error en el cuadre');
-                                setTimeout('document.location.reload()',1500);
-                            }
-                        });
-
+                            });
+                        }
                     }
 
                 }

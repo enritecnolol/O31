@@ -88,8 +88,13 @@ class   CajasController extends Controller
 
         $fecha = date('Y-m-d');
 //
-        $caja = DB::table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num')->where('fecha_apertura', date("Y-m-d"))->latest()->take(1)->get();
-        $idcaja = $caja[0]->id;
+        $caja = DB::table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num', 'cuadreconf')->where('fecha_apertura', date("Y-m-d"))->latest()->take(1)->get();
+        if ($caja == '[]'){
+            $idcaja = 0;
+        }else{
+            $idcaja = $caja[0]->id;
+
+        }
 
         $ventas = Facture::all()->where('date','==',date("Y-m-d"))->where('caja_id', $idcaja)->count();
 
@@ -108,6 +113,7 @@ class   CajasController extends Controller
         }else{
             $valor_apertura = $apertura[0]->valor_apertura;
         }
+//        return $caja;
 
         return view('caja.cierrecaja', compact('ventas', $ventas), compact('caja', $caja))->with(compact('total', $total))->with(compact('valor_apertura', $valor_apertura));
 
@@ -140,13 +146,20 @@ class   CajasController extends Controller
         return view('caja.historicoventa');
     }
     public function cuadrecaja(){
+
         $fecha = date('Y-m-d');
         $caja = DB::table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num', 'cuadreconf')->where('fecha_apertura', date("Y-m-d"))->where('status', 'C')->latest()->take(1)->get();
-        $idcaja = $caja[0]->id;
-        $ventastotal = DB::table('factures')->select(DB::raw('SUM(total_facture) as total'))->where("date",$fecha)->get();
+
+        if ($caja == '[]'){
+            $idcaja = 0;
+        }else{
+            $idcaja = $caja[0]->id;
+
+        }
+        $ventastotal = DB::table('factures')->select(DB::raw('SUM(total_facture) as total'))->where("date",$fecha)->where('caja_id', $idcaja)->get();
         $ventasmonto_tarjeta = DB::table('factures')->select(DB::raw('SUM(Monto_tarjeta) as total_tarjeta'))->where('caja_id', $idcaja)->where("date",$fecha)->get();
         $ventasmonto_efectivo = DB::table('factures')->select(DB::raw('SUM(Monto_efectivo) as total_efectivo'))->where('caja_id', $idcaja)->where("date",$fecha)->get();
-//        $caja = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"))->where('status', '==', 'C');
+        $ventasmonto_devueltas = DB::table('factures')->select(DB::raw('SUM(returns) as total_devuelta'))->where('caja_id', $idcaja)->where("date",$fecha)->get();
 
 
         if ($ventastotal == '[{"total":null}]'){
@@ -164,12 +177,14 @@ class   CajasController extends Controller
         if ($ventasmonto_efectivo == '[{"total_efectivo":null}]'){
             $total_efectivo = 00;
         }else{
-            $total_efectivo = $ventasmonto_efectivo[0]->total_efectivo;
+            $total_efectivo = $ventasmonto_efectivo[0]->total_efectivo - $ventasmonto_devueltas[0]->total_devuelta;
         }
 
         if ($caja == '[]') {
+
             $nose = 'Abierta';
             $caja = $caja;
+
         }elseif ($caja[0]->cuadreconf == 'No'){
             $nose = 'NoCuadrada';
         }
@@ -177,8 +192,8 @@ class   CajasController extends Controller
             $caja = $caja;
             $nose = 'cuadrada';
         }
+//        return $total_efectivo;
 
-//            return $caja;
         return view('caja.cuadrecaja',
             compact('total'),
             compact('total_tarjeta'))

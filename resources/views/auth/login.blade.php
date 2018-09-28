@@ -1,4 +1,5 @@
 @include('layouts.header')
+@section('tittle', 'Cafeteria | Login')
 <body class="animsition">
 <div class="page-wrapper">
     <div class="page-content--bge5">
@@ -36,7 +37,7 @@
                                     <input type="checkbox" name="remember"{{ old('remember') ? 'checked' : '' }}>Recordar
                                 </label>
                                 <label>
-                                    <a href="/register">No tienes Cuenta?</a>
+
                                 </label>
                             </div>
                             <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">Iniciar Sesion</button>

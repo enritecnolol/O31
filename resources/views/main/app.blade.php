@@ -93,8 +93,9 @@
                                                 </a>
                                             </div>
                                             <div class="account-dropdown__item">
-                                                <a href="#">
-                                                    <i class="zmdi zmdi-settings"></i>Configuracion</a>
+                                                <a data-toggle="modal" data-target="#proxima" href="#proxima">
+                                                    <i class="zmdi zmdi-settings"></i>Configuracion
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="account-dropdown__footer">
@@ -138,6 +139,7 @@
         <!-- END MAIN CONTENT-->
         <!-- END PAGE CONTAINER-->
     </div>
+    @include('mantenimiento.proxima')
 
 </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Caja;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +30,17 @@ class ApisController extends Controller
     }
 
     public function historico(){
-        return datatables(Facture::all()->where('date', '==', date('Y-m-d')))->toJson();
+        $caja = Caja::all()->where('fecha_apertura', '==', date('Y-m-d'))->where('status', '==', 'A');
+
+        if ($caja == '[]'){
+            $id = 0;
+        }else{
+            foreach ($caja as $caja){
+                $id = $caja->id;
+            }
+        }
+        return datatables(Facture::all()->where('date', '==', date('Y-m-d'))->where('caja_id', '==', $id))->toJson();
+
     }
     public function buscarproducto(){
             $data = Input::all();
