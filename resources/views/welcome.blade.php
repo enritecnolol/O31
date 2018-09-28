@@ -1,6 +1,7 @@
 @extends('main.app')
 @section('style')
     <style>
+
         #plus{
             -webkit-transition: all .6s ease-in-out;    /* safari - Chrome*/
             -moz-transition: all .6s ease-in-out;       /* Firefox */
@@ -86,7 +87,7 @@
 @section('tittle',' Cafeteria| Facturacion')
 
 @section('titulo')
-    <h3 style="color: white">Es Hora de Vender!!</h3>
+    <h3 style="color: white"><i class="fa fa-usd "></i><i class="fa fa-usd SS"></i> Punto de Venta</h3>
 @endsection
 
 @section('aside')
@@ -145,7 +146,7 @@
     <div id="p">
         <div class="container">
             <nav class="navbar navbar-light" style="background-color: #0069d9;">
-                <a class="navbar-brand" href="#"><strong style="color: whitesmoke">Productos</strong></a>
+                <a class="navbar-brand" href="#" style="color: whitesmoke"><i class="fas fa-list-ul"></i> <strong>Productos</strong></a>
                 <input type="search" class="form-control col-md-2 pull-right right" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
 
             </nav>
