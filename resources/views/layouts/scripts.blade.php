@@ -24,3 +24,5 @@
 
 <!-- Main JS-->
 <script src="{{ URL::asset('js/main.js')}}"></script>
+<script src="{{ URL::asset('teclado/jquery.numpad.js')}}"></script>
+<script src="{{ URL::asset('teclado/jquery.keyboard.js')}}"></script>

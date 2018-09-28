@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use App\Caja;
 use App\Detail;
 use App\Facture;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\String_;
 
-class CajasController extends Controller
+class   CajasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,14 +22,16 @@ class CajasController extends Controller
      */
     public function index()
     {
-        $fecha = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"));
-        if ($fecha == '[]'){
-            $cerrada = 'no tiene';
-        }else{
-            $cerrada = $fecha[0]["status"];
-        }
+        $fecha = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"))->last();
 
-        return view('caja.iniciocaja', compact('fecha'), compact('cerrada'));
+        if ($fecha == '[]'){
+            $cerrad = 'no tiene';
+        }else{
+            $cerrad = $fecha["status"];
+            $cuadre = $fecha["cuadreconf"];
+
+        }
+        return view('caja.iniciocaja', compact('fecha', $fecha), compact('cerrad', $cerrad))->with(compact('cuadre', $cuadre));
     }
 
     /**
@@ -49,6 +53,9 @@ class CajasController extends Controller
         $cajaapertura->usuario = 'general';
         $cajaapertura->status = 'A';
         $cajaapertura->caja_num = 1;
+        $cajaapertura->cuadre = 'JSON';
+        $cajaapertura->cuadreconf = 'No';
+        $cajaapertura->user_id = Auth::id();
         $cajaapertura->save();
         return 'Guardado';
     }
@@ -81,9 +88,17 @@ class CajasController extends Controller
 
         $fecha = date('Y-m-d');
 //
-        $ventas = Facture::all()->where('date','==',date("Y-m-d"))->count();
-        $totalcierre = DB::table('factures')->select(DB::raw('SUM(total_facture) as total'))->where("date",$fecha)->get();
-        $caja = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"));
+        $caja = DB::table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num', 'cuadreconf')->where('fecha_apertura', date("Y-m-d"))->latest()->take(1)->get();
+        if ($caja == '[]'){
+            $idcaja = 0;
+        }else{
+            $idcaja = $caja[0]->id;
+
+        }
+
+        $ventas = Facture::all()->where('date','==',date("Y-m-d"))->where('caja_id', $idcaja)->count();
+
+        $totalcierre = DB::table('factures')->select(DB::raw('SUM(total_facture) as total'))->where("date",$fecha)->where('caja_id', $idcaja)->get();
 
         if ($totalcierre == '[{"total":null}]'){
             $total = 0;
@@ -98,10 +113,10 @@ class CajasController extends Controller
         }else{
             $valor_apertura = $apertura[0]->valor_apertura;
         }
-//
+//        return $caja;
 
         return view('caja.cierrecaja', compact('ventas', $ventas), compact('caja', $caja))->with(compact('total', $total))->with(compact('valor_apertura', $valor_apertura));
-//        return $totalcierre;
+
 
     }
     public function cerrarcaja(){
@@ -130,4 +145,78 @@ class CajasController extends Controller
     public function historico(){
         return view('caja.historicoventa');
     }
+    public function cuadrecaja(){
+
+        $fecha = date('Y-m-d');
+        $caja = DB::table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num', 'cuadreconf')->where('fecha_apertura', date("Y-m-d"))->where('status', 'C')->latest()->take(1)->get();
+
+        if ($caja == '[]'){
+            $idcaja = 0;
+        }else{
+            $idcaja = $caja[0]->id;
+
+        }
+        $ventastotal = DB::table('factures')->select(DB::raw('SUM(total_facture) as total'))->where("date",$fecha)->where('caja_id', $idcaja)->get();
+        $ventasmonto_tarjeta = DB::table('factures')->select(DB::raw('SUM(Monto_tarjeta) as total_tarjeta'))->where('caja_id', $idcaja)->where("date",$fecha)->get();
+        $ventasmonto_efectivo = DB::table('factures')->select(DB::raw('SUM(Monto_efectivo) as total_efectivo'))->where('caja_id', $idcaja)->where("date",$fecha)->get();
+        $ventasmonto_devueltas = DB::table('factures')->select(DB::raw('SUM(returns) as total_devuelta'))->where('caja_id', $idcaja)->where("date",$fecha)->get();
+
+
+        if ($ventastotal == '[{"total":null}]'){
+            $total = 00;
+        }else{
+            $total = $ventastotal[0]->total;
+        }
+
+        if ($ventasmonto_tarjeta == '[{"total_tarjeta":null}]'){
+            $total_tarjeta = 00;
+        }else{
+            $total_tarjeta = $ventasmonto_tarjeta[0]->total_tarjeta;
+        }
+
+        if ($ventasmonto_efectivo == '[{"total_efectivo":null}]'){
+            $total_efectivo = 00;
+        }else{
+            $total_efectivo = $ventasmonto_efectivo[0]->total_efectivo - $ventasmonto_devueltas[0]->total_devuelta;
+        }
+
+        if ($caja == '[]') {
+
+            $nose = 'Abierta';
+            $caja = $caja;
+
+        }elseif ($caja[0]->cuadreconf == 'No'){
+            $nose = 'NoCuadrada';
+        }
+        else{
+            $caja = $caja;
+            $nose = 'cuadrada';
+        }
+//        return $total_efectivo;
+
+        return view('caja.cuadrecaja',
+            compact('total'),
+            compact('total_tarjeta'))
+            ->with(compact('total_efectivo'))
+            ->with(compact('fecha'))
+            ->with(compact('caja'))
+            ->with(compact('cerrada'))->with(compact('nose'));
+
+    }
+
+    public function cuadrarcj()
+    {
+        $data = Input::all();
+        $cuadre = $data["encaja"];
+        $id = $data["caja"][0]["id"];
+
+
+        $caja = Caja::where('id', $id)->first();
+        $caja->cuadre = json_encode($cuadre);
+        $caja->cuadreconf = 'Si';
+        $caja->update();
+
+        return 'actulizado';
+    }
+
 }

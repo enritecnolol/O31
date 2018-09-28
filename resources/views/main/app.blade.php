@@ -32,6 +32,8 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('DataTables/datatables.min.css') }}"/>
     <!-- Main CSS-->
     <link href="{{ URL::asset('css/theme.css')}}" rel="stylesheet" media="all">
+    <link href="{{ URL::asset('teclado/jquery.numpad.css')}}" rel="stylesheet" media="all">
+    <link href="{{ URL::asset('teclado/keyboard.css')}}" rel="stylesheet" media="all">
     @yield('style')
 
 </head>
@@ -47,10 +49,9 @@
                 <div class="container-fluid">
                     <div class="header-wrap">
                         <form class="form-header" action="" method="POST">
-                            {{--<input class="au-input au-input--xl" type="text" disabled name="search" placeholder="Search for datas &amp; reports..." />--}}
-                            {{--<button class="au-btn--submit" disabled type="submit">--}}
-                                {{--<i class="zmdi zmdi-search"></i>--}}
-                            {{--</button>--}}
+                            <div class="text-center">
+                                @yield('titulo')
+                            </div>
                         </form>
                         <div class="header-button">
                             <div class="account-wrap">
@@ -62,6 +63,19 @@
                                         <a class="js-acc-btn" href="#" style="color: white">Opciones</a>
                                     </div>
                                     <div class="account-dropdown js-dropdown">
+                                        <div class="info clearfix">
+                                            <div class="image">
+                                                <a href="#">
+                                                    <img src="{{ URL::asset('imagenes/User.png')}}" alt="usuario" />
+                                                </a>
+                                            </div>
+                                            <div class="content">
+                                                <h5 class="name">
+                                                    <a href="#">{{ Auth::user()->name }}</a>
+                                                </h5>
+                                                <span class="email">{{ Auth::user()->email }}</span>
+                                            </div>
+                                        </div>
                                         <div class="account-dropdown__body">
                                             <div class="account-dropdown__item">
                                                 <a href="/productos">
@@ -74,15 +88,26 @@
                                                 </a>
                                             </div>
                                             <div class="account-dropdown__item">
-                                            <a href="/caja">
-                                            <i class="zmdi zmdi-money-box"></i>Caja
-                                            </a>
+                                                <a href="/caja">
+                                                    <i class="zmdi zmdi-money-box"></i>Caja
+                                                </a>
+                                            </div>
+                                            <div class="account-dropdown__item">
+                                                <a id="#proximamente" href="#">
+                                                    <i class="zmdi zmdi-settings"></i>Configuracion <span class="badge badge-info">Proximamente</span>
+                                                </a>
                                             </div>
                                         </div>
-                                        {{--<div class="account-dropdown__footer">--}}
-                                        {{--<a href="#">--}}
-                                        {{--<i class="zmdi zmdi-power"></i>Logout</a>--}}
-                                        {{--</div>--}}
+                                        <div class="account-dropdown__footer">
+                                            <a href="{{ route('logout') }}"onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                                <i class="zmdi zmdi-power"></i>Logout
+                                            </a>
+                                            {{--{{ Auth::user()->name }}--}}
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                {{ csrf_field() }}
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -91,6 +116,7 @@
                 </div>
             </div>
         </header>
+    @include('mantenimiento.proxima')
         <!-- HEADER DESKTOP-->
         <!-- MENU SIDEBAR-->
         <div id="Vue">
@@ -114,11 +140,15 @@
         <!-- END MAIN CONTENT-->
         <!-- END PAGE CONTAINER-->
     </div>
-
 </div>
 
 @include('layouts.scripts')
 @yield('scriptp')
+<script !src="">
+    $(document).on('click', '#proximamente', function() {
+        $('#proxima').modal('show');
+    });
+</script>
 </body>
 </html>
 <!-- end document-->
