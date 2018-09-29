@@ -2,13 +2,13 @@
 @section('tittle', 'Cafeteria | Login')
 <body class="animsition">
 <div class="page-wrapper">
-    <div class="page-content--bge5">
-        <div class="container">
+    <div class="page-content--bge5" style="overflow: scroll">
+        <div class="container" style="">
             <div class="login-wrap">
                 <div class="login-content">
                     <div class="login-logo">
                         <a href="#">
-                            <img src="{{ URL::asset('imagenes/logo.png')}}" alt="CoolAdmin">
+                            <img src="{{ URL::asset('imagenes/logo.png')}}" style="width: 160px" alt="CoolAdmin">
                         </a>
                     </div>
                     <div class="login-form">

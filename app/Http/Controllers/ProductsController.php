@@ -63,6 +63,7 @@ class ProductsController extends Controller
                 $product->existence = $request->input('existencia');
                 $product->impost = $request->input('impuesto');
                 $product->status = 1;
+                $product->img = 'default.jpg';
 //            $product->unity_id = 0;
                 $product->save();
 
@@ -84,14 +85,13 @@ class ProductsController extends Controller
                 $product->save();
 
             }else{
-
                 $product->name = $request->input('nombre');
                 $product->price = $request->input('precio');
                 $product->barcode = '';
                 $product->existence = 0;
                 $product->impost = 0;
                 $product->status = 1;
-                $product->img = '';
+                $product->img = 'default.jpg';
 //            $product->unity_id = 0;
                 $product->save();
 

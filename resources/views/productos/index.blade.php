@@ -86,8 +86,8 @@
                                     <td>@{{p.price}}</td>
                                     <td>@{{p.impost}}</td>
                                     <td>
-                                        <button type="button" v-on:click="producto(p.id)" class="btn btn-sm btn-secondary mb-1" data-toggle="modal" data-target="#largeModal">
-                                            Editar
+                                        <button type="button" v-on:click="producto(p.id)" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
+                                            <i class="fas fa-edit"></i>
                                         </button>
                                     </td>
                                 </tr>
