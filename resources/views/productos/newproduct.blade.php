@@ -8,8 +8,13 @@
                 </button>
             </div>
             <div class="modal-body" >
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <strong>Nuevo producto!</strong> Si el producto depende de ingredientes, en codigo de barrar coloque (no), existencia (0), impuesto (0).
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 <div class="card" style="background: white">
-
                     <div class="card-body">
                         <div class="card-title">
                             <h3 class="text-center title-2" style="color: #0069d9">Agregar Producto</h3>

@@ -8,7 +8,12 @@
                 </button>
             </div>
             <div class="modal-body">
-
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <strong>Recuerde!</strong> Si el producto depende de ingredientes, en codigo de barrar coloque (no), existencia (0), impuesto (0).
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 <form :action="'/anja/' + datos.id" method="POST"  enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
