@@ -20,9 +20,9 @@
                 <div class="text-center">
                     <div class="alert alert-warning" role="alert" style="width: 500px; margin-left: 30%">
                         <h4 class="alert-heading">No hay una caja abierta!!</h4>
-                        <p>Para poder cerrar la caja debes hacer una apertura, luego Vender.</p>
+                        <p>Para poder cerrar la caja debes hacer una apertura y procede a Vender.</p>
                         <hr>
-                        <p class="mb-0">Luego de vender debe cuadrar la caja, si la naja no esta cuadrada no se le permitira abrir otra caja.</p>
+                        <p class="mb-0">Luego de vender ya podra cerrar la caja, despues cuadre la caja, si la caja no esta cuadrada no se le permitira abrir otra caja.</p>
                     </div>
                 </div>
             </div>
