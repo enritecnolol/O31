@@ -40,7 +40,7 @@ class ProductsController extends Controller
     {
 
         $product = new Product;
-        if ($request->has('Cbarra') and $request->has('existencia') and $request->has('impuesto')){
+        if ($request->has('Cbarra') or $request->has('existencia') or $request->has('impuesto')){
 
             if ($request->hasFile('img')){
                 $file = $request->file('img');
@@ -48,7 +48,7 @@ class ProductsController extends Controller
                 $product->name = $request->input('nombre');
                 $product->price = $request->input('precio');
                 $product->barcode = $request->input('Cbarra');
-                $product->img = $file->getClientOriginalName();;
+                $product->img = $file->getClientOriginalName();
                 $product->existence = $request->input('existencia');
                 $product->impost = $request->input('impuesto');
                 $product->status = 1;
@@ -77,7 +77,7 @@ class ProductsController extends Controller
 
                 $product->name = $request->input('nombre');
                 $product->price = $request->input('precio');
-                $product->barcode = '';
+                $product->barcode = time();
                 $product->img = $file->getClientOriginalName();
                 $product->existence = 0;
                 $product->impost = 0;
@@ -89,7 +89,7 @@ class ProductsController extends Controller
             }else{
                 $product->name = $request->input('nombre');
                 $product->price = $request->input('precio');
-                $product->barcode = '';
+                $product->barcode = time();
                 $product->existence = 0;
                 $product->impost = 0;
                 $product->status = 1;

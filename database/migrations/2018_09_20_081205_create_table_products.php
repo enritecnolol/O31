@@ -17,10 +17,10 @@ class CreateTableProducts extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('price');
-            $table->string('barcode');
+            $table->string('barcode')->nullable($value = true);
             $table->string('img');
-            $table->integer('existence');
-            $table->integer('impost');
+            $table->integer('existence')->nullable($value = true);
+            $table->integer('impost')->nullable($value = true);
             $table->integer('status');
             $table->integer('user_id');
             $table->timestamps();

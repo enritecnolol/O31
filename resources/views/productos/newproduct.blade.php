@@ -27,13 +27,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="Cbarra" class="control-label mb-1" >Codigo de barra</label>
-                                <input type="text" id="Cbarra"  name="Cbarra" placeholder="" class="input-sm form-control-sm form-control">
+                                <input type="text" id="Cbarra"  required name="Cbarra" placeholder="" class="input-sm form-control-sm form-control">
                             </div>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="existencia" class="control-label mb-1">Existencia</label>
-                                        <input id="existencia" min="0" name="existencia" type="number" class="form-control cc-exp" value="0" data-val="true" data-val-required="Es necesario es te dato"
+                                        <input id="existencia" min="0" name="existencia" required type="number" class="form-control cc-exp" value="0" data-val="true" data-val-required="Es necesario es te dato"
                                                data-val-cc-exp="Please enter a valid month and year" placeholder="" >
                                         <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
                                     </div>
@@ -41,7 +41,7 @@
                                 <div class="col-6">
                                     <label for="impuesto" class="control-label mb-1" >Impuesto</label>
                                     <div class="input-group">
-                                        <input id="impuesto" min="0" name="impuesto" type="number" class="form-control cc-cvc" value="0">
+                                        <input id="impuesto" min="0" required name="impuesto" type="number" class="form-control cc-cvc" value="0">
                                     </div>
                                 </div>
                             </div>

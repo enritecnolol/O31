@@ -289,7 +289,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="cc-exp" class="control-label mb-1">Efectivo<span style="color: red">*</span></label>
-                                    <input id="efectivom" name="dinero"  v-on:keypress.enter="facturar()" type="number" class="form-control cc-exp"  v-model="campodinero">
+                                    <input id="efectivom" name="dinero"  required v-on:keypress.enter="facturar()" type="number" class="form-control cc-exp"  v-model="campodinero">
                                 </div>
                             </div>
                         </div>
@@ -297,7 +297,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="cc-exp" class="control-label mb-1">Tarjeta<span style="color: red">*</span></label>
-                                    <input id="tarjetam" name="dinero" type="number" class="form-control cc-exp"  v-model="montotarjeta">
+                                    <input id="tarjetam" name="dinero" required type="number" class="form-control cc-exp"  v-model="montotarjeta">
                                 </div>
                             </div>
                         </div>
@@ -305,7 +305,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="cc-number" class="control-label mb-1">Tipo de tarjeta</label>
-                                    <select name="selectSm" id="SelectLm" v-model="tipotarjeta" class="form-control-sm form-control">
+                                    <select name="selectSm"  id="SelectLm" v-model="tipotarjeta" class="form-control-sm form-control">
                                         <option value="">--Selecciona--</option>
                                         <option value="visa">Visa</option>
                                         <option value="mastercard">MasteCard</option>
@@ -325,14 +325,14 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="numtarjeta" class="control-label mb-1">Num.Tarjeta <span style="color: red">*</span></label>
-                                    <input id="numtarjeta" name="numtarjeta" type="text" class="form-control cc-exp" maxlength="16"  v-model="Numtarjeta" data-val="true" data-val-required="Please enter the card expiration" >
+                                    <input id="numtarjeta"  name="numtarjeta" type="text" class="form-control cc-exp" maxlength="16"  v-model="Numtarjeta" data-val="true" data-val-required="Please enter the card expiration" >
                                     <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <label for="auth" class="control-label mb-1">Autorización<span style="color: red">*</span></label>
                                 <div class="input-group">
-                                    <input id="auth" name="auth" v-model="auth" maxlength="20" type="text" class="form-control cc-cvc">
+                                    <input id="auth" name="auth"  v-model="auth" maxlength="20" type="text" class="form-control cc-cvc">
                                 </div>
                             </div>
                         </div>

@@ -53,8 +53,8 @@ class ApisController extends Controller
 
 
     public function historico(){
-        $id = Auth::id();
-        $caja = Caja::all()->where('fecha_apertura', '==', date('Y-m-d'))->where('status', '==', 'A')->where('user_id',$id);
+        $ida = Auth::id();
+        $caja = Caja::all()->where('fecha_apertura', '==', date('Y-m-d'))->where('status', '==', 'A')->where('user_id',$ida);
 
         if ($caja == '[]'){
             $id = 0;
@@ -70,7 +70,7 @@ class ApisController extends Controller
         $id = Auth::id();
         $data = Input::all();
         $producto = $data["producto"];
-        $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->where('user_id',$id)->get();
+        $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->get();
         return $productos;
     }
     public function buscarproductoreferencia(){
@@ -78,7 +78,7 @@ class ApisController extends Controller
         $data = Input::all();
         $referencia = $data["referenciah"];
 //            $productos = Product::all()->where('name', 'LIKE', '%' . $producto . '%');
-        $product = DB::table('products')->where('barcode', 'like', '%'.$referencia.'%')->where('user_id',$id)->get();
+        $product = DB::table('products')->where('barcode', 'like', '%'.$referencia.'%')->get();
         return $product;
     }
 
@@ -87,7 +87,7 @@ class ApisController extends Controller
         $data = Input::all();
         $producto = $data["producto"];
 //            $productos = Product::all()->where('name', 'LIKE', '%' . $producto . '%');
-        $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->where('user_id',$id)->get();
+        $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->get();
         return $productos;
     }
 
