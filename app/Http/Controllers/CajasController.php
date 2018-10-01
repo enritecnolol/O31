@@ -22,7 +22,8 @@ class   CajasController extends Controller
      */
     public function index()
     {
-        $fecha = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"))->last();
+        $id = Auth::id();
+        $fecha = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"))->where('user_id',$id)->last();
 
         if ($fecha == '[]'){
             $cerrad = 'no tiene';
@@ -87,8 +88,8 @@ class   CajasController extends Controller
     public function cierrecaja(){
 
         $fecha = date('Y-m-d');
-//
-        $caja = DB::table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num', 'cuadreconf')->where('fecha_apertura', date("Y-m-d"))->latest()->take(1)->get();
+        $id = Auth::id();
+        $caja = DB::table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num', 'cuadreconf')->where('fecha_apertura', date("Y-m-d"))->where('user_id',$id)->latest()->take(1)->get();
         if ($caja == '[]'){
             $idcaja = 0;
         }else{
@@ -148,7 +149,8 @@ class   CajasController extends Controller
     public function cuadrecaja(){
 
         $fecha = date('Y-m-d');
-        $caja = DB::table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num', 'cuadreconf')->where('fecha_apertura', date("Y-m-d"))->where('status', 'C')->latest()->take(1)->get();
+        $id = Auth::id();
+        $caja = DB::table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num', 'cuadreconf')->where('fecha_apertura', date("Y-m-d"))->where('status', 'C')->where('user_id',$id)->latest()->take(1)->get();
 
         if ($caja == '[]'){
             $idcaja = 0;

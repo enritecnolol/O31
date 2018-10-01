@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Caja;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\Facture;
@@ -52,7 +53,8 @@ class ApisController extends Controller
 
 
     public function historico(){
-        $caja = Caja::all()->where('fecha_apertura', '==', date('Y-m-d'))->where('status', '==', 'A');
+        $id = Auth::id();
+        $caja = Caja::all()->where('fecha_apertura', '==', date('Y-m-d'))->where('status', '==', 'A')->where('user_id',$id);
 
         if ($caja == '[]'){
             $id = 0;
@@ -65,25 +67,27 @@ class ApisController extends Controller
 
     }
     public function buscarproducto(){
+        $id = Auth::id();
         $data = Input::all();
         $producto = $data["producto"];
-//            $productos = Product::all()->where('name', 'LIKE', '%' . $producto . '%');
-        $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->get();
+        $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->where('user_id',$id)->get();
         return $productos;
     }
     public function buscarproductoreferencia(){
+        $id = Auth::id();
         $data = Input::all();
         $referencia = $data["referenciah"];
 //            $productos = Product::all()->where('name', 'LIKE', '%' . $producto . '%');
-        $product = DB::table('products')->where('barcode', 'like', '%'.$referencia.'%')->get();
+        $product = DB::table('products')->where('barcode', 'like', '%'.$referencia.'%')->where('user_id',$id)->get();
         return $product;
     }
 
     public function buscarp(){
+        $id = Auth::id();
         $data = Input::all();
         $producto = $data["producto"];
 //            $productos = Product::all()->where('name', 'LIKE', '%' . $producto . '%');
-        $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->get();
+        $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->where('user_id',$id)->get();
         return $productos;
     }
 
@@ -91,7 +95,7 @@ class ApisController extends Controller
     public function update(Request $request){
 
         $id = $request->id;
-        $product =Product::find($id);
+        $product = Product::find($id);
 
         if ($request->hasFile('img')){
             if ($request->hasFile('img')){

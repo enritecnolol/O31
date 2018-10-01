@@ -8,6 +8,7 @@ use App\Facture;
 use App\Product;
 use DemeterChain\C;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -27,7 +28,8 @@ class IndexController extends Controller
      */
     public function index()
     {
-        $caja = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"));
+        $id = Auth::id();
+        $caja = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"))->where('user_id','==',$id);
         $productos = Product::all();
         if ($caja == '[]'){
             $cerrada = 'C';
@@ -36,7 +38,6 @@ class IndexController extends Controller
                 $cerrada = $cerrada["status"];
             }
         }
-
         return view('welcome', ['productos' => json_encode($productos)], ['caja' => json_encode($caja)])->with(compact('cerrada', $cerrada));
     }
 

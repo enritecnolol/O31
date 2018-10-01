@@ -433,7 +433,6 @@
 
                     });
                 },
-
                 buscarreferencia:function () {
                     var _this = this
                     $.ajax({
@@ -451,15 +450,18 @@
 
 
                 pfactura: function (id) {
+
                     var producto = Object.entries(this.productos)[id-1];
+
+                    console.log(producto);
 
                     this.carrito = {
                         id : producto[1].id,
                         name : producto[1].name,
                         price : producto[1].price,
-
                         count : 1
                     }
+
 
 
 
@@ -517,8 +519,6 @@
                         }
 
                     }
-
-
                 },
 
                 eliminarp: function (id) {
