@@ -453,8 +453,6 @@
 
                     var producto = Object.entries(this.productos)[id-1];
 
-                    console.log(producto);
-
                     this.carrito = {
                         id : producto[1].id,
                         name : producto[1].name,
