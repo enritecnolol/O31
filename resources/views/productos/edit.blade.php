@@ -9,9 +9,10 @@
             </div>
             <div class="modal-body">
 
-                <form action="productos" method="POST" enctype="multipart/form-data">
+                <form :action="'/anja/' + datos.id" method="POST"  enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="_method" value="PUT">
+
+
                     <div>
                         <div class="form-group">
                             <label for="cc-payment" class="control-label mb-1">Nombre</label>
@@ -41,20 +42,32 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row form-group">
+                        <div class="row form-group" v-if="!image">
                             <div class="col col-md-3">
                                 <label for="file-input" class=" form-control-label">Imagen</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="file" id="imgm" name="img" class="form-control-file">
-                            </div>
-                            <div class="text-center">
-                                <img style="width: 100px" :src="'imagenes/' + datos.img"  alt="">
+                                <input type="file" id="imagen" name="img">
+
                             </div>
                         </div>
+                        <div class="row form-group" v-else>
+                            <div class="col col-md-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <img :src="image" style="width: 100px; height: 100px"/>
+                                    </div>
+                                    <div class="col">
+                                        <img style="width: 100px; height: 100px" :src="'imagenes/' + datos.img"  alt="">
+                                    </div>
+                                </div>
+                                <button @click="removeImage">Remove image</button>
+                            </div>
+                        </div>
+
                     </div>
                     <div>
-                        <button id="payment-button" @click="updateproducto()" type="button" class="btn btn-lg btn-info btn-block">
+                        <button id="payment-button"  type="submit" class="btn btn-lg btn-info btn-block">
                             <i class="fa fa-check-square fa-lg"></i>&nbsp;
                             <span id="payment-button-amount">Guardar</span>
                             <span id="payment-button-sending" style="display:none;">Enviando…</span>

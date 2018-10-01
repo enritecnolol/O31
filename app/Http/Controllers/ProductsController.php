@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
@@ -36,10 +37,7 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-//        $validatedData = $request->validate([
-//            'nombre' => 'required|unique:posts|max:255',
-//            'precio' => 'required',
-//        ]);
+
         $product = new Product;
         if ($request->has('Cbarra') and $request->has('existencia') and $request->has('impuesto')){
 
@@ -53,6 +51,7 @@ class ProductsController extends Controller
                 $product->existence = $request->input('existencia');
                 $product->impost = $request->input('impuesto');
                 $product->status = 1;
+                $product->user_id = Auth::id();
                 $product->save();
 
             }else{
@@ -64,6 +63,7 @@ class ProductsController extends Controller
                 $product->impost = $request->input('impuesto');
                 $product->status = 1;
                 $product->img = 'default.jpg';
+                $product->user_id = Auth::id();
 //            $product->unity_id = 0;
                 $product->save();
 
@@ -81,6 +81,7 @@ class ProductsController extends Controller
                 $product->existence = 0;
                 $product->impost = 0;
                 $product->status = 1;
+                $product->user_id = Auth::id();
 //            $product->unity_id = 1;
                 $product->save();
 
@@ -92,6 +93,7 @@ class ProductsController extends Controller
                 $product->impost = 0;
                 $product->status = 1;
                 $product->img = 'default.jpg';
+                $product->user_id = Auth::id();
 //            $product->unity_id = 0;
                 $product->save();
 
@@ -105,6 +107,17 @@ class ProductsController extends Controller
 
 
     }
+    public function update(Request $request){
+
+        if ($request->hasFile('img')){
+            return 'hay';
+        }else{
+            return 'no hay';
+        }
+
+
+    }
+
 
     public function show($id)
     {

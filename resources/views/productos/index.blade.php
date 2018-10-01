@@ -43,7 +43,7 @@
                                     <td>{{ $producto->name }}</td>
                                     <td>{{$producto->barcode}}</td>
                                     <td>{{$producto->existence}}</td>
-                                    <td>{{$producto->price}}</td>
+                                    <td><strong>{{$producto->price}}</strong></td>
                                     <td>{{$producto->impost}}</td>
                                     <td>
                                         <button type="button" v-on:click="producto('<?php echo $producto->id; ?>')" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
@@ -78,19 +78,19 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="p in productos">
-                                    <td><img class="rounded-circle mx-auto d-block" :src="'imagenes/'+p.img" alt="" style="width: 60px"></td>
-                                    <td>@{{ p.name }}</td>
-                                    <td>@{{p.barcode}}</td>
-                                    <td>@{{p.existence}}</td>
-                                    <td>@{{p.price}}</td>
-                                    <td>@{{p.impost}}</td>
-                                    <td>
-                                        <button type="button" v-on:click="producto(p.id)" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                            <tr v-for="p in productos">
+                                <td><img class="rounded-circle mx-auto d-block" :src="'imagenes/'+p.img" alt="" style="width: 60px"></td>
+                                <td>@{{ p.name }}</td>
+                                <td>@{{p.barcode}}</td>
+                                <td>@{{p.existence}}</td>
+                                <td><strong>@{{p.price}}</strong></td>
+                                <td>@{{p.impost}}</td>
+                                <td>
+                                    <button type="button" v-on:click="producto(p.id)" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -103,6 +103,7 @@
 @endsection
 
 @section('scriptp')
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
         new Vue({
@@ -111,6 +112,9 @@
                 datos : [],
                 buscador:'',
                 productos: '',
+                someData:'',
+                image: '',
+                files: new FormData()
             },
             methods:{
                 producto: function (id) {
@@ -124,6 +128,32 @@
                         }
 
                     });
+                },
+
+                onFileChange(e) {
+                    var files = e.target.files || e.dataTransfer.files;
+                    if (!files.length)
+                        return;
+                    this.createImage(files[0]);
+                },
+                createImage(file) {
+                    var image = new Image();
+                    var reader = new FileReader();
+                    var vm = this;
+
+                    reader.onload = (e) => {
+                        vm.image = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                },
+
+                removeImage: function (e) {
+                    this.image = '';
+                },
+
+
+                fileChange(fileList) {
+                    this.files.append("file", fileList[0], fileList[0].name);
                 },
 
                 buscadorp:function () {
@@ -141,24 +171,6 @@
                     });
                 },
 
-                updateproducto: function () {
-
-                    $.ajax({
-                        url: '/actualizar/producto',
-                        method: 'GET',
-                        data: {
-                            data: this.datos
-                        },
-                        success:function (dato) {
-                            $('#largeModal').modal('hide');
-                            toastr.success('El producto se a Actualizado');
-                            setTimeout('document.location.reload()',2000);
-                        },
-                        error:function () {
-                            toastr.error('Sea producido un error')
-                        }
-                    });
-                }
 
             }
         })

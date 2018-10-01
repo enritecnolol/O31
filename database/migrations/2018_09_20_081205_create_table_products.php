@@ -22,6 +22,7 @@ class CreateTableProducts extends Migration
             $table->integer('existence');
             $table->integer('impost');
             $table->integer('status');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

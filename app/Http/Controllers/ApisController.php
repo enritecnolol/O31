@@ -12,22 +12,44 @@ use Illuminate\Database\Eloquent;
 
 class ApisController extends Controller
 {
-    public function actualizarp(){
+    public function actualizarp(Request $request){
 
-        $data = Input::all()["data"];
-        $id = $data["id"];
-        $producto = Product::where('id', $id)->first();
-        $producto->name = $data["name"];
-        $producto->price = $data["price"];
-        $producto->img = $data["img"];
-        $producto->barcode = $data["barcode"];
-        $producto->status = $data["status"];
-        $producto->existence = $data["existence"];
-        $producto->impost = $data["impost"];
-        $producto->update();
-        return 'Actualizado';
+        $data = Input::all();
 
+        return $request->img;
+
+        dd($request);
+
+        $file = $request->file('img');
+        $file->storeAs('/', $file->getClientOriginalName());
+        if (Input::hasFile('img')){
+            $id = $data["data"]["id"];
+            $producto = Product::where('id', $id)->first();
+            $producto->name = $data["data"]["name"];
+            $producto->price = $data["data"]["price"];
+            $producto->img = $data["data"]["img"];
+            $producto->barcode = $data["data"]["barcode"];
+            $producto->status = $data["data"]["status"];
+            $producto->existence = $data["data"]["existence"];
+            $producto->impost = $data["data"]["impost"];
+            $producto->update();
+            return 'tiene';
+        }else{
+
+            $id = $data["data"]["id"];
+            $producto = Product::where('id', $id)->first();
+            $producto->name = $data["data"]["name"];
+            $producto->price = $data["data"]["price"];
+            $producto->img = $data["data"]["img"];
+            $producto->barcode = $data["data"]["barcode"];
+            $producto->status = $data["data"]["status"];
+            $producto->existence = $data["data"]["existence"];
+            $producto->impost = $data["data"]["impost"];
+            $producto->update();
+            return 'no tiene';
+        }
     }
+
 
     public function historico(){
         $caja = Caja::all()->where('fecha_apertura', '==', date('Y-m-d'))->where('status', '==', 'A');
@@ -43,26 +65,64 @@ class ApisController extends Controller
 
     }
     public function buscarproducto(){
-            $data = Input::all();
-            $producto = $data["producto"];
+        $data = Input::all();
+        $producto = $data["producto"];
 //            $productos = Product::all()->where('name', 'LIKE', '%' . $producto . '%');
-            $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->get();
-            return $productos;
+        $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->get();
+        return $productos;
     }
     public function buscarproductoreferencia(){
-            $data = Input::all();
-            $referencia = $data["referenciah"];
+        $data = Input::all();
+        $referencia = $data["referenciah"];
 //            $productos = Product::all()->where('name', 'LIKE', '%' . $producto . '%');
-            $product = DB::table('products')->where('barcode', 'like', '%'.$referencia.'%')->get();
-            return $product;
+        $product = DB::table('products')->where('barcode', 'like', '%'.$referencia.'%')->get();
+        return $product;
     }
 
     public function buscarp(){
-            $data = Input::all();
-            $producto = $data["producto"];
+        $data = Input::all();
+        $producto = $data["producto"];
 //            $productos = Product::all()->where('name', 'LIKE', '%' . $producto . '%');
-            $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->get();
-            return $productos;
+        $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->get();
+        return $productos;
+    }
+
+
+    public function update(Request $request){
+
+        $id = $request->id;
+        $product =Product::find($id);
+
+        if ($request->hasFile('img')){
+            if ($request->hasFile('img')){
+                $file = $request->file('img');
+                $file->storeAs('/', $file->getClientOriginalName());
+                $product->name = $request->nombre;
+                $product->price = $request->precio;
+                $product->barcode = $request->Cbarra;
+                $product->img = $file->getClientOriginalName();;
+                $product->existence = $request->existencia;
+                $product->impost = $request->impuesto;
+                $product->update();
+
+            }else{
+
+                $product->name = $request->nombre;
+                $product->price = $request->precio;
+                $product->barcode = $request->Cbarra;
+                $product->existence = $request->existencia;
+                $product->impost = $request->impuesto;
+                $product->update();
+            }
+        }else{
+            $product->name = $request->nombre;
+            $product->price = $request->precio;
+            $product->barcode = $request->Cbarra;
+            $product->existence = $request->existencia;
+            $product->impost = $request->impuesto;
+            $product->update();
+        }
+        return redirect('/productos');
     }
 
 }
