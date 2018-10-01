@@ -145,6 +145,14 @@
 @section('content')
     <div id="p">
         <div class="container">
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <strong>Hola!</strong> Si tienes algun inconveniente al utilizar el sistema por favor notificalo a Soporte Tecnico
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <div class="container">
             <nav class="navbar navbar-light" style="background-color: #0069d9;">
                 <a class="navbar-brand" href="#" style="color: whitesmoke"><i class="fas fa-list-ul"></i> <strong>Productos</strong></a>
                 <input type="search" class="form-control col-md-2 pull-right right" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
