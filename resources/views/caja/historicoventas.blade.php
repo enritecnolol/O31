@@ -109,7 +109,7 @@
                     <div class="card-body">
                         <div class="text-center" style="margin-top: 10%;margin-bottom: 10%">
                             <h2>No se ha realizado ninguna venta</h2>
-                        </div>
+                        </div>h
                     </div>
                 </div>
             </template>
