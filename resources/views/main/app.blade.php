@@ -20,6 +20,7 @@
     <!-- Bootstrap CSS-->
     <link href="{{ URL::asset('bootstrap-4.1/bootstrap.min.css')}}" rel="stylesheet" media="all">
     <link href="{{ URL::asset('notificaciones/toastr.css')}}" rel="stylesheet" media="all">
+    <link href="{{ URL::asset('datepicker/css/datepicker.css')}}" rel="stylesheet" media="all">
 
     <!-- Vendor CSS-->
     <link href="{{ URL::asset('animsition/animsition.min.css')}}" rel="stylesheet" media="all">

@@ -103,8 +103,6 @@
 @endsection
 
 @section('scriptp')
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
     <script>
         new Vue({
             el: '#Vue',

@@ -52,6 +52,5 @@
             } );
 
         });
-
     </script>
 @endsection

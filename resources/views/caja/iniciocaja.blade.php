@@ -225,25 +225,28 @@
             methods:{
 
                 abrircaja:function () {
+                    if (this.valortotal < 0 ){
+                        alert('No puede en pesar debiendo')
+                    }else {
+                        $.ajax({
+                            url: '/caja/apertura',
+                            method: 'GET',
+                            data: {
+                                fecha: this.fecha,
+                                valortotal:this.valortotal,
+                                total: this.total,
+                            },
+                            success:function (dato) {
+                                toastr.success('Hemos hecho la Apertura de la Caja');
+                                location.reload();
 
-                    $.ajax({
-                        url: '/caja/apertura',
-                        method: 'GET',
-                        data: {
-                            fecha: this.fecha,
-                            valortotal:this.valortotal,
-                            total: this.total,
-                        },
-                        success:function (dato) {
-                            toastr.success('Hemos hecho la Apertura de la Caja');
-                            location.reload();
+                            },
+                            error:function (dato) {
+                                toastr.error('Ha ocurrido un error')
+                            }
 
-                        },
-                        error:function (dato) {
-                            toastr.error('Ha ocurrido un error')
-                        }
-
-                    });
+                        });
+                    }
 
                 }
             }

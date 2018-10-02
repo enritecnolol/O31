@@ -63,9 +63,22 @@ class ApisController extends Controller
                 $id = $caja->id;
             }
         }
-        return datatables(Facture::all()->where('date', '==', date('Y-m-d'))->where('caja_id', '==', $id))->toJson();
+        return Facture::all()->where('date', '==', date('Y-m-d'));
 
     }
+    public function ventasbusqueda(){
+        $ida = Auth::id();
+        $caja = DB::table('cajas')->select('id')->where('fecha_apertura', date("Y-m-d"))->where('status', 'A')->where('user_id',$ida)->latest()->take(1)->get();
+        $id = $caja[0]->id;
+        $data = Input::all();
+        $fecha = $data["fecha"];
+
+        $factures = DB::table('factures')->where('date', $fecha)->get();
+
+        return $factures;
+
+    }
+
     public function buscarproducto(){
         $id = Auth::id();
         $data = Input::all();
@@ -128,5 +141,20 @@ class ApisController extends Controller
         }
         return redirect('/productos');
     }
+     public function cuadres(){
+
+        $id = Auth::id();
+        $caja = Caja::all()->where('user_id', '==', $id);
+
+        return $caja;
+
+     }
+     public function buscarcuadre(){
+        $id = Auth::id();
+         $data = Input::all();
+         $fecha = $data["fecha"];
+         $caja = DB::table('cajas')->where('fecha_apertura', $fecha)->where('user_id', $id)->get();
+        return $caja;
+     }
 
 }

@@ -144,7 +144,15 @@ class   CajasController extends Controller
 
     }
     public function historico(){
-        return view('caja.historicoventa');
+//        $id = Auth::id();
+//        $cerrada = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"))->where('status', '==', 'A')->where('user_id',$id)->last();
+//        if ($cerrada == ''){
+//            $cerrada = 'C';
+//        }else{
+//            $cerrada = 'A';
+//        }
+
+        return view('caja.historicoventas');
     }
     public function cuadrecaja(){
 
@@ -219,6 +227,10 @@ class   CajasController extends Controller
         $caja->update();
 
         return 'actulizado';
+    }
+    public function vercuadre(){
+        return view('caja.vercuadres');
+
     }
 
 }

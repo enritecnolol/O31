@@ -19,8 +19,9 @@
 <script src="{{ URL::asset('chartjs/Chart.bundle.min.js')}}"></script>
 <script src="{{ URL::asset('select2/select2.min.js')}}">
 </script>
-
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript" src="{{ URL::asset('DataTables/datatables.min.js')}}"></script>
+<script type="text/javascript" src="{{ URL::asset('datepicker/js/bootstrap-datepicker.js')}}"></script>
 
 <!-- Main JS-->
 <script src="{{ URL::asset('js/main.js')}}"></script>

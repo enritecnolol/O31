@@ -33,4 +33,6 @@
     <!-- Main CSS-->
     <link href="{{ URL::asset('css/theme.css')}}" rel="stylesheet" media="all">
 
+    <link href="{{ URL::asset('datepicker/css/datepicker.css')}}" rel="stylesheet" media="all">
+
 </head>
