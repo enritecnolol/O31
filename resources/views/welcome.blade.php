@@ -569,6 +569,7 @@
                         }if (this.montotarjeta > this.facturatotal - this.campodinero){
                             alert('La tarjeta no puede ser mayor al precio a pagar');
                         }else{
+                            _this = this
                             $.ajax({
                                 url: '/facturacion',
                                 method: 'GET',
@@ -587,7 +588,10 @@
                                 },
                                 success:function (dato) {
                                     if (dato == 'bien'){
-                                        console.log('bien');
+
+                                        _this.list = [];
+                                        _this.carrito = {};
+
                                         $('#pago').modal('hide');
                                         toastr.options.newestOnTop = false;
                                         toastr.success('Gracias por la compra');
@@ -608,6 +612,7 @@
                         }if (this.montotarjeta == 0 && this.campodinero == 0){
                             alert('No puedes hacer una compra de valor 0');
                         }else{
+                            _this = this
                             $.ajax({
                                 url: '/facturacion',
                                 method: 'GET',
@@ -626,7 +631,10 @@
                                 },
                                 success:function (dato) {
                                     if (dato == 'bien'){
-                                        console.log('bien');
+
+                                        _this.list = [];
+                                        _this.carrito = {};
+
                                         $('#pago').modal('hide');
                                         toastr.options.newestOnTop = false;
                                         toastr.success('Gracias por la compra');
