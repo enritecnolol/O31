@@ -49,8 +49,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/caja/cuadre', 'CajasController@cuadrecaja'); // vista de el cuadre de caja
     Route::get('/caja/ver/cuadre', 'CajasController@vercuadre'); // Ver Cuadre vista
 
-
-
 });
 
 Auth::routes();

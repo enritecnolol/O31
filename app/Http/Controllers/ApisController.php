@@ -63,7 +63,15 @@ class ApisController extends Controller
                 $id = $caja->id;
             }
         }
-        return Facture::all()->where('date', '==', date('Y-m-d'));
+        $factures = Facture::all()->where('date', '==', date('Y-m-d'));
+
+        if ($factures == '[]'){
+            $facturas = 'no ventas';
+        }else{
+            $facturas = $factures;
+        }
+
+        return $facturas;
 
     }
     public function ventasbusqueda(){

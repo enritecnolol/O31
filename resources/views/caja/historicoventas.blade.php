@@ -80,6 +80,7 @@
             <nav class="navbar navbar-light" style="background-color: #0069d9;">
                 <a class="navbar-brand" href="#" style="color: whitesmoke"><i class="fas fa-clipboard-list"></i> Historial de Ventas</a>
                 <input v-if="ventas == ''" disabled type="search" class="form-control col-md-3 "  placeholder="Buscar..." name="" >
+                <input v-else-if="ventas == 'no ventas'" disabled type="search" class="form-control col-md-3 "  placeholder="Buscar..." name="" >
                 <input v-else type="date" class="form-control col-md-3" id="datepicker" v-model="buscador"  v-on:input.self="ventasbusc(buscador)" placeholder="Buscar..." name="" >
             </nav>
 
@@ -96,6 +97,18 @@
                         <div class="text-center">
 
                             <button type="button" @click="cargarventas()" class="btn btn-lg btn-outline-success">Ver</button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template v-else-if="ventas == 'no ventas'">
+                <div class="card">
+                    <div class="card-header">
+                        <Strong>Historial de Ventas</Strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center" style="margin-top: 10%;margin-bottom: 10%">
+                            <h2>No se ha realizado ninguna venta</h2>
                         </div>
                     </div>
                 </div>
