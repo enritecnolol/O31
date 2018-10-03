@@ -112,7 +112,9 @@
                 productos: '',
                 someData:'',
                 image: '',
-                files: new FormData()
+                files: new FormData(),
+                tipop: '',
+                no : 'no'
             },
             methods:{
                 producto: function (id) {

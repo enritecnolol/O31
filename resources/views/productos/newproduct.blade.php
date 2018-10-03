@@ -8,12 +8,6 @@
                 </button>
             </div>
             <div class="modal-body" >
-                <div class="alert alert-info alert-dismissible fade show" role="alert">
-                    <strong>Nuevo producto!</strong> Si el producto depende de ingredientes, en codigo de barrar coloque (no), existencia (0), impuesto (0).
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
                 <div class="card" style="background: white">
                     <div class="card-body">
                         <div class="card-title">
@@ -28,25 +22,39 @@
                             </div>
                             <div class="form-group">
                                 <label for="precio" class="control-label mb-1" >Precio</label>
-                                <input type="number" id="precio" min="0" name="precio" required placeholder="$:" class="input-sm form-control-sm form-control">
+                                <input type="number" id="precio" min="0" name="precio" required placeholder="$" class="input-sm form-control-sm form-control">
                             </div>
-                            <div class="form-group">
-                                <label for="Cbarra" class="control-label mb-1" >Codigo de barra</label>
-                                <input type="text" id="Cbarra"  required name="Cbarra" placeholder="" class="input-sm form-control-sm form-control">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="Cbarra" class="control-label mb-1" >Codigo de barra</label>
+                                        <input type="text" v-if="tipop == 'simple'" id="Cbarra"  required name="Cbarra"  class="input-sm form-control-sm form-control">
+                                        <input type="text" id="Cbarra" v-else-if="tipop == 'compuesto'" value="compuesto" readonly name="Cbarra" class="input-sm form-control-sm form-control">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label for="tipop" class="control-label mb-1" >tipo productos <span style="color: red">*</span></label>
+                                    <select required v-model="tipop" class="form-control" name="tipop">
+                                        <option value="">--selecciona--</option>
+                                        <option value="compuesto">Compuesto</option>
+                                        <option value="simple">Simple</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="existencia" class="control-label mb-1">Existencia</label>
-                                        <input id="existencia" min="0" name="existencia" required type="number" class="form-control cc-exp" value="0" data-val="true" data-val-required="Es necesario es te dato"
-                                               data-val-cc-exp="Please enter a valid month and year" placeholder="" >
+                                        <input id="existencia" min="0" v-if="tipop == 'compuesto'" readonly name="existencia" required type="number" class="form-control cc-exp" value="0" data-val="true">
+                                        <input id="existencia" min="0" v-else name="existencia" required type="number" class="form-control cc-exp" value="0" data-val="true">
                                         <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <label for="impuesto" class="control-label mb-1" >Impuesto</label>
                                     <div class="input-group">
-                                        <input id="impuesto" min="0" required name="impuesto" type="number" class="form-control cc-cvc" value="0">
+                                        <input id="impuesto" min="0" v-if="tipop == 'compuesto'" readonly value="0" required name="impuesto" type="number" class="form-control cc-cvc">
+                                        <input id="impuesto" min="0" v-else required name="impuesto" value="0" type="number" class="form-control cc-cvc">
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +63,7 @@
                                     <label for="file-input" class=" form-control-label">Imagen</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="file" id="file-input"  name="img" class="form-control-file">
+                                    <input type="file" id="file-input" name="img" class="form-control-file" accept="image/gif, image/jpeg, image/png">
                                 </div>
                             </div>
                             <div>

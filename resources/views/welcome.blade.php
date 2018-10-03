@@ -76,7 +76,7 @@
             border-radius: 4px;
             font-size: 16px;
             background-color: white;
-            background-image: url('searchicon.png');
+            background-image: url('');
             background-position: 10px 10px;
             background-repeat: no-repeat;
             padding: 12px 20px 12px 40px;
@@ -159,7 +159,7 @@
 
             </nav>
         </div>
-        @include('productos.newproduct')
+        {{--@include('productos.newproduct')--}}
         <br>
         <div class="section__content section__content--p30">
             <div class="container-fluid">
@@ -184,10 +184,10 @@
                                 <div class="overlay1" v-if="p.existence > 0">
                                     <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
                                 </div>
-                                <div class="overlay1" v-else-if="p.existence == 0 && p.barcode =='no'">
+                                <div class="overlay1" v-else-if="p.existence == 0 && p.barcode =='compuesto'">
                                     <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
                                 </div>
-                                <div class="overlay2" v-else-if="p.existence == 0 && p.barcode !='no'">
+                                <div class="overlay2" v-else-if="p.existence == 0 && p.barcode !='compuesto'">
                                     <div class="text1"><i class="fas fa-times fa-3x" id="plus"></i></div>
                                 </div>
                             </div>
@@ -212,10 +212,10 @@
                                 <div class="overlay1" v-if="p.existence > 0">
                                     <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
                                 </div>
-                                <div class="overlay1" v-else-if="p.existence == 0 && p.barcode =='no'">
+                                <div class="overlay1" v-else-if="p.existence == 0 && p.barcode =='compuesto'">
                                     <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
                                 </div>
-                                <div class="overlay2" v-else-if="p.existence == 0 && p.barcode !='no'">
+                                <div class="overlay2" v-else-if="p.existence == 0 && p.barcode !='compuesto'">
                                     <div class="text1"><i class="fas fa-times fa-3x" id="plus"></i></div>
                                 </div>
                             </div>
@@ -366,14 +366,15 @@
             if(e.which == 35){
                 $('#pago').modal('show');
             }
-            if(e.which == 36){
-                $('#crear').modal('show');
-            }if(e.which == 187){
-                $('#buscarp').modal('show');
-            }
-            if(e.which == 192){
-                location.href ="/caja/cuadre";
-            }
+            // if(e.which == 36){
+            //     $('#crear').modal('show');
+            //
+            // }if(e.which == 187){
+            //     $('#buscarp').modal('show');
+            // }
+            // if(e.which == 192){
+            //     location.href ="/caja/cuadre";
+            // }
         });
         $(function () {
             $('#myModal').modal('show');
@@ -499,7 +500,7 @@
                                 return dato
                             });
 
-                        }if(cant < 0 && bar == 'no'){
+                        }if(cant < 0 && bar == 'compuesto'){
 
                             this.list.map(function (dato) {
                                 if (dato.id == listid) {
@@ -509,13 +510,13 @@
                                 return dato
                             });
 
-                        }if(cant < 0 && bar != 'no'){
+                        }if(cant < 0 && bar != 'compuesto'){
 
                             alert('no tiene mas producto de este');
                         }
 
                     }else{
-                        if(cantidad == 0 && bar == 'no'){
+                        if(cantidad == 0 && bar == 'compuesto'){
                             this.list.push(this.carrito)
                         }
                         if(cantidad == 0){

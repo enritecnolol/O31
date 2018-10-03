@@ -38,7 +38,6 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-
         $product = new Product;
         if ($request->has('Cbarra') or $request->has('existencia') or $request->has('impuesto')){
 
