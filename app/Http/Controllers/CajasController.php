@@ -144,15 +144,8 @@ class   CajasController extends Controller
 
     }
     public function historico(){
-//        $id = Auth::id();
-//        $cerrada = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"))->where('status', '==', 'A')->where('user_id',$id)->last();
-//        if ($cerrada == ''){
-//            $cerrada = 'C';
-//        }else{
-//            $cerrada = 'A';
-//        }
 
-        return view('caja.historicoventas');
+        return view('caja.historicoventa');
     }
     public function cuadrecaja(){
 

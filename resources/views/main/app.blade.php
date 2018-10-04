@@ -28,6 +28,7 @@
     <link href="{{ URL::asset('wow/animate.css')}}" rel="stylesheet" media="all">
     <link href="{{ URL::asset('css-hamburgers/hamburgers.min.css')}}" rel="stylesheet" media="all">
     <link href="{{ URL::asset('slick/slick.css')}}" rel="stylesheet" media="all">
+    <link href="{{ URL::asset('slick/slick-theme.css')}}" rel="stylesheet" media="all">
     <link href="{{ URL::asset('select2/select2.min.css')}}" rel="stylesheet" media="all">
     <link href="{{ URL::asset('perfect-scrollbar/perfect-scrollbar.css')}}" rel="stylesheet" media="all">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('DataTables/datatables.min.css') }}"/>
@@ -89,6 +90,11 @@
                                                 </a>
                                             </div>
                                             <div class="account-dropdown__item">
+                                                <a href="/categorias">
+                                                    <i class="fas fa-clipboard-check"></i></i>Categorias
+                                                </a>
+                                            </div>
+                                            <div class="account-dropdown__item">
                                                 <a href="/caja">
                                                     <i class="zmdi zmdi-money-box"></i>Caja
                                                 </a>
@@ -121,7 +127,7 @@
         <!-- HEADER DESKTOP-->
         <!-- MENU SIDEBAR-->
         <div id="Vue">
-            <aside class="menu-sidebar2 d-none d-lg-block" style="background: #4272d7">
+            <aside class="menu-sidebar2 d-none d-lg-block" style="background: url({{ URL::asset('fondo2.png')}});">
                 <div class="logo">
                     <a href="/">
                         <img style="width: 80px" src="{{ URL::asset('imagenes/logo.png')}}" alt="Logo" /> <span style="color: white; font-size: x-large">Cafeteria</span>

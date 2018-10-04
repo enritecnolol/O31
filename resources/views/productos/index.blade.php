@@ -13,7 +13,7 @@
             <a class="navbar-brand" href="#" style="color: whitesmoke"><i class="fas fa-list-ul"></i> Lista de Productos</a>
             <input type="search" class="form-control col-md-3 " v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
 
-            <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#crear"><i class="fas fa-plus"></i> Nuevo Producto</button>
+            <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#crear" @click="cargarcategoria()"><i class="fas fa-plus"></i> Nuevo Producto</button>
         </nav>
     </div>
     @include('productos.newproduct')
@@ -95,14 +95,77 @@
                         </table>
                     </div>
                     <!-- END DATA TABLE-->
+
                 </div>
             </div>
         </div>
-        @include('productos.edit')
     </div>
+    {{--<div class="container">--}}
+        {{--<div class="card">--}}
+            {{--<h5 class="card-header">productos</h5>--}}
+            {{--<div class="card-body">--}}
+                {{--<div class="container-fluid">--}}
+                    {{--<table id="productos" class="table table-hover">--}}
+                        {{--<thead>--}}
+                        {{--<tr>--}}
+                            {{--<th></th>--}}
+                            {{--<th>Nombre</th>--}}
+                            {{--<th>Codigo</th>--}}
+                            {{--<th>Precio</th>--}}
+                            {{--<th>Editar</th>--}}
+                        {{--</tr>--}}
+                        {{--</thead>--}}
+                    {{--</table>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+    @include('productos.edit')
+    @include('categoria.nueva')
 @endsection
 
 @section('scriptp')
+    <script !src="">
+        var error = '{!! $errors !!}';
+
+
+        if (error != '[]') {
+            $(function () {
+                $('#crear').modal('show');
+            })
+        }
+
+    </script>
+
+    {{--<script !src="">--}}
+        {{--$(document).ready(function () {--}}
+            {{--$('#productos').DataTable({--}}
+                {{--serverSide: true,--}}
+                {{--ajax: '/lista/productos',--}}
+                {{--// method:'POST',--}}
+                {{--columns: [--}}
+                    {{--{data: "img",--}}
+                    {{--"render": function (data) {--}}
+                        {{--var data;--}}
+                        {{--return '<img class="rounded-circle mx-auto d-block" style="width: 60px; height: 60px" src="imagenes/'+data+'">'--}}
+                    {{--}},--}}
+                    {{--{data: "name"},--}}
+                    {{--{data: "barcode"},--}}
+                    {{--{data: "price"},--}}
+                    {{--// {"defaultContent": '<button type="button" v-on:click="producto('+data+')" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">'+'<i class="fas fa-edit"></i>'+'</button>'},--}}
+                    {{--{data:"id",--}}
+                    {{--"render":function (data) {--}}
+                        {{--var data;--}}
+                        {{--return '<button type="button" v-on:click="producto('+data+')" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">'+'<i class="fas fa-edit"></i>'+'</button>'--}}
+
+                    {{--}}--}}
+                {{--]--}}
+
+            {{--} );--}}
+
+        {{--});--}}
+    {{--</script>--}}
+
     <script>
         new Vue({
             el: '#Vue',
@@ -114,7 +177,10 @@
                 image: '',
                 files: new FormData(),
                 tipop: '',
-                no : 'no'
+                no : 'no',
+                nombrecategoria:'',
+                codigocategoria: '',
+                listacategoria: []
             },
             methods:{
                 producto: function (id) {
@@ -169,6 +235,33 @@
                         }
 
                     });
+                },
+
+                crearcategoria: function (id) {
+                    var _this = this;
+                    axios.post('/crear/categoria', {
+                        nombre: this.nombrecategoria,
+                        codigo: this.codigocategoria
+                    })
+                        .then(function (response) {
+                            console.log(response);
+                            $('#nuevacategoria').modal('hide');
+                            toastr.success('categoria Creada');
+                            _this.cargarcategoria();
+                        })
+                        .catch(function (error) {
+                            toastr.warning('El codigo o el nombre de la categoria esta registrado');
+                        });
+                },
+                cargarcategoria: function () {
+                    var _this = this;
+
+                    axios.post('/ver/categoria')
+                        .then(function (response) {
+                            _this.listacategoria = response["data"];
+                        })
+                        .catch(function (error) {
+                        });
                 },
 
 

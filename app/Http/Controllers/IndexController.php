@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Caja;
+use App\Categoria;
 use App\Detail;
 use App\Facture;
 use App\Product;
@@ -38,7 +39,8 @@ class IndexController extends Controller
                 $cerrada = $cerrada["status"];
             }
         }
-        return view('welcome', ['productos' => json_encode($productos)], ['caja' => json_encode($caja)])->with(compact('cerrada', $cerrada));
+        $categoria = Categoria::all();
+        return view('welcome', ['productos' => json_encode($productos)], ['caja' => json_encode($caja)])->with(compact('cerrada', $cerrada))->with(compact('categoria', $categoria));
     }
 
     /**
@@ -103,28 +105,28 @@ class IndexController extends Controller
             $detalle->facture_id = $idfacture->last()->id;
 
 
-            $id = $d["id"];
-            $product = DB::table('products')->select('existence')->where('id', $id)->first();
-            $existencia = $product->existence;
-            $resta = $existencia - $d["count"];
-
-
-            if ($resta < 0){
-                $resta = 0;
-                $productupdate = Product::where('id', $d["id"])->first();
-                $productupdate->existence = $resta;
-                $productupdate->update();
-
+//            $id = $d["id"];
+//            $product = DB::table('products')->select('existence')->where('id', $id)->first();
+//            $existencia = $product->existence;
+//            $resta = $existencia - $d["count"];
 //
-
-            }else{
-
-                $productupdate = Product::where('id', $d["id"])->first();
-                $productupdate->existence = $resta;
-                $productupdate->update();
-
-            }
-
+//
+//            if ($resta < 0){
+//                $resta = 0;
+//                $productupdate = Product::where('id', $d["id"])->first();
+//                $productupdate->existence = $resta;
+//                $productupdate->update();
+//
+////
+//
+//            }else{
+//
+//                $productupdate = Product::where('id', $d["id"])->first();
+//                $productupdate->existence = $resta;
+//                $productupdate->update();
+//
+//            }
+//
             $detalle->save();
 
         }

@@ -39,7 +39,9 @@
                 serverSide: true,
                 order: [[ 0, "desc" ]],
                 ajax: '/historico/venta',
+                // method:'POST',
                 columns: [
+
                     {data: "id"},
                     {data: "box"},
                     {data: "client"},

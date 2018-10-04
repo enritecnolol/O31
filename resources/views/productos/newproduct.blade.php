@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body" >
-                <div class="card" style="background: white">
+                <div class="card" style="background: white" @mousemove="cargarcategoria()">
                     <div class="card-body">
                         <div class="card-title">
                             <h3 class="text-center title-2" style="color: #0069d9">Agregar Producto</h3>
@@ -18,52 +18,63 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="form-group">
                                 <label for="cc-payment" class="control-label mb-1" >Nombre</label>
-                                <input id="cc-pament" name="nombre" minlength="0" required type="text" class="form-control" aria-required="true" aria-invalid="false" value="">
+                                <input id="cc-pament" name="nombre" minlength="0" required type="text" class="form-control" aria-required="true" aria-invalid="false" value="{{ old('nombre') }}">
                             </div>
                             <div class="form-group">
                                 <label for="precio" class="control-label mb-1" >Precio</label>
-                                <input type="number" id="precio" min="0" name="precio" required placeholder="$" class="input-sm form-control-sm form-control">
+                                <input type="number" id="precio" min="0" value="{{ old('precio') }}" name="precio" required placeholder="$" class="input-sm form-control-sm form-control">
                             </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="Cbarra" class="control-label mb-1" >Codigo de barra</label>
-                                        <input type="text" v-if="tipop == 'simple'" id="Cbarra"  required name="Cbarra"  class="input-sm form-control-sm form-control">
-                                        <input type="text" id="Cbarra" v-else-if="tipop == 'compuesto'" value="compuesto" readonly name="Cbarra" class="input-sm form-control-sm form-control">
+
+                            <div class="form-group">
+                                <label for="Cbarra" class="control-label mb-1" >codigo</label>
+                                <input type="text" id="Cbarra"  required name="barcode"  value="{{ old('barcode') }}" class="input-sm form-control-sm form-control">
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <p>El codigo ya es existente</p>
                                     </div>
-                                </div>
-                                <div class="col-6">
-                                    <label for="tipop" class="control-label mb-1" >tipo productos <span style="color: red">*</span></label>
-                                    <select required v-model="tipop" class="form-control" name="tipop">
-                                        <option value="">--selecciona--</option>
-                                        <option value="compuesto">Compuesto</option>
-                                        <option value="simple">Simple</option>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Categoria</label>
+                                {{--<label class="sr-only" for="inlineFormInputGroup">Categoria</label>--}}
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <button type="button" data-toggle="modal" data-target="#nuevacategoria"><span style="color: green"><i class="fas fa-plus"></i></span></button>
+                                        </div>
+                                    </div>
+
+                                    <select class="form-control" name="categoria" id="exampleFormControlSelect1">
+                                        <option value="">-selecciona-</option>
+                                        <template v-for="c in listacategoria">
+                                            <option :value="c.id" >@{{ c.nombre }}</option>
+                                        </template>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="existencia" class="control-label mb-1">Existencia</label>
-                                        <input id="existencia" min="0" v-if="tipop == 'compuesto'" readonly name="existencia" required type="number" class="form-control cc-exp" value="0" data-val="true">
-                                        <input id="existencia" min="0" v-else name="existencia" required type="number" class="form-control cc-exp" value="0" data-val="true">
-                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <label for="impuesto" class="control-label mb-1" >Impuesto</label>
-                                    <div class="input-group">
-                                        <input id="impuesto" min="0" v-if="tipop == 'compuesto'" readonly value="0" required name="impuesto" type="number" class="form-control cc-cvc">
-                                        <input id="impuesto" min="0" v-else required name="impuesto" value="0" type="number" class="form-control cc-cvc">
-                                    </div>
-                                </div>
-                            </div>
+
+                            {{--<div class="row">--}}
+                            {{--<div class="col-6">--}}
+                            {{--<div class="form-group">--}}
+                            {{--<label for="existencia" class="control-label mb-1">Existencia</label>--}}
+                            {{--<input id="existencia" min="0" readonly name="existencia" required type="number" class="form-control cc-exp" value="0" data-val="true">--}}
+                            {{--<span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>--}}
+                            {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-6">--}}
+                            {{--<label for="impuesto" class="control-label mb-1" >Impuesto</label>--}}
+                            {{--<div class="input-group">--}}
+                            {{--<input id="impuesto" min="0" readonly value="0" required name="impuesto" type="number" class="form-control cc-cvc">--}}
+                            {{--</div>--}}
+                            {{--</div>--}}
+                            {{--</div>--}}
+
                             <div class="row form-group">
                                 <div class="col col-md-3">
                                     <label for="file-input" class=" form-control-label">Imagen</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="file" id="file-input" name="img" class="form-control-file" accept="image/gif, image/jpeg, image/png">
+                                    <input type="file" id="file-input" value="{{ old('img') }}" name="img" class="form-control-file" accept="image/gif, image/jpeg, image/png">
                                 </div>
                             </div>
                             <div>
@@ -75,7 +86,6 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>

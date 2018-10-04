@@ -39,6 +39,11 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         $product = new Product;
+
+        $request->validate([
+            'barcode' => 'bail|required|unique:products|max:255',
+        ]);
+
         if ($request->has('Cbarra') or $request->has('existencia') or $request->has('impuesto')){
 
             if ($request->hasFile('img')){
@@ -46,24 +51,26 @@ class ProductsController extends Controller
                 $file->storeAs('/', $file->getClientOriginalName());
                 $product->name = $request->input('nombre');
                 $product->price = $request->input('precio');
-                $product->barcode = $request->input('Cbarra');
+                $product->barcode = $request->input('barcode');
                 $product->img = $file->getClientOriginalName();
-                $product->existence = $request->input('existencia');
-                $product->impost = $request->input('impuesto');
+                $product->existence = 0;
+                $product->impost = 0;
                 $product->status = 1;
                 $product->user_id = Auth::id();
+                $product->categoria_id = $request->input('categoria');
                 $product->save();
 
             }else{
 
                 $product->name = $request->input('nombre');
                 $product->price = $request->input('precio');
-                $product->barcode = $request->input('Cbarra');
-                $product->existence = $request->input('existencia');
-                $product->impost = $request->input('impuesto');
+                $product->barcode = $request->input('barcode');
+                $product->existence = 0;
+                $product->impost = 0;
                 $product->status = 1;
                 $product->img = 'default.jpg';
                 $product->user_id = Auth::id();
+                $product->categoria_id = $request->input('categoria');
 //            $product->unity_id = 0;
                 $product->save();
 
@@ -76,25 +83,25 @@ class ProductsController extends Controller
 
                 $product->name = $request->input('nombre');
                 $product->price = $request->input('precio');
-                $product->barcode = time();
+                $product->barcode = $request->input('barcode');
                 $product->img = $file->getClientOriginalName();
                 $product->existence = 0;
                 $product->impost = 0;
                 $product->status = 1;
                 $product->user_id = Auth::id();
-//            $product->unity_id = 1;
+                $product->categoria_id = $request->input('categoria');
                 $product->save();
 
             }else{
                 $product->name = $request->input('nombre');
                 $product->price = $request->input('precio');
-                $product->barcode = time();
+                $product->barcode = $request->input('barcode');
                 $product->existence = 0;
                 $product->impost = 0;
                 $product->status = 1;
                 $product->img = 'default.jpg';
                 $product->user_id = Auth::id();
-//            $product->unity_id = 0;
+                $product->categoria_id = $request->input('categoria');
                 $product->save();
 
             }

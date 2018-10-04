@@ -24,7 +24,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/facturacion', 'IndexController@store');// api para mandar datos de factura
 //    Route::post('actualizar/producto', 'ApisController@actualizarp'); // api para actualizar los productos
     Route::get('/cierrecaja', 'CajasController@cerrarcaja');// api para cerrar la caja en BD
-    Route::post('/historico/venta', 'ApisController@historico');// api para cerrar la caja en BD
+    Route::get('/historico/venta', 'ApisController@historico');// api para cerrar la caja en BD
+    Route::get('/lista/productos', 'ApisController@productos');// api para cerrar la caja en BD
     Route::post('/historico/venta/busqueda', 'ApisController@ventasbusqueda');// api para cerrar la caja en BD
     Route::get('/caja/cuadrarcaja', 'CajasController@cuadrarcj');//api para guardar el cuadre de la casa
     Route::get('/buscar/producto', 'ApisController@buscarproducto'); // api para buscar producto
@@ -32,7 +33,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/buscar/producto/referencia', 'ApisController@buscarproductoreferencia'); // api para buscar producto
     Route::post('anja/{id}', 'ApisController@update' );// api para actualizar los productos
 
+    Route::get('ver/categoria/get', 'ApisController@cargarcategoria' );// api para actualizar los productos
+
+    ///////////////////////////////////////-Categoria-////////////////////////////////////////////////////
+    Route::post('/crear/categoria', 'ApisController@crearcategoriarapida');// api para agregar categoria rapido en productos
+    Route::post('/ver/categoria', 'ApisController@cargarcategoria');// api ver categoria
+    Route::post('vender/productos/categoria', 'ApisController@productoscategoria' );// api para sacar las categoria en la pantalla de vender
+    Route::get('productos/categoria', 'ApisController@productosporcategoria' );//productos por categoria
+
     ///////////////////////////////////////-Cuadre-/////////////////////////////////////////////////////////
+    ///
     Route::post('/caja/cuadres/ver', 'ApisController@buscarcuadre'); // Ver Cuadre vista
     Route::post('/caja/cuadres', 'ApisController@cuadres'); // Ver Cuadre vista
 
@@ -40,6 +50,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     /*=================================\Productos/======================================================*/
     Route::resource('/productos', 'ProductsController'); // controller de manejo de los productos
+
+    /*=================================\Categorias/======================================================*/
+    Route::get('categorias', 'CategoriasController@index'); // controller de manejo de los productos
+    Route::post('categorias/nueva', 'CategoriasController@nuevacategoria'); // controller de manejo de los productos
+    Route::post('categorias/edit', 'CategoriasController@editarcategoria'); // controller de manejo de los productos
+    Route::get('categoria/editar/{id}', 'CategoriasController@buscarcategoria'); // controller de manejo de los productos
+
 
     /*=================================\CAJA/======================================================*/
     Route::get('/caja', 'CajasController@index'); // controller para la caja

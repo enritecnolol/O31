@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Caja;
+use App\Categoria;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\Facture;
 use Illuminate\Database\Eloquent;
+use Validator;
+
 
 class ApisController extends Controller
 {
@@ -53,25 +56,8 @@ class ApisController extends Controller
 
 
     public function historico(){
-        $ida = Auth::id();
-        $caja = Caja::all()->where('fecha_apertura', '==', date('Y-m-d'))->where('status', '==', 'A')->where('user_id',$ida);
 
-        if ($caja == '[]'){
-            $id = 0;
-        }else{
-            foreach ($caja as $caja){
-                $id = $caja->id;
-            }
-        }
-        $factures = Facture::all()->where('date', '==', date('Y-m-d'));
-
-        if ($factures == '[]'){
-            $facturas = 'no ventas';
-        }else{
-            $facturas = $factures;
-        }
-
-        return $facturas;
+        return datatables(Facture::all())->toJson();
 
     }
     public function ventasbusqueda(){
@@ -126,8 +112,9 @@ class ApisController extends Controller
                 $product->price = $request->precio;
                 $product->barcode = $request->Cbarra;
                 $product->img = $file->getClientOriginalName();;
-                $product->existence = $request->existencia;
-                $product->impost = $request->impuesto;
+                $product->existence = 0;
+                $product->impost = 0;
+                $product->categoria_id = $request->categoria;
                 $product->update();
 
             }else{
@@ -135,34 +122,77 @@ class ApisController extends Controller
                 $product->name = $request->nombre;
                 $product->price = $request->precio;
                 $product->barcode = $request->Cbarra;
-                $product->existence = $request->existencia;
-                $product->impost = $request->impuesto;
+                $product->existence = 0;
+                $product->impost = 0;
+                $product->categoria_id = $request->categoria;
                 $product->update();
             }
         }else{
             $product->name = $request->nombre;
             $product->price = $request->precio;
             $product->barcode = $request->Cbarra;
-            $product->existence = $request->existencia;
-            $product->impost = $request->impuesto;
+            $product->existence = 0;
+            $product->impost = 0;
+            $product->categoria_id = $request->categoria;
             $product->update();
         }
         return redirect('/productos');
     }
-     public function cuadres(){
+    public function cuadres(){
 
         $id = Auth::id();
         $caja = Caja::all()->where('user_id', '==', $id);
 
         return $caja;
 
-     }
-     public function buscarcuadre(){
+    }
+    public function buscarcuadre(){
         $id = Auth::id();
-         $data = Input::all();
-         $fecha = $data["fecha"];
-         $caja = DB::table('cajas')->where('fecha_apertura', $fecha)->where('user_id', $id)->get();
+        $data = Input::all();
+        $fecha = $data["fecha"];
+        $caja = DB::table('cajas')->where('fecha_apertura', $fecha)->where('user_id', $id)->get();
         return $caja;
-     }
+    }
+
+    public function crearcategoriarapida(Request $request){
+
+        $data = $this->validate($request, [
+            'nombre' => 'required|unique:categorias|max:255',
+            'codigo' => 'required|unique:categorias',
+        ]);
+
+
+        $categoria = new Categoria;
+
+        $categoria->nombre = $data["nombre"];
+        $categoria->codigo = $data["codigo"];
+        $categoria->img = 'default.jpg';
+        $categoria->user_id = Auth::id();
+        $categoria->save();
+
+        return 'guardado';
+
+
+
+    }
+    public function cargarcategoria(){
+        $id = Auth::id();
+        $categoria = Categoria::all()->where('user_id', '==', $id);
+
+        return $categoria;
+    }
+    public function productos(){
+        return datatables(Product::all()->where('user_id', '==', Auth::id()))->toJson();
+    }
+
+    public function productoscategoria(Request $request){
+        return $request;
+    }
+
+    public function productosporcategoria(Request $request){
+
+        $productos = Product::all()->where('categoria_id', '==', $request->id)->where('user_id', '==', Auth::id());
+        return $productos;
+    }
 
 }

@@ -2,24 +2,32 @@
     <nav class="navbar-sidebar">
         <ul class="list-unstyled navbar__list">
             <li>
-                <a href="/productos" style="color: whitesmoke">
-                    <i class="fas fa-utensils"></i>PRODUCTOS</a>
-            </li>
-            <li class="">
-                <a href="/caja" style="color: whitesmoke">
-                    <i class="fas fa-folder-open"></i>APERTURA DE CAJA</a>
-            </li>
-            <li class="">
-                <a href="/caja/historico/ventas" style="color: whitesmoke">
-                    <i class="fas fa-book"></i>HISTORIAL DE VENTAS</a>
+                <a href="/productos" >
+                    <i class="fas fa-utensils"></i><strong>PRODUCTOS</strong></a>
             </li>
             <li>
-                <a href="/cierre/caja" style="color: whitesmoke">
-                    <i class="fas fa-inbox"></i>CIERRE DE CAJAS</a>
+                <a href="/categorias" >
+                    <i class="fas fa-clipboard-check"></i><strong>CATEGORIAS</strong></a>
             </li>
             <li>
-                <a href="/caja/cuadre" style="color: whitesmoke">
-                    <i class="fa fa-gavel"></i>CUADRE DE CAJA</a>
+                <a href="/" >
+                    <i class="fas fa-shopping-cart"></i><strong>VENDER</strong></a>
+            </li>
+            <li class="">
+                <a href="/caja" >
+                    <i class="fas fa-folder-open"></i><strong>APERTURA DE CAJA</strong></a>
+            </li>
+            <li class="">
+                <a href="/caja/historico/ventas" >
+                    <i class="fas fa-book"></i><strong>HISTORIAL DE VENTAS</strong></a>
+            </li>
+            <li>
+                <a href="/cierre/caja" >
+                    <i class="fas fa-inbox"></i><strong>CIERRE DE CAJAS</strong></a>
+            </li>
+            <li>
+                <a href="/caja/cuadre" >
+                    <i class="fa fa-gavel"></i><strong>CUADRE DE CAJA</strong></a>
             </li>
         </ul>
     </nav>

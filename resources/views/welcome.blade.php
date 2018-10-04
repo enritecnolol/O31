@@ -61,7 +61,7 @@
         .text1 {
             color: white;
             position: absolute;
-            margin: 41%;
+            margin: 40%;
 
         }
         .image1 {
@@ -94,7 +94,7 @@
 
     <div class="container">
         <div class="card-title">
-            <h3 class="text-center title-2" style="padding-top: 10px; color: white">Factura</h3>
+            <h3 class="text-center title-2" style="padding-top: 10px;">Factura</h3>
         </div>
         <form action="" method="post" novalidate="novalidate">
             <div class="form-group has-success">
@@ -102,38 +102,38 @@
                     <table class="table table-sm">
                         <thead>
                         <tr>
-                            <th style="color: white">Producto</th>
-                            <th style="color: white">Cant.</th>
-                            <th style="color: white">Total</th>
-                            <th style="color: white"></th>
+                            <th>Producto</th>
+                            <th >Cant.</th>
+                            <th >Total</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="item in list">
-                            <th style="color: white">@{{item.name}}</th>
-                            <td class="text-center" style="color: white">@{{item.count}}</td>
-                            <td class="text-center" style="color: white">@{{item.price}}</td>
+                            <th>@{{item.name}}</th>
+                            <td class="text-center" >@{{item.count}}</td>
+                            <td class="text-center" >@{{item.price}}</td>
                             <td><button type="button" class="far fa-trash-alt" style="color: #ffc30e" @click="eliminarp(item.id)"></button></td>
                         </tr>
                         </tbody>
                     </table>
                     <div v-if="cerrada == 'A' && facturatotal > 0" style="position: fixed;bottom:10px; width: 250px">
-                        <button data-toggle="modal" data-target="#pago" type="button" class="btn btn-lg btn-info btn-block">
+                        <button data-toggle="modal" data-target="#pago" type="button" style="height: 130px" class="btn btn-lg btn-info btn-block">
                             <i class="fa fa-money-bill-alt fa-lg"></i>&nbsp;
-                            <span id="payment-button-amount">Pagar $: @{{ facturatotal }}</span>
+                            <span id="payment-button-amount" style="font-size: 24px"><strong>Pagar $: </strong><span style="color: red;font-size: 24px">@{{ facturatotal }}</span></span>
                             <span id="payment-button-sending" style="display:none;">Sending…</span>
                         </button>
                     </div>
-                    <div v-else-if="cerrada == 'A' && facturatotal == 0" style="position: fixed;bottom:10px; width: 250px">
-                        <button data-toggle="modal" disabled data-target="#pago" type="button" class="btn btn-lg btn-info btn-block">
+                    <div v-else-if="cerrada == 'A' && facturatotal == 0" style="position: fixed;bottom:30px; width: 250px">
+                        <button data-toggle="modal" disabled data-target="#pago" type="button" style="height: 130px" class="btn btn-lg btn-info btn-block">
                             <i class="fa fa-money-bill-alt fa-lg"></i>&nbsp;
-                            <span id="payment-button-amount">Pagar $: @{{ facturatotal }}</span>
+                            <span id="payment-button-amount" style="font-size: 24px"><strong>Pagar $: </strong><span style="color: red;font-size: 24px">@{{ facturatotal }}</span></span>
                             <span id="payment-button-sending" style="display:none;">Sending…</span>
                         </button>
                     </div>
                     <div v-else style="position: fixed;bottom:10px; width: 250px">
-                        <h4 style="color: red">Caja no esta abierta</h4>
-                        <p style="font-size: small;color:white;">Opciones => Caja => Apertura Caja </p>
+                        <h4 style="color: red; font-size: 24px">Caja no esta abierta</h4>
+                        <p style="font-size: small;font-size: 22px">Opciones => Caja => Apertura Caja </p>
                     </div>
                 </div>
             </div>
@@ -143,7 +143,7 @@
 
 @endsection
 @section('content')
-    <div id="p">
+    <div id="p" v-on:mousemove="cargarcategoria()">
         <div class="container">
             <div class="alert alert-info alert-dismissible fade show" role="alert">
                 <strong>Hola!</strong> Si tienes algun inconveniente al utilizar el sistema por favor notificalo a Soporte Tecnico
@@ -155,83 +155,119 @@
         <div class="container">
             <nav class="navbar navbar-light" style="background-color: #0069d9;">
                 <a class="navbar-brand" href="#" style="color: whitesmoke"><i class="fas fa-list-ul"></i> <strong>Productos</strong></a>
-                <input type="search" class="form-control col-md-2 pull-right right" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
-
+                <input type="search"  class="form-control col-md-2 pull-right" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
             </nav>
         </div>
         {{--@include('productos.newproduct')--}}
         <br>
         <div class="section__content section__content--p30">
             <div class="container-fluid">
-                <div class="row">
 
-                    <template v-for="p in productos" v-if="cerrada == 'A' && productosbuscados == ''">
-                        <div class="col-md-3">
-                            <div class="card" style="height: auto;background: #c8f1ff" @click="pfactura(p.id)">
-                                <div class="card-header" style="color: #2db3ff">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <span class="badge badge-success pull-right">@{{ p.existence }}</span>
+                {{--<div class="row">--}}
+                {{--<template  v-for="c in listacategoria">--}}
+                {{--<div class="col-md-2">--}}
+                {{--<div class="card" style="height: auto;background: #FFFFFF;cursor: pointer;" @click="productocategoria(c.id)">--}}
+                {{--<div class="card-body">--}}
+                {{--<div class="mx-auto d-block">--}}
+                {{--<img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" :src="'imagenes/'+c.img" alt="Card image cap">--}}
+                {{--<h5 class="text-sm-center mt-2 mb-1">@{{ c.nombre }}</h5>--}}
+                {{--<div class="location text-sm-center" style="color: #0062cc">--}}
+                {{--</div>--}}
+                {{--</div>--}}
+                {{--</div>--}}
+                {{--</div>--}}
+                {{--</div>--}}
+                {{--</template>--}}
+                {{--</div>--}}
+
+                {{--<hr>--}}
+
+
+                <div class="" id="funciona">
+                    @foreach($categoria as $cat)
+                        <div class="card" style="height: auto;background: red;cursor: pointer;" @click="productocategoria('<?php echo $cat->id; ?>')">
+                            <div class="card-body">
+                                <div class="mx-auto d-block">
+                                    <img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" src="imagenes/{{$cat->img }}" alt="Card image cap">
+                                    <h5 class="text-sm-center mt-2 mb-1" style="color: #FFFFFF">{{ $cat->nombre }}</h5>
+                                    <div class="location text-sm-center" style="color: #0062cc">
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <template v-for="p in productos" v-if="cerrada == 'A' && productosbuscados == ''">
+                        <div class="col-md-2">
+                            <div class="card" style="height: auto;background: #c8f1ff" @click="pfactura(p.id)">
+                                {{--<div class="card-header" style="color: #2db3ff">--}}
+                                {{--<i class="fa fa-shopping-cart"></i>--}}
+                                {{--<span class="badge badge-success pull-right"></span>--}}
+                                {{--</div>--}}
                                 <div class="card-body">
                                     <div class="mx-auto d-block">
-                                        <img class="rounded-circle mx-auto d-block image1" style=" height: 100px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
+                                        <img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
                                         <h5 class="text-sm-center mt-2 mb-1">@{{ p.name }}</h5>
                                         <div class="location text-sm-center" style="color: #0062cc">
                                             <i class="fa fa-money-bill-alt"></i> @{{p.price}}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="overlay1" v-if="p.existence > 0">
+                                <div class="overlay1" >
                                     <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
                                 </div>
-                                <div class="overlay1" v-else-if="p.existence == 0 && p.barcode =='compuesto'">
-                                    <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
-                                </div>
-                                <div class="overlay2" v-else-if="p.existence == 0 && p.barcode !='compuesto'">
-                                    <div class="text1"><i class="fas fa-times fa-3x" id="plus"></i></div>
-                                </div>
+                                {{--<div class="overlay1" v-else-if="p.existence == 0 && p.barcode =='compuesto'">--}}
+                                {{--<div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>--}}
+                                {{--</div>--}}
+                                {{--<div class="overlay2" v-else-if="p.existence == 0 && p.barcode !='compuesto'">--}}
+                                {{--<div class="text1"><i class="fas fa-times fa-3x" id="plus"></i></div>--}}
+                                {{--</div>--}}
                             </div>
                         </div>
                     </template>
 
                     <template v-for="p in productosbuscados" v-if="cerrada == 'A' && productosbuscados != ''">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="card" style="height: auto;background: #c8f1ff" @click="pfactura(p.id)">
-                                <div class="card-header" style="color: #2db3ff">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <span class="badge badge-success pull-right">@{{ p.existence }}</span>
-                                </div>
+                                {{--<div class="card-header" style="color: #2db3ff">--}}
+                                {{--<i class="fa fa-shopping-cart"></i>--}}
+                                {{--<span class="badge badge-success pull-right"></span>--}}
+                                {{--</div>--}}
                                 <div class="card-body">
                                     <div class="mx-auto d-block">
-                                        <img class="rounded-circle mx-auto d-block image1" style=" height: 100px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
+                                        <img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
                                         <h5 class="text-sm-center mt-2 mb-1">@{{ p.name }}</h5>
                                         <div class="location text-sm-center" style="color: #0062cc">
                                             <i class="fa fa-money-bill-alt"></i> @{{p.price}}</div>
                                     </div>
                                 </div>
-                                <div class="overlay1" v-if="p.existence > 0">
+                                <div class="overlay1">
                                     <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
                                 </div>
-                                <div class="overlay1" v-else-if="p.existence == 0 && p.barcode =='compuesto'">
-                                    <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
-                                </div>
-                                <div class="overlay2" v-else-if="p.existence == 0 && p.barcode !='compuesto'">
-                                    <div class="text1"><i class="fas fa-times fa-3x" id="plus"></i></div>
-                                </div>
+                                {{--<div class="overlay1" v-else-if="p.existence == 0 && p.barcode =='compuesto'">--}}
+                                {{--<div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>--}}
+                                {{--</div>--}}
+                                {{--<div class="overlay2" v-else-if="p.existence == 0 && p.barcode !='compuesto'">--}}
+                                {{--<div class="text1"><i class="fas fa-times fa-3x" id="plus"></i></div>--}}
+                                {{--</div>--}}
                             </div>
                         </div>
                     </template>
 
                     <template v-for="p in productos" v-else-if="cerrada == 'C'">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="card" style="height: auto">
-                                <div class="card-header">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <span class="badge badge-success pull-right"></span>
-                                </div>
+                                {{--<div class="card-header">--}}
+                                {{--<i class="fa fa-shopping-cart"></i>--}}
+                                {{--<span class="badge badge-success pull-right"></span>--}}
+                                {{--</div>--}}
                                 <div class="card-body">
                                     <div class="mx-auto d-block">
-                                        <img class="rounded-circle mx-auto d-block image1" style=" height: 100px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
+                                        <img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
                                         <h5 class="text-sm-center mt-2 mb-1">@{{ p.name }}</h5>
                                         <div class="location text-sm-center">
                                             <i class="fa fa-money-bill-alt"></i> @{{p.price}}</div>
@@ -362,6 +398,19 @@
 @endsection
 @section('scriptp')
     <script !src="">
+
+        $(document).ready(function(){
+
+            $('#funciona').slick({
+                infinite: false,
+                speed: 300,
+                slidesToShow: 5,
+                slidesToScroll: 4,
+                // prevArrow:'<i class="fas fa-angle-left"></i>',
+                // nextArrow:'<i class="fas fa-angle-right"></i>'
+            });
+        });
+
         $('body').keyup(function(e) {
             if(e.which == 35){
                 $('#pago').modal('show');
@@ -380,7 +429,6 @@
             $('#myModal').modal('show');
         })
         toastr.options.newestOnTop = false;
-        $(document).ready();
 
     </script>
 
@@ -417,6 +465,8 @@
                 carrito: {},
                 productosbuscados:'',
                 productosreferencia:'',
+                listacategoria: [],
+
 
             },
             watch:{
@@ -428,6 +478,33 @@
 
             },
             methods:{
+
+                cargarcategoria: function () {
+                    var _this = this;
+
+                    axios.post('/ver/categoria')
+                        .then(function (response) {
+                            _this.listacategoria = response["data"];
+                        })
+                        .catch(function (error) {
+                        });
+                },
+
+                productoscategorias:function(id){
+                    var _this = this;
+                    axios.post('/ver/categoria',
+                        {
+                            id:id
+                        })
+                        .then(function (response) {
+                            console.log(response);
+                        })
+                        .catch(function (error) {
+
+                        });
+
+                },
+
                 buscadorp:function () {
                     var _this = this
                     $.ajax({
@@ -479,6 +556,7 @@
                     }
                     var cantidad = producto[1].existence;
                     var bar = producto[1].barcode;
+
                     if (this.list.find(buscaid)){
 
                         var count = this.list.find(buscaid).count;
@@ -490,40 +568,50 @@
                         var listid = this.list.find(buscaid).id
                         var total = contador * producto[1].price;
 
-                        if(cant > 0){
+                        this.list.map(function (dato){
+                            if (dato.id == listid) {
+                                dato.count = contador
+                                dato.price = total
+                            }
+                            return dato
+                        });
 
-                            this.list.map(function (dato){
-                                if (dato.id == listid) {
-                                    dato.count = contador
-                                    dato.price = total
-                                }
-                                return dato
-                            });
 
-                        }if(cant < 0 && bar == 'compuesto'){
-
-                            this.list.map(function (dato) {
-                                if (dato.id == listid) {
-                                    dato.count = contador
-                                    dato.price = total
-                                }
-                                return dato
-                            });
-
-                        }if(cant < 0 && bar != 'compuesto'){
-
-                            alert('no tiene mas producto de este');
-                        }
+                        // if(cant > 0){
+                        //
+                        //     this.list.map(function (dato){
+                        //         if (dato.id == listid) {
+                        //             dato.count = contador
+                        //             dato.price = total
+                        //         }
+                        //         return dato
+                        //     });
+                        //
+                        // }if(cant < 0 && bar == 'compuesto'){
+                        //
+                        //     this.list.map(function (dato) {
+                        //         if (dato.id == listid) {
+                        //             dato.count = contador
+                        //             dato.price = total
+                        //         }
+                        //         return dato
+                        //     });
+                        //
+                        // }if(cant < 0 && bar != 'compuesto'){
+                        //
+                        //     alert('no tiene mas producto de este');
+                        // }
 
                     }else{
-                        if(cantidad == 0 && bar == 'compuesto'){
-                            this.list.push(this.carrito)
-                        }
-                        if(cantidad == 0){
-                            alert('no tenemos mas de este producto O es un producto compuesto')
-                        }else{
-                            this.list.push(this.carrito)
-                        }
+                        this.list.push(this.carrito)
+                        // if(cantidad == 0 && bar == 'compuesto'){
+                        //     this.list.push(this.carrito)
+                        // }
+                        // if(cantidad == 0){
+                        //     alert('no tenemos mas de este producto O es un producto compuesto')
+                        // }else{
+                        //     this.list.push(this.carrito)
+                        // }
 
                     }
                 },
@@ -649,10 +737,23 @@
                             });
                         }
                     }
+                },
 
+                productocategoria:function (id) {
+                    _this = this
+                    $.ajax({
+                        url: 'productos/categoria',
+                        method: 'GET',
+                        data: {
+                            id:id
+                        },
+                        success:function (data) {
+                            _this.productosbuscados = data;
+                        },
+                        error:function () {
+                        }
 
-
-
+                    });
 
                 }
             },
