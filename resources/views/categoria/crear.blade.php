@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Categoria</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -32,7 +32,7 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <label for="exampleFormControlFile1">Example file input</label>
+                                <label for="exampleFormControlFile1">Imagen</label>
                                 <input type="file" value="{{ old('img') }}" class="form-control-file"  name="img" id="exampleFormControlFile1">
                             </div>
                             <div>

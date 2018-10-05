@@ -123,7 +123,7 @@
                 </div>
             </div>
         </header>
-    @include('mantenimiento.proxima')
+        @include('mantenimiento.proxima')
         <!-- HEADER DESKTOP-->
         <!-- MENU SIDEBAR-->
         <div id="Vue">

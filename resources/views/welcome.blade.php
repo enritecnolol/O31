@@ -105,22 +105,21 @@
                             <th>Producto</th>
                             <th >Cant.</th>
                             <th >Total</th>
-                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="item in list">
                             <th>@{{item.name}}</th>
-                            <td class="text-center" >@{{item.count}}</td>
-                            <td class="text-center" >@{{item.price}}</td>
-                            <td><button type="button" class="far fa-trash-alt" style="color: #ffc30e" @click="eliminarp(item.id)"></button></td>
+                            <td class="text-center" style="cursor: pointer">@{{item.count}}</td>
+                            <td class="text-center">@{{item.price}}</td>
+                            <td><button type="button" class="far fa-trash-alt" style="color: orangered" @click="eliminarp(item.id)"></button></td>
                         </tr>
                         </tbody>
                     </table>
                     <div v-if="cerrada == 'A' && facturatotal > 0" style="position: fixed;bottom:10px; width: 250px">
                         <button data-toggle="modal" data-target="#pago" type="button" style="height: 130px" class="btn btn-lg btn-info btn-block">
                             <i class="fa fa-money-bill-alt fa-lg"></i>&nbsp;
-                            <span id="payment-button-amount" style="font-size: 24px"><strong>Pagar $: </strong><span style="color: red;font-size: 24px">@{{ facturatotal }}</span></span>
+                            <span id="payment-button-amount" style="font-size: 20px">Pagar $: <span style="color: red;font-size: 28px">@{{ facturatotal }}</span></span>
                             <span id="payment-button-sending" style="display:none;">Sending…</span>
                         </button>
                     </div>
@@ -143,7 +142,7 @@
 
 @endsection
 @section('content')
-    <div id="p" v-on:mousemove="cargarcategoria()">
+    <div id="p" v-on:mousemove="cargarcategoria()" style="margin-top: -40px">
         <div class="container">
             <div class="alert alert-info alert-dismissible fade show" role="alert">
                 <strong>Hola!</strong> Si tienes algun inconveniente al utilizar el sistema por favor notificalo a Soporte Tecnico
@@ -152,44 +151,25 @@
                 </button>
             </div>
         </div>
-        <div class="container">
-            <nav class="navbar navbar-light" style="background-color: #0069d9;">
-                <a class="navbar-brand" href="#" style="color: whitesmoke"><i class="fas fa-list-ul"></i> <strong>Productos</strong></a>
-                <input type="search"  class="form-control col-md-2 pull-right" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
-            </nav>
-        </div>
         {{--@include('productos.newproduct')--}}
         <br>
         <div class="section__content section__content--p30">
             <div class="container-fluid">
-
-                {{--<div class="row">--}}
-                {{--<template  v-for="c in listacategoria">--}}
-                {{--<div class="col-md-2">--}}
-                {{--<div class="card" style="height: auto;background: #FFFFFF;cursor: pointer;" @click="productocategoria(c.id)">--}}
-                {{--<div class="card-body">--}}
-                {{--<div class="mx-auto d-block">--}}
-                {{--<img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" :src="'imagenes/'+c.img" alt="Card image cap">--}}
-                {{--<h5 class="text-sm-center mt-2 mb-1">@{{ c.nombre }}</h5>--}}
-                {{--<div class="location text-sm-center" style="color: #0062cc">--}}
-                {{--</div>--}}
-                {{--</div>--}}
-                {{--</div>--}}
-                {{--</div>--}}
-                {{--</div>--}}
-                {{--</template>--}}
-                {{--</div>--}}
-
-                {{--<hr>--}}
-
-
-                <div class="" id="funciona">
+                <div class="">
+                    <nav class="navbar navbar-light" style="background-color: #0069d9;">
+                        <a class="navbar-brand" href="#" style="color: whitesmoke"><i class="fas fa-list-ul"></i> <strong>Productos</strong></a>
+                        <input type="search"  class="form-control col-md-2 pull-right" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
+                    </nav>
+                </div>
+                <br>
+                <div v-if="cerrada !='A'"></div>
+                <div v-else class="" id="funciona">
                     @foreach($categoria as $cat)
-                        <div class="card" style="height: auto;background: red;cursor: pointer;" @click="productocategoria('<?php echo $cat->id; ?>')">
+                        <div class="card" style="height: auto;margin-right:10px  ;background: whitesmoke;cursor: pointer;box-shadow: 5px 4px 18px #888888" @click="productocategoria('<?php echo $cat->id; ?>')">
                             <div class="card-body">
                                 <div class="mx-auto d-block">
                                     <img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" src="imagenes/{{$cat->img }}" alt="Card image cap">
-                                    <h5 class="text-sm-center mt-2 mb-1" style="color: #FFFFFF">{{ $cat->nombre }}</h5>
+                                    <h5 class="text-sm-center mt-2 mb-1">{{ $cat->nombre }}</h5>
                                     <div class="location text-sm-center" style="color: #0062cc">
                                     </div>
                                 </div>
@@ -198,12 +178,9 @@
                     @endforeach
                 </div>
 
-                <hr>
-
                 <div class="row">
                     <template v-for="p in productos" v-if="cerrada == 'A' && productosbuscados == ''">
-                        <div class="col-md-2">
-                            <div class="card" style="height: auto;background: #c8f1ff" @click="pfactura(p.id)">
+                            <div class="card" style="height: auto;background: #c8f1ff; min-width: 176px; min-height: 188px; margin-left: 15px;margin-right: 15px" @click="pfactura(p.id)">
                                 {{--<div class="card-header" style="color: #2db3ff">--}}
                                 {{--<i class="fa fa-shopping-cart"></i>--}}
                                 {{--<span class="badge badge-success pull-right"></span>--}}
@@ -227,7 +204,6 @@
                                 {{--<div class="text1"><i class="fas fa-times fa-3x" id="plus"></i></div>--}}
                                 {{--</div>--}}
                             </div>
-                        </div>
                     </template>
 
                     <template v-for="p in productosbuscados" v-if="cerrada == 'A' && productosbuscados != ''">
@@ -327,13 +303,13 @@
                 <div class="modal-body">
                     <form action="" method="post" novalidate="novalidate">
                         <div class="text-center" style="margin-bottom: 20px">
-                            <h3>Neto a Pagar $: <span style="font-size: 50px; color: red">@{{ facturatotal }} </span></h3>
+                            <h3 style="font-size: 50px">A PAGAR $: <span style="font-size: 50px; color: red">@{{ facturatotal }}.00</span></h3>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="cc-exp" class="control-label mb-1">Efectivo<span style="color: red">*</span></label>
-                                    <input id="efectivom" name="dinero"  required v-on:keypress.enter="facturar()" type="number" class="form-control cc-exp"  v-model="campodinero">
+                                    <input id="efectivom" name="dinero" autofocus="autofocus" required v-on:keypress.enter="facturar()" type="number" class="form-control cc-exp"  v-model="campodinero">
                                 </div>
                             </div>
                         </div>
@@ -433,6 +409,7 @@
     </script>
 
     <script>
+
         var productos = JSON.parse('{!! $productos !!}')
         var caja = '{!! $caja !!}'
         var cerrada = '{!! $cerrada !!}'
@@ -466,6 +443,7 @@
                 productosbuscados:'',
                 productosreferencia:'',
                 listacategoria: [],
+                cuadro: false
 
 
             },
@@ -755,6 +733,9 @@
 
                     });
 
+                },
+                doThis:function () {
+                    alert('funciona')
                 }
             },
             computed:{
@@ -767,7 +748,7 @@
 
                         suma = suma + this.list[i].price
                     }
-                    return suma;
+                    return parseFloat(suma);
                 },
 
                 suma:function () {
