@@ -43,7 +43,7 @@
                                     <td>{{ $producto->name }}</td>
                                     <td>{{$producto->barcode}}</td>
                                     <td>{{$producto->existence}}</td>
-                                    <td><strong>{{$producto->price}}</strong></td>
+                                    <td><strong>{{$producto->price}}.00</strong></td>
                                     <td>{{$producto->impost}}</td>
                                     <td>
                                         <button type="button" v-on:click="producto('<?php echo $producto->id; ?>')" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
@@ -83,7 +83,7 @@
                                 <td>@{{ p.name }}</td>
                                 <td>@{{p.barcode}}</td>
                                 <td>@{{p.existence}}</td>
-                                <td><strong>@{{p.price}}</strong></td>
+                                <td><strong>@{{p.price}}.00</strong></td>
                                 <td>@{{p.impost}}</td>
                                 <td>
                                     <button type="button" v-on:click="producto(p.id)" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">

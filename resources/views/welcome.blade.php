@@ -92,7 +92,7 @@
 
 @section('aside')
 
-    <div class="container">
+    <div class="container" >
         <div class="card-title">
             <h3 class="text-center title-2" style="padding-top: 10px;">Factura</h3>
         </div>
@@ -103,30 +103,40 @@
                         <thead>
                         <tr>
                             <th>Producto</th>
-                            <th >Cant.</th>
-                            <th >Total</th>
+                            <th>Cant.</th>
+                            <th>Total</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="item in list">
-                            <th>@{{item.name}}</th>
-                            <td class="text-center" style="cursor: pointer">@{{item.count}}</td>
+                            <td style="line-height: 1">@{{item.name}}</td>
+                            <td class="text-center" style="cursor: pointer" @click="cuadro = true" v-if="cuadro == false">@{{item.count}}</td>
+                            <td class="text-center" style="cursor: pointer" v-else>
+                                <input type="number" class="form-control" min="0" style="width: 70px" v-model="item.count" @keypress.enter="normal" @input.self="cambiarcount(item.id, item.count)">
+                            </td>
                             <td class="text-center">@{{item.price}}</td>
-                            <td><button type="button" class="far fa-trash-alt" style="color: orangered" @click="eliminarp(item.id)"></button></td>
+                            <td><button type="button" class="fas fa-minus" style="color: orangered" @click="eliminarp(item.id)"></button></td>
                         </tr>
                         </tbody>
+                        <thead>
+                        <tr>
+                            <th>Total:</th>
+                            <th class="text-center">@{{ productototal }}</th>
+                            <th class="text-center">@{{ facturatotal }}.00</th>
+                            <th></th>
+                        </tr>
+                        </thead>
                     </table>
-                    <div v-if="cerrada == 'A' && facturatotal > 0" style="position: fixed;bottom:10px; width: 250px">
-                        <button data-toggle="modal" data-target="#pago" type="button" style="height: 130px" class="btn btn-lg btn-info btn-block">
-                            <i class="fa fa-money-bill-alt fa-lg"></i>&nbsp;
-                            <span id="payment-button-amount" style="font-size: 20px">Pagar $: <span style="color: red;font-size: 28px">@{{ facturatotal }}</span></span>
+                    <div v-if="cerrada == 'A' && facturatotal > 0" style="position: fixed;bottom:30px; width: 300px">
+                        <button data-toggle="modal" data-target="#pago" type="button" style="height: 130px;background: #4272d7;" class="btn btn-lg  btn-block">
+                            <span id="payment-button-amount" style="font-size: 20px;color: whitesmoke"> Pagar <br><span style="color: whitesmoke;font-size: 30px">$ @{{ facturatotal }}.00</span></span>
                             <span id="payment-button-sending" style="display:none;">Sending…</span>
                         </button>
                     </div>
-                    <div v-else-if="cerrada == 'A' && facturatotal == 0" style="position: fixed;bottom:30px; width: 250px">
-                        <button data-toggle="modal" disabled data-target="#pago" type="button" style="height: 130px" class="btn btn-lg btn-info btn-block">
-                            <i class="fa fa-money-bill-alt fa-lg"></i>&nbsp;
-                            <span id="payment-button-amount" style="font-size: 24px"><strong>Pagar $: </strong><span style="color: red;font-size: 24px">@{{ facturatotal }}</span></span>
+                    <div v-else-if="cerrada == 'A' && facturatotal == 0" style="position: fixed;bottom:30px; width: 300px">
+                        <button data-toggle="modal" disabled data-target="#pago" type="button" style="height: 130px; background: #4272d7;" class="btn btn-lg  btn-block">
+                            <span id="payment-button-amount" style="font-size: 24px"><span style="color: whitesmoke">Pagar <br></span><span style="color: whitesmoke;font-size: 30px">$&nbsp;@{{ facturatotal }}.00</span></span>
                             <span id="payment-button-sending" style="display:none;">Sending…</span>
                         </button>
                     </div>
@@ -142,7 +152,7 @@
 
 @endsection
 @section('content')
-    <div id="p" v-on:mousemove="cargarcategoria()" style="margin-top: -40px">
+    <div id="p" style="margin-top: -40px">
         <div class="container">
             <div class="alert alert-info alert-dismissible fade show" role="alert">
                 <strong>Hola!</strong> Si tienes algun inconveniente al utilizar el sistema por favor notificalo a Soporte Tecnico
@@ -155,17 +165,10 @@
         <br>
         <div class="section__content section__content--p30">
             <div class="container-fluid">
-                <div class="">
-                    <nav class="navbar navbar-light" style="background-color: #0069d9;">
-                        <a class="navbar-brand" href="#" style="color: whitesmoke"><i class="fas fa-list-ul"></i> <strong>Productos</strong></a>
-                        <input type="search"  class="form-control col-md-2 pull-right" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
-                    </nav>
-                </div>
-                <br>
                 <div v-if="cerrada !='A'"></div>
                 <div v-else class="" id="funciona">
                     @foreach($categoria as $cat)
-                        <div class="card" style="height: auto;margin-right:10px  ;background: whitesmoke;cursor: pointer;box-shadow: 5px 4px 18px #888888" @click="productocategoria('<?php echo $cat->id; ?>')">
+                        <div class="card" style="height: auto;margin-right:10px  ;background: #f7f4e3;cursor: pointer;box-shadow: 3px 3px 10px #888888" @click="productocategoria('<?php echo $cat->id; ?>')">
                             <div class="card-body">
                                 <div class="mx-auto d-block">
                                     <img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" src="imagenes/{{$cat->img }}" alt="Card image cap">
@@ -177,15 +180,21 @@
                         </div>
                     @endforeach
                 </div>
-
-                <div class="row">
+                <div class="">
+                    <nav class="navbar navbar-light" style="background-color: whitesmoke;box-shadow: 2px 2px 7px #888888">
+                        <a class="navbar-brand" href="#" style="color: #0062cc"><i class="fas fa-list-ul"></i> <strong>Productos</strong></a>
+                        <input type="search"  class="form-control col-md-2 pull-right" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
+                    </nav>
+                </div>
+                <br>
+                <div class="row" style="justify-content:space-between;">
                     <template v-for="p in productos" v-if="cerrada == 'A' && productosbuscados == ''">
-                            <div class="card" style="height: auto;background: #c8f1ff; min-width: 176px; min-height: 188px; margin-left: 15px;margin-right: 15px" @click="pfactura(p.id)">
+                            <div class="card" style="height: auto;background: #c8f1ff; max-height: 188px;min-width: 176px; min-height: 188px; margin-left: 15px;margin-right: 15px" @click="pfactura(p.id)">
                                 {{--<div class="card-header" style="color: #2db3ff">--}}
                                 {{--<i class="fa fa-shopping-cart"></i>--}}
                                 {{--<span class="badge badge-success pull-right"></span>--}}
                                 {{--</div>--}}
-                                <div class="card-body">
+                                <div class="card-body" style="background: white">
                                     <div class="mx-auto d-block">
                                         <img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
                                         <h5 class="text-sm-center mt-2 mb-1">@{{ p.name }}</h5>
@@ -208,12 +217,12 @@
 
                     <template v-for="p in productosbuscados" v-if="cerrada == 'A' && productosbuscados != ''">
                         <div class="col-md-2">
-                            <div class="card" style="height: auto;background: #c8f1ff" @click="pfactura(p.id)">
+                            <div class="card" style="height: auto;max-height: 188px;background: #c8f1ff; min-width: 176px; min-height: 188px; margin-left: 15px;margin-right: 15px" @click="pfactura(p.id)">
                                 {{--<div class="card-header" style="color: #2db3ff">--}}
                                 {{--<i class="fa fa-shopping-cart"></i>--}}
                                 {{--<span class="badge badge-success pull-right"></span>--}}
                                 {{--</div>--}}
-                                <div class="card-body">
+                                <div class="card-body" style="background: white">
                                     <div class="mx-auto d-block">
                                         <img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
                                         <h5 class="text-sm-center mt-2 mb-1">@{{ p.name }}</h5>
@@ -382,8 +391,6 @@
                 speed: 300,
                 slidesToShow: 5,
                 slidesToScroll: 4,
-                // prevArrow:'<i class="fas fa-angle-left"></i>',
-                // nextArrow:'<i class="fas fa-angle-right"></i>'
             });
         });
 
@@ -391,15 +398,6 @@
             if(e.which == 35){
                 $('#pago').modal('show');
             }
-            // if(e.which == 36){
-            //     $('#crear').modal('show');
-            //
-            // }if(e.which == 187){
-            //     $('#buscarp').modal('show');
-            // }
-            // if(e.which == 192){
-            //     location.href ="/caja/cuadre";
-            // }
         });
         $(function () {
             $('#myModal').modal('show');
@@ -468,21 +466,6 @@
                         });
                 },
 
-                productoscategorias:function(id){
-                    var _this = this;
-                    axios.post('/ver/categoria',
-                        {
-                            id:id
-                        })
-                        .then(function (response) {
-                            console.log(response);
-                        })
-                        .catch(function (error) {
-
-                        });
-
-                },
-
                 buscadorp:function () {
                     var _this = this
                     $.ajax({
@@ -540,8 +523,6 @@
                         var count = this.list.find(buscaid).count;
                         var contador = count + 1;
                         var cant = producto[1].existence - count;
-
-                        console.log(cant)
 
                         var listid = this.list.find(buscaid).id
                         var total = contador * producto[1].price;
@@ -627,6 +608,45 @@
                         }
                     }
 
+                },
+                cambiarcount:function(idcambio ,cambiocount ){
+                    var producto = Object.entries(this.productos)[idcambio-1]
+                    var idp = producto[1].id
+
+                    function buscaid(prod) {
+                        return prod.id == idp;
+                    }
+                    if (this.list.find(buscaid)){
+
+                        var countnuevo = cambiocount;
+                        var totalnuevo = countnuevo * producto[1].price;
+                        var listid = this.list.find(buscaid).id
+
+                        this.list.map(function(dato) {
+
+                            if (dato.id == listid){
+                                dato.count = countnuevo
+                                dato.price = totalnuevo
+                            }
+                            return dato
+                        });
+
+                    }if(this.list.find(buscaid)){
+                        if (this.list.find(buscaid).count == 0){
+                            var index = this.list.indexOf(this.list.find(buscaid));
+                            if (index > -1) {
+                                this.list.splice(index, 1);
+                            }
+                        }
+                    }
+
+
+                },
+
+                normal:function(e){
+                    _this = this;
+                    e.preventDefault();
+                    _this.cuadro = false;
                 },
 
                 facturar:function () {
@@ -749,6 +769,17 @@
                         suma = suma + this.list[i].price
                     }
                     return parseFloat(suma);
+                },
+
+                productototal:function () {
+
+                    var suma = 0
+                    for(var i = 0; i< this.list.length; i++ ){
+
+                        suma = suma + this.list[i].count
+                    }
+
+                        return suma;
                 },
 
                 suma:function () {

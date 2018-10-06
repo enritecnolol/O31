@@ -127,7 +127,7 @@
         <!-- HEADER DESKTOP-->
         <!-- MENU SIDEBAR-->
         <div id="Vue">
-            <aside class="menu-sidebar2 d-none d-lg-block" style="background: url({{ URL::asset('fondo2.png')}});">
+            <aside class="menu-sidebar2 d-none d-lg-block" style="background: url({{ URL::asset('fondo2.png')}});box-shadow: 1px 1px 6px #888888">
                 <div class="logo">
                     <a href="/">
                         <img style="width: 80px" src="{{ URL::asset('imagenes/logo.png')}}" alt="Logo" /> <span style="color: white; font-size: x-large">Cafeteria</span>

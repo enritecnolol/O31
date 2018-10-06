@@ -309,6 +309,7 @@ section {
 .main-content {
     padding-top: 116px;
     min-height: 100vh;
+    margin-left: 50px;
 }
 
 @media (max-width: 991px) {
@@ -2104,7 +2105,7 @@ section {
 }
 
 .menu-sidebar2 {
-    width: 300px;
+    width: 350px;
     position: fixed;
     left: 0;
     top: 0;
@@ -2295,7 +2296,7 @@ section {
     z-index: 1001;
     top: 0;
     right: 0;
-    left: 300px;
+    left: 350px;
 }
 
 @media (max-width: 991px) {
