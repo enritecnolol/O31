@@ -190,7 +190,7 @@
                 <br>
                 <div class="row" style="justify-content:space-between;">
                     <template v-for="p in productos" v-if="cerrada == 'A' && productosbuscados == ''">
-                            <div class="card" style="height: auto;background: #c8f1ff; max-height: 188px;min-width: 176px; min-height: 188px; margin-left: 15px;margin-right: 15px" @click="pfactura(p.id)">
+                            <div class="card" style="height: auto;background: #c8f1ff; max-height: 188px;min-width: 176px; min-height: 188px; margin-left: 15px;margin-right: 15px" @click="pfactura(p.id)" :title="p.name">
                                 {{--<div class="card-header" style="color: #2db3ff">--}}
                                 {{--<i class="fa fa-shopping-cart"></i>--}}
                                 {{--<span class="badge badge-success pull-right"></span>--}}
@@ -198,7 +198,7 @@
                                 <div class="card-body" style="background: white">
                                     <div class="mx-auto d-block">
                                         <img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                        <h5 class="text-sm-center mt-2 mb-1">@{{ p.name }}</h5>
+                                        <h5 class="text-sm-center mt-2 mb-1">@{{ reducir(p.name) }}</h5>
                                         <div class="location text-sm-center" style="color: #0062cc">
                                             <i class="fa fa-money-bill-alt"></i> @{{p.price}}
                                         </div>
@@ -218,7 +218,7 @@
 
                     <template v-for="p in productosbuscados" v-if="cerrada == 'A' && productosbuscados != ''">
                         <div class="col-md-2">
-                            <div class="card" style="height: auto;max-height: 188px;background: #c8f1ff; min-width: 176px; min-height: 188px; margin-left: 15px;margin-right: 15px" @click="pfactura(p.id)">
+                            <div class="card"  :title="p.name" style="height: auto;max-height: 188px;background: #c8f1ff; min-width: 176px; min-height: 188px; margin-left: 15px;margin-right: 15px" @click="pfactura(p.id)">
                                 {{--<div class="card-header" style="color: #2db3ff">--}}
                                 {{--<i class="fa fa-shopping-cart"></i>--}}
                                 {{--<span class="badge badge-success pull-right"></span>--}}
@@ -226,7 +226,7 @@
                                 <div class="card-body" style="background: white">
                                     <div class="mx-auto d-block">
                                         <img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                        <h5 class="text-sm-center mt-2 mb-1">@{{ p.name }}</h5>
+                                        <h5 class="text-sm-center mt-2 mb-1">@{{ reducir(p.name) }}</h5>
                                         <div class="location text-sm-center" style="color: #0062cc">
                                             <i class="fa fa-money-bill-alt"></i> @{{p.price}}</div>
                                     </div>
@@ -442,7 +442,7 @@
                 productosbuscados:'',
                 productosreferencia:'',
                 listacategoria: [],
-                cuadro: false
+                cuadro: false,
 
 
             },
@@ -764,6 +764,14 @@
                 },
                 doThis:function () {
                     alert('funciona')
+                },
+                reducir:function (cantidad) {
+                    cant = cantidad.length;
+                    if (cant > 14){
+                        return cantidad.substr(0, 14) + '...';
+                    }else {
+                        return cantidad;
+                    }
                 }
             },
             computed:{
@@ -803,6 +811,7 @@
 
                     return devuelta;
                 },
+
 
 
 
