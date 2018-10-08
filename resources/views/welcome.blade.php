@@ -113,7 +113,7 @@
                             <td style="line-height: 1">@{{item.name}}</td>
                             <td class="text-center" style="cursor: pointer" @click="cuadro = true" v-if="cuadro == false">@{{item.count}}</td>
                             <td class="text-center" style="cursor: pointer" v-else>
-                                <input type="number" class="form-control" min="0" style="width: 70px" v-model="item.count" @keypress.enter="normal" @input.self="cambiarcount(item.id, item.count)">
+                                <input type="number" class="form-control" min="0" style="width: 70px" v-model="item.count" @keypress.enter="normal" @blur="cambiarcount(item.id, item.count)" @blur="cuadro = false" @input.self="cambiarcount(item.id, item.count)">
                             </td>
                             <td class="text-center">@{{item.price}}</td>
                             <td><button type="button" class="fas fa-minus" style="color: orangered" @click="eliminarp(item.id)"></button></td>
@@ -122,13 +122,14 @@
                         <thead>
                         <tr>
                             <th>Total:</th>
-                            <th class="text-center">@{{ productototal }}</th>
+                            <th class="text-center"></th>
                             <th class="text-center">@{{ facturatotal }}.00</th>
                             <th></th>
                         </tr>
                         </thead>
                     </table>
                     <div v-if="cerrada == 'A' && facturatotal > 0" style="position: fixed;bottom:30px; width: 300px">
+                        <button type="button" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar Compra</button>
                         <button data-toggle="modal" data-target="#pago" type="button" style="height: 130px;background: #4272d7;" class="btn btn-lg  btn-block">
                             <span id="payment-button-amount" style="font-size: 20px;color: whitesmoke"> Pagar <br><span style="color: whitesmoke;font-size: 30px">$ @{{ facturatotal }}.00</span></span>
                             <span id="payment-button-sending" style="display:none;">Sending…</span>
@@ -454,6 +455,10 @@
 
             },
             methods:{
+                cancelarcompra:function(){
+                    this.carrito = [];
+                    this.list = [];
+                },
 
                 cargarcategoria: function () {
                     var _this = this;
@@ -647,6 +652,9 @@
                     _this = this;
                     e.preventDefault();
                     _this.cuadro = false;
+                },
+                console:function (){
+                  console.log('funciona')
                 },
 
                 facturar:function () {

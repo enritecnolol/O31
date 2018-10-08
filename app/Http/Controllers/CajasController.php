@@ -225,5 +225,13 @@ class   CajasController extends Controller
         return view('caja.vercuadres');
 
     }
+    public function idcuadre($id){
+        $caja = Caja::find($id);
+        $json = json_decode($caja->cuadre, true);
+        return view('caja.elcuadre', compact('caja'), compact('json'));
+
+//        return $json;
+    }
+
 
 }

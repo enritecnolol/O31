@@ -29,6 +29,10 @@
                 <a href="/caja/cuadre" >
                     <i class="fa fa-gavel"></i><strong>CUADRE DE CAJA</strong></a>
             </li>
+            <li>
+                <a href="/caja/ver/cuadre">
+                    <i class="fas fa-clipboard-list"></i><strong>CUADRES DE CAJAS</strong></a>
+            </li>
         </ul>
     </nav>
 </div>

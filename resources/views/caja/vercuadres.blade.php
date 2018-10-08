@@ -16,7 +16,7 @@
         </div>
         <div v-else>
             <nav class="navbar navbar-light" style="background-color: #0069d9;">
-                <a class="navbar-brand" href="#" style="color: whitesmoke"><i class="fas fa-clipboard-list"></i> Historial de Ventas</a>
+                <a class="navbar-brand" href="#" style="color: whitesmoke"><i class="fas fa-clipboard-list"></i> Historial de Cuadres</a>
                 <input v-if="cuadres == ''" disabled type="search" class="form-control col-md-3 "  placeholder="Buscar..." name="" >
                 <input v-else type="date" class="form-control col-md-3" id="datepicker" v-model="buscador"  v-on:input.self="busquedacuadres(buscador)" placeholder="Buscar..." name="" >
             </nav>
@@ -40,52 +40,60 @@
             </template>
 
             <template v-else>
-                <div class="table-responsive m-b-40">
-                    <table class="table table-borderless table-data3">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>fecha apertura</th>
-                            <th>fecha cierre</th>
-                            <th>total cierre</th>
-                            <th>Valor apertura</th>
-                            <th>Total venta</th>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive m-b-40">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>fecha apertura</th>
+                                    <th>fecha cierre</th>
+                                    <th>total cierre</th>
+                                    <th>Valor apertura</th>
+                                    <th>Total venta</th>
+                                    <th></th>
 
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <template v-if="cuadresbuscadas == ''">
-                            <tr v-for="v in cuadres">
-                                <td>@{{ v.id }}</td>
-                                <td>@{{ v.fecha_apertura }}</td>
-                                <td>@{{ v.fecha_cierre }}</td>
-                                <td>@{{ v.total_cierre }}</td>
-                                <td>@{{ v.valor_apertura }}</td>
-                                <td>@{{ v.total_venta }}</td>
-                            </tr>
-                        </template>
-                        <template v-else>
-                            <tr v-for="v in cuadresbuscadas">
-                                <td>@{{ v.id }}</td>
-                                <td>@{{ v.fecha_apertura }}</td>
-                                <td>@{{ v.fecha_cierre }}</td>
-                                <td>@{{ v.total_cierre }}</td>
-                                <td>@{{ v.valor_apertura }}</td>
-                                <td>@{{ v.total_venta }}</td>
-                            </tr>
-                        </template>
-                        </tbody>
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>fecha apertura</th>
-                            <th>fecha cierre</th>
-                            <th>total cierre</th>
-                            <th>Valor apertura</th>
-                            <th>Total venta</th>
-                        </tr>
-                        </thead>
-                    </table>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <template v-if="cuadresbuscadas == ''">
+                                    <tr v-for="v in cuadres">
+                                        <td>@{{ v.id }}</td>
+                                        <td>@{{ v.fecha_apertura }}</td>
+                                        <td>@{{ v.fecha_cierre }}</td>
+                                        <td>@{{ v.total_cierre }}</td>
+                                        <td>@{{ v.valor_apertura }}</td>
+                                        <td>@{{ v.total_venta }}</td>
+                                        <td><button type="button" @click="desglose(v.id)" class="btn btn-light">Ver Desglose</button></td>
+                                    </tr>
+                                </template>
+                                <template v-else>
+                                    <tr v-for="v in cuadresbuscadas">
+                                        <td>@{{ v.id }}</td>
+                                        <td>@{{ v.fecha_apertura }}</td>
+                                        <td>@{{ v.fecha_cierre }}</td>
+                                        <td>@{{ v.total_cierre }}</td>
+                                        <td>@{{ v.valor_apertura }}</td>
+                                        <td>@{{ v.total_venta }}</td>
+                                        <td><button type="button" @click="desglose(v.id)" class="btn btn-light">Ver Desglose</button></td>
+                                    </tr>
+                                </template>
+                                </tbody>
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>fecha apertura</th>
+                                    <th>fecha cierre</th>
+                                    <th>total cierre</th>
+                                    <th>Valor apertura</th>
+                                    <th>Total venta</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </template>
         </div>
@@ -150,6 +158,10 @@
                         .then(function () {
                             // always executed
                         });
+                },
+                desglose:function (id) {
+
+                    window.open('/formato/cuadre/'+id);
                 }
             }
 
