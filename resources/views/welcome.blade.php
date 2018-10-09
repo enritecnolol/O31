@@ -113,7 +113,7 @@
                             <td style="line-height: 1">@{{item.name}}</td>
                             <td class="text-center" style="cursor: pointer" @click="cuadro = true" v-if="cuadro == false">@{{item.count}}</td>
                             <td class="text-center" style="cursor: pointer" v-else>
-                                <input type="number" class="form-control" min="0" style="width: 70px" v-model="item.count" @keypress.enter="normal" @blur="cambiarcount(item.id, item.count)" @blur="cuadro = false" @input.self="cambiarcount(item.id, item.count)">
+                                <input type="number" class="form-control" min="0" style="width: 70px" v-model="item.count" @keypress.enter="normal" @blur="normal" @input.self="cambiarcount(item.id, item.count)">
                             </td>
                             <td class="text-center">@{{item.price}}</td>
                             <td><button type="button" class="fas fa-minus" style="color: orangered" @click="eliminarp(item.id)"></button></td>
@@ -393,6 +393,13 @@
                 slidesToShow: 5,
                 slidesToScroll: 4,
             });
+
+            var alerta = '{{$alerta}}';
+            if (alerta == 'si'){
+
+                toastr.warning('!!Recuerda Cerrar la CAJA antes de cerrar');
+            }
+
         });
 
         $('body').keyup(function(e) {
@@ -765,6 +772,7 @@
                 doThis:function () {
                     alert('funciona')
                 },
+
                 reducir:function (cantidad) {
                     cant = cantidad.length;
                     if (cant > 14){

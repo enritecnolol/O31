@@ -56,8 +56,8 @@ class ApisController extends Controller
 
 
     public function historico(){
-
-        return datatables(Facture::all())->toJson();
+        $fecha = date("Y-m-d");
+        return datatables(Facture::all()->where('date', '==', $fecha))->toJson();
 
     }
     public function ventasbusqueda(){

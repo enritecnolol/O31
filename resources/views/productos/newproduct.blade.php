@@ -44,7 +44,7 @@
                                         </div>
                                     </div>
 
-                                    <select class="form-control" name="categoria" id="exampleFormControlSelect1">
+                                    <select class="form-control" required name="categoria" id="exampleFormControlSelect1">
                                         <option value="">-selecciona-</option>
                                         <template v-for="c in listacategoria">
                                             <option :value="c.id" >@{{ c.nombre }}</option>

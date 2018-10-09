@@ -29,6 +29,19 @@ class IndexController extends Controller
      */
     public function index()
     {
+        $hora = date("h:m:i");
+
+        $fecha_actual = strtotime(date("d-m-Y h:i:00",time()));
+        $fecha_entrada = strtotime("9:00:00 PM");
+
+        if($fecha_actual > $fecha_entrada)
+        {
+            $alerta = "si";
+        }else
+        {
+            $alerta =  "no";
+        }
+
         $id = Auth::id();
         $caja = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"))->where('user_id','==',$id);
         $productos = Product::all();
@@ -40,7 +53,8 @@ class IndexController extends Controller
             }
         }
         $categoria = Categoria::all();
-        return view('welcome', ['productos' => json_encode($productos)], ['caja' => json_encode($caja)])->with(compact('cerrada', $cerrada))->with(compact('categoria', $categoria));
+//        return $alerta;
+        return view('welcome', ['productos' => json_encode($productos)], ['caja' => json_encode($caja)])->with(compact('cerrada', $cerrada))->with(compact('categoria', $categoria))->with(compact('alerta'));
     }
 
     /**

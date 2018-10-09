@@ -25,6 +25,18 @@
                             <th>Fecha</th>
                         </tr>
                         </thead>
+                        <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>Total&nbsp;&nbsp;&nbsp;=</th>
+                            <th>{{$total}}</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
