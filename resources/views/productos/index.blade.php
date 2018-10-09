@@ -54,6 +54,10 @@
                             @endforeach
                             </tbody>
                         </table>
+                        <div class="pull-right">
+
+                            {{ $productos->links() }}
+                        </div>
                     </div>
                     <!-- END DATA TABLE-->
                 </div>

@@ -32,7 +32,7 @@
                             <th></th>
                             <th></th>
                             <th>Total&nbsp;&nbsp;&nbsp;=</th>
-                            <th>{{$total}}</th>
+                            <th>{{$total}}.00</th>
                             <th></th>
                             <th></th>
                         </tr>

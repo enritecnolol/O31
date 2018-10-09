@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CategoriasController extends Controller
 {
     public function index(){
-        return view('categoria.index');
+        $id = Auth::id();
+//        $categorias = Categoria::all()->where('user_id', '==', $id)->pagination(5);
+        $categorias = DB::table('categorias')->where('user_id', $id)->paginate(5);
+        return view('categoria.index2', compact('categorias'));
     }
 
 

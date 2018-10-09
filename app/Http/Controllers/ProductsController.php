@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProductsController extends Controller
 {
@@ -16,7 +17,8 @@ class ProductsController extends Controller
     public function index()
     {
         $id = Auth::id();
-        $productos = Product::all()->where('user_id', '==', $id);
+//        $productos = Product::all()->where('user_id', '==', $id);
+        $productos = DB::table('products')->where('user_id', $id)->paginate(7);
         return view('productos.index', compact('productos'));
     }
 
