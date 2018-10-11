@@ -22,7 +22,6 @@ class ApisController extends Controller
 
         return $request->img;
 
-        dd($request);
 
         $file = $request->file('img');
         $file->storeAs('/', $file->getClientOriginalName());
@@ -115,6 +114,7 @@ class ApisController extends Controller
                 $product->existence = 0;
                 $product->impost = 0;
                 $product->categoria_id = $request->categoria;
+                $product->subcategoria_id = $request->subcategoria;
                 $product->update();
 
             }else{
@@ -125,6 +125,7 @@ class ApisController extends Controller
                 $product->existence = 0;
                 $product->impost = 0;
                 $product->categoria_id = $request->categoria;
+                $product->subcategoria_id = $request->subcategoria;
                 $product->update();
             }
         }else{
@@ -134,6 +135,7 @@ class ApisController extends Controller
             $product->existence = 0;
             $product->impost = 0;
             $product->categoria_id = $request->categoria;
+            $product->subcategoria_id = $request->subcategoria;
             $product->update();
         }
         return redirect('/productos');

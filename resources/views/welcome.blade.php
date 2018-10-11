@@ -81,6 +81,27 @@
             background-repeat: no-repeat;
             padding: 12px 20px 12px 40px;
         }
+        /* width */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
 
     </style>
 @endsection
@@ -92,7 +113,7 @@
 
 @section('aside')
 
-    <div class="container" >
+    <div class="container">
         <div class="card-title">
             <h3 class="text-center title-2" style="padding-top: 10px;">Factura</h3>
         </div>
@@ -155,117 +176,139 @@
 @section('content')
     <div id="p" style="margin-top: -40px">
         <div class="container">
-            <div class="alert alert-info alert-dismissible fade show" role="alert">
-                <strong>Hola!</strong> Si tienes algun inconveniente al utilizar el sistema por favor notificalo a Soporte Tecnico
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
         </div>
         {{--@include('productos.newproduct')--}}
         <br>
         <div class="section__content section__content--p30">
             <div class="container-fluid">
-                <div v-if="cerrada !='A'"></div>
-                <div v-else class="" id="funciona">
-                    @foreach($categoria as $cat)
-                        <div class="card" style="height: auto;margin-right:10px  ;background: #f7f4e3;cursor: pointer;box-shadow: 3px 3px 10px #888888" @click="productocategoria('<?php echo $cat->id; ?>')">
-                            <div class="card-body">
-                                <div class="mx-auto d-block">
-                                    <img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" src="imagenes/{{$cat->img }}" alt="Card image cap">
-                                    <h5 class="text-sm-center mt-2 mb-1">{{ $cat->nombre }}</h5>
-                                    <div class="location text-sm-center" style="color: #0062cc">
-                                    </div>
-                                </div>
+                <div class="alert alert-primary pull-right" style="display: none" id="check" role="alert">
+                    A simple primary alert—check it out!
+                </div>
+                <div class="row" style="clear: both">
+
+                    <template v-if="cerrada !='A'"></template>
+                    <template v-else>
+                        <div class="col-" style="overflow-y: scroll;margin:0; padding:0; height: 88vh;">
+                            <div class="text-center" style="margin-bottom: 5px">
+                                <h5>Categorias</h5>
                             </div>
-                        </div>
-                    @endforeach
-                </div>
-                <div class="">
-                    <nav class="navbar navbar-light" style="background-color: whitesmoke;box-shadow: 2px 2px 7px #888888">
-                        <a class="navbar-brand" href="#" style="color: #0062cc"><i class="fas fa-list-ul"></i> <strong>Productos</strong></a>
-                        <input type="search"  class="form-control col-md-2 pull-right" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
-                    </nav>
-                </div>
-                <br>
-                <div class="row" style="justify-content:space-between;">
-                    <template v-for="p in productos" v-if="cerrada == 'A' && productosbuscados == ''">
-                            <div class="card" style="height: auto;background: #c8f1ff; max-height: 188px;min-width: 176px; min-height: 188px; margin-left: 15px;margin-right: 15px" @click="pfactura(p.id)" :title="p.name">
-                                {{--<div class="card-header" style="color: #2db3ff">--}}
-                                {{--<i class="fa fa-shopping-cart"></i>--}}
-                                {{--<span class="badge badge-success pull-right"></span>--}}
-                                {{--</div>--}}
-                                <div class="card-body" style="background: white">
-                                    <div class="mx-auto d-block">
-                                        <img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                        <h5 class="text-sm-center mt-2 mb-1">@{{ reducir(p.name) }}</h5>
-                                        <div class="location text-sm-center" style="color: #0062cc">
-                                            <i class="fa fa-money-bill-alt"></i> @{{p.price}}
+                            @foreach($categoria as $cat)
+                                <div class="card" style="height: auto;width: 150px;margin-right:10px;background: #f7f4e3;cursor: pointer;box-shadow: 3px 3px 10px #888888" @click="productocategoria('<?php echo $cat->id; ?>'), cargarsubcategoria('<?php echo $cat->id; ?>'), cambio = 'subcategoria'">
+                                    <div class="card-body">
+                                        <div class="mx-auto d-block">
+                                            <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" src="imagenes/{{$cat->img }}" alt="Card image cap">
+                                            <h5 class="text-sm-center mt-2 mb-1">{{ $cat->nombre }}</h5>
+                                            <div class="location text-sm-center" style="color: #0062cc">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="overlay1" >
-                                    <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
-                                </div>
-                                {{--<div class="overlay1" v-else-if="p.existence == 0 && p.barcode =='compuesto'">--}}
-                                {{--<div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>--}}
-                                {{--</div>--}}
-                                {{--<div class="overlay2" v-else-if="p.existence == 0 && p.barcode !='compuesto'">--}}
-                                {{--<div class="text1"><i class="fas fa-times fa-3x" id="plus"></i></div>--}}
-                                {{--</div>--}}
+                            @endforeach
+                        </div>
+                        <div class="col-" v-show="cambio == 'subcategoria'" style="overflow-y: scroll;height: 88vh;">
+                            <div class="text-center" style="margin-bottom: 5px">
+                                <h6>SubCategoria</h6>
                             </div>
-                    </template>
-
-                    <template v-for="p in productosbuscados" v-if="cerrada == 'A' && productosbuscados != ''">
-                        <div class="col-md-2">
-                            <div class="card"  :title="p.name" style="height: auto;max-height: 188px;background: #c8f1ff; min-width: 176px; min-height: 188px; margin-left: 15px;margin-right: 15px" @click="pfactura(p.id)">
-                                {{--<div class="card-header" style="color: #2db3ff">--}}
-                                {{--<i class="fa fa-shopping-cart"></i>--}}
-                                {{--<span class="badge badge-success pull-right"></span>--}}
-                                {{--</div>--}}
-                                <div class="card-body" style="background: white">
-                                    <div class="mx-auto d-block">
-                                        <img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                        <h5 class="text-sm-center mt-2 mb-1">@{{ reducir(p.name) }}</h5>
-                                        <div class="location text-sm-center" style="color: #0062cc">
-                                            <i class="fa fa-money-bill-alt"></i> @{{p.price}}</div>
+                            <template v-if="categoria_subcategoria == ''">
+                                <div class="card" @click="cambio = 'categoria'" style="height: 110px;width: 130px;margin-right: 10px;margin-left: 10px;background: #f7f4e3;cursor: pointer;box-shadow: 3px 3px 10px #888888">
+                                    <div class="card-body">
+                                        <div class="mx-auto d-block">
+                                            <img class="rounded-circle mx-auto d-block image1" style=" height: 50px; width: 80px"  src="imagenes/default.jpg" alt="Card image cap">
+                                            <h6 class="text-sm-center mt-2 mb-1">No Resultado</h6>
+                                            <div class="location text-sm-center" style="color: #0062cc">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="overlay1">
-                                    <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
-                                </div>
-                                {{--<div class="overlay1" v-else-if="p.existence == 0 && p.barcode =='compuesto'">--}}
-                                {{--<div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>--}}
-                                {{--</div>--}}
-                                {{--<div class="overlay2" v-else-if="p.existence == 0 && p.barcode !='compuesto'">--}}
-                                {{--<div class="text1"><i class="fas fa-times fa-3x" id="plus"></i></div>--}}
-                                {{--</div>--}}
-                            </div>
-                        </div>
-                    </template>
-
-                    <template v-for="p in productos" v-else-if="cerrada == 'C'">
-                        <div class="col-md-2">
-                            <div class="card" style="height: auto">
-                                {{--<div class="card-header">--}}
-                                {{--<i class="fa fa-shopping-cart"></i>--}}
-                                {{--<span class="badge badge-success pull-right"></span>--}}
-                                {{--</div>--}}
-                                <div class="card-body">
-                                    <div class="mx-auto d-block">
-                                        <img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                        <h5 class="text-sm-center mt-2 mb-1">@{{ p.name }}</h5>
-                                        <div class="location text-sm-center">
-                                            <i class="fa fa-money-bill-alt"></i> @{{p.price}}</div>
+                            </template>
+                            <template v-else v-for="cs in categoria_subcategoria">
+                                <div class="card" @click="subcategoriaproductos(cs.id)" style="height: 110px;width: 130px;margin-right: 10px;margin-left: 10px;background: #f7f4e3;cursor: pointer;box-shadow: 3px 3px 10px #888888">
+                                    <div class="card-body">
+                                        <div class="mx-auto d-block">
+                                            <img class="rounded-circle mx-auto d-block image1" style=" height: 50px; width: 80px" :src="'imagenes/'+cs.img" alt="Card image cap">
+                                            <h5 class="text-sm-center mt-2 mb-1">@{{ cs.nombre }}</h5>
+                                            <div class="location text-sm-center" style="color: #0062cc">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="overlay1">
-                                    <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
-                                </div>
-                            </div>
+                            </template>
                         </div>
                     </template>
+                    {{--<div class="">--}}
+                    {{--<nav class="navbar navbar-light" style="background-color: whitesmoke;box-shadow: 2px 2px 7px #888888">--}}
+                    {{--<a class="navbar-brand" href="#" style="color: #0062cc"><i class="fas fa-list-ul"></i> <strong>Productos</strong></a>--}}
+                    {{--<input type="search"  class="form-control col-md-2 pull-right" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">--}}
+                    {{--</nav>--}}
+                    {{--</div>--}}
+                    <br>
+                    <div class="col" style="box-shadow: 1px 1px 5px #888888;overflow-y: scroll">
+                        <div class="text-center" style="margin-bottom: 8px">
+                            <button type="button" class="btn btn-lg btn-sm btn-link" v-show="cambio == 'subcategoria'" @click="cambio = 'categoria'" style="float: left;margin-left: 10px"><i class="fas fa-arrow-left"></i></button>
+                            <h3>Productos</h3>
+                        </div>
 
+
+                        <div class="row" >
+                            <template v-for="p in productos" v-if="cerrada == 'A' && productosbuscados == ''">
+                                    <div class="card" style="height: auto;background: #c8f1ff;width: 130px;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)" :title="p.name">
+                                        <div class="card-body" style="background: white">
+                                            <div class="mx-auto d-block">
+                                                <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
+                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ reducir(p.name) }}</h6>
+                                                <div class="location text-sm-center" style="color: #0062cc">
+                                                    <i class="fa fa-money-bill-alt"></i> @{{p.price}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="overlay1">
+                                            <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
+                                        </div>
+                                    </div>
+                            </template>
+
+                            <template v-for="p in productosbuscados" v-if="cerrada == 'A' && productosbuscados != ''">
+
+                                    <div class="card"  :title="p.name" style="height: auto;width: 130px;background: #c8f1ff;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)">
+                                        <div class="card-body" style="background: white">
+                                            <div class="mx-auto d-block">
+                                                <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
+                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ reducir(p.name) }}</h6>
+                                                <div class="location text-sm-center" style="color: #0062cc">
+                                                    <i class="fa fa-money-bill-alt"></i> @{{p.price}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="overlay1">
+                                            <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
+                                        </div>
+                                    </div>
+
+                            </template>
+
+                            <template v-for="p in productos" v-else-if="cerrada == 'C'">
+                                <div class="col-md-2">
+                                    <div class="card" style="height: auto">
+                                        {{--<div class="card-header">--}}
+                                        {{--<i class="fa fa-shopping-cart"></i>--}}
+                                        {{--<span class="badge badge-success pull-right"></span>--}}
+                                        {{--</div>--}}
+                                        <div class="card-body">
+                                            <div class="mx-auto d-block">
+                                                <img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
+                                                <h5 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ p.name }}</h5>
+                                                <div class="location text-sm-center">
+                                                    <i class="fa fa-money-bill-alt"></i> @{{p.price}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="overlay1">
+                                            <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -383,21 +426,46 @@
     @include('productos.buscarmodal')
 @endsection
 @section('scriptp')
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/es-do.js"></script>
+
     <script !src="">
 
+        console.log()
+
         $(document).ready(function(){
+
+
+
 
             $('#funciona').slick({
                 infinite: false,
                 speed: 300,
                 slidesToShow: 5,
                 slidesToScroll: 4,
+                dots: true,
+                vertical: true,
+                verticalSwiping: true,
             });
 
             var alerta = '{{$alerta}}';
-            if (alerta == 'si'){
+            if (moment().format('hh:mm A') > '10:05 PM'){
 
-                toastr.warning('!!Recuerda Cerrar la CAJA antes de cerrar');
+                toastr.options = {
+                    "closeButton": true,
+                    "timeOut": "500000",
+                    "extendedTimeOut": "100000",
+                    "positionClass": "toast-top-center",
+                }
+                toastr.warning('Son las ' + moment().format('hh:mm A') + ' favor acordarse de cerrar la caja');
+                // toastr.error('Error!');
+                //
+                // console.log(moment().format('hh:mm A'));
+                // $('#check').show();
+
+                // toastr.warning('!!Recuerda Cerrar la CAJA antes de cerrar');
             }
 
         });
@@ -410,7 +478,7 @@
         $(function () {
             $('#myModal').modal('show');
         })
-        toastr.options.newestOnTop = false;
+        toastr.options.newestOnTop = 'false';
 
     </script>
 
@@ -450,6 +518,8 @@
                 productosreferencia:'',
                 listacategoria: [],
                 cuadro: false,
+                categoria_subcategoria:'',
+                cambio:'categoria',
 
 
             },
@@ -462,6 +532,31 @@
 
             },
             methods:{
+                subcategoriaproductos:function (id) {
+
+                    _this = this
+                    axios.post('subcategoria/productos',{
+                        id:id
+                    })
+                        .then(function (response) {
+                            _this.productosbuscados = response["data"]
+                        })
+                        .catch(function (error) {
+                        });
+
+                },
+                cargarsubcategoria:function(id){
+                    _this = this
+                    axios.post('subcategoria/vender',{
+                        id:id
+                    })
+                        .then(function (response) {
+                            _this.categoria_subcategoria = response["data"]
+                        })
+                        .catch(function (error) {
+                        });
+                },
+
                 cancelarcompra:function(){
                     this.carrito = [];
                     this.list = [];
@@ -661,7 +756,7 @@
                     _this.cuadro = false;
                 },
                 console:function (){
-                  console.log('funciona')
+                    console.log('funciona')
                 },
 
                 facturar:function () {
@@ -775,8 +870,8 @@
 
                 reducir:function (cantidad) {
                     cant = cantidad.length;
-                    if (cant > 14){
-                        return cantidad.substr(0, 14) + '...';
+                    if (cant > 10){
+                        return cantidad.substr(0, 10) + '...';
                     }else {
                         return cantidad;
                     }
@@ -803,7 +898,7 @@
                         suma = suma + this.list[i].count
                     }
 
-                        return suma;
+                    return suma;
                 },
 
                 suma:function () {

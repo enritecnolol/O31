@@ -138,7 +138,7 @@
             <!-- END MENU SIDEBAR-->
 
             <!-- MAIN CONTENT-->
-            <div class="main-content"style="background: url({{ URL::asset('fondo2.png')}});">
+            <div class="main-content" style="background: url({{ URL::asset('fondo2.png')}});">
                 <!--datos-->
                 @yield('content')
 

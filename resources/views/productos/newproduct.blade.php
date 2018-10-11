@@ -44,15 +44,32 @@
                                         </div>
                                     </div>
 
-                                    <select class="form-control" required name="categoria" id="exampleFormControlSelect1">
+                                    <select class="form-control" v-model="idsubcategoria" @change="subcategoria()" required name="categoria" id="exampleFormControlSelect1">
                                         <option value="">-selecciona-</option>
                                         <template v-for="c in listacategoria">
-                                            <option :value="c.id" >@{{ c.nombre }}</option>
+                                            <option :value="c.id">@{{ c.nombre }}</option>
                                         </template>
                                     </select>
                                 </div>
                             </div>
 
+                            <div v-if="listasubcategoria == ''"></div>
+                            <div class="form-group" v-else>
+                                <label for="exampleFormControlSelect1">Subcategoria</label>
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <button type="button" data-toggle="modal" data-target="#createsubcategoria"><span style="color: #0062cc"><i class="fas fa-plus"></i></span></button>
+                                        </div>
+                                    </div>
+                                    <select class="form-control"  required name="subcategoria" id="exampleFormControlSelect1">
+                                        <option value="">-selecciona-</option>
+                                        <template v-for="sc in listasubcategoria">
+                                            <option :value="sc.id">@{{ sc.nombre }}</option>
+                                        </template>
+                                    </select>
+                                </div>
+                            </div>
                             {{--<div class="row">--}}
                             {{--<div class="col-6">--}}
                             {{--<div class="form-group">--}}

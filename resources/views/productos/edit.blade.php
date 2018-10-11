@@ -7,11 +7,9 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" @mousemove="cargarcategoria()">
-                <form :action="'/anja/' + datos.id" method="POST"  enctype="multipart/form-data">
+            <div class="modal-body" @mousemove="cargarcategoria() ">
+                <form :action="'/anja/' + datos.id" method="POST"  enctype="multipart/form-data" @mousemove="cargarsubcategoria()">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-
                     <div>
                         <div class="form-group">
                             <label for="cc-payment" class="control-label mb-1">Nombre</label>
@@ -39,11 +37,26 @@
                                         <button type="button" data-toggle="modal" data-target="#nuevacategoria"><span style="color: green"><i class="fas fa-plus"></i></span></button>
                                     </div>
                                 </div>
-
                                 <select class="form-control" v-model="datos.categoria_id" name="categoria" id="exampleFormControlSelect1">
                                     <option value="">-selecciona-</option>
                                     <template v-for="c in listacategoria">
                                         <option :value="c.id" >@{{ c.nombre }}</option>
+                                    </template>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Subcategoria</label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <button type="button" data-toggle="modal" data-target="#createsubcategoria"><span style="color: #0062cc"><i class="fas fa-plus"></i></span></button>
+                                    </div>
+                                </div>
+                                <select class="form-control" v-model="datos.subcategoria_id" required name="subcategoria" id="exampleFormControlSelect1">
+                                    <option value="">-selecciona-</option>
+                                    <template v-for="sc in listasubcategoriaedit">
+                                        <option :value="sc.id">@{{ sc.nombre }}</option>
                                     </template>
                                 </select>
                             </div>

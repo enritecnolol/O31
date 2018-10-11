@@ -60,6 +60,7 @@ class ProductsController extends Controller
                 $product->status = 1;
                 $product->user_id = Auth::id();
                 $product->categoria_id = $request->input('categoria');
+                $product->subcategoria_id = $request->input('subcategoria');
                 $product->save();
 
             }else{
@@ -73,6 +74,7 @@ class ProductsController extends Controller
                 $product->img = 'default.jpg';
                 $product->user_id = Auth::id();
                 $product->categoria_id = $request->input('categoria');
+                $product->subcategoria_id = $request->input('subcategoria');
 //            $product->unity_id = 0;
                 $product->save();
 
@@ -92,6 +94,7 @@ class ProductsController extends Controller
                 $product->status = 1;
                 $product->user_id = Auth::id();
                 $product->categoria_id = $request->input('categoria');
+                $product->subcategoria_id = $request->input('subcategoria');
                 $product->save();
 
             }else{
@@ -104,6 +107,7 @@ class ProductsController extends Controller
                 $product->img = 'default.jpg';
                 $product->user_id = Auth::id();
                 $product->categoria_id = $request->input('categoria');
+                $product->subcategoria_id = $request->input('subcategoria');
                 $product->save();
 
             }

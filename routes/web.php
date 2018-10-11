@@ -58,6 +58,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('categorias/edit', 'CategoriasController@editarcategoria'); // controller de manejo de los productos
     Route::get('categoria/editar/{id}', 'CategoriasController@buscarcategoria'); // controller de manejo de los productos
 
+    /*=================================\Sub -- Categorias/======================================================*/
+    Route::post('nueva/subcategoria', 'SubcategoriasController@crearsubcategoria'); //Controller para ingresar nueva subtarea
+    Route::post('/mostrar/subcategorias', 'SubcategoriasController@mostrarsubcategorias'); //buscar todas las subcategorias de una categoria
+    Route::post('edit/subcategoria/{id}', 'SubcategoriasController@subcategoriaeditar'); //buscar todas las subcategorias de una categoria
+    Route::post('datos/subcategoria', 'SubcategoriasController@editarsubcategoria'); //datos de subcategoria para editar
+    Route::post('subcategoria/producto', 'SubcategoriasController@productosubcategoria'); // Buscar las subcategoria para asociar los con los productos
+    Route::post('subcategoria/rapida', 'SubcategoriasController@nuevasubcategoria'); // inserta subcategoria rapido en pantalla de producto
+    Route::post('subcategoria/vender', 'SubcategoriasController@subcategoriavender'); // inserta subcategoria rapido en pantalla de producto
+    Route::post('subcategoria/productos', 'SubcategoriasController@subcategoriaproductos'); // buscar los productos que pertenezcan en esa subcategoria
+    Route::post('/ver/subcategorias', 'SubcategoriasController@versubcategorias'); // mostrar las subacetgorias en la parte de editar productos
 
     /*=================================\CAJA/======================================================*/
     Route::get('/caja', 'CajasController@index'); // controller para la caja

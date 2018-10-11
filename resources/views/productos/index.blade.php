@@ -104,28 +104,10 @@
             </div>
         </div>
     </div>
-    {{--<div class="container">--}}
-        {{--<div class="card">--}}
-            {{--<h5 class="card-header">productos</h5>--}}
-            {{--<div class="card-body">--}}
-                {{--<div class="container-fluid">--}}
-                    {{--<table id="productos" class="table table-hover">--}}
-                        {{--<thead>--}}
-                        {{--<tr>--}}
-                            {{--<th></th>--}}
-                            {{--<th>Nombre</th>--}}
-                            {{--<th>Codigo</th>--}}
-                            {{--<th>Precio</th>--}}
-                            {{--<th>Editar</th>--}}
-                        {{--</tr>--}}
-                        {{--</thead>--}}
-                    {{--</table>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
+
     @include('productos.edit')
     @include('categoria.nueva')
+    @include('categoria.createsubcategoriarapida')
 @endsection
 
 @section('scriptp')
@@ -140,36 +122,6 @@
         }
 
     </script>
-
-    {{--<script !src="">--}}
-        {{--$(document).ready(function () {--}}
-            {{--$('#productos').DataTable({--}}
-                {{--serverSide: true,--}}
-                {{--ajax: '/lista/productos',--}}
-                {{--// method:'POST',--}}
-                {{--columns: [--}}
-                    {{--{data: "img",--}}
-                    {{--"render": function (data) {--}}
-                        {{--var data;--}}
-                        {{--return '<img class="rounded-circle mx-auto d-block" style="width: 60px; height: 60px" src="imagenes/'+data+'">'--}}
-                    {{--}},--}}
-                    {{--{data: "name"},--}}
-                    {{--{data: "barcode"},--}}
-                    {{--{data: "price"},--}}
-                    {{--// {"defaultContent": '<button type="button" v-on:click="producto('+data+')" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">'+'<i class="fas fa-edit"></i>'+'</button>'},--}}
-                    {{--{data:"id",--}}
-                    {{--"render":function (data) {--}}
-                        {{--var data;--}}
-                        {{--return '<button type="button" v-on:click="producto('+data+')" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">'+'<i class="fas fa-edit"></i>'+'</button>'--}}
-
-                    {{--}}--}}
-                {{--]--}}
-
-            {{--} );--}}
-
-        {{--});--}}
-    {{--</script>--}}
-
     <script>
         new Vue({
             el: '#Vue',
@@ -184,9 +136,45 @@
                 no : 'no',
                 nombrecategoria:'',
                 codigocategoria: '',
-                listacategoria: []
+                listacategoria: [],
+                listasubcategoria:'',
+                idsubcategoria:'',
+                nombresubcategoria: '',
+                listasubcategoriaedit:''
             },
             methods:{
+
+                subcategoria:function(){
+                    // console.log(this.idsubcategoria);
+                    var _this = this;
+                    axios.post('subcategoria/producto', {
+                        id:_this.idsubcategoria
+                    })
+                        .then(function (response) {
+                            _this.listasubcategoria = response["data"];
+                        })
+                        .catch(function (error) {
+                        });
+
+                },
+                nuevasubcategoria:function (){
+                    var _this = this;
+                    axios.post('subcategoria/rapida', {
+                        nombre:_this.nombresubcategoria,
+                        idcategoria: _this.idsubcategoria
+                    })
+                        .then(function (response) {
+                            console.log(response)
+                            if (response["data"] == 'bien'){
+                                $('#createsubcategoria').modal('hide');
+                                toastr.success('La subcategoria se a creado correctamente');
+                                _this.subcategoria();
+                            }
+                        })
+                        .catch(function (error) {
+                            toastr.error('Ha ocurrido un error');
+                        });
+                },
                 producto: function (id) {
                     var _this = this;
                     $.ajax({
@@ -263,6 +251,16 @@
                     axios.post('/ver/categoria')
                         .then(function (response) {
                             _this.listacategoria = response["data"];
+                        })
+                        .catch(function (error) {
+                        });
+                },
+                cargarsubcategoria: function () {
+                    var _this = this;
+
+                    axios.post('/ver/subcategorias')
+                        .then(function (response) {
+                            _this.listasubcategoriaedit = response["data"];
                         })
                         .catch(function (error) {
                         });

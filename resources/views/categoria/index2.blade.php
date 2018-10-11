@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-header">
                 <strong style="color: #0062cc">Categorias</strong>
-                <button type="button" class="btn btn-primary btn-sm pull-right"  data-toggle="modal" data-target="#crearcategoria">Nueva Categoria</button>
+                <button type="button" class="btn btn-outline-primary btn-sm pull-right"  data-toggle="modal" data-target="#crearcategoria"><i class="fas fa-plus"></i> Nueva Categoria</button>
             </div>
             <div class="card-body">
                     <table class="table">
@@ -37,6 +37,12 @@
                                     <button type="button" @click="categoria('<?php echo $categoria->id; ?>')" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#editcategoria">
                                         <i class="fas fa-edit"></i>
                                     </button>
+                                    <button type="button" class="btn btn-outline-success btn-sm" @click="cargarid('<?php echo $categoria->id; ?>')" title="Agregar nueva subcategoria" data-toggle="modal" data-target="#createsubcategoria">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm" @click="versubcategorias('<?php echo $categoria->id; ?>')" title="Ver Subcategorias" data-toggle="modal" data-target="#showsubcategorias">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -50,6 +56,9 @@
     </div>
     @include('categoria.crear')
     @include('categoria.edit')
+    @include('categoria.createsubcategoria')
+    @include('categoria.showsubcategoria')
+    @include('categoria.editsubcategoria')
 @endsection
 
 @section('scriptp')
@@ -69,10 +78,44 @@
             el: '#Vue',
             data:{
                 listacategoria:[],
-                categoriaedit:[]
+                categoriaedit:[],
+                subcategoria:[],
+                idcategoria:0,
+                subcategoriadatos:[],
             },
             methods:{
+                subcategoriaedit:function(id){
+                    _this = this
 
+                    axios.post('datos/subcategoria',{
+                        id:id
+                    })
+                        .then(function (response) {
+
+                            _this.subcategoriadatos = response["data"];
+                        })
+                        .catch(function (error) {
+                        });
+
+                },
+                versubcategorias:function(id){
+                    _this = this
+
+                    axios.post('/mostrar/subcategorias',{
+                        id:id
+                    })
+                        .then(function (response) {
+
+                            _this.subcategoria = response["data"];
+                        })
+                        .catch(function (error) {
+                        });
+                },
+
+                cargarid:function (id){
+                    _this = this
+                    _this.idcategoria = id;
+                },
                 cargarcategoria: function () {
                     var _this = this;
 
