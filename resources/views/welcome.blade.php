@@ -58,6 +58,10 @@
             box-shadow: 5px 10px 18px #888888
         }
 
+        #categoria:hover{
+            box-shadow: 5px 10px 18px #00aced;
+        }
+
         .text1 {
             color: white;
             position: absolute;
@@ -193,7 +197,7 @@
                                 <h5>Categorias</h5>
                             </div>
                             @foreach($categoria as $cat)
-                                <div class="card" style="height: auto;width: 150px;margin-right:10px;background: #f7f4e3;cursor: pointer;box-shadow: 3px 3px 10px #888888" @click="productocategoria('<?php echo $cat->id; ?>'), cargarsubcategoria('<?php echo $cat->id; ?>'), cambio = 'subcategoria'">
+                                <div class="card" id="categoria" style="height: auto;width: 150px;margin-right:10px;background: #f7f4e3;cursor: pointer;box-shadow: 3px 3px 10px #888888" @click="productocategoria('<?php echo $cat->id; ?>'), cargarsubcategoria('<?php echo $cat->id; ?>'), cambio = 'subcategoria'">
                                     <div class="card-body">
                                         <div class="mx-auto d-block">
                                             <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" src="imagenes/{{$cat->img }}" alt="Card image cap">
@@ -242,14 +246,14 @@
                     {{--</nav>--}}
                     {{--</div>--}}
                     <br>
-                    <div class="col" style="box-shadow: 1px 1px 5px #888888;overflow-y: scroll">
+                    <div class="col" style="box-shadow: 1px 1px 5px #888888;overflow-y: scroll;height: 88vh;">
                         <div class="text-center" style="margin-bottom: 8px">
                             <button type="button" class="btn btn-lg btn-sm btn-link" v-show="cambio == 'subcategoria'" @click="cambio = 'categoria'" style="float: left;margin-left: 10px"><i class="fas fa-arrow-left"></i></button>
                             <h3>Productos</h3>
                         </div>
 
 
-                        <div class="row" >
+                        <div class="row">
                             <template v-for="p in productos" v-if="cerrada == 'A' && productosbuscados == ''">
                                     <div class="card" style="height: auto;background: #c8f1ff;width: 130px;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)" :title="p.name">
                                         <div class="card-body" style="background: white">
