@@ -196,5 +196,10 @@ class ApisController extends Controller
         $productos = Product::all()->where('categoria_id', '==', $request->id)->where('user_id', '==', Auth::id());
         return $productos;
     }
+    public function eliminarproducto(Request $request){
+        $product = Product::find($request->id);
+        $product->delete();
+        return 'eliminado';
+    }
 
 }

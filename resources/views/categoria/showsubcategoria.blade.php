@@ -25,6 +25,9 @@
                                 <button type="button" data-toggle="modal" @click="subcategoriaedit(sc.id)" data-target="#editarsubcategoria" class="btn btn-sm btn-warning mb-1">
                                     <i class="fas fa-edit"></i>
                                 </button>
+                                <button type="button" class="btn btn-outline-danger btn-sm" @click="confimar2(sc.id)" title="Eliminar Categoria y Subcategorias">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
                             </td>
                         </tr>
                     </template>

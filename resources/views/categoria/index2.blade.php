@@ -43,6 +43,9 @@
                                     <button type="button" class="btn btn-outline-primary btn-sm" @click="versubcategorias('<?php echo $categoria->id; ?>')" title="Ver Subcategorias" data-toggle="modal" data-target="#showsubcategorias">
                                         <i class="fas fa-eye"></i>
                                     </button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm" @click="confimar('<?php echo $categoria->id; ?>')" title="Eliminar Categoria y Subcategorias">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -84,6 +87,53 @@
                 subcategoriadatos:[],
             },
             methods:{
+
+                confimar2: function (id){
+                    var txt;
+                    var r = confirm("Estas Seguro que quieres borrar la subcategoria?");
+                    if (r == true){
+                        txt = this.borrarsubcategoria(id);
+                    }
+                },
+                borrarsubcategoria:function (id){
+                    _this = this
+
+                    axios.post('eliminar/subcategoria',{
+                        id:id
+                    })
+                        .then(function (response) {
+                            if (response["data"] == 'eliminado'){
+                                toastr.success('La subcategoria han sido eliminadas');
+                                setTimeout('document.location.reload()',1000);
+                            }
+                        })
+                        .catch(function (error) {
+                        });
+                },
+
+                confimar: function (id){
+                    var txt;
+                    var r = confirm("Estas Seguro que quieres borrar las categorias y subcategoria?");
+                    if (r == true){
+                        txt = this.borrardos(id);
+                    }
+                },
+                borrardos:function (id){
+                    _this = this
+
+                    axios.post('eliminar/dos',{
+                        id:id
+                    })
+                        .then(function (response) {
+                            if (response["data"] == 'eliminados'){
+                                toastr.success('La subcategoria y Categorias han sido eliminadas');
+                                setTimeout('document.location.reload()',1000);
+                            }
+                        })
+                        .catch(function (error) {
+                        });
+                },
+
                 subcategoriaedit:function(id){
                     _this = this
 

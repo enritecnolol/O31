@@ -73,18 +73,7 @@
             width: 100%;
             height: auto;
         }
-        #buscador{
-            width: 100%;
-            box-sizing: border-box;
-            border: 2px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-            background-color: white;
-            background-image: url('');
-            background-position: 10px 10px;
-            background-repeat: no-repeat;
-            padding: 12px 20px 12px 40px;
-        }
+
         /* width */
         ::-webkit-scrollbar {
             width: 8px;
@@ -181,15 +170,11 @@
     <div id="p" style="margin-top: -40px">
         <div class="container">
         </div>
-        {{--@include('productos.newproduct')--}}
+
         <br>
         <div class="section__content section__content--p30">
             <div class="container-fluid">
-                <div class="alert alert-primary pull-right" style="display: none" id="check" role="alert">
-                    A simple primary alert—check it out!
-                </div>
                 <div class="row" style="clear: both">
-
                     <template v-if="cerrada !='A'"></template>
                     <template v-else>
                         <div class="col-" style="overflow-y: scroll;margin:0; padding:0; height: 88vh;">
@@ -255,39 +240,37 @@
 
                         <div class="row">
                             <template v-for="p in productos" v-if="cerrada == 'A' && productosbuscados == ''">
-                                    <div class="card" style="height: auto;background: #c8f1ff;width: 130px;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)" :title="p.name">
-                                        <div class="card-body" style="background: white">
-                                            <div class="mx-auto d-block">
-                                                <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ reducir(p.name) }}</h6>
-                                                <div class="location text-sm-center" style="color: #0062cc">
-                                                    <i class="fa fa-money-bill-alt"></i> @{{p.price}}
-                                                </div>
+                                <div class="card" style="height: auto;background: #c8f1ff;width: 130px;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)" :title="p.name">
+                                    <div class="card-body" style="background: white">
+                                        <div class="mx-auto d-block">
+                                            <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
+                                            <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ reducir(p.name) }}</h6>
+                                            <div class="location text-sm-center" style="color: #0062cc">
+                                                <i class="fa fa-money-bill-alt"></i> @{{p.price}}
                                             </div>
                                         </div>
-                                        <div class="overlay1">
-                                            <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
-                                        </div>
                                     </div>
+                                    <div class="overlay1">
+                                        <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
+                                    </div>
+                                </div>
                             </template>
 
                             <template v-for="p in productosbuscados" v-if="cerrada == 'A' && productosbuscados != ''">
-
-                                    <div class="card"  :title="p.name" style="height: auto;width: 130px;background: #c8f1ff;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)">
-                                        <div class="card-body" style="background: white">
-                                            <div class="mx-auto d-block">
-                                                <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ reducir(p.name) }}</h6>
-                                                <div class="location text-sm-center" style="color: #0062cc">
-                                                    <i class="fa fa-money-bill-alt"></i> @{{p.price}}
-                                                </div>
+                                <div  class="card"  :title="p.name" style="height: auto;width: 130px;background: #c8f1ff;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)">
+                                    <div class="card-body" style="background: white">
+                                        <div class="mx-auto d-block">
+                                            <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
+                                            <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ reducir(p.name) }}</h6>
+                                            <div class="location text-sm-center" style="color: #0062cc">
+                                                <i class="fa fa-money-bill-alt"></i> @{{p.price}}
                                             </div>
                                         </div>
-                                        <div class="overlay1">
-                                            <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
-                                        </div>
                                     </div>
-
+                                    <div class="overlay1">
+                                        <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
+                                    </div>
+                                </div>
                             </template>
 
                             <template v-for="p in productos" v-else-if="cerrada == 'C'">
@@ -464,9 +447,6 @@
             p = moment( dia +' '+ '10:00 PM', 'DD-MM-YYYY hh:mm A').utc().format();
 
 
-
-
-
             if (moment().isAfter(p)){
 
                 toastr.options = {
@@ -476,12 +456,6 @@
                     "positionClass": "toast-top-center",
                 }
                 toastr.warning('Son las ' + moment().format('hh:mm A') + ' favor acordarse de cerrar la caja');
-                // toastr.error('Error!');
-                //
-                // console.log(moment().format('hh:mm A'));
-                // $('#check').show();
-
-                // toastr.warning('!!Recuerda Cerrar la CAJA antes de cerrar');
             }
 
         });
@@ -504,10 +478,15 @@
         var caja = '{!! $caja !!}'
         var cerrada = '{!! $cerrada !!}'
 
-        function toObject(arr) {
+        function toObject(arr){
             var rv = {};
-            for (var i = 0; i < arr.length; ++i)
-                rv[arr[i].id] = arr[i];
+
+            for (var key in arr) {
+                if(arr.hasOwnProperty(key)) {
+                    var item = arr[key];
+                    rv[item.id] = item;
+                }
+            }
             return rv;
         }
 
@@ -562,6 +541,7 @@
 
                 },
                 cargarsubcategoria:function(id){
+
                     _this = this
                     axios.post('subcategoria/vender',{
                         id:id
@@ -621,39 +601,36 @@
 
                 pfactura: function (id) {
 
-                    var producto = Object.entries(this.productos)[id-1];
-
+                    var producto = this.productos[id];
                     this.carrito = {
-                        id : producto[1].id,
-                        name : producto[1].name,
-                        price : producto[1].price,
+                        id : producto.id,
+                        name : producto.name,
+                        price : producto.price,
                         count : 1
                     }
 
-
-
-
-                    var idp = producto[1].id
+                    console.log(producto)
+                    var idp = producto.id
 
                     function buscaid(prod) {
                         return prod.id == idp;
                     }
-                    var cantidad = producto[1].existence;
-                    var bar = producto[1].barcode;
+                    var cantidad = producto.existence;
+                    var bar = producto.barcode;
 
                     if (this.list.find(buscaid)){
 
                         var count = this.list.find(buscaid).count;
                         var contador = count + 1;
-                        var cant = producto[1].existence - count;
+                        var cant = producto.existence - count;
 
                         var listid = this.list.find(buscaid).id
-                        var total = contador * producto[1].price;
+                        var total = contador * producto.price;
 
                         this.list.map(function (dato){
                             if (dato.id == listid) {
-                                dato.count = contador
-                                dato.price = total
+                                dato.count = parseFloat(contador)
+                                dato.price = parseFloat(total)
                             }
                             return dato
                         });
@@ -699,8 +676,8 @@
                 },
 
                 eliminarp: function (id) {
-                    var producto = Object.entries(this.productos)[id-1]
-                    var idp = producto[1].id
+                    var producto = this.productos[id]
+                    var idp = producto.id
 
                     function buscaid(prod) {
                         return prod.id == idp;
@@ -710,8 +687,8 @@
                         var count = this.list.find(buscaid).count;
                         var contador = count - 1 ;
                         var listid = this.list.find(buscaid).id
-                        // var total = contador * producto[1].price;
-                        var total = this.list.find(buscaid).price - producto[1].price
+                        // var total = contador * producto.price;
+                        var total = this.list.find(buscaid).price - producto.price
 
                         this.list.map(function(dato) {
 
@@ -734,7 +711,7 @@
                 },
                 cambiarcount:function(idcambio ,cambiocount ){
                     var producto = Object.entries(this.productos)[idcambio-1]
-                    var idp = producto[1].id
+                    var idp = producto.id
 
                     function buscaid(prod) {
                         return prod.id == idp;
@@ -742,14 +719,14 @@
                     if (this.list.find(buscaid)){
 
                         var countnuevo = cambiocount;
-                        var totalnuevo = countnuevo * producto[1].price;
+                        var totalnuevo = countnuevo * producto.price;
                         var listid = this.list.find(buscaid).id
 
                         this.list.map(function(dato) {
 
                             if (dato.id == listid){
-                                dato.count = countnuevo
-                                dato.price = totalnuevo
+                                dato.count = parseFloat(countnuevo)
+                                dato.price = parseFloat(totalnuevo)
                             }
                             return dato
                         });

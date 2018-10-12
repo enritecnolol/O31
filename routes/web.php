@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/buscar', 'ApisController@buscarp'); // api para buscar producto
     Route::get('/buscar/producto/referencia', 'ApisController@buscarproductoreferencia'); // api para buscar producto
     Route::post('anja/{id}', 'ApisController@update' );// api para actualizar los productos
+    Route::post('eliminar/producto', 'ApisController@eliminarproducto' );// Eliminar productos
 
     Route::get('ver/categoria/get', 'ApisController@cargarcategoria' );// api para actualizar los productos
 
@@ -52,6 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
     /*=================================\Productos/======================================================*/
     Route::resource('/productos', 'ProductsController'); // controller de manejo de los productos
 
+
     /*=================================\Categorias/======================================================*/
     Route::get('categorias', 'CategoriasController@index'); // controller de manejo de los productos
     Route::post('categorias/nueva', 'CategoriasController@nuevacategoria'); // controller de manejo de los productos
@@ -68,6 +70,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('subcategoria/vender', 'SubcategoriasController@subcategoriavender'); // inserta subcategoria rapido en pantalla de producto
     Route::post('subcategoria/productos', 'SubcategoriasController@subcategoriaproductos'); // buscar los productos que pertenezcan en esa subcategoria
     Route::post('/ver/subcategorias', 'SubcategoriasController@versubcategorias'); // mostrar las subacetgorias en la parte de editar productos
+    Route::post('eliminar/dos', 'SubcategoriasController@eliminardos'); // Eliminar Categoria y subcategoria junta
+    Route::post('eliminar/subcategoria', 'SubcategoriasController@eliminarsubcategoria'); // Eliminar subcategoria
 
     /*=================================\CAJA/======================================================*/
     Route::get('/caja', 'CajasController@index'); // controller para la caja

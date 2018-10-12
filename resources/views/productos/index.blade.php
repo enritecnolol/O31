@@ -49,6 +49,9 @@
                                         <button type="button" v-on:click="producto('<?php echo $producto->id; ?>')" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
                                             <i class="fas fa-edit"></i>
                                         </button>
+                                        <button type="button" class="btn btn-outline-danger btn-sm" @click="confimar('<?php echo $producto->id; ?>')" title="Eliminar Producto">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -92,6 +95,9 @@
                                 <td>
                                     <button type="button" v-on:click="producto(p.id)" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
                                         <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm" @click="confimar(p.id)" title="Eliminar Producto">
+                                        <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -143,6 +149,28 @@
                 listasubcategoriaedit:''
             },
             methods:{
+                confimar: function (id){
+                    var txt;
+                    var r = confirm("Estas Seguro que quieres borrar este producto?");
+                    if (r == true){
+                        txt = this.borrar(id);
+                    }
+                },
+                borrar:function (id){
+                    _this = this
+
+                    axios.post('eliminar/producto',{
+                        id:id
+                    })
+                        .then(function (response) {
+                            if (response["data"] == 'eliminado'){
+                                toastr.success('El producto ha sido eliminado');
+                                setTimeout('document.location.reload()',1000);
+                            }
+                        })
+                        .catch(function (error) {
+                        });
+                },
 
                 subcategoria:function(){
                     // console.log(this.idsubcategoria);

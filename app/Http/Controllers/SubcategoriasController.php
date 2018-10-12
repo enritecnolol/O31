@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Categoria;
 use App\Product;
 use App\Subcategoria;
 use Illuminate\Http\Request;
@@ -100,5 +101,18 @@ class SubcategoriasController extends Controller
         $id = Auth::id();
         $sub = Subcategoria::all()->where('user_id', '==', $id);
         return $sub;
+    }
+    public function eliminardos(Request $request){
+        $categoria = Categoria::find($request->id);
+        $categoria->delete();
+
+        $subcategoria = Subcategoria::where('categoria_id', $request->id)->delete();
+        return 'eliminados';
+    }
+    public function eliminarsubcategoria(Request $request){
+        $sub = Subcategoria::find($request->id);
+        $sub->delete();
+
+        return'eliminado';
     }
 }
