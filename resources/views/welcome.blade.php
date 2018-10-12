@@ -609,8 +609,7 @@
                         count : 1
                     }
 
-                    console.log(producto)
-                    var idp = producto.id
+                    var idp = parseFloat(producto.id)
 
                     function buscaid(prod) {
                         return prod.id == idp;
@@ -621,7 +620,7 @@
                     if (this.list.find(buscaid)){
 
                         var count = this.list.find(buscaid).count;
-                        var contador = count + 1;
+                        var contador = parseFloat(count) + 1;
                         var cant = producto.existence - count;
 
                         var listid = this.list.find(buscaid).id
