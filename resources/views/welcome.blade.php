@@ -250,8 +250,8 @@
                         <div class="text-center" style="margin-bottom: 8px">
                             <button type="button" class="btn btn-lg btn-sm btn-link" v-show="cambio == 'subcategoria'" @click="cambio = 'categoria'" style="float: left;margin-left: 10px"><i class="fas fa-arrow-left"></i></button>
                             <h3>Productos</h3>
+                            <input type="search"  class="form-control form-control-sm" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
                         </div>
-
 
                         <div class="row">
                             <template v-for="p in productos" v-if="cerrada == 'A' && productosbuscados == ''">
@@ -455,7 +455,19 @@
             });
 
             var alerta = '{{$alerta}}';
-            if (moment().format('hh:mm A') > '10:05 PM'){
+
+
+            dia = moment().format('DD-MM-YYYY');
+
+
+
+            p = moment( dia +' '+ '10:00 PM', 'DD-MM-YYYY hh:mm A').utc().format();
+
+
+
+
+
+            if (moment().isAfter(p)){
 
                 toastr.options = {
                     "closeButton": true,
