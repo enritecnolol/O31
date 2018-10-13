@@ -224,12 +224,6 @@
                             </template>
                         </div>
                     </template>
-                    {{--<div class="">--}}
-                    {{--<nav class="navbar navbar-light" style="background-color: whitesmoke;box-shadow: 2px 2px 7px #888888">--}}
-                    {{--<a class="navbar-brand" href="#" style="color: #0062cc"><i class="fas fa-list-ul"></i> <strong>Productos</strong></a>--}}
-                    {{--<input type="search"  class="form-control col-md-2 pull-right" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">--}}
-                    {{--</nav>--}}
-                    {{--</div>--}}
                     <br>
                     <div class="col" style="box-shadow: 1px 1px 5px #888888;overflow-y: scroll;height: 88vh;">
                         <div class="text-center" style="margin-bottom: 8px">
@@ -276,10 +270,6 @@
                             <template v-for="p in productos" v-else-if="cerrada == 'C'">
                                 <div class="col-md-2">
                                     <div class="card" style="height: auto">
-                                        {{--<div class="card-header">--}}
-                                        {{--<i class="fa fa-shopping-cart"></i>--}}
-                                        {{--<span class="badge badge-success pull-right"></span>--}}
-                                        {{--</div>--}}
                                         <div class="card-body">
                                             <div class="mx-auto d-block">
                                                 <img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
@@ -709,7 +699,7 @@
 
                 },
                 cambiarcount:function(idcambio ,cambiocount ){
-                    var producto = Object.entries(this.productos)[idcambio-1]
+                    var producto = this.productos[idcambio]
                     var idp = producto.id
 
                     function buscaid(prod) {
@@ -746,9 +736,6 @@
                     _this = this;
                     e.preventDefault();
                     _this.cuadro = false;
-                },
-                console:function (){
-                    console.log('funciona')
                 },
 
                 facturar:function () {
@@ -812,6 +799,7 @@
                                     tipop:this.campotipop,
                                     banco:this.banco,
                                     auth: this.auth,
+
                                     tipotarjeta: this.tipotarjeta,
                                     Numtarjeta: this.Numtarjeta,
                                     montotarjeta:this.montotarjeta,
