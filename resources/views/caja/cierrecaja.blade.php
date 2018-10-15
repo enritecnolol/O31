@@ -30,7 +30,7 @@
         <div v-else class="card" style="width: 100%;">
             <div class="card-header">
                 <strong>Cierre</strong>
-                <button v-if="caja[0].total_cierre == 0" class="btn btn-success btn-sm pull-right" @click="confimar()" type="button"><i class="fas fa-lock">&nbsp; Cerrar Caja</i></button>
+                <button v-if="caja[0].status == 'A'" class="btn btn-success btn-sm pull-right" @click="confimar()" type="button"><i class="fas fa-lock">&nbsp; Cerrar Caja</i></button>
                 <button v-else disabled class="btn btn-success btn-sm pull-right"  type="button"><i class="fas fa-lock">&nbsp; Cerrar Caja</i></button>
             </div>
             <div class="card-body">
