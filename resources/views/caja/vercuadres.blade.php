@@ -52,6 +52,7 @@
                                     <th>total cierre</th>
                                     <th>Valor apertura</th>
                                     <th>Total venta</th>
+                                    <th>cuadrada?</th>
                                     <th></th>
 
                                 </tr>
@@ -65,6 +66,7 @@
                                         <td>@{{ v.total_cierre }}</td>
                                         <td>@{{ v.valor_apertura }}</td>
                                         <td>@{{ v.total_venta }}</td>
+                                        <td><span class="badge badge-dark">@{{ v.cuadreconf }}</span></td>
                                         <td><button type="button" @click="desglose(v.id)" class="btn btn-light">Ver Desglose</button></td>
                                     </tr>
                                 </template>
@@ -76,6 +78,7 @@
                                         <td>@{{ v.total_cierre }}</td>
                                         <td>@{{ v.valor_apertura }}</td>
                                         <td>@{{ v.total_venta }}</td>
+                                        <td><span class="badge badge-dark">@{{ v.cuadreconf }}</span></td>
                                         <td><button type="button" @click="desglose(v.id)" class="btn btn-light">Ver Desglose</button></td>
                                     </tr>
                                 </template>

@@ -123,15 +123,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="item in list">
-                            <td style="line-height: 1">@{{item.name}}</td>
-                            <td class="text-center" style="cursor: pointer" @click="cuadro = true" v-if="cuadro == false">@{{item.count}}</td>
-                            <td class="text-center" style="cursor: pointer" v-else>
-                                <input type="number" class="form-control" min="0" style="width: 70px" v-model="item.count" @keypress.enter="normal" @blur="normal" @input.self="cambiarcount(item.id, item.count)">
-                            </td>
-                            <td class="text-center">@{{item.price}}</td>
-                            <td><button type="button" class="fas fa-minus" style="color: orangered" @click="eliminarp(item.id)"></button></td>
-                        </tr>
+                            <tr v-for="item in list">
+                                <td style="line-height: 1">@{{item.name}}</td>
+                                <td class="text-center" style="cursor: pointer" @click="cuadro = true" v-if="cuadro == false">@{{item.count}}</td>
+                                <td class="text-center" style="cursor: pointer" v-else>
+                                    <input type="number" class="form-control" min="0" style="width: 70px" v-model="item.count" @keypress.enter="normal" @blur="normal" @input.self="cambiarcount(item.id, item.count)">
+                                </td>
+                                <td class="text-center">@{{item.price}}</td>
+                                <td><button type="button" class="fas fa-minus" style="color: orangered" @click="eliminarp(item.id)"></button></td>
+                            </tr>
                         </tbody>
                         <thead>
                         <tr>
@@ -142,27 +142,33 @@
                         </tr>
                         </thead>
                     </table>
-                    <div v-if="cerrada == 'A' && facturatotal > 0" style="position: fixed;bottom:30px; width: 300px">
-                        <button type="button" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar Compra</button>
-                        <button data-toggle="modal" data-target="#pago" type="button" style="height: 130px;background: #4272d7;" class="btn btn-lg  btn-block">
-                            <span id="payment-button-amount" style="font-size: 20px;color: whitesmoke"> Pagar <br><span style="color: whitesmoke;font-size: 30px">$ @{{ facturatotal }}.00</span></span>
-                            <span id="payment-button-sending" style="display:none;">Sending…</span>
-                        </button>
-                    </div>
-                    <div v-else-if="cerrada == 'A' && facturatotal == 0" style="position: fixed;bottom:30px; width: 300px">
-                        <button data-toggle="modal" disabled data-target="#pago" type="button" style="height: 130px; background: #4272d7;" class="btn btn-lg  btn-block">
-                            <span id="payment-button-amount" style="font-size: 24px"><span style="color: whitesmoke">Pagar <br></span><span style="color: whitesmoke;font-size: 30px">$&nbsp;@{{ facturatotal }}.00</span></span>
-                            <span id="payment-button-sending" style="display:none;">Sending…</span>
-                        </button>
-                    </div>
-                    <div v-else style="position: fixed;bottom:10px; width: 250px">
-                        <h4 style="color: red; font-size: 24px">Caja no esta abierta</h4>
-                        <p style="font-size: small;font-size: 22px">Opciones => Caja => Apertura Caja </p>
-                    </div>
                 </div>
             </div>
+
         </form>
+
+        <div v-show="cerrada == 'A' && facturatotal > 0" style="width: 300px;position: fixed;bottom: 10px;">
+            <button type="button" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar Compra</button>
+            <button data-toggle="modal" data-target="#pago" type="button" style="height: 130px;background: #4272d7;" class="btn btn-lg  btn-block">
+                <span id="payment-button-amount" style="font-size: 20px;color: whitesmoke"> Pagar <br><span style="color: whitesmoke;font-size: 30px">$ @{{ facturatotal }}.00</span></span>
+                <span id="payment-button-sending" style="display:none;">Sending…</span>
+            </button>
+        </div>
+        <div v-show="cerrada == 'A' && facturatotal == 0" style="width: 300px;position: fixed;bottom: 10px;">
+            <button data-toggle="modal" disabled data-target="#pago" type="button" style="height: 130px; background: #4272d7;" class="btn btn-lg  btn-block">
+                <span id="payment-button-amount" style="font-size: 24px"><span style="color: whitesmoke">Pagar <br></span><span style="color: whitesmoke;font-size: 30px">$&nbsp;@{{ facturatotal }}.00</span></span>
+                <span id="payment-button-sending" style="display:none;">Sending…</span>
+            </button>
+        </div>
+        <div v-show="cerrada == 'C'" style="position: fixed;bottom:10px; width: 250px">
+            <h4 style="color: red; font-size: 24px">Caja no esta abierta</h4>
+            <p style="font-size: small;font-size: 22px">Menu => Caja => Apertura Caja </p>
+        </div>
+
+
     </div>
+
+
 
 
 @endsection
@@ -447,6 +453,9 @@
                 }
                 toastr.warning('Son las ' + moment().format('hh:mm A') + ' favor acordarse de cerrar la caja');
             }
+
+            /*Cerrar caja antes de las 12*/
+
 
         });
 

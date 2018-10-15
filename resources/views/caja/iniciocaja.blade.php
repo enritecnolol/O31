@@ -126,11 +126,53 @@
                     <div class="card-header">
                         <strong>Apertura de Caja</strong>
                     </div>
-                    <div class="card-body text-center">
-                        <h1 style="margin: 10%">La caja ya <span style="color: red">Cerrada</span></h1>
-                        <br>
-                        <hr>
-                        <a href="/caja/cuadre">Si quiere Cuadrar su caja presione aqui</a>
+                    <div class="card-body">
+                        <form action="" method="POST">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="" class=" form-control-label">Fecha</label>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <input type="text" name="fecha" placeholder="" v-model="fecha" disabled class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="" class=" form-control-label">Almacen</label>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <input type="text" id="" name="almacen" placeholder="" value="general" disabled class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="" class=" form-control-label">Valor Apertura</label>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <input type="number" name="valor_apertura" v-on:keyup.enter="abrircaja()" placeholder="" min="0" value="0"  class="form-control" required v-model="valortotal" title="El numero tiene que se mayor a 0">
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="" class=" form-control-label">Total</label>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <input type="number" name="total" v-model="total" placeholder="" value="0" disabled class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="text-center" style="margin-top: 40px">
+                                <button type="button" @click="abrircaja()" class="btn btn-success">
+                                    <i class="fas fa-lock-open"></i>&nbsp; Guardar
+                                </button>
+                            </div>
+
+
+                        </form>
                     </div>
                 </div>
 

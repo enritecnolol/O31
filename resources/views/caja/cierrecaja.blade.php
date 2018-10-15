@@ -34,7 +34,7 @@
                 <button v-else disabled class="btn btn-success btn-sm pull-right"  type="button"><i class="fas fa-lock">&nbsp; Cerrar Caja</i></button>
             </div>
             <div class="card-body">
-                <div class="row" v-if="caja[0].total_cierre == 0 && caja[0].status == 'A'">
+                <div class="row" v-if="caja[0].status == 'A'">
                     <div class="col-md-3">
                         <strong>Cierre de caja:</strong> No.1
                     </div>
@@ -58,19 +58,12 @@
                         <strong>Total de Ventas:</strong> @{{ ventas }}  - @{{ total }}
                     </div>
                 </div>
-                <div v-else-if="caja[0].total_cierre == 0 && caja[0].status == 'C'" class="text-center">
-                    <h1>La caja esta <strong style="color: red">Cerrada</strong></h1>
+                <div v-if="caja[0].status == 'C'" class="text-center">
+                    <h1>La ultima caja esta <strong style="color: red">Cerrada</strong></h1>
                     <br>
                     <br>
                     <hr>
-                    <a href="/caja/cuadre">Si quiere Cuadrar su caja presione <strong style="color: red">AQUI</strong></a>
-                </div>
-                <div v-else class="text-center">
-                    <h1>La caja esta <strong style="color: red">Cerrada</strong></h1>
-                    <br>
-                    <br>
-                    <hr>
-                    <a href="/caja/cuadre">Si quiere Cuadrar su caja presione <strong style="color: red">AQUI</strong></a>
+                    <a href="/caja/cuadre">Si desea cuadrar una caja presione <strong style="color: red">AQUI</strong></a>
                 </div>
             </div>
         </div>

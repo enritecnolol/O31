@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/caja/cuadres/ver', 'ApisController@buscarcuadre'); // Ver Cuadre vista buscador
     Route::post('/caja/cuadres', 'ApisController@cuadres'); // Ver Cuadre vista
     Route::get('/formato/cuadre/{id}', 'CajasController@idcuadre'); //desglose un el id del cuadre
+    Route::post('/cuadre/infocaja', 'CajasController@infocaja'); //buscar informacion de la caja para hacer el cuadre
 
 
 
