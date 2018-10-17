@@ -169,7 +169,7 @@ strong {
 .title-2 {
     text-transform: capitalize;
     font-weight: 400;
-    font-size: 24px;
+    font-size: 18px;
     line-height: 1;
 }
 
@@ -1143,7 +1143,7 @@ section {
 }
 
 .card {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 .input-group-addon {
@@ -2121,7 +2121,7 @@ section {
 }
 
 .menu-sidebar2 .logo {
-    height: 75px;
+    height: 50px;
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -2290,7 +2290,7 @@ section {
 }
 
 .header-desktop2 {
-    height: 75px;
+    height: 50px;
     background: #4272d7;
     position: fixed;
     z-index: 1001;
@@ -3198,10 +3198,10 @@ section {
     display: inline-block;
 }
 
-.overview-box .text h2 {
-    font-weight: 300;
+.overview-box .text h3 {
+    font-weight: 250;
     color: #fff;
-    font-size: 36px;
+    font-size: 30px;
     line-height: 1;
     margin-bottom: 5px;
 }

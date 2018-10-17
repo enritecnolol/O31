@@ -24,10 +24,10 @@
                     <div class="overview__inner">
                         <div class="overview-box clearfix">
                             <div class="icon">
-                                <i class="zmdi zmdi-money"></i>
+                                <i class="zmdi zmdi-hc-5x zmdi-money"></i>
                             </div>
                             <div class="text">
-                                <h2>$ {{$totaldias}}.00</h2>
+                                <h3>$ {{$totaldias}}.00</h3>
                                 <span>Total del dia</span>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                                 <i class="zmdi zmdi-shopping-cart"></i>
                             </div>
                             <div class="text">
-                                <h2>${{$ventassemana}}.00</h2>
+                                <h3>${{$ventassemana}}.00</h3>
                                 <span>total semana</span>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                                 <i class="zmdi zmdi-calendar-note"></i>
                             </div>
                             <div class="text">
-                                <h2>${{$ventasmes}}.00</h2>
+                                <h3>${{$ventasmes}}.00</h3>
                                 <span>Total del mes</span>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                                 <i class="zmdi zmdi-money"></i>
                             </div>
                             <div class="text">
-                                <h2>${{$totalventas[0]->total}}.00</h2>
+                                <h3>${{$totalventas}}.00</h3>
                                 <span>Total Ventas - año</span>
                             </div>
                         </div>
@@ -86,7 +86,6 @@
     </div>
 
     <div class="container">
-
         <div class="row">
             <div class="col-lg-6">
                 <div class="au-card m-b-30">
@@ -152,13 +151,18 @@
                     label: '',
                     data: valores,
                     backgroundColor: [
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
                     ],
                     borderColor: [
                         'rgba(54, 162, 235, 1)',
@@ -201,15 +205,27 @@
                     label: '',
                     data: valores2,
                     backgroundColor: [
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
                     ],
                     borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
                         'rgba(54, 162, 235, 1)',
                         'rgba(54, 162, 235, 1)',
                         'rgba(54, 162, 235, 1)',
@@ -261,7 +277,7 @@
                         'rgba(255, 206, 86, 0.2)',
                         'rgba(75, 192, 192, 0.2)',
                         'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
+                        'rgba(255, 159, 64, 0.2)',
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)',
@@ -300,13 +316,18 @@
                     label: '',
                     data: valores4,
                     backgroundColor: [
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
                     ],
                     borderColor: [
                         'rgba(54, 162, 235, 1)',
@@ -347,15 +368,27 @@
                     label: '',
                     data: valores6,
                     backgroundColor: [
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
-                        'rgba(54, 162, 235, 0.3)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
                     ],
                     borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
                         'rgba(54, 162, 235, 1)',
                         'rgba(54, 162, 235, 1)',
                         'rgba(54, 162, 235, 1)',

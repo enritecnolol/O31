@@ -91,6 +91,13 @@
 
         }
 
+        .factura-table th {
+            font-weight: 600;
+        }
+
+        .factura-table td {
+            font-size: 14px;
+        }
         /* Handle on hover */
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
@@ -101,19 +108,23 @@
 @section('tittle',' Cafeteria| Facturacion')
 
 @section('titulo')
-    <h3 style="color: white"><i class="fa fa-usd "></i><i class="fa fa-usd SS"></i> Punto de Venta</h3>
+    <h4 style="color: white;font-weight: 400"> <i class="fa fa-arrow-circle-right"></i> Punto de Venta</h4>
 @endsection
 
 @section('aside')
 
     <div class="container">
-        <div class="card-title">
-            <h3 class="text-center title-2" style="padding-top: 10px;">Factura</h3>
+        <div class="card-title" style="margin: 0;  margin-top: 15px">
+            <div style="text-align: center; background-color: #4272d7; color: white">
+                Factura
+            </div>
+            {{--<h4 class="text-center title-2" style="padding-top: 10px;">Factura</h4>--}}
+
         </div>
         <form action="" method="post" novalidate="novalidate">
             <div class="form-group has-success">
                 <div class="table-responsive" style="margin-bottom: 5px">
-                    <table class="table table-sm">
+                    <table class="table table-sm factura-table" >
                         <thead>
                         <tr>
                             <th>Producto</th>
@@ -147,19 +158,21 @@
 
         </form>
 
-        <div v-show="cerrada == 'A' && facturatotal > 0" style="width: 300px;position: fixed;bottom: 10px;">
+        <div v-show="cerrada == 'A' && facturatotal > 0" style="width: 320px;position: fixed;bottom: 10px;">
             <button type="button" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar Compra</button>
             <button data-toggle="modal" data-target="#pago" type="button" style="height: 130px;background: #4272d7;" class="btn btn-lg  btn-block">
                 <span id="payment-button-amount" style="font-size: 20px;color: whitesmoke"> Pagar <br><span style="color: whitesmoke;font-size: 30px">$ @{{ facturatotal }}.00</span></span>
                 <span id="payment-button-sending" style="display:none;">Sending…</span>
             </button>
         </div>
-        <div v-show="cerrada == 'A' && facturatotal == 0" style="width: 300px;position: fixed;bottom: 10px;">
+
+        <div v-show="cerrada == 'A' && facturatotal == 0" style="width: 320px;position: fixed;bottom: 10px;">
             <button data-toggle="modal" disabled data-target="#pago" type="button" style="height: 130px; background: #4272d7;" class="btn btn-lg  btn-block">
                 <span style="font-size: 24px"><span style="color: whitesmoke">Pagar <br></span><span style="color: whitesmoke;font-size: 30px">$&nbsp;@{{ facturatotal }}.00</span></span>
                 <span style="display:none;">Sending…</span>
             </button>
         </div>
+
         <div v-show="cerrada == 'C'" style="position: fixed;bottom:10px; width: 250px">
             <h4 style="color: red; font-size: 24px">Caja no esta abierta</h4>
             <p style="font-size: small;font-size: 22px">Menu => Caja => Apertura Caja</p>
@@ -173,7 +186,7 @@
 
 @endsection
 @section('content')
-    <div id="p" style="margin-top: -40px">
+    <div id="p" style="margin-top: -80px">
         <br>
         <div class="section__content section__content--p30">
             <div class="container-fluid">
@@ -181,12 +194,12 @@
                     <template v-if="cerrada !='A'"></template>
                     <template v-if="cerrada == 'no es dia'"></template>
                     <template v-if="cerrada =='A'">
-                        <div class="col-" style="overflow-y: scroll;margin:0; padding:0; height: 88vh;">
+                        <div class="col-" style="overflow-y: scroll;margin:0; padding:0; height: 90vh;">
                             <div class="text-center" style="margin-bottom: 5px">
                                 <h5>Categorias</h5>
                             </div>
                             @foreach($categoria as $cat)
-                                <div class="card" id="categoria" style="height: auto;width: 150px;margin-right:10px;background: #f7f4e3;cursor: pointer;box-shadow: 3px 3px 10px #888888" @click="productocategoria('<?php echo $cat->id; ?>'), cargarsubcategoria('<?php echo $cat->id; ?>'), cambio = 'subcategoria'">
+                                <div class="card" id="categoria" style="height: auto;width: 150px;margin-right:10px;background: white;cursor: pointer;box-shadow:rgb(136, 136, 136) 1px 1px 5px;" @click="productocategoria('<?php echo $cat->id; ?>'), cargarsubcategoria('<?php echo $cat->id; ?>'), cambio = 'subcategoria'">
                                     <div class="card-body">
                                         <div class="mx-auto d-block">
                                             <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" src="imagenes/{{$cat->img }}" alt="Card image cap">
@@ -198,12 +211,13 @@
                                 </div>
                             @endforeach
                         </div>
-                        <div class="col-" v-show="cambio == 'subcategoria'" style="overflow-y: scroll;height: 88vh;">
+                        <div class="col-" v-show="cambio == 'subcategoria' && categoria_subcategoria.length !== 0" style="overflow-y: scroll;height: 90vh;">
                             <div class="text-center" style="margin-bottom: 5px">
-                                <h6>SubCategoria</h6>
+                                <h6>Subcategoria</h6>
                             </div>
                             <template v-if="categoria_subcategoria == ''">
-                                <div class="card" @click="cambio = 'categoria'" style="height: 110px;width: 130px;margin-right: 10px;margin-left: 10px;background: #f7f4e3;cursor: pointer;box-shadow: 3px 3px 10px #888888">
+
+                                <div class="card" @click="cambio = 'categoria'" style="height: 110px;width: 130px;margin-right: 10px;margin-left: 10px;background: white;cursor: pointer;box-shadow: 3px 3px 10px #888888">
                                     <div class="card-body">
                                         <div class="mx-auto d-block">
                                             <img class="rounded-circle mx-auto d-block image1" style=" height: 50px; width: 80px"  src="imagenes/default.jpg" alt="Card image cap">
@@ -215,7 +229,7 @@
                                 </div>
                             </template>
                             <template v-else v-for="cs in categoria_subcategoria">
-                                <div class="card" @click="subcategoriaproductos(cs.id)" style="height: 110px;width: 130px;margin-right: 10px;margin-left: 10px;background: #f7f4e3;cursor: pointer;box-shadow: 3px 3px 10px #888888">
+                                <div class="card" @click="subcategoriaproductos(cs.id)" style="height: 110px;width: 130px;margin-right: 10px;margin-left: 10px;background: white;cursor: pointer;box-shadow: 3px 3px 10px #888888">
                                     <div class="card-body">
                                         <div class="mx-auto d-block">
                                             <img class="rounded-circle mx-auto d-block image1" style=" height: 50px; width: 80px" :src="'imagenes/'+cs.img" alt="Card image cap">
@@ -229,9 +243,9 @@
                         </div>
                     </template>
                     <br>
-                    <div class="col" style="box-shadow: 1px 1px 5px #888888;overflow-y: scroll;height: 88vh;">
+                    <div class="col" style="box-shadow: 1px 1px 5px #888888;overflow-y: scroll;height: 90vh;">
                         <div class="text-center" style="margin-bottom: 8px">
-                            <button type="button" class="btn btn-lg btn-sm btn-link" v-show="cambio == 'subcategoria'" @click="cambio = 'categoria'" style="float: left;margin-left: 10px"><i class="fas fa-arrow-left"></i></button>
+                            <button type="button" class="btn btn-lg btn-sm btn-link" v-show="cambio == 'subcategoria' && categoria_subcategoria.length !== 0" @click="cambio = 'categoria'" style="float: left;margin-left: 10px"><i class="fas fa-arrow-left"></i></button>
                             <h3>Productos</h3>
                             <input type="search"  class="form-control form-control-sm" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
                         </div>
@@ -481,6 +495,16 @@
     </script>
 
     <script>
+        function formatMoney(n, c, d, t) {
+            var c = isNaN(c = Math.abs(c)) ? 2 : c,
+                d = d == undefined ? "." : d,
+                t = t == undefined ? "," : t,
+                s = n < 0 ? "-" : "",
+                i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+                j = (j = i.length) > 3 ? j % 3 : 0;
+
+            return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+        };
 
         var productos = JSON.parse('{!! $productos !!}')
         var caja = '{!! $caja !!}'
@@ -521,12 +545,22 @@
                 productosreferencia:'',
                 listacategoria: [],
                 cuadro: false,
-                categoria_subcategoria:'',
+                categoria_subcategoria:[],
                 cambio:'categoria',
 
 
             },
             watch:{
+                formatMoney: function(n, c, d, t){
+                    var c = isNaN(c = Math.abs(c)) ? 2 : c,
+                        d = d == undefined ? "." : d,
+                        t = t == undefined ? "," : t,
+                        s = n < 0 ? "-" : "",
+                        i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+                        j = (j = i.length) > 3 ? j % 3 : 0;
+
+                    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+                },
 
                 facturatotal:function(valor){
                     this.campodinero = valor

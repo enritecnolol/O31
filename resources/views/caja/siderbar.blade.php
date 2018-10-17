@@ -6,16 +6,16 @@
                     <i class="fas fa-chart-line"></i><strong>DASHBOARD</strong></a>
             </li>
             <li>
+                <a href="/" >
+                    <i class="fas fa-shopping-cart"></i><strong>PUNTO DE VENTA</strong></a>
+            </li>
+            <li>
                 <a href="/productos" >
                     <i class="fas fa-utensils"></i><strong>PRODUCTOS</strong></a>
             </li>
             <li>
                 <a href="/categorias" >
                     <i class="fas fa-clipboard-check"></i><strong>CATEGORIAS</strong></a>
-            </li>
-            <li>
-                <a href="/" >
-                    <i class="fas fa-shopping-cart"></i><strong>VENDER</strong></a>
             </li>
             <li class="">
                 <a href="/caja" >
