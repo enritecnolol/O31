@@ -59,7 +59,7 @@
                             <div class="account-wrap">
                                 <div class="account-item clearfix js-item-menu">
                                     <div class="image">
-                                        <img src="{{ URL::asset('imagenes/User.png')}}" alt="John Doe" />
+
                                     </div>
                                     <div class="content">
                                         <a class="js-acc-btn" href="#" style="color: white">Menu</a>
