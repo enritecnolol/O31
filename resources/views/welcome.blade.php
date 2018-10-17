@@ -123,15 +123,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in list">
-                                <td style="line-height: 1">@{{item.name}}</td>
-                                <td class="text-center" style="cursor: pointer" @click="cuadro = true" v-if="cuadro == false">@{{item.count}}</td>
-                                <td class="text-center" style="cursor: pointer" v-else>
-                                    <input type="number" class="form-control" min="0" style="width: 70px" v-model="item.count" @keypress.enter="normal" @blur="normal" @input.self="cambiarcount(item.id, item.count)">
-                                </td>
-                                <td class="text-center">@{{item.price}}</td>
-                                <td><button type="button" class="fas fa-minus" style="color: orangered" @click="eliminarp(item.id)"></button></td>
-                            </tr>
+                        <tr v-for="item in list">
+                            <td style="line-height: 1">@{{item.name}}</td>
+                            <td class="text-center" style="cursor: pointer" @click="cuadro = true" v-if="cuadro == false">@{{item.count}}</td>
+                            <td class="text-center" style="cursor: pointer" v-else>
+                                <input type="number" class="form-control" min="0" style="width: 70px" v-model="item.count" @keypress.enter="normal" @blur="normal" @input.self="cambiarcount(item.id, item.count)">
+                            </td>
+                            <td class="text-center">@{{item.price}}</td>
+                            <td><button type="button" class="fas fa-minus" style="color: orangered" @click="eliminarp(item.id)"></button></td>
+                        </tr>
                         </tbody>
                         <thead>
                         <tr>
@@ -156,13 +156,13 @@
         </div>
         <div v-show="cerrada == 'A' && facturatotal == 0" style="width: 300px;position: fixed;bottom: 10px;">
             <button data-toggle="modal" disabled data-target="#pago" type="button" style="height: 130px; background: #4272d7;" class="btn btn-lg  btn-block">
-                <span id="payment-button-amount" style="font-size: 24px"><span style="color: whitesmoke">Pagar <br></span><span style="color: whitesmoke;font-size: 30px">$&nbsp;@{{ facturatotal }}.00</span></span>
-                <span id="payment-button-sending" style="display:none;">Sending…</span>
+                <span style="font-size: 24px"><span style="color: whitesmoke">Pagar <br></span><span style="color: whitesmoke;font-size: 30px">$&nbsp;@{{ facturatotal }}.00</span></span>
+                <span style="display:none;">Sending…</span>
             </button>
         </div>
         <div v-show="cerrada == 'C'" style="position: fixed;bottom:10px; width: 250px">
             <h4 style="color: red; font-size: 24px">Caja no esta abierta</h4>
-            <p style="font-size: small;font-size: 22px">Menu => Caja => Apertura Caja </p>
+            <p style="font-size: small;font-size: 22px">Menu => Caja => Apertura Caja</p>
         </div>
 
 
@@ -174,15 +174,13 @@
 @endsection
 @section('content')
     <div id="p" style="margin-top: -40px">
-        <div class="container">
-        </div>
-
         <br>
         <div class="section__content section__content--p30">
             <div class="container-fluid">
                 <div class="row" style="clear: both">
                     <template v-if="cerrada !='A'"></template>
-                    <template v-else>
+                    <template v-if="cerrada == 'no es dia'"></template>
+                    <template v-if="cerrada =='A'">
                         <div class="col-" style="overflow-y: scroll;margin:0; padding:0; height: 88vh;">
                             <div class="text-center" style="margin-bottom: 5px">
                                 <h5>Categorias</h5>
@@ -272,23 +270,10 @@
                                     </div>
                                 </div>
                             </template>
+                            <template v-if="cerrada == 'no es dia'">
 
+                            </template>
                             <template v-for="p in productos" v-else-if="cerrada == 'C'">
-                                <div class="col-md-2">
-                                    <div class="card" style="height: auto">
-                                        <div class="card-body">
-                                            <div class="mx-auto d-block">
-                                                <img class="rounded-circle mx-auto d-block image1" style=" height: 80px; width: 100px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                                <h5 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ p.name }}</h5>
-                                                <div class="location text-sm-center">
-                                                    <i class="fa fa-money-bill-alt"></i> @{{p.price}}</div>
-                                            </div>
-                                        </div>
-                                        <div class="overlay1">
-                                            <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
-                                        </div>
-                                    </div>
-                                </div>
                             </template>
                         </div>
                     </div>
@@ -299,7 +284,31 @@
 
     <!--Para decir que la caja esta cerrada-->
     <div v-if="cerrada == 'A'"></div>
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true" v-else>
+    <div v-if="cerrada == 'no es dia'" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mediumModalLabel">Caja Pendiente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning" role="alert">
+                        <h4 class="alert-heading">Caja abierta</h4>
+                        <p>En este momento la caja se encuentra cerrada, para poder realizar un venta necesitamos saber con cuento fondo cuenta la caja</p>
+                        <hr>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <a class="btn btn-success" href="/caja" role="button">caja</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div v-if="cerrada == 'C'" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">

@@ -43,7 +43,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive m-b-40">
-                            <table class="table table-hover">
+                            <table class="table table-sm table-hover">
                                 <thead>
                                 <tr>
                                     <th></th>
@@ -66,7 +66,8 @@
                                         <td>@{{ v.total_cierre }}</td>
                                         <td>@{{ v.valor_apertura }}</td>
                                         <td>@{{ v.total_venta }}</td>
-                                        <td><span class="badge badge-dark">@{{ v.cuadreconf }}</span></td>
+                                        <td v-if="v.cuadreconf == 'Si'"><span class="badge badge-info">@{{ v.cuadreconf }}</span></td>
+                                        <td v-else><span class="badge badge-danger">@{{ v.cuadreconf }}</span></td>
                                         <td><button type="button" @click="desglose(v.id)" class="btn btn-light">Ver Desglose</button></td>
                                     </tr>
                                 </template>
@@ -78,7 +79,8 @@
                                         <td>@{{ v.total_cierre }}</td>
                                         <td>@{{ v.valor_apertura }}</td>
                                         <td>@{{ v.total_venta }}</td>
-                                        <td><span class="badge badge-dark">@{{ v.cuadreconf }}</span></td>
+                                        <td><span v-if="v.cuadreconf == 'Si'" class="badge badge-info">@{{ v.cuadreconf }}</span></td>
+                                        <td><span v-else class="badge badge-danger">@{{ v.cuadreconf }}</span></td>
                                         <td><button type="button" @click="desglose(v.id)" class="btn btn-light">Ver Desglose</button></td>
                                     </tr>
                                 </template>
@@ -91,6 +93,7 @@
                                     <th>total cierre</th>
                                     <th>Valor apertura</th>
                                     <th>Total venta</th>
+                                    <th></th>
                                     <th></th>
                                 </tr>
                                 </thead>

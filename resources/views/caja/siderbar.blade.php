@@ -2,6 +2,10 @@
     <nav class="navbar-sidebar">
         <ul class="list-unstyled navbar__list">
             <li>
+                <a href="/dashboard" >
+                    <i class="fas fa-chart-line"></i><strong>DASHBOARD</strong></a>
+            </li>
+            <li>
                 <a href="/productos" >
                     <i class="fas fa-utensils"></i><strong>PRODUCTOS</strong></a>
             </li>

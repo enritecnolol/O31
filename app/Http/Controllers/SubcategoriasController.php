@@ -72,8 +72,8 @@ class SubcategoriasController extends Controller
         return redirect('/categorias');
     }
     public function productosubcategoria(Request $request){
-
-        $sub = Subcategoria::all()->where('categoria_id', '==', $request->id);
+        $id = Auth::id();
+        $sub = Subcategoria::all()->where('categoria_id', '==', $request->id)->where('user_id', $id);
         return $sub;
 
     }
@@ -88,13 +88,14 @@ class SubcategoriasController extends Controller
         return 'bien';
     }
     public function subcategoriavender(Request $request){
-
-        $subcategorias = Subcategoria::all()->where('categoria_id', '==', $request->id);
+        $id = Auth::id();
+        $subcategorias = Subcategoria::all()->where('categoria_id', '==', $request->id)->where('user_id', $id);
         return $subcategorias;
 
     }
     public function subcategoriaproductos(Request $request){
-        $productos = Product::all()->where('subcategoria_id', '==', $request->id);
+        $id = Auth::id();
+        $productos = Product::all()->where('subcategoria_id', '==', $request->id)->where('user_id',$id);
         return $productos;
     }
     public function versubcategorias(){

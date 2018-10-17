@@ -43,17 +43,18 @@ class IndexController extends Controller
         }
 
         $id = Auth::id();
-        $caja = Caja::all()->where('fecha_apertura', '==', date("Y-m-d"))->where('user_id','==',$id);
-        $productos = Product::all();
+        $caja = Caja::all()->where('user_id','==',$id)->last();
+        $productos = Product::all()->where('user_id', '==', $id);
+
         if ($caja == '[]'){
             $cerrada = 'C';
+        }if($caja->fecha_apertura != date("Y-m-d") and $caja->status == 'A'){
+            $cerrada = 'no es dia';
         }else{
-            foreach ($caja as $cerrada){
-                $cerrada = $cerrada["status"];
-            }
+            $cerrada = $caja->status;
         }
-        $categoria = Categoria::all();
-//        return $alerta;
+        $categoria = Categoria::all()->where('user_id', '==', $id);
+//        return $cerrada;
         return view('welcome', ['productos' => json_encode($productos)], ['caja' => json_encode($caja)])->with(compact('cerrada', $cerrada))->with(compact('categoria', $categoria))->with(compact('alerta'));
     }
 
@@ -96,6 +97,7 @@ class IndexController extends Controller
         $facture->banco = $request->banco;
         $facture->auth = $request->auth;
         $facture->caja_id = $idcaja->last()->id;
+        $facture->user_id = Auth::id();
         $facture->save();
 
         $idfacture = Facture::all();

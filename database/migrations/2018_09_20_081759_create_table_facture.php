@@ -33,6 +33,7 @@ class CreateTableFacture extends Migration
             $table->string('Banco')->nullable($value = true);
             $table->string('auth')->nullable($value = true);
             $table->integer('caja_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

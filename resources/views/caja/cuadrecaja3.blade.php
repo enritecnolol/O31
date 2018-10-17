@@ -23,7 +23,7 @@
             </div>
             <div class="card-body text-center">
                 <div class="form-group row">
-                    <label for="" class="col-sm-5 col-form-label" style="font-size: 28px"><strong>Cajas sin cuadrar</strong></label>
+                    <label for="" class="col-sm-5 col-form-label" style="font-size: 28px"><strong>Cuadre</strong></label>
                     <div class="col-sm-6">
                         <select v-model="selectcaja" @change="infocaja($event)" class="form-control form-control-lg">
                             <option value="">/-------Seleccionar-------\</option>

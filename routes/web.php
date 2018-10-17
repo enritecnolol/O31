@@ -81,6 +81,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/caja/historico/ventas', 'CajasController@historico'); //  se usa?
     Route::get('/caja/cuadre', 'CajasController@cuadrecaja'); // vista de el cuadre de caja
     Route::get('/caja/ver/cuadre', 'CajasController@vercuadre'); // Ver Cuadre vista
+    /*=================================\- DashBoard- /======================================================*/
+    Route::get('/dashboard', 'ApisController@dashboard'); // Dashboard index
+
 
 });
 

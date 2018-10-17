@@ -80,6 +80,11 @@
                                         </div>
                                         <div class="account-dropdown__body">
                                             <div class="account-dropdown__item">
+                                                <a href="/dashboard">
+                                                    <i class="fas fa-chart-line"></i>Dashboard
+                                                </a>
+                                            </div>
+                                            <div class="account-dropdown__item">
                                                 <a href="/productos">
                                                     <i class="fas fa-utensils"></i>Productos
                                                 </a>
