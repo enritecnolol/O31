@@ -92,7 +92,7 @@
                 <div class="col-lg-12">
                     <div class="au-card m-b-30">
                         <div class="au-card-inner">
-                            <h3 class="title-2 m-b-40">General todo el año por dia</h3>
+                            <h3 class="title-2 m-b-40">Ventas por dias 2018</h3>
                             <div id="chartdiv" style="width: auto; height: 400px;"></div>
                         </div>
                     </div>
@@ -100,7 +100,7 @@
                 <div class="col-lg-6">
                     <div class="au-card m-b-30">
                         <div class="au-card-inner">
-                            <h3 class="title-2 m-b-40">Dias con mas Ventas</h3>
+                            <h3 class="title-2 m-b-40">Dias con mas Ventas 2018</h3>
                             <canvas id="diasmasventa"></canvas>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                 <div class="col-lg-6">
                     <div class="au-card m-b-30">
                         <div class="au-card-inner">
-                            <h3 class="title-2 m-b-40">Ventas Por Mes</h3>
+                            <h3 class="title-2 m-b-40">Ventas Por Mes 2018</h3>
                             <canvas id="ventasmes"></canvas>
                         </div>
                     </div>
@@ -124,7 +124,7 @@
                 <div class="col-lg-6">
                     <div class="au-card m-b-30">
                         <div class="au-card-inner">
-                            <h3 class="title-2 m-b-40">Productos Mas Vendidos</h3>
+                            <h3 class="title-2 m-b-40">Productos Mas Vendidos 2018</h3>
                             <canvas id="productomasvendidos"></canvas>
                         </div>
                     </div>
@@ -132,7 +132,7 @@
                 <div class="col-lg-12">
                     <div class="au-card m-b-30">
                         <div class="au-card-inner">
-                            <h3 class="title-2 m-b-40">Ventas por Horas</h3>
+                            <h3 class="title-2 m-b-40">Ventas por Horas 2018</h3>
                             <canvas id="ventaporhoras" height="90"></canvas>
                         </div>
                     </div>

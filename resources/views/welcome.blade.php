@@ -310,7 +310,7 @@
                 <div class="modal-body">
                     <div class="alert alert-warning" role="alert">
                         <h4 class="alert-heading">Caja abierta</h4>
-                        <p>En este momento la caja se encuentra cerrada, para poder realizar un venta necesitamos saber con cuento fondo cuenta la caja</p>
+                        <p>En Este momento la caja se encuentra abierta del dia anterior por favor ir a cerrarla</p>
                         <hr>
 
                     </div>
