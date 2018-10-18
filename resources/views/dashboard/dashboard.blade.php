@@ -10,120 +10,122 @@
 @endsection
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="overview-wrap">
-                    <h2 class="title-1">Vista General</h2>
+    <div style="margin-top: -60px">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1">Vista General</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-t-25">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c2">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="icon">
+                                    <i class="zmdi zmdi-hc-5x zmdi-money"></i>
+                                </div>
+                                <div class="text">
+                                    <h3>$ {{$totaldias}}.00</h3>
+                                    <span>Total del dia</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c2">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="icon">
+                                    <i class="zmdi zmdi-shopping-cart"></i>
+                                </div>
+                                <div class="text">
+                                    <h3>${{$ventassemana}}.00</h3>
+                                    <span>total semana</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c2">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="icon">
+                                    <i class="zmdi zmdi-calendar-note"></i>
+                                </div>
+                                <div class="text">
+                                    <h3>${{$ventasmes}}.00</h3>
+                                    <span>Total del mes</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c2">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="icon">
+                                    <i class="zmdi zmdi-money"></i>
+                                </div>
+                                <div class="text">
+                                    <h3>${{$totalventas}}.00</h3>
+                                    <span>Total Ventas - año</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row m-t-25">
-            <div class="col-sm-6 col-lg-3">
-                <div class="overview-item overview-item--c2">
-                    <div class="overview__inner">
-                        <div class="overview-box clearfix">
-                            <div class="icon">
-                                <i class="zmdi zmdi-hc-5x zmdi-money"></i>
-                            </div>
-                            <div class="text">
-                                <h3>$ {{$totaldias}}.00</h3>
-                                <span>Total del dia</span>
-                            </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                            <h3 class="title-2 m-b-40">Dias con mas Ventas</h3>
+                            <canvas id="diasmasventa"></canvas>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-6 col-lg-3">
-                <div class="overview-item overview-item--c2">
-                    <div class="overview__inner">
-                        <div class="overview-box clearfix">
-                            <div class="icon">
-                                <i class="zmdi zmdi-shopping-cart"></i>
-                            </div>
-                            <div class="text">
-                                <h3>${{$ventassemana}}.00</h3>
-                                <span>total semana</span>
-                            </div>
+                <div class="col-lg-6">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                            <h3 class="title-2 m-b-40">Ventas Semana pasada</h3>
+                            <canvas id="semanapasadaventa"></canvas>
                         </div>
-
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-6 col-lg-3">
-                <div class="overview-item overview-item--c2">
-                    <div class="overview__inner">
-                        <div class="overview-box clearfix">
-                            <div class="icon">
-                                <i class="zmdi zmdi-calendar-note"></i>
-                            </div>
-                            <div class="text">
-                                <h3>${{$ventasmes}}.00</h3>
-                                <span>Total del mes</span>
-                            </div>
+                <div class="col-lg-6">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                            <h3 class="title-2 m-b-40">Ventas Por Mes</h3>
+                            <canvas id="ventasmes"></canvas>
                         </div>
-
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-6 col-lg-3">
-                <div class="overview-item overview-item--c2">
-                    <div class="overview__inner">
-                        <div class="overview-box clearfix">
-                            <div class="icon">
-                                <i class="zmdi zmdi-money"></i>
-                            </div>
-                            <div class="text">
-                                <h3>${{$totalventas}}.00</h3>
-                                <span>Total Ventas - año</span>
-                            </div>
+                <div class="col-lg-6">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                            <h3 class="title-2 m-b-40">Productos Mas Vendidos</h3>
+                            <canvas id="productomasvendidos"></canvas>
                         </div>
-
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="au-card m-b-30">
-                    <div class="au-card-inner">
-                        <h3 class="title-2 m-b-40">Dias con mas Ventas</h3>
-                        <canvas id="diasmasventa"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="au-card m-b-30">
-                    <div class="au-card-inner">
-                        <h3 class="title-2 m-b-40">Ventas Semana pasada</h3>
-                        <canvas id="semanapasadaventa"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="au-card m-b-30">
-                    <div class="au-card-inner">
-                        <h3 class="title-2 m-b-40">Ventas Por Mes</h3>
-                        <canvas id="ventasmes"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="au-card m-b-30">
-                    <div class="au-card-inner">
-                        <h3 class="title-2 m-b-40">Productos Mas Vendidos</h3>
-                        <canvas id="productomasvendidos"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="au-card m-b-30">
-                    <div class="au-card-inner">
-                        <h3 class="title-2 m-b-40">Ventas por Horas</h3>
-                        <canvas id="ventaporhoras"></canvas>
+                <div class="col-lg-12">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                            <h3 class="title-2 m-b-40">Ventas por Horas</h3>
+                            <canvas id="ventaporhoras"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -137,9 +139,11 @@
         var datoss = JSON.parse(datos.replace(/&quot;/g,'"'));
         var valores = [];
         var entidad = [];
+        var otro = [];
         for (var valor of datoss) {
-            entidad.push(valor.diasemana)
-            valores.push(valor.cantidad);
+            otro.push(valor.dia)
+            entidad.push(valor.DIA_SEMANA)
+            valores.push(valor.total);
         }
 
         var ctx = document.getElementById("diasmasventa");
