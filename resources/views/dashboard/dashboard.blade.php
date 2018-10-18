@@ -28,7 +28,7 @@
                                     <i class="zmdi zmdi-hc-5x zmdi-money"></i>
                                 </div>
                                 <div class="text">
-                                    <h3>$ {{$totaldias}}.00</h3>
+                                    <h3>${{$totaldias}}.00</h3>
                                     <span>Total del dia</span>
                                 </div>
                             </div>
