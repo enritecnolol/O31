@@ -92,7 +92,7 @@
                 <div class="col-lg-12">
                     <div class="au-card m-b-30">
                         <div class="au-card-inner">
-                            <h3 class="title-2 m-b-40">General</h3>
+                            <h3 class="title-2 m-b-40">General todo el año por dia</h3>
                             <div id="chartdiv" style="width: auto; height: 400px;"></div>
                         </div>
                     </div>
@@ -133,7 +133,7 @@
                     <div class="au-card m-b-30">
                         <div class="au-card-inner">
                             <h3 class="title-2 m-b-40">Ventas por Horas</h3>
-                            <canvas id="ventaporhoras"></canvas>
+                            <canvas id="ventaporhoras" height="90"></canvas>
                         </div>
                     </div>
                 </div>
