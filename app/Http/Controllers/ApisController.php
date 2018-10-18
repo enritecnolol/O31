@@ -234,14 +234,14 @@ class ApisController extends Controller
             $ventasmes = number_format($ventasmes[0]->total);
         }
 
-        $diasconmasventas = DB::table('factures')->select(DB::raw("(ELT(WEEKDAY(date) + 1, 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo')) AS diasemana, COUNT(total_facture) AS cantidad"))->where('user_id', $id)->groupBy('diasemana')->get();
+        $diasconmasventas = DB::table('factures')->select(DB::raw("(ELT(WEEKDAY(date) + 1, 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo')) AS diasemana, SUM(total_facture) AS cantidad"))->where('user_id', $id)->groupBy('diasemana')->get();
 //        SELECT meses.id, meses.mes, IFNULL(t2.Total, 0) FROM meses LEFT JOIN (SELECT MONTH(factures.date) i, SUM(factures.total_facture) as Total FROM factures GROUP BY i) as t2 ON meses.id = t2.i
-        $pormes = json_encode(DB::select('SELECT meses.id, meses.mes, IFNULL(t2.Total, 0) as cantidad FROM meses LEFT JOIN (SELECT MONTH(factures.date) i, COUNT(factures.total_facture) as Total FROM factures  WHERE factures.user_id = '.$id.' GROUP BY i) as t2 ON meses.id = t2.i ORDER BY meses.id'));
+        $pormes = json_encode(DB::select('SELECT meses.id, meses.mes, IFNULL(t2.Total, 0) as cantidad FROM meses LEFT JOIN (SELECT MONTH(factures.date) i, SUM(factures.total_facture) as Total FROM factures  WHERE factures.user_id = '.$id.' GROUP BY i) as t2 ON meses.id = t2.i ORDER BY meses.id'));
 //        SELECT (ELT(WEEKDAY(date) + 1, 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo')) AS DIA_SEMANA, SUM(total_facture) FROM factures GROUP BY DIA_SEMANA
         $productosmasvendidos = json_encode(DB::select('SELECT products.name AS nombre, COUNT(details.product_id) AS catidad FROM products, details WHERE products.id = details.product_id AND products.user_id = '.$id.' GROUP BY nombre ORDER BY catidad DESC LIMIT 5'));
 //        SELECT (ELT(WEEKDAY(date) + 1, 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo')) AS DIA_SEMANA, SUM(total_facture) FROM factures where date between date_sub(now(),INTERVAL 1 WEEK) and now() GROUP BY DIA_SEMANA
         $ventassemanapasada = json_encode(DB::select("SELECT (ELT(WEEKDAY(date) + 1, 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo')) AS DIA_SEMANA, SUM(total_facture) AS total FROM factures where date between date_sub(now(),INTERVAL 1 WEEK) and now() AND factures.user_id = ".$id." GROUP BY DIA_SEMANA ORDER BY DIA_SEMANA"));
-        $ventasporhoras = json_encode(DB::select("SELECT CONCAT(HOUR(DATE_FORMAT(created_at, '%h:%i:%s %p')), ':00') as hora,SUM(total_facture) as total FROM factures where user_id = ".$id." GROUP BY hora ORDER BY hora desc"));
+        $ventasporhoras = json_encode(DB::select("SELECT CONCAT(HOUR(DATE_FORMAT(created_at, '%h:%i:%s %p')), ':00') as hora,SUM(total_facture) as total FROM factures where user_id = ".$id." AND month(date) = MONTH(CURDATE()) GROUP BY hora ORDER BY hora desc"));
 
 
         return view('dashboard.dashboard',
