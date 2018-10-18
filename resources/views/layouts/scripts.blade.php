@@ -22,6 +22,8 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript" src="{{ URL::asset('DataTables/datatables.min.js')}}"></script>
 <script type="text/javascript" src="{{ URL::asset('datepicker/js/bootstrap-datepicker.js')}}"></script>
+<script type="text/javascript" src="{{ URL::asset('amcharts/amcharts.js')}}"></script>
+<script type="text/javascript" src="{{ URL::asset('amcharts/serial.js')}}"></script>
 
 <!-- Main JS-->
 <script src="{{ URL::asset('js/main.js')}}"></script>

@@ -241,6 +241,7 @@ class ApisController extends Controller
         $ventassemanapasada = json_encode(DB::select("SELECT (ELT(WEEKDAY(date) + 1, 1, 2, 3, 4, 5, 6, 7)) AS DIA, (ELT(WEEKDAY(date) + 1, 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo')) AS DIA_SEMANA, SUM(total_facture) AS total FROM factures where date between date_sub(now(),INTERVAL 1 WEEK) and now() AND factures.user_id = ".$id." GROUP BY date ORDER BY `DIA` ASC"));
         $ventasporhoras = json_encode(DB::select("SELECT HOUR(created_at) AS horaa ,DATE_FORMAT(created_at, '%h %p') as hora,SUM(total_facture) as total FROM factures where user_id = ".$id." AND month(date) = MONTH(CURDATE()) GROUP BY hora,horaa ORDER BY `horaa` ASC"));
 
+        $graficogrande = json_encode(DB::select("SELECT date ,SUM(factures.total_facture) as total FROM factures where user_id = ".$id." GROUP BY DATe"));
         return view('dashboard.dashboard',
             compact('totalventas'),
             compact('ventasmes'))
@@ -250,7 +251,8 @@ class ApisController extends Controller
             ->with(compact('pormes'))
             ->with(compact('productosmasvendidos'))
             ->with(compact('ventassemanapasada'))
-            ->with(compact('ventasporhoras'));
+            ->with(compact('ventasporhoras'))
+            ->with(compact('graficogrande'));
     }
 
 }

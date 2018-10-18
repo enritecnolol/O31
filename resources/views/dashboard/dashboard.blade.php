@@ -87,7 +87,16 @@
         </div>
 
         <div class="container">
+
             <div class="row">
+                <div class="col-lg-12">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                            <h3 class="title-2 m-b-40">General</h3>
+                            <div id="chartdiv" style="width: auto; height: 400px;"></div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-lg-6">
                     <div class="au-card m-b-30">
                         <div class="au-card-inner">
@@ -155,27 +164,18 @@
                     label: '',
                     data: valores,
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                    ],
-                    borderColor: [
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 0.4)',
+                        'rgba(54, 162, 235, 0.4)',
+                        'rgba(255, 206, 86, 0.4)',
+                        'rgba(75, 192, 192, 0.4)',
+                        'rgba(153, 102, 255, 0.4)',
+                        'rgba(255, 159, 64, 0.4)',
+                        'rgba(255, 99, 132, 0.4)',
+                        'rgba(54, 162, 235, 0.4)',
+                        'rgba(255, 206, 86, 0.4)',
+                        'rgba(75, 192, 192, 0.4)',
+                        'rgba(153, 102, 255, 0.4)',
+                        'rgba(255, 159, 64, 0.4)',
                     ],
                     borderWidth: 1
                 }]
@@ -412,6 +412,55 @@
                         }
                     }]
                 }
+            }
+        });
+    </script>
+    <script !src="">
+        var grande = '{{$graficogrande}}';
+        var grandedato = JSON.parse(grande.replace(/&quot;/g,'"'));
+        var chartData = grandedato;
+        AmCharts.makeChart("chartdiv", {
+            "theme": "light",
+            "type": "serial",
+            "marginRight": 80,
+            "autoMarginOffset": 20,
+            "marginTop":20,
+            "dataProvider": chartData,
+            "valueAxes": [{
+                "id": "v1",
+                "axisAlpha": 0.1
+            }],
+            "graphs": [{
+                "useNegativeColorIfDown": true,
+                "balloonText": "[[category]]<br><b>cantidad: [[value]]</b>",
+                "bullet": "round",
+                "bulletBorderAlpha": 1,
+                "bulletBorderColor": "#FFFFFF",
+                "hideBulletsCount": 50,
+                "lineThickness": 2,
+                "lineColor": "#fdd400",
+                "negativeLineColor": "#67b7dc",
+                "valueField": "total"
+            }],
+            "chartScrollbar": {
+                "scrollbarHeight": 5,
+                "backgroundAlpha": 0.1,
+                "backgroundColor": "#868686",
+                "selectedBackgroundColor": "#67b7dc",
+                "selectedBackgroundAlpha": 1
+            },
+            "chartCursor": {
+                "valueLineEnabled": true,
+                "valueLineBalloonEnabled": true
+            },
+            "categoryField": "date",
+            "categoryAxis": {
+                "parseDates": true,
+                "axisAlpha": 0,
+                "minHorizontalGap": 60
+            },
+            "export": {
+                "enabled": true
             }
         });
     </script>
