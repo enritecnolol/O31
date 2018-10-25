@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableUnity extends Migration
+class CreateTableRangoImpuesto extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreateTableUnity extends Migration
      */
     public function up()
     {
-        Schema::create('unity', function (Blueprint $table) {
+        Schema::create('rangoimpuestos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->date('desde');
+            $table->date('hasta');
+            $table->integer('porciento');
+            $table->integer('referenciaitbis_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ class CreateTableUnity extends Migration
      */
     public function down()
     {
-        Schema::drop('unity');
+        Schema::dropIfExists('rangoimpuestos');
     }
 }

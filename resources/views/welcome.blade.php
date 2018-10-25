@@ -118,8 +118,6 @@
             <div style="text-align: center; background-color: #4272d7; color: white">
                 Factura
             </div>
-            {{--<h4 class="text-center title-2" style="padding-top: 10px;">Factura</h4>--}}
-
         </div>
         <form action="" method="post" novalidate="novalidate">
             <div class="form-group has-success">
@@ -129,6 +127,7 @@
                         <tr>
                             <th>Producto</th>
                             <th>Cant.</th>
+                            <th>Desc</th>
                             <th>Total</th>
                             <th></th>
                         </tr>
@@ -140,6 +139,10 @@
                             <td class="text-center" style="cursor: pointer" v-else>
                                 <input type="number" class="form-control" min="0" style="width: 70px" v-model="item.count" @keypress.enter="normal" @blur="normal" @input.self="cambiarcount(item.id, item.count)">
                             </td>
+                            <td class="text-center" style="cursor: pointer" v-if="desc == false" @click="desc = true">@{{ item.desc }} %</td>
+                            <td class="text-center" v-else>
+                                <input type="number" class="form-control" min="0" v-model="item.desc" @keypress.enter="normall" @blur="normall" @input.self="descuentoagregar(item.id, item.desc)" style="width: 70px">
+                            </td>
                             <td class="text-center">@{{item.price}}</td>
                             <td><button type="button" class="fas fa-minus" style="color: orangered" @click="eliminarp(item.id)"></button></td>
                         </tr>
@@ -148,27 +151,41 @@
                         <tr>
                             <th>Total:</th>
                             <th class="text-center"></th>
-                            <th class="text-center">@{{ facturatotal }}.00</th>
+                            <th></th>
+                            <th class="text-center">@{{ neto }}</th>
                             <th></th>
                         </tr>
                         </thead>
                     </table>
                 </div>
             </div>
-
         </form>
-
-        <div v-show="cerrada == 'A' && facturatotal > 0" style="width: 320px;position: fixed;bottom: 10px;">
+        <div v-show="cerrada == 'A' && neto > 0" style="width: 320px;position: fixed;bottom: 10px;">
+            <div class="" style="height: 120px;margin-bottom: 5px">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h6>Bruto: </h6> <p>@{{bruto}}</p>
+                            <br>
+                            <h6>Neto: </h6><p>@{{ neto }}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6>Itbis: </h6><p>@{{ algoitbis }}</p>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <button type="button" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar Compra</button>
-            <button data-toggle="modal" data-target="#pago" type="button" style="height: 130px;background: #4272d7;" class="btn btn-lg  btn-block">
-                <span id="payment-button-amount" style="font-size: 20px;color: whitesmoke"> Pagar <br><span style="color: whitesmoke;font-size: 30px">$ @{{ facturatotal }}.00</span></span>
+            <button data-toggle="modal" data-target="#pago" type="button" style="height: 130px;background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
+                <span id="payment-button-amount" style="font-size: 20px;color: whitesmoke"> Pagar <br><span style="color: whitesmoke;font-size: 30px">$ @{{ neto }}</span></span>
                 <span id="payment-button-sending" style="display:none;">Sending…</span>
             </button>
         </div>
 
-        <div v-show="cerrada == 'A' && facturatotal == 0" style="width: 320px;position: fixed;bottom: 10px;">
-            <button data-toggle="modal" disabled data-target="#pago" type="button" style="height: 130px; background: #4272d7;" class="btn btn-lg  btn-block">
-                <span style="font-size: 24px"><span style="color: whitesmoke">Pagar <br></span><span style="color: whitesmoke;font-size: 30px">$&nbsp;@{{ facturatotal }}.00</span></span>
+        <div v-show="cerrada == 'A' && neto == 0" style="width: 320px;position: fixed;bottom: 10px;">
+            <button data-toggle="modal" disabled data-target="#pago" type="button" style="height: 130px; background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
+                <span style="font-size: 24px"><span style="color: whitesmoke">Pagar <br></span><span style="color: whitesmoke;font-size: 30px">$&nbsp;@{{ neto }}</span></span>
                 <span style="display:none;">Sending…</span>
             </button>
         </div>
@@ -177,8 +194,6 @@
             <h4 style="color: red; font-size: 24px">Caja no esta abierta</h4>
             <p style="font-size: small;font-size: 22px">Menu => Caja => Apertura Caja</p>
         </div>
-
-
     </div>
 
 
@@ -244,51 +259,52 @@
                     </template>
                     <br>
                     <div class="col" style="box-shadow: 1px 1px 5px #888888;overflow-y: scroll;height: 90vh;">
-                        <div class="text-center" style="margin-bottom: 8px">
-                            <button type="button" class="btn btn-lg btn-sm btn-link" v-show="cambio == 'subcategoria' && categoria_subcategoria.length !== 0" @click="cambio = 'categoria'" style="float: left;margin-left: 10px"><i class="fas fa-arrow-left"></i></button>
-                            <h3>Productos</h3>
-                            <input type="search"  class="form-control form-control-sm" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
-                        </div>
+                        <div class="container">
+                            <div class="text-center" style="margin-bottom: 8px">
+                                <button type="button" class="btn btn-lg btn-sm btn-link" v-show="cambio == 'subcategoria' && categoria_subcategoria.length !== 0" @click="cambio = 'categoria'" style="float: left;margin-left: 10px"><i class="fas fa-arrow-left"></i></button>
+                                <h3>Productos</h3>
+                                <input type="search"  class="form-control form-control-sm" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
+                            </div>
 
-                        <div class="row">
-                            <template v-for="p in productos" v-if="cerrada == 'A' && productosbuscados == ''">
-                                <div class="card" style="height: auto;background: #c8f1ff;width: 130px;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)" :title="p.name">
-                                    <div class="card-body" style="background: white">
-                                        <div class="mx-auto d-block">
-                                            <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                            <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ reducir(p.name) }}</h6>
-                                            <div class="location text-sm-center" style="color: #0062cc">
-                                                <i class="fa fa-money-bill-alt"></i> @{{p.price}}
+                            <div class="row">
+                                <template v-for="p in productos" v-if="cerrada == 'A' && productosbuscados == ''">
+                                    <div class="card" style="height: auto;background: #c8f1ff;width: 130px;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)" :title="p.name">
+                                        <div class="card-body" style="background: white">
+                                            <div class="mx-auto d-block">
+                                                <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
+                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ reducir(p.name) }}</h6>
+                                                <div class="location text-sm-center" style="color: #0062cc">
+                                                    <i class="fa fa-money-bill-alt"></i> @{{p.price}}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="overlay1">
-                                        <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
-                                    </div>
-                                </div>
-                            </template>
-
-                            <template v-for="p in productosbuscados" v-if="cerrada == 'A' && productosbuscados != ''">
-                                <div  class="card"  :title="p.name" style="height: auto;width: 130px;background: #c8f1ff;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)">
-                                    <div class="card-body" style="background: white">
-                                        <div class="mx-auto d-block">
-                                            <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                            <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ reducir(p.name) }}</h6>
-                                            <div class="location text-sm-center" style="color: #0062cc">
-                                                <i class="fa fa-money-bill-alt"></i> @{{p.price}}
-                                            </div>
+                                        <div class="overlay1">
+                                            <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
                                         </div>
                                     </div>
-                                    <div class="overlay1">
-                                        <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
-                                    </div>
-                                </div>
-                            </template>
-                            <template v-if="cerrada == 'no es dia'">
+                                </template>
 
-                            </template>
-                            <template v-for="p in productos" v-else-if="cerrada == 'C'">
-                            </template>
+                                <template v-for="p in productosbuscados" v-if="cerrada == 'A' && productosbuscados != ''">
+                                    <div  class="card"  :title="p.name" style="height: auto;width: 130px;background: #c8f1ff;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)">
+                                        <div class="card-body" style="background: white">
+                                            <div class="mx-auto d-block">
+                                                <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
+                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ reducir(p.name) }}</h6>
+                                                <div class="location text-sm-center" style="color: #0062cc">
+                                                    <i class="fa fa-money-bill-alt"></i> @{{p.price}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="overlay1">
+                                            <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
+                                        </div>
+                                    </div>
+                                </template>
+                                <template v-if="cerrada == 'no es dia'">
+                                </template>
+                                <template v-for="p in productos" v-else-if="cerrada == 'C'">
+                                </template>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -362,13 +378,13 @@
                 <div class="modal-body">
                     <form action="" method="post" novalidate="novalidate">
                         <div class="text-center" style="margin-bottom: 20px">
-                            <h3 style="font-size: 50px">A PAGAR $: <span style="font-size: 50px; color: red">@{{ facturatotal }}.00</span></h3>
+                            <h3 style="font-size: 50px">A PAGAR $: <span style="font-size: 50px; color: red">@{{ neto }}</span></h3>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="cc-exp" class="control-label mb-1">Efectivo<span style="color: red">*</span></label>
-                                    <input id="efectivom" name="dinero" autofocus="autofocus" required v-on:keypress.enter="facturar()" type="number" class="form-control cc-exp"  v-model="campodinero">
+                                    <input id="efectivom" name="dinero" autofocus required v-on:keypress.enter="facturar()" type="number" class="form-control cc-exp"  v-model="campodinero">
                                 </div>
                             </div>
                         </div>
@@ -420,7 +436,7 @@
                                 <h4>Devuelta:<span> @{{ devuelta }} </span></h4>
                             </div>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button v-if="suma >= facturatotal" type="button" @click="facturar()" class="btn btn-primary">&nbsp;Pagar</button>
+                            <button v-if="suma >= neto" type="button" @click="facturar()" class="btn btn-primary">&nbsp;Pagar</button>
                             <button v-else disabled type="button" @click="facturar()" class="btn btn-primary">&nbsp;Pagar</button>
                         </div>
                     </form>
@@ -430,6 +446,8 @@
     </div>
     <!--/Modal para configurar el Pago-->
     @include('productos.buscarmodal')
+
+    @include('modal.modelfacture')
 @endsection
 @section('scriptp')
 
@@ -439,13 +457,7 @@
 
     <script !src="">
 
-        console.log()
-
         $(document).ready(function(){
-
-
-
-
             $('#funciona').slick({
                 infinite: false,
                 speed: 300,
@@ -460,7 +472,6 @@
 
 
             dia = moment().format('DD-MM-YYYY');
-
 
 
             p = moment( dia +' '+ '10:00 PM', 'DD-MM-YYYY hh:mm A').utc().format();
@@ -493,6 +504,13 @@
         toastr.options.newestOnTop = 'false';
 
     </script>
+    <script>
+        $( document ).ready(function() {
+            $("#imprimir").click(function () {
+                $("div#myPrintArea").printArea();
+            });
+        });
+    </script>
 
     <script>
         function formatMoney(n, c, d, t) {
@@ -522,6 +540,10 @@
             return rv;
         }
 
+        var itbistotal = 0;
+
+        var tipoitbis = '{{$config}}';
+
         var app = new Vue({
             el: '#Vue',
             data: {
@@ -547,6 +569,10 @@
                 cuadro: false,
                 categoria_subcategoria:[],
                 cambio:'categoria',
+                descuento:0,
+                desc:false,
+                descgeneral:0,
+                cuadrogeneral:false
 
 
             },
@@ -562,11 +588,9 @@
                     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
                 },
 
-                facturatotal:function(valor){
+                neto:function(valor){
                     this.campodinero = valor
                 },
-
-
             },
             methods:{
                 subcategoriaproductos:function (id) {
@@ -647,11 +671,13 @@
                     this.carrito = {
                         id : producto.id,
                         name : producto.name,
-                        price : producto.price,
-                        count : 1
-                    }
+                        price : parseFloat(producto.price).toFixed(2),
+                        desc : 0,
+                        count : 1,
+                        itbis : producto.porciento
+                    };
 
-                    var idp = parseFloat(producto.id)
+                    var idp = parseFloat(producto.id);
 
                     function buscaid(prod) {
                         return prod.id == idp;
@@ -665,13 +691,13 @@
                         var contador = parseFloat(count) + 1;
                         var cant = producto.existence - count;
 
-                        var listid = this.list.find(buscaid).id
+                        var listid = this.list.find(buscaid).id;
                         var total = contador * producto.price;
 
                         this.list.map(function (dato){
                             if (dato.id == listid) {
-                                dato.count = parseFloat(contador)
-                                dato.price = parseFloat(total)
+                                dato.count = parseFloat(contador);
+                                dato.price = parseFloat(total).toFixed(2)
                             }
                             return dato
                         });
@@ -727,9 +753,9 @@
 
                         var count = this.list.find(buscaid).count;
                         var contador = count - 1 ;
-                        var listid = this.list.find(buscaid).id
+                        var listid = this.list.find(buscaid).id;
                         // var total = contador * producto.price;
-                        var total = this.list.find(buscaid).price - producto.price
+                        var total = this.list.find(buscaid).price - producto.price;
 
                         this.list.map(function(dato) {
 
@@ -789,22 +815,35 @@
                     e.preventDefault();
                     _this.cuadro = false;
                 },
+                normall:function(e){
+                    _this = this;
+                    e.preventDefault();
+                    _this.desc = false;
+                },
+                normalll:function(e){
+                    _this = this;
+                    e.preventDefault();
+                    _this.cuadrogeneral = false;
+                },
 
                 facturar:function () {
                     if (this.montotarjeta > 0){
                         if (this.tipotarjeta == '' ||  this.auth == '' || this.Numtarjeta == ''){
                             alert('Faltan Datos por Llenar')
-                        }if (this.montotarjeta > this.facturatotal - this.campodinero){
+                        }if (this.montotarjeta > this.neto - this.campodinero){
                             alert('La tarjeta no puede ser mayor al precio a pagar');
                         }else{
-                            _this = this
+                            _this = this;
                             $.ajax({
                                 url: '/facturacion',
                                 method: 'GET',
                                 data: {
                                     cliente:this.campocliente,
                                     devuelta:this.devuelta,
-                                    preciop:this.facturatotal,
+                                    preciop:this.neto,
+                                    bruto:this.bruto,
+                                    itbis:this.algoitbis,
+                                    neto:this.neto,
                                     tipop:this.campotipop,
                                     banco:this.banco,
                                     auth: this.auth,
@@ -817,15 +856,11 @@
                                 success:function (dato) {
                                     if (dato == 'bien'){
 
-                                        _this.list = [];
-                                        _this.carrito = {};
-
                                         $('#pago').modal('hide');
                                         toastr.options.newestOnTop = false;
                                         toastr.success('Gracias por la compra');
-                                        setTimeout('document.location.reload()',1000);
+                                        $('#pagofactura').modal('show');
                                     }
-
                                 },
                                 error:function () {
                                     toastr.error('A ocurrido un error al realizar la venta');
@@ -835,7 +870,7 @@
                         }
 
                     }else{
-                        if (this.montotarjeta > this.facturatotal){
+                        if (this.montotarjeta > this.neto){
                             alert('El Monto de la Tarjeta no puede ser mayor al precio a pagar')
                         }if (this.montotarjeta == 0 && this.campodinero == 0){
                             alert('No puedes hacer una compra de valor 0');
@@ -847,11 +882,13 @@
                                 data: {
                                     cliente:this.campocliente,
                                     devuelta:this.devuelta,
-                                    preciop:this.facturatotal,
+                                    preciop:this.neto,
                                     tipop:this.campotipop,
                                     banco:this.banco,
                                     auth: this.auth,
-
+                                    bruto:this.bruto,
+                                    itbis:this.algoitbis,
+                                    neto:this.neto,
                                     tipotarjeta: this.tipotarjeta,
                                     Numtarjeta: this.Numtarjeta,
                                     montotarjeta:this.montotarjeta,
@@ -861,13 +898,11 @@
                                 success:function (dato) {
                                     if (dato == 'bien'){
 
-                                        _this.list = [];
-                                        _this.carrito = {};
-
                                         $('#pago').modal('hide');
                                         toastr.options.newestOnTop = false;
                                         toastr.success('Gracias por la compra');
-                                        setTimeout('document.location.reload()',1000);
+                                        $('#pagofactura').modal('show');
+
                                     }
                                 },
                                 error:function () {
@@ -907,24 +942,46 @@
                     }else {
                         return cantidad;
                     }
-                }
+                },
+
+                descuentoagregar:function(idcambio ,desc ){
+                    var producto = this.productos[idcambio];
+                    var idp = producto.id;
+                    var descuento = desc;
+                    function buscaid(prod) {
+                        return prod.id == idp;
+                    }
+                    if(this.list.find(buscaid)){
+
+                        var listid = this.list.find(buscaid).id;
+
+                        this.list.map(function(dato){
+                            if(dato.id == listid){
+                                dato.desc = parseFloat(descuento)
+                            }
+                            return dato
+                        });
+                    }
+                },
+
+
             },
             computed:{
 
                 facturatotal:function () {
 
 
-                    var suma = 0
+                    var suma = 0;
                     for(var i = 0; i< this.list.length; i++ ){
 
                         suma = suma + this.list[i].price
                     }
-                    return parseFloat(suma);
+                    return parseFloat(suma).toFixed(2);
                 },
 
                 productototal:function () {
 
-                    var suma = 0
+                    var suma = 0;
                     for(var i = 0; i< this.list.length; i++ ){
 
                         suma = suma + this.list[i].count
@@ -935,20 +992,233 @@
 
                 suma:function () {
 
-                    var suma = (parseFloat(this.campodinero) + parseFloat(this.montotarjeta))
+                    var suma = (parseFloat(this.campodinero) + parseFloat(this.montotarjeta));
 
                     return suma;
                 },
 
                 devuelta:function () {
-                    // var devuelta = suma - this.facturatotal
-                    var devuelta = this.suma - this.facturatotal
+                    // var devuelta = suma - this.neto
+                    var devuelta = this.suma - this.neto;
 
-                    return devuelta;
+                    return parseFloat(devuelta).toFixed(2);
                 },
 
+                bruto:function () {
+
+                    if (tipoitbis == 'incluido'){
+
+                        _this = this;
+
+                        var total = 0;
+                        var id = 0;
+
+                        for(var i = 0; i< this.list.length; i++ ){
+
+                            id = _this.list[i].id;
+
+                            var producto = this.productos[id];
+
+                            var idp = producto.id;
+
+                            function buscaid(prod) {
+                                return prod.id == idp;
+                            }
+                            var dinero = this.list.find(buscaid).price;
+                            var descuento = this.list.find(buscaid).desc;
+
+                            var paso1 = descuento/100;
+                            // var paso2 = dinero * parseFloat(paso1).toFixed(3);
+                            // var paso3 = dinero - paso2;
+
+                            var itbis = producto.itbis;
+                            if (itbis == 'si'){
+
+                                var porciento = producto.porciento;
+
+                                var pitbis = parseFloat('1.' + porciento);
+
+                                var bruto = parseFloat(dinero)/ parseFloat(pitbis);
+                                var paso2 = bruto * parseFloat(paso1).toFixed(3);
+                                var brutodescuento = bruto - parseFloat(paso2).toFixed(3);
+
+                                var itbismultiplicado =  parseFloat(brutodescuento).toFixed(3) * parseFloat('0.'+porciento);
+
+                                itbistotal = parseFloat(itbismultiplicado);
+
+                                total = parseFloat(brutodescuento  + total)
+
+                            }else{
+                                var paso2 = dinero * parseFloat(paso1).toFixed(3);
+                                var paso3 = dinero - paso2;
+                                total = parseFloat(total + paso3)
+                            }
+                        }
+                        return parseFloat(total).toFixed(2);
+
+                    }if (tipoitbis == 'sumado'){
+
+                        _this = this;
+
+                        var total = 0;
+                        var id = 0;
+
+                        for(var i = 0; i< this.list.length; i++ ){
+
+                            id = _this.list[i].id;
+
+                            var producto = this.productos[id];
+
+                            var idp = producto.id;
+
+                            function buscaid(prod) {
+                                return prod.id == idp;
+                            }
+                            var dinero = this.list.find(buscaid).price;
+                            var descuento = this.list.find(buscaid).desc;
+
+                            var paso1 = descuento/100;
+                            // var paso2 = dinero * parseFloat(paso1).toFixed(3);
+                            // var paso3 = dinero - paso2;
+
+                            var itbis = producto.itbis;
+                            if (itbis == 'si'){
+
+                                var porciento = producto.porciento;
+
+                                var pitbis = parseFloat('1.' + porciento);
+
+                                var bruto = parseFloat(dinero);
+                                var paso2 = bruto * parseFloat(paso1).toFixed(3);
+                                var brutodescuento = bruto - parseFloat(paso2).toFixed(3);
+
+                                var itbismultiplicado = parseFloat(brutodescuento).toFixed(3) - parseFloat(dinero) ;
+
+                                itbistotal = parseFloat(itbismultiplicado);
+
+                                total = parseFloat(brutodescuento  + total)
+
+                            }else{
+                                var paso2 = dinero * parseFloat(paso1).toFixed(3);
+                                var paso3 = dinero - paso2;
+                                total = parseFloat(total + paso3);
+                            }
+                        }
+                        return parseFloat(total).toFixed(2);
+                    }
+
+                },
+                algoitbis:function () {
+
+                    if (tipoitbis == 'incluido'){
+                        _this = this;
+
+                        var total = 0;
+                        var id = 0;
+
+                        for(var i = 0; i< this.list.length; i++ ){
+
+                            id = _this.list[i].id;
+
+                            var producto = this.productos[id];
+
+                            var idp = producto.id;
+
+                            function buscaid(prod) {
+                                return prod.id == idp;
+                            }
+                            var dinero = this.list.find(buscaid).price;
+                            var descuento = this.list.find(buscaid).desc;
+                            var paso1 = descuento/100;
+
+                            var itbis = producto.itbis;
+                            if (itbis == 'si'){
+
+                                var porciento = producto.porciento;
+
+                                var pitbis = parseFloat('1.' + porciento);
+
+                                var bruto = parseFloat(dinero)/ parseFloat(pitbis);
+                                var paso2 = bruto * parseFloat(paso1).toFixed(3);
+                                var brutodescuento = bruto - parseFloat(paso2).toFixed(3);
+
+                                var itbismultiplicado =  parseFloat(brutodescuento).toFixed(3) * parseFloat('0.'+porciento);
+
+                                itbistotal = parseFloat(itbismultiplicado);
+
+                                total = parseFloat( total + itbistotal)
 
 
+                            }else{
+
+                                total = parseFloat(total + 0)
+                            }
+                        }
+                        return parseFloat(total).toFixed(2);
+
+                    }if (tipoitbis == 'sumado'){
+
+                        _this = this;
+
+                        var total = 0;
+                        var id = 0;
+
+                        for(var i = 0; i< this.list.length; i++ ){
+
+                            id = _this.list[i].id;
+
+                            var producto = this.productos[id];
+
+                            var idp = producto.id;
+
+                            function buscaid(prod) {
+                                return prod.id == idp;
+                            }
+                            var dinero = this.list.find(buscaid).price;
+                            var descuento = this.list.find(buscaid).desc;
+                            var paso1 = descuento/100;
+
+                            var itbis = producto.itbis;
+                            if (itbis == 'si'){
+
+                                var porciento = producto.porciento;
+
+                                var pitbis = parseFloat('1.' + porciento);
+
+                                var bruto = parseFloat(dinero);
+                                var paso2 = bruto * parseFloat(paso1).toFixed(3);
+                                var brutodescuento = bruto - parseFloat(paso2).toFixed(3);
+
+                                var itbismultiplicado = parseFloat(brutodescuento).toFixed(3) * parseFloat(pitbis).toFixed(3);
+                                var itbisresta = parseFloat(itbismultiplicado).toFixed(3) - parseFloat(brutodescuento).toFixed(3) ;
+
+                                itbistotal = parseFloat(itbisresta);
+
+                                total = parseFloat( total + itbistotal)
+
+                            }else{
+
+                                total = parseFloat(total + 0)
+                            }
+                        }
+                        return parseFloat(total).toFixed(2);
+                    }
+                },
+
+                neto:function () {
+                    _this = this;
+
+                    var total = 0;
+                    var id = 0;
+
+                    for(var i = 0; i< this.list.length; i++ ){
+
+                        var suma = parseFloat(_this.algoitbis) + parseFloat(_this.bruto)
+
+                        total = suma;
+                    }
+                    return parseFloat(total).toFixed(2);
+                },
 
             }
         });

@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/buscar/producto/referencia', 'ApisController@buscarproductoreferencia'); // api para buscar producto
     Route::post('anja/{id}', 'ApisController@update' );// api para actualizar los productos
     Route::post('eliminar/producto', 'ApisController@eliminarproducto' );// Eliminar productos
+    Route::post('/itbis/producto', 'ApisController@itbisporproducto' );// Eliminar productos
 
     Route::get('ver/categoria/get', 'ApisController@cargarcategoria' );// api para actualizar los productos
 
@@ -83,7 +84,25 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/caja/ver/cuadre', 'CajasController@vercuadre'); // Ver Cuadre vista
     /*=================================\- DashBoard- /======================================================*/
     Route::get('/dashboard', 'ApisController@dashboard'); // Dashboard index
-
+    /*=================================\- Reportes- /======================================================*/
+    Route::get('/reportes', 'ReportesController@index');// muesta las vista
+    Route::get('/reportes/resultado', 'ReportesController@busqueda'); // busca las facturas por rango de fecha
+    /*=================================\- Configuracion- /======================================================*/
+    Route::get('/configuracion','ConfiguracionesController@index');//muestra vista para configurar la compania
+    Route::post('/configuracion/store','ConfiguracionesController@store'); // guardar configuracion
+    Route::post('/configuracion/edit','ConfiguracionesController@update');// editar configuracion
+    /*=================================\- itbis- /======================================================*/
+    Route::get('/configuracion/itbis','ImpuestosController@itbis');
+    Route::post('/nuevo/itbis','ImpuestosController@store');
+    Route::post('/itbis/datos','ImpuestosController@datos');
+    Route::post('/itbis/editar/buscar','ImpuestosController@editarbuscardatos');
+    Route::post('/itbis/editar','ImpuestosController@editaritbis');
+    /*=================================\- Impuesto ref- /======================================================*/
+    Route::post('/impuestoref/nuevo','ImpuestosrefsController@store');
+    Route::post('/impuestoref/datos','ImpuestosrefsController@datos');
+    Route::post('/impuestoref/ingresar/rango','ImpuestosrefsController@ingresarrango');
+    Route::post('/impuestoref/editar/rango','ImpuestosrefsController@editarrango');
+    Route::post('/impuestoref/datos/producto','ImpuestosrefsController@datosimpuestorefproducto');
 
 });
 

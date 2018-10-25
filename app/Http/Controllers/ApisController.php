@@ -104,6 +104,12 @@ class ApisController extends Controller
         $id = $request->id;
         $product = Product::find($id);
 
+        if ($request->has('refimpuestoid') != 0){
+            $itbis = 'si';
+        }else{
+            $itbis = 'no';
+        }
+
         if ($request->hasFile('img')){
             if ($request->hasFile('img')){
                 $file = $request->file('img');
@@ -114,6 +120,8 @@ class ApisController extends Controller
                 $product->img = $file->getClientOriginalName();;
                 $product->existence = 0;
                 $product->impost = 0;
+                $product->impuestoref_id = $request->refimpuestoid;
+                $product->itbis = $itbis;
                 $product->categoria_id = $request->categoria;
                 $product->subcategoria_id = $request->subcategoria;
                 $product->update();
@@ -125,6 +133,8 @@ class ApisController extends Controller
                 $product->barcode = $request->Cbarra;
                 $product->existence = 0;
                 $product->impost = 0;
+                $product->impuestoref_id = $request->refimpuestoid;
+                $product->itbis = $itbis;
                 $product->categoria_id = $request->categoria;
                 $product->subcategoria_id = $request->subcategoria;
                 $product->update();
@@ -135,6 +145,8 @@ class ApisController extends Controller
             $product->barcode = $request->Cbarra;
             $product->existence = 0;
             $product->impost = 0;
+            $product->impuestoref_id = $request->refimpuestoid;
+            $product->itbis = $itbis;
             $product->categoria_id = $request->categoria;
             $product->subcategoria_id = $request->subcategoria;
             $product->update();
@@ -241,7 +253,7 @@ class ApisController extends Controller
         $ventassemanapasada = json_encode(DB::select("SELECT (ELT(WEEKDAY(date) + 1, 1, 2, 3, 4, 5, 6, 7)) AS DIA, (ELT(WEEKDAY(date) + 1, 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo')) AS DIA_SEMANA, SUM(total_facture) AS total FROM factures where date between date_sub(now(),INTERVAL 1 WEEK) and now() AND factures.user_id = ".$id." GROUP BY date ORDER BY `DIA` ASC"));
         $ventasporhoras = json_encode(DB::select("SELECT HOUR(created_at) AS horaa ,DATE_FORMAT(created_at, '%h %p') as hora,SUM(total_facture) as total FROM factures where user_id = ".$id." AND month(date) = MONTH(CURDATE()) GROUP BY hora,horaa ORDER BY `horaa` ASC"));
 
-        $graficogrande = json_encode(DB::select("SELECT date ,SUM(factures.total_facture) as total FROM factures where user_id = ".$id." GROUP BY DATe"));
+        $graficogrande = json_encode(DB::select("SELECT date, SUM(factures.total_facture) as total FROM factures where user_id = ".$id." GROUP BY date"));
         return view('dashboard.dashboard',
             compact('totalventas'),
             compact('ventasmes'))
@@ -253,6 +265,20 @@ class ApisController extends Controller
             ->with(compact('ventassemanapasada'))
             ->with(compact('ventasporhoras'))
             ->with(compact('graficogrande'));
+    }
+    public function itbisporproducto(Request $request)
+    {
+        $iduser = Auth::id();
+        $id = $request->id;
+        $porciento = DB::select("SELECT products.*, impuestosrefs.descripcion, rangoimpuestos.porciento FROM products, impuestosrefs, rangoimpuestos WHERE products.impuestoref_id = impuestosrefs.id AND rangoimpuestos.referenciaitbis_id = impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta AND products.user_id = ".$iduser." AND products.id =".$id);
+
+        if ($porciento == []){
+            $porciento = 0;
+        }else{
+            $porciento = $porciento;
+        }
+
+        return $porciento;
     }
 
 }

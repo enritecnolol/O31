@@ -44,7 +44,7 @@
                                     <td>{{$producto->barcode}}</td>
                                     <td>{{$producto->existence}}</td>
                                     <td><strong>{{$producto->price}}.00</strong></td>
-                                    <td>{{$producto->impost}}</td>
+                                    <td>{{$producto->porciento}}%</td>
                                     <td>
                                         <button type="button" v-on:click="producto('<?php echo $producto->id; ?>')" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
                                             <i class="fas fa-edit"></i>
@@ -146,9 +146,25 @@
                 listasubcategoria:'',
                 idsubcategoria:'',
                 nombresubcategoria: '',
-                listasubcategoriaedit:''
+                listasubcategoriaedit:'',
+                check:false,
+                refimpuesto:''
+            },
+            mounted(){
+                _this = this;
+                _this.datorefimpuesto();
+                _this.cargarcategoria();
             },
             methods:{
+                datorefimpuesto:function (){
+                    axios.post('/impuestoref/datos/producto',)
+                        .then(function (response) {
+                            _this.refimpuesto = response['data'];
+                            console.log(response['data'])
+                        })
+                        .catch(function (error) {
+                        });
+                },
                 confimar: function (id){
                     var txt;
                     var r = confirm("Estas Seguro que quieres borrar este producto?");
@@ -209,6 +225,11 @@
                         method: 'GET',
                         url: 'productos/' + id,
                         success:function (data) {
+                            if (data.itbis == 'si'){
+                                _this.check = true
+                            }else {
+                                _this.check = false
+                            }
                             _this.datos =  data;
 
                         }

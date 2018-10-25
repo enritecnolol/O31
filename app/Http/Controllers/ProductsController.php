@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
@@ -18,7 +18,17 @@ class ProductsController extends Controller
     {
         $id = Auth::id();
 //        $productos = Product::all()->where('user_id', '==', $id);
-        $productos = DB::table('products')->where('user_id', $id)->paginate(7);
+
+//        SELECT products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento , IFNULL(impuestosrefs.descripcion, '') AS descripcion FROM products
+//        LEFT JOIN impuestosrefs ON products.impuestoref_id = impuestosrefs.id
+//        LEFT JOIN rangoimpuestos ON rangoimpuestos.referenciaitbis_id = impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta
+
+        $productos = DB::table('products')
+            ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
+            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
+            ->where('products.user_id', $id)
+            ->select(DB::raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->paginate(7);
+
         return view('productos.index', compact('productos'));
     }
 
@@ -46,6 +56,13 @@ class ProductsController extends Controller
             'barcode' => 'bail|required|unique:products|max:255',
         ]);
 
+        if ($request->has('refimpuestoid') != 0){
+            $itbis = 'si';
+        }else{
+            $itbis = 'no';
+        }
+//SELECT products.*, impuestosrefs.descripcion, rangoimpuestos.porciento FROM products, impuestosrefs, rangoimpuestos WHERE products.impuestoref_id = impuestosrefs.id AND rangoimpuestos.referenciaitbis_id = impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta AND products.user_id = 1 AND products.id = 20
+
         if ($request->has('Cbarra') or $request->has('existencia') or $request->has('impuesto')){
 
             if ($request->hasFile('img')){
@@ -58,6 +75,8 @@ class ProductsController extends Controller
                 $product->existence = 0;
                 $product->impost = 0;
                 $product->status = 1;
+                $product->impuestoref_id = $request->input('refimpuestoid');
+                $product->itbis = $itbis;
                 $product->user_id = Auth::id();
                 $product->categoria_id = $request->input('categoria');
                 $product->subcategoria_id = $request->input('subcategoria');
@@ -71,6 +90,8 @@ class ProductsController extends Controller
                 $product->existence = 0;
                 $product->impost = 0;
                 $product->status = 1;
+                $product->impuestoref_id = $request->input('refimpuestoid');
+                $product->itbis = $itbis;
                 $product->img = 'default.jpg';
                 $product->user_id = Auth::id();
                 $product->categoria_id = $request->input('categoria');
@@ -92,6 +113,8 @@ class ProductsController extends Controller
                 $product->existence = 0;
                 $product->impost = 0;
                 $product->status = 1;
+                $product->impuestoref_id = $request->input('refimpuestoid');
+                $product->itbis = $itbis;
                 $product->user_id = Auth::id();
                 $product->categoria_id = $request->input('categoria');
                 $product->subcategoria_id = $request->input('subcategoria');
@@ -104,6 +127,8 @@ class ProductsController extends Controller
                 $product->existence = 0;
                 $product->impost = 0;
                 $product->status = 1;
+                $product->impuestoref_id = $request->input('refimpuestoid');
+                $product->itbis = $itbis;
                 $product->img = 'default.jpg';
                 $product->user_id = Auth::id();
                 $product->categoria_id = $request->input('categoria');

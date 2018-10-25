@@ -36,6 +36,31 @@
     <link href="{{ URL::asset('css/theme.css')}}" rel="stylesheet" media="all">
     <link href="{{ URL::asset('teclado/jquery.numpad.css')}}" rel="stylesheet" media="all">
     <link href="{{ URL::asset('teclado/keyboard.css')}}" rel="stylesheet" media="all">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+
+        }
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
     @yield('style')
 
 </head>
@@ -133,6 +158,7 @@
         <!-- MENU SIDEBAR-->
         <div id="Vue">
             <aside class="menu-sidebar2 d-none d-lg-block" style="background: url({{ URL::asset('fondo2.png')}});box-shadow: 1px 1px 6px #888888;">
+            {{--<aside class="menu-sidebar2 d-none d-lg-block" style="box-shadow: 1px 1px 6px #888888;">--}}
                 <div class="logo">
                     <a href="/dashboard">
                          <span style="color: white; font-size: x-large"> <span style="font-weight: 600">ADG</span>POS</span>

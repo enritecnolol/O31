@@ -22,6 +22,8 @@ class CreateTableProducts extends Migration
             $table->integer('existence')->nullable($value = true);
             $table->integer('impost')->nullable($value = true);
             $table->integer('status');
+            $table->integer('impuestoref_id');
+            $table->string('itbis');
             $table->integer('categoria_id');
             $table->integer('subcategoria_id')->nullable($value = true);
             $table->integer('user_id');

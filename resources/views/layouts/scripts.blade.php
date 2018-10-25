@@ -25,6 +25,11 @@
 <script type="text/javascript" src="{{ URL::asset('amcharts/amcharts.js')}}"></script>
 <script type="text/javascript" src="{{ URL::asset('amcharts/serial.js')}}"></script>
 
+{{--<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>--}}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PrintArea/2.4.1/jquery.PrintArea.js"></script>
+
 <!-- Main JS-->
 <script src="{{ URL::asset('js/main.js')}}"></script>
 <script src="{{ URL::asset('teclado/jquery.numpad.js')}}"></script>

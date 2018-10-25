@@ -19,9 +19,9 @@ class CreateTableFacture extends Migration
             $table->string('box');
             $table->integer('cashier');
             $table->string('client');
-            $table->integer('brute');
-            $table->integer('desc');
-            $table->integer('itbis');
+            $table->float('brute');
+            $table->float('desc');
+            $table->float('itbis');
             $table->integer('total_facture');
             $table->integer('Monto_tarjeta')->nullable($value = true);
             $table->integer('Monto_efectivo')->nullable($value = true);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Caja;
 use App\Categoria;
+use App\Configuracion;
 use App\Detail;
 use App\Facture;
 use App\Product;
@@ -44,7 +45,12 @@ class IndexController extends Controller
 
         $id = Auth::id();
         $caja = Caja::all()->where('user_id','==',$id)->last();
-        $productos = Product::all()->where('user_id', '==', $id);
+//        $productos = Product::all()->where('user_id', '==', $id);
+        $productos = DB::table('products')
+            ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
+            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
+            ->where('products.user_id', $id)
+            ->select(DB::raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
 
         if ($caja == '[]'){
             $cerrada = 'C';
@@ -54,8 +60,22 @@ class IndexController extends Controller
             $cerrada = $caja->status;
         }
         $categoria = Categoria::all()->where('user_id', '==', $id);
-//        return $cerrada;
-        return view('welcome', ['productos' => json_encode($productos)], ['caja' => json_encode($caja)])->with(compact('cerrada', $cerrada))->with(compact('categoria', $categoria))->with(compact('alerta'));
+
+        $config = DB::table('configuracions')->select('impuesto')->where('user_id', $id)->get();
+
+        if ($config == '[]'){
+            $config = 'vacio';
+        }elseif($config == '[{"impuesto":"incluido"}]'){
+            $config = 'incluido';
+        }elseif ($config == '[{"impuesto":"sumado"}]'){
+            $config = 'sumado';
+        }
+
+        return view('welcome', ['productos' => json_encode($productos)], ['caja' => json_encode($caja)])
+            ->with(compact('cerrada', $cerrada))
+            ->with(compact('categoria', $categoria))
+            ->with(compact('alerta'))
+            ->with(compact('config'));
     }
 
     /**
@@ -83,9 +103,9 @@ class IndexController extends Controller
         $facture->box = 'Caja No.1';
         $facture->cashier = 0;
         $facture->client = $request->cliente;
-        $facture->brute = 0;
+        $facture->brute = $request->bruto;
         $facture->desc = 0;
-        $facture->itbis = 0;
+        $facture->itbis = $request->itbis;
         $facture->total_facture = $request->preciop;
         $facture->Monto_tarjeta = $request->montotarjeta;
         $facture->Monto_efectivo = $request->dinero;
@@ -112,37 +132,20 @@ class IndexController extends Controller
 
             $detalle->date = now();
             $detalle->name_product = $d["name"];
-            $detalle->unity_sale = 0;
+            $detalle->descuento = $d['desc'];
             $detalle->quanlity = $d["count"];
             $detalle->price = $d["price"];
-            $detalle->depot = 0;
-            $detalle->impost = 0;
+            $itbisp = $d['price'] / floatval('1.'.$d['itbis']);
+            if ($itbisp == $d['price']){
+                $itbisp = 0;
+            }else{
+                $itbisp = $itbisp;
+            }
+            $bruto = floatval($itbisp) * floatval('0.'.$d['itbis']);
+            $detalle->depot = $bruto;
+            $detalle->impost = $itbisp;
             $detalle->product_id = $d["id"];
             $detalle->facture_id = $idfacture->last()->id;
-
-
-//            $id = $d["id"];
-//            $product = DB::table('products')->select('existence')->where('id', $id)->first();
-//            $existencia = $product->existence;
-//            $resta = $existencia - $d["count"];
-//
-//
-//            if ($resta < 0){
-//                $resta = 0;
-//                $productupdate = Product::where('id', $d["id"])->first();
-//                $productupdate->existence = $resta;
-//                $productupdate->update();
-//
-////
-//
-//            }else{
-//
-//                $productupdate = Product::where('id', $d["id"])->first();
-//                $productupdate->existence = $resta;
-//                $productupdate->update();
-//
-//            }
-//
             $detalle->save();
 
         }

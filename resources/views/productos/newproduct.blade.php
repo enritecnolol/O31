@@ -35,8 +35,31 @@
                                 @endif
                             </div>
                             <div class="form-group">
+                                <label for="" class="control-label mb-1">Grabado de itbis ? </label>
+                                <button type="button" class="btn btn-outline-secondary btn-sm" @click="check = false">No</button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm" @click="check = true">Si</button>
+                            </div>
+
+                            <div class="form-group" v-if="check == true">
+                                <label for="" class="control-label mb-1">Clasificacion de ITBIS</label>
+                                <div class="container">
+                                    <div class="row">
+                                        <select class="form-control" required name="refimpuestoid" id="exampleFormControlSelect1">
+                                            <template v-for="ref in refimpuesto">
+                                                <option :value="ref.id">@{{ ref.descripcion}}</option>
+                                            </template>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div v-else>
+                                <input type="text" hidden name="refimpuestoid"  value="0" style="margin-right: 5px" required readonly class="input-sm col-sm-1 text-center form-control-sm form-control">
+                            </div>
+
+
+                            <div class="form-group">
                                 <label for="exampleFormControlSelect1">Categoria</label>
-                                {{--<label class="sr-only" for="inlineFormInputGroup">Categoria</label>--}}
                                 <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
@@ -70,22 +93,6 @@
                                     </select>
                                 </div>
                             </div>
-                            {{--<div class="row">--}}
-                            {{--<div class="col-6">--}}
-                            {{--<div class="form-group">--}}
-                            {{--<label for="existencia" class="control-label mb-1">Existencia</label>--}}
-                            {{--<input id="existencia" min="0" readonly name="existencia" required type="number" class="form-control cc-exp" value="0" data-val="true">--}}
-                            {{--<span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-6">--}}
-                            {{--<label for="impuesto" class="control-label mb-1" >Impuesto</label>--}}
-                            {{--<div class="input-group">--}}
-                            {{--<input id="impuesto" min="0" readonly value="0" required name="impuesto" type="number" class="form-control cc-cvc">--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-
                             <div class="row form-group">
                                 <div class="col col-md-3">
                                     <label for="file-input" class=" form-control-label">Imagen</label>

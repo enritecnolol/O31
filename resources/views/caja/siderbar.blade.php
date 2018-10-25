@@ -35,7 +35,20 @@
             </li>
             <li>
                 <a href="/caja/ver/cuadre">
-                    <i class="fas fa-clipboard-list"></i><strong>CUADRES DE CAJAS</strong></a>
+                    <i class="fas fa-clipboard-list"></i>
+                    <strong>CUADRES DE CAJAS</strong></a>
+            </li>
+            <li class="has-sub">
+                <a class="js-arrow" href="#">
+                    <i class="zmdi zmdi-settings"></i><strong>CONFIGURACION</strong></a>
+                <ul class="list-unstyled navbar__sub-list js-sub-list">
+                    <li>
+                        <a href="/configuracion">Compania</a>
+                    </li>
+                    <li>
+                        <a href="/configuracion/itbis">ITBIS</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </nav>

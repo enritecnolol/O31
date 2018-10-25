@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableDetail extends Migration
+class CreateTableImpuestos extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateTableDetail extends Migration
      */
     public function up()
     {
-        Schema::create('detail', function (Blueprint $table) {
+        Schema::create('impuestos', function (Blueprint $table) {
             $table->increments('id');
-            $table->dateTime('date');
-            $table->string('name_product');
-            $table->integer('unity_sale');
-            $table->integer('quanlity');
-            $table->integer('price');
-            $table->integer('depot');
-            $table->integer('impost');
+            $table->date('desde');
+            $table->date('hasta');
+            $table->integer('itbis');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ class CreateTableDetail extends Migration
      */
     public function down()
     {
-        Schema::drop('detail');
+        Schema::dropIfExists('impuestos');
     }
 }
