@@ -63,14 +63,17 @@
                         <div class="col-md-12" style="margin-top: 10px">
                             <div class="container">
                                 <div class="row text-center">
-                                    <div class="col-sm-6">
-                                        <h6>Bruto: </h6> <p>@{{bruto}}</p>
-                                        <br>
-                                        <h6>Neto: </h6><p>@{{ neto }}</p>
+                                    <div class="col-sm-12">
+                                        <h5 style="float: left">Bruto: </h5> <p style="float: right">@{{bruto}}</p>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <h6>Itbis: </h6><p>@{{ algoitbis }}</p>
-                                        <br>
+                                    <div class="col-sm-12">
+                                        <h5 style="float: left">Descuento: </h5> <p style="float: right">@{{ totaldescuento }}</p>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <h5 style="float: left">Itbis: </h5> <p style="float: right">@{{ algoitbis }}</p>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <h5 style="float: left">Neto: </h5> <p style="float: right">@{{ neto }}</p>
                                     </div>
                                 </div>
                             </div>

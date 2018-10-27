@@ -90,6 +90,9 @@
                     <button type="button" v-if="datotabla != '' && editar == false"  @click="guardarrango" class="btn btn-warning btn-sm">
                         <i class="fas fa-save"></i> Guardar
                     </button>
+                    <button type="button" v-if="datotabla != '' && editar == false"  @click="datotabla = '', descripcion = '', identificador = ''" class="btn btn-danger btn-sm">
+                        <i class="fas fa-save"></i> Limpiar
+                    </button>
                     <button type="button" v-if="datotabla != '' && editar == true"  @click="editarrango" class="btn btn-success btn-sm">
                         <i class="fas fa-save"></i> Guardar
                     </button>

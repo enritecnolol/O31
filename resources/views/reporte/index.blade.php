@@ -31,13 +31,16 @@
                     <br>
                     <br>
                     <div class="col-md-12">
-                        <table class="table table-sm">
+                        <table class="table table-sm table-bordered">
                             <thead>
                             <tr>
                                 <th scope="col">FECHA</th>
                                 <th scope="col">NO.FACTURA</th>
                                 <th scope="col">MONTO EFECTIVO</th>
                                 <th scope="col">MONTO TARJETA</th>
+                                <th scope="col">BRUTO</th>
+                                <th scope="col">DESC</th>
+                                <th scope="col">ITBIS</th>
                                 <th scope="col">TOTAL</th>
                             </tr>
                             </thead>

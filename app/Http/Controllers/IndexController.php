@@ -104,7 +104,7 @@ class IndexController extends Controller
         $facture->cashier = 0;
         $facture->client = $request->cliente;
         $facture->brute = $request->bruto;
-        $facture->desc = 0;
+        $facture->desc = $request->descuento;
         $facture->itbis = $request->itbis;
         $facture->total_facture = $request->preciop;
         $facture->Monto_tarjeta = $request->montotarjeta;

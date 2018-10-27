@@ -25,6 +25,10 @@
                 <a href="/caja/historico/ventas" >
                     <i class="fas fa-book"></i><strong>HISTORIAL DE VENTAS</strong></a>
             </li>
+            <li class="">
+                <a href="/reportes" >
+                    <i class="fas fa-newspaper"></i><strong>REPORTE DE VENTAS</strong></a>
+            </li>
             <li>
                 <a href="/cierre/caja" >
                     <i class="fas fa-inbox"></i><strong>CIERRE DE CAJAS</strong></a>

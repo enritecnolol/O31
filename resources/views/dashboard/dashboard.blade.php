@@ -433,45 +433,56 @@
         var grande = '{{$graficogrande}}';
         var grandedato = JSON.parse(grande.replace(/&quot;/g,'"'));
         var chartData = grandedato;
-        AmCharts.makeChart("chartdiv", {
-            "theme": "light",
+        var chart = AmCharts.makeChart("chartdiv", {
             "type": "serial",
-            "marginRight": 80,
-            "autoMarginOffset": 20,
-            "marginTop":20,
+            "theme": "light",
             "dataProvider": chartData,
             "valueAxes": [{
-                "id": "v1",
-                "axisAlpha": 0.1
+                "axisAlpha": 0,
+                "dashLength": 4,
+                "position": "left"
             }],
+            "mouseWheelZoomEnabled": true,
             "graphs": [{
-                "useNegativeColorIfDown": true,
-                "balloonText": "[[category]]<br><b>cantidad: [[value]]</b>",
-                "bullet": "round",
-                "bulletBorderAlpha": 1,
-                "bulletBorderColor": "#FFFFFF",
-                "hideBulletsCount": 50,
-                "lineThickness": 2,
-                "lineColor": "#fdd400",
-                "negativeLineColor": "#67b7dc",
-                "valueField": "total"
+                "bulletSize": 14,
+                "customBullet": "https://www.amcharts.com/lib/3/images/star.png?x",
+                "customBulletField": "customBullet",
+                "valueField": "total",
+                "balloonText":"<div style='margin:10px; text-align:left;'><span style='font-size:13px'>[[category]]</span><br><span style='font-size:18px'>Monto: $[[value]]</span>",
             }],
-            "chartScrollbar": {
-                "scrollbarHeight": 5,
-                "backgroundAlpha": 0.1,
-                "backgroundColor": "#868686",
-                "selectedBackgroundColor": "#67b7dc",
-                "selectedBackgroundAlpha": 1
+            "marginTop": 20,
+            "marginRight": 70,
+            "marginLeft": 40,
+            "marginBottom": 20,
+            "chartCursor": {
+                "graphBulletSize": 1.5,
+                "zoomable":false,
+                "valueZoomable":true,
+                "cursorAlpha":0,
+                "valueLineEnabled":true,
+                "valueLineBalloonEnabled":true,
+                "valueLineAlpha":0.2
             },
             "chartCursor": {
-                "valueLineEnabled": true,
-                "valueLineBalloonEnabled": true
+                "limitToGraph":"g1"
             },
+            "chartScrollbar": {
+                "autoGridCount": true,
+                "graph": "g1",
+                "scrollbarHeight": 40
+            },
+            "autoMargins": false,
+            "dataDateFormat": "YYYY-MM-DD",
             "categoryField": "date",
+            "valueScrollbar":{
+                "offset":30
+            },
             "categoryAxis": {
                 "parseDates": true,
                 "axisAlpha": 0,
-                "minHorizontalGap": 60
+                "gridAlpha": 0,
+                "inside": true,
+                "tickLength": 0
             },
             "export": {
                 "enabled": true

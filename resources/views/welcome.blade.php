@@ -126,6 +126,7 @@
                         <thead>
                         <tr>
                             <th>Producto</th>
+                            <th></th>
                             <th>Cant.</th>
                             <th>Desc</th>
                             <th>Total</th>
@@ -135,6 +136,7 @@
                         <tbody>
                         <tr v-for="item in list">
                             <td style="line-height: 1">@{{item.name}}</td>
+                            <td style="line-height: 1;">@{{item.itbis}}%</td>
                             <td class="text-center" style="cursor: pointer" @click="cuadro = true" v-if="cuadro == false">@{{item.count}}</td>
                             <td class="text-center" style="cursor: pointer" v-else>
                                 <input type="number" class="form-control" min="0" style="width: 70px" v-model="item.count" @keypress.enter="normal" @blur="normal" @input.self="cambiarcount(item.id, item.count)">
@@ -150,6 +152,7 @@
                         <thead>
                         <tr>
                             <th>Total:</th>
+                            <th></th>
                             <th class="text-center"></th>
                             <th></th>
                             <th class="text-center">@{{ neto }}</th>
@@ -164,14 +167,17 @@
             <div class="" style="height: 120px;margin-bottom: 5px">
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-6">
-                            <h6>Bruto: </h6> <p>@{{bruto}}</p>
-                            <br>
-                            <h6>Neto: </h6><p>@{{ neto }}</p>
+                        <div class="col-sm-12">
+                            <h5 style="float: left">Bruto: </h5> <p style="float: right">@{{bruto}}</p>
                         </div>
-                        <div class="col-sm-6">
-                            <h6>Itbis: </h6><p>@{{ algoitbis }}</p>
-                            <br>
+                        <div class="col-sm-12">
+                            <h5 style="float: left">Descuento: </h5> <p style="float: right">@{{ totaldescuento }}</p>
+                        </div>
+                        <div class="col-sm-12">
+                            <h5 style="float: left">Itbis: </h5> <p style="float: right">@{{ algoitbis }}</p>
+                        </div>
+                        <div class="col-md-12">
+                            <h5 style="float: left">Neto: </h5> <p style="float: right">@{{ neto }}</p>
                         </div>
                     </div>
                 </div>
@@ -272,7 +278,7 @@
                                         <div class="card-body" style="background: white">
                                             <div class="mx-auto d-block">
                                                 <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ reducir(p.name) }}</h6>
+                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ p.name }}</h6>
                                                 <div class="location text-sm-center" style="color: #0062cc">
                                                     <i class="fa fa-money-bill-alt"></i> @{{p.price}}
                                                 </div>
@@ -289,7 +295,7 @@
                                         <div class="card-body" style="background: white">
                                             <div class="mx-auto d-block">
                                                 <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ reducir(p.name) }}</h6>
+                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ p.name }}</h6>
                                                 <div class="location text-sm-center" style="color: #0062cc">
                                                     <i class="fa fa-money-bill-alt"></i> @{{p.price}}
                                                 </div>
@@ -513,17 +519,6 @@
     </script>
 
     <script>
-        function formatMoney(n, c, d, t) {
-            var c = isNaN(c = Math.abs(c)) ? 2 : c,
-                d = d == undefined ? "." : d,
-                t = t == undefined ? "," : t,
-                s = n < 0 ? "-" : "",
-                i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
-                j = (j = i.length) > 3 ? j % 3 : 0;
-
-            return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
-        };
-
         var productos = JSON.parse('{!! $productos !!}')
         var caja = '{!! $caja !!}'
         var cerrada = '{!! $cerrada !!}'
@@ -541,6 +536,8 @@
         }
 
         var itbistotal = 0;
+        var brutototal = 0;
+        var descuentototal = 0;
 
         var tipoitbis = '{{$config}}';
 
@@ -577,17 +574,6 @@
 
             },
             watch:{
-                formatMoney: function(n, c, d, t){
-                    var c = isNaN(c = Math.abs(c)) ? 2 : c,
-                        d = d == undefined ? "." : d,
-                        t = t == undefined ? "," : t,
-                        s = n < 0 ? "-" : "",
-                        i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
-                        j = (j = i.length) > 3 ? j % 3 : 0;
-
-                    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
-                },
-
                 neto:function(valor){
                     this.campodinero = valor
                 },
@@ -761,7 +747,7 @@
 
                             if (dato.id == listid){
                                 dato.count = contador
-                                dato.price = total
+                                dato.price = (total).toFixed(2)
                             }
                             return dato
                         });
@@ -844,6 +830,7 @@
                                     bruto:this.bruto,
                                     itbis:this.algoitbis,
                                     neto:this.neto,
+                                    descuento:this.totaldescuento,
                                     tipop:this.campotipop,
                                     banco:this.banco,
                                     auth: this.auth,
@@ -889,6 +876,7 @@
                                     bruto:this.bruto,
                                     itbis:this.algoitbis,
                                     neto:this.neto,
+                                    descuento:this.totaldescuento,
                                     tipotarjeta: this.tipotarjeta,
                                     Numtarjeta: this.Numtarjeta,
                                     montotarjeta:this.montotarjeta,
@@ -1024,12 +1012,11 @@
                             function buscaid(prod) {
                                 return prod.id == idp;
                             }
+
                             var dinero = this.list.find(buscaid).price;
                             var descuento = this.list.find(buscaid).desc;
 
                             var paso1 = descuento/100;
-                            // var paso2 = dinero * parseFloat(paso1).toFixed(3);
-                            // var paso3 = dinero - paso2;
 
                             var itbis = producto.itbis;
                             if (itbis == 'si'){
@@ -1040,23 +1027,29 @@
 
                                 var bruto = parseFloat(dinero)/ parseFloat(pitbis);
                                 var paso2 = bruto * parseFloat(paso1).toFixed(3);
+
                                 var brutodescuento = bruto - parseFloat(paso2).toFixed(3);
 
                                 var itbismultiplicado =  parseFloat(brutodescuento).toFixed(3) * parseFloat('0.'+porciento);
 
-                                itbistotal = parseFloat(itbismultiplicado);
+                                itbistotal = parseFloat(itbismultiplicado + itbistotal);
 
-                                total = parseFloat(brutodescuento  + total)
+                                brutototal = (bruto + brutototal);
+
+                                total = parseFloat(bruto  + total)
 
                             }else{
+
                                 var paso2 = dinero * parseFloat(paso1).toFixed(3);
                                 var paso3 = dinero - paso2;
                                 total = parseFloat(total + paso3)
+
                             }
                         }
                         return parseFloat(total).toFixed(2);
 
-                    }if (tipoitbis == 'sumado'){
+                    }
+                    if (tipoitbis == 'sumado'){
 
                         _this = this;
 
@@ -1092,29 +1085,32 @@
                                 var paso2 = bruto * parseFloat(paso1).toFixed(3);
                                 var brutodescuento = bruto - parseFloat(paso2).toFixed(3);
 
-                                var itbismultiplicado = parseFloat(brutodescuento).toFixed(3) - parseFloat(dinero) ;
+                                var itbismultiplicado = parseFloat(brutodescuento).toFixed(3) - parseFloat(dinero);
 
                                 itbistotal = parseFloat(itbismultiplicado);
 
-                                total = parseFloat(brutodescuento  + total)
+                                total = parseFloat(bruto) + parseFloat(total)
 
                             }else{
                                 var paso2 = dinero * parseFloat(paso1).toFixed(3);
                                 var paso3 = dinero - paso2;
-                                total = parseFloat(total + paso3);
+                                total = parseFloat(total) + parseFloat(paso3);
                             }
                         }
                         return parseFloat(total).toFixed(2);
                     }
 
                 },
+
                 algoitbis:function () {
 
                     if (tipoitbis == 'incluido'){
                         _this = this;
 
                         var total = 0;
+
                         var id = 0;
+                        var otrototal = 0;
 
                         for(var i = 0; i< this.list.length; i++ ){
 
@@ -1127,11 +1123,12 @@
                             function buscaid(prod) {
                                 return prod.id == idp;
                             }
+
                             var dinero = this.list.find(buscaid).price;
                             var descuento = this.list.find(buscaid).desc;
                             var paso1 = descuento/100;
-
                             var itbis = producto.itbis;
+
                             if (itbis == 'si'){
 
                                 var porciento = producto.porciento;
@@ -1139,24 +1136,25 @@
                                 var pitbis = parseFloat('1.' + porciento);
 
                                 var bruto = parseFloat(dinero)/ parseFloat(pitbis);
-                                var paso2 = bruto * parseFloat(paso1).toFixed(3);
-                                var brutodescuento = bruto - parseFloat(paso2).toFixed(3);
+                                var paso2 = bruto * parseFloat(paso1).toFixed(4);
+                                var brutodescuento = bruto - parseFloat(paso2).toFixed(4);
 
-                                var itbismultiplicado =  parseFloat(brutodescuento).toFixed(3) * parseFloat('0.'+porciento);
+                                var itbismultiplicado =  parseFloat(brutodescuento).toFixed(4) * parseFloat('0.'+porciento);
 
                                 itbistotal = parseFloat(itbismultiplicado);
 
-                                total = parseFloat( total + itbistotal)
-
+                                total = parseFloat(itbistotal) + parseFloat(total);
 
                             }else{
 
-                                total = parseFloat(total + 0)
+                                total = (parseFloat(total).toFixed(2) + 0);
+
                             }
                         }
                         return parseFloat(total).toFixed(2);
 
-                    }if (tipoitbis == 'sumado'){
+                    }
+                    if (tipoitbis == 'sumado'){
 
                         _this = this;
 
@@ -1194,7 +1192,7 @@
 
                                 itbistotal = parseFloat(itbisresta);
 
-                                total = parseFloat( total + itbistotal)
+                                total = parseFloat( total) + parseFloat(itbistotal)
 
                             }else{
 
@@ -1205,21 +1203,121 @@
                     }
                 },
 
+                totaldescuento:function () {
+
+                    if (tipoitbis == 'incluido'){
+
+                        _this = this;
+
+                        var total = 0;
+                        var id = 0;
+                        var otrototal = 0;
+
+                        for(var i = 0; i< this.list.length; i++ ){
+
+                            id = _this.list[i].id;
+
+                            var producto = this.productos[id];
+
+                            var idp = producto.id;
+
+                            function buscaid(prod) {
+                                return prod.id == idp;
+                            }
+
+                            var dinero = this.list.find(buscaid).price;
+                            var descuento = this.list.find(buscaid).desc;
+
+                            var paso1 = descuento/100;
+
+                            var itbis = producto.itbis;
+                            if (itbis == 'si'){
+
+                                var porciento = producto.porciento;
+
+                                var pitbis = parseFloat('1.' + porciento);
+
+                                var bruto = parseFloat(dinero)/ parseFloat(pitbis);
+                                var paso2 = bruto * parseFloat(paso1).toFixed(4);
+                                var brutodescuento = bruto - parseFloat(paso2).toFixed(4);
+                                var itbismultiplicado =  parseFloat(brutodescuento).toFixed(4) * parseFloat('0.'+porciento);
+                                itbistotal = parseFloat(itbismultiplicado + itbistotal);
+
+                                descuentototal = parseFloat(paso2 + descuentototal);
+
+                                total = parseFloat( paso2) + parseFloat(total)
+
+                            }else{
+                                var paso2 = dinero * parseFloat(paso1).toFixed(3);
+                                var paso3 = dinero - paso2;
+                                total = parseFloat(total).toFixed(4) + parseFloat(paso2)
+                            }
+                        }
+                        return parseFloat(total).toFixed(2);
+
+                    }
+                    if (tipoitbis == 'sumado'){
+
+                        _this = this;
+
+                        var total = 0;
+                        var id = 0;
+
+                        for(var i = 0; i< this.list.length; i++ ){
+
+                            id = _this.list[i].id;
+
+                            var producto = this.productos[id];
+
+                            var idp = producto.id;
+
+                            function buscaid(prod) {
+                                return prod.id == idp;
+                            }
+                            var dinero = this.list.find(buscaid).price;
+                            var descuento = this.list.find(buscaid).desc;
+
+                            var paso1 = descuento/100;
+                            // var paso2 = dinero * parseFloat(paso1).toFixed(3);
+                            // var paso3 = dinero - paso2;
+
+                            var itbis = producto.itbis;
+                            if (itbis == 'si'){
+
+                                var porciento = producto.porciento;
+
+                                var bruto = parseFloat(dinero);
+                                var paso2 = bruto * parseFloat(paso1).toFixed(3);
+                                var brutodescuento = bruto - parseFloat(paso2).toFixed(3);
+
+                                var itbismultiplicado = parseFloat(brutodescuento).toFixed(3) - parseFloat(dinero);
+
+                                itbistotal = parseFloat(itbismultiplicado);
+
+                                total = parseFloat(paso2) + parseFloat(total)
+
+                            }else{
+                                var paso2 = dinero * parseFloat(paso1).toFixed(3);
+                                var paso3 = dinero - paso2;
+                                total = parseFloat(total) + parseFloat(paso2);
+                            }
+                        }
+                        return parseFloat(total).toFixed(2);
+                    }
+                },
+
                 neto:function () {
                     _this = this;
-
                     var total = 0;
                     var id = 0;
 
                     for(var i = 0; i< this.list.length; i++ ){
-
-                        var suma = parseFloat(_this.algoitbis) + parseFloat(_this.bruto)
-
+                        // var suma = (parseFloat(_this.algoitbis) + (parseFloat(_this.bruto)) - _this.totaldescuento);
+                        var suma = parseFloat(_this.algoitbis) + parseFloat(_this.bruto)  - _this.totaldescuento;
                         total = suma;
                     }
                     return parseFloat(total).toFixed(2);
                 },
-
             }
         });
     </script>
