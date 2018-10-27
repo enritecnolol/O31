@@ -2,7 +2,7 @@
 @foreach($facturas as $factura)
     <tr>
         <td>{{$factura->date}}</td>
-        <td>{{$factura->id}}</td>
+        <td># {{$factura->id}}</td>
         <td class="text-center">{{number_format($factura->Monto_efectivo,2)}}</td>
         <td class="text-center">{{number_format($factura->Monto_tarjeta,2)}}</td>
         <td class="text-left"><span class="pull-right">{{number_format($factura->brute , 2)}}</span></td>

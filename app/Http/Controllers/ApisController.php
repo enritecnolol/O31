@@ -281,5 +281,13 @@ class ApisController extends Controller
 
         return $porciento;
     }
+    public function ultimoid()
+    {
+        $id = Auth::id();
+
+        $ultimoid = Facture::all()->where('user_id', '==', $id)->last()->id;
+
+        return $ultimoid;
+    }
 
 }

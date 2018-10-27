@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('anja/{id}', 'ApisController@update' );// api para actualizar los productos
     Route::post('eliminar/producto', 'ApisController@eliminarproducto' );// Eliminar productos
     Route::post('/itbis/producto', 'ApisController@itbisporproducto' );// Eliminar productos
+    Route::post('/ultima/facture', 'ApisController@ultimoid' );// Eliminar productos
 
     Route::get('ver/categoria/get', 'ApisController@cargarcategoria' );// api para actualizar los productos
 

@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Factura</h5>
                 <button type="button" onclick=" location.href='/' " class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -21,6 +21,10 @@
                         <hr>
                         <br>
                         <div class="col-md-12">
+                            <div class="form-group text-center">
+                                <label for="cc-exp" class="control-label mb-1"><strong>No.factura: </strong> </label>
+                                <label for="cc-exp" class="control-label mb-1"># @{{ ultfacture }}</label>
+                            </div>
                             <div class="form-group text-center">
                                 <label for="cc-exp" class="control-label mb-1"><strong>Fecha: </strong> </label>
                                 <label for="cc-exp" class="control-label mb-1"><?php echo date('d-m-Y h:i:s A')?></label>
@@ -82,8 +86,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick=" location.href='/' ">Close</button>
-                <button type="button" class="btn btn-primary" id="imprimir">Imprimir</button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick=" location.href='/' ">Close</button>
+                <button type="button" class="btn btn-primary btn-sm" id="imprimir">Imprimir</button>
             </div>
         </div>
     </div>

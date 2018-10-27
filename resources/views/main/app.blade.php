@@ -130,6 +130,11 @@
                                                 </a>
                                             </div>
                                             <div class="account-dropdown__item">
+                                                <a href="/reportes">
+                                                    <i class="fas fa-newspaper"></i>Reportes
+                                                </a>
+                                            </div>
+                                            <div class="account-dropdown__item">
                                                 <a id="#proximamente" href="#">
                                                     <i class="zmdi zmdi-settings"></i>Configuracion <span class="badge badge-info">Proximamente</span>
                                                 </a>

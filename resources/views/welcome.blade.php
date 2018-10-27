@@ -393,6 +393,17 @@
                                     <input id="efectivom" name="dinero" autofocus required v-on:keypress.enter="facturar()" type="number" class="form-control cc-exp"  v-model="campodinero">
                                 </div>
                             </div>
+                            <div class="col-6">
+                               <div class="form-group">
+                                   <label for="cc-exp" class="control-label mb-1">Billetes<span style="color: red"></span></label>
+                                   <br>
+                                   <button type="button" class="btn btn-secondary" @click="campodinero = 100.00">$100</button>
+                                   <button type="button" class="btn btn-secondary" @click="campodinero = 200.00">$200</button>
+                                   <button type="button" class="btn btn-secondary" @click="campodinero = 500.00">$500</button>
+                                   <button type="button" class="btn btn-secondary" @click="campodinero = 1000.00">$1000</button>
+                                   <button type="button" class="btn btn-secondary" @click="campodinero = 2000.00">$2000</button>
+                               </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
@@ -442,7 +453,7 @@
                                 <h4>Devuelta:<span> @{{ devuelta }} </span></h4>
                             </div>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button v-if="suma >= neto" type="button" @click="facturar()" class="btn btn-primary">&nbsp;Pagar</button>
+                            <button v-if="suma >= neto" type="button" @click="facturar(), ultimoidfactura()" class="btn btn-primary">&nbsp;Pagar</button>
                             <button v-else disabled type="button" @click="facturar()" class="btn btn-primary">&nbsp;Pagar</button>
                         </div>
                     </form>
@@ -569,7 +580,8 @@
                 descuento:0,
                 desc:false,
                 descgeneral:0,
-                cuadrogeneral:false
+                cuadrogeneral:false,
+                ultfacture: 0,
 
 
             },
@@ -606,8 +618,12 @@
                 },
 
                 cancelarcompra:function(){
-                    this.carrito = [];
-                    this.list = [];
+                    var txt;
+                    var r = confirm("Estas seguro que quieres cancelar la compra ? ");
+                    if (r == true){
+                        txt = this.carrito = [];
+                        this.list = [];;
+                    }
                 },
 
                 cargarcategoria: function () {
@@ -952,6 +968,17 @@
                     }
                 },
 
+                ultimoidfactura:function () {
+                    _this = this
+
+                    axios.post('/ultima/facture',)
+                        .then(function (response) {
+                            _this.ultfacture = response['data'];
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                },
 
             },
             computed:{

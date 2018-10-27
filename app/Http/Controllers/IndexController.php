@@ -45,7 +45,6 @@ class IndexController extends Controller
 
         $id = Auth::id();
         $caja = Caja::all()->where('user_id','==',$id)->last();
-//        $productos = Product::all()->where('user_id', '==', $id);
         $productos = DB::table('products')
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
             ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
