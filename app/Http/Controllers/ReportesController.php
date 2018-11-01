@@ -36,7 +36,7 @@ class ReportesController extends Controller
     {
         $id = Auth::id();
         $facturasinicio = DB::select("SELECT * FROM factures WHERE user_id = ".$id." AND date BETWEEN '".$start."' AND '".$end."' ORDER BY `id` ASC");
-        $total = DB::select("SELECT SUM(total_facture) as total FROM factures WHERE user_id = ".$id." AND date BETWEEN '".$start."' AND '".$end."' ORDER BY `id` ASC");
+        $total = DB::select("SELECT SUM(total_facture) as total FROM factures WHERE user_id = ".$id." AND date BETWEEN '".$start."' AND '".$end."'");
         return view('reporte.bodyperiodofacture')->with(compact('facturasinicio'))->with(compact('total'));
 
     }
