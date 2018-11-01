@@ -314,7 +314,8 @@ section {
 
 @media (max-width: 991px) {
     .main-content {
-        padding-top: 50px;
+        padding-top: 60px;
+        margin-left: 0px;
     }
 }
 
@@ -2303,6 +2304,7 @@ section {
     .header-desktop2 {
         left: 0;
         position: relative;
+        display: none;
     }
 }
 

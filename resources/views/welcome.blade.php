@@ -114,10 +114,19 @@
 @section('aside')
 
     <div class="container">
-        <div class="card-title" style="margin: 0;  margin-top: 15px">
-            <div style="text-align: center; background-color: #4272d7; color: white">
+        <div class="card-title" style="margin: 0;  margin-top: 15px;">
+            <div style="text-align: center; background-color: #4272d7; margin-bottom: 5px;color: white">
                 Factura
             </div>
+            <div v-show="cerrada != 'C'" style="text-align: center; color: white; margin-bottom: 5px">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fas fa-code"></i></div>
+                    </div>
+                    <input type="text" placeholder="Codigo" id="codigo1" v-model="codigop" class="form-control form-control-sm" autofocus @keyup.enter="codigopfactura">
+                </div>
+            </div>
+
         </div>
         <form action="" method="post" novalidate="novalidate">
             <div class="form-group has-success">
@@ -149,33 +158,12 @@
                             <td><button type="button" class="fas fa-minus" style="color: orangered" @click="eliminarp(item.id)"></button></td>
                         </tr>
                         </tbody>
-                        <thead>
-                        <tr>
-                            <th>Total:</th>
-                            <th></th>
-                            <th class="text-center"></th>
-                            <th></th>
-                            <th class="text-center">@{{ neto }}</th>
-                            <th></th>
-                        </tr>
-                        </thead>
                     </table>
                 </div>
             </div>
         </form>
         <div v-if="cerrada == 'A' && neto > 0" style="width: 320px;position: fixed;bottom: 10px;">
-            <div class="" style="height: 180px;margin-bottom: 5px">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <input type="text" placeholder="Codigo" id="codigo2" v-model="codigop" autofocus class="form-control form-control-sm" @keyup.enter="codigopfactura">
-                        </div>
-                        <div class="col-sm-5">
-                            <input type="number" placeholder="" v-model="cantidadp"  @keyup.enter="codigopfactura" min="0" class="form-control form-control-sm">
-                        </div>
-                    </div>
-                </div>
-                <hr>
+            <div class="" style="height: 100px;margin-bottom: 5px">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
@@ -201,18 +189,6 @@
         </div>
 
         <div v-else-if="cerrada == 'A' && neto == 0" style="width: 320px;position: fixed;bottom: 10px;">
-            <div class="" style="height: 50px;margin-bottom: 5px">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <input type="text" placeholder="Codigo" id="codigo1" v-model="codigop" class="form-control form-control-sm" autofocus @keyup.enter="codigopfactura">
-                        </div>
-                        <div class="col-sm-5">
-                            <input type="number" placeholder=""  v-model="cantidadp" min="0" @keyup.enter="codigopfactura" class="form-control form-control-sm">
-                        </div>
-                    </div>
-                </div>
-            </div>
             <button data-toggle="modal" disabled data-target="#pago" type="button" style="height: 130px; background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
                 <span style="font-size: 24px"><span style="color: whitesmoke">Pagar <br></span><span style="color: whitesmoke;font-size: 30px">$&nbsp;@{{ neto }}</span></span>
                 <span style="display:none;">Sending…</span>
@@ -632,7 +608,7 @@
             },
             watch:{
                 neto:function(valor){
-                    this.campodinero = valor
+                    this.campodinero = 0
                 },
             },
             methods:{
@@ -898,7 +874,7 @@
                                         $('#pago').modal('hide');
                                         toastr.options.newestOnTop = false;
                                         toastr.success('Gracias por la compra');
-                                        $('#pagofactura').modal('show');
+                                        setTimeout('document.location.reload()',1000);
                                     }
                                 },
                                 error:function () {
@@ -941,7 +917,7 @@
                                         $('#pago').modal('hide');
                                         toastr.options.newestOnTop = false;
                                         toastr.success('Gracias por la compra');
-                                        $('#pagofactura').modal('show');
+                                        setTimeout('document.location.reload()',1000);
 
                                     }
                                 },

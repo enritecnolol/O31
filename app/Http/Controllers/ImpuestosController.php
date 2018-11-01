@@ -12,6 +12,9 @@ class ImpuestosController extends Controller
     public function itbis()
     {
         $ref = Impuestosref::all()->where('user_id', Auth::id())->last()->id;
+        if  ($ref == '[]'){
+            $ref = 0;
+        }
 
         return view('configuracion.itbis.index2', compact('ref'));
     }
