@@ -56,7 +56,7 @@ class ReportesController extends Controller
     {
         $id = Auth::id();
         $facturasinicio = DB::select("SELECT * FROM factures WHERE user_id = ".$id." AND date BETWEEN '".$start."' AND '".$end."' ORDER BY `id` ASC");
-        $total = DB::select("SELECT SUM(factures.brute) as bruto, SUM(factures.desc) AS descuento,  SUM(factures.itbis) AS itbis, SUM(total_facture) as total, SUM(factures.Monto_efectivo) - SUM(factures.returns) AS efectivo, SUM(factures.Monto_tarjeta) AS tarjeta FROM factures WHERE user_id = ".$id." AND date BETWEEN '".$start."' AND '".$end."' ORDER BY `id` ASC");
+        $total = DB::select("SELECT SUM(factures.brute) as bruto, SUM(factures.desc) AS descuento,  SUM(factures.itbis) AS itbis, SUM(total_facture) as total, SUM(factures.Monto_efectivo) - SUM(factures.returns) AS efectivo, SUM(factures.Monto_tarjeta) AS tarjeta FROM factures WHERE user_id = ".$id." AND date BETWEEN '".$start."' AND '".$end."'");
         $empresa = Configuracion::all()->where('user_id',$id);
         return view('reporte.tableprintventas')
             ->with(compact('facturasinicio'))
