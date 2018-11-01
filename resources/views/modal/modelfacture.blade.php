@@ -68,6 +68,9 @@
                             <div class="container">
                                 <div class="row text-center">
                                     <div class="col-sm-12">
+                                        <h5 style="float: left">Efectivo: </h5> <p style="float: right"> @{{ campodinero }}</p>
+                                    </div>
+                                    <div class="col-sm-12">
                                         <h5 style="float: left">Bruto: </h5> <p style="float: right">@{{bruto}}</p>
                                     </div>
                                     <div class="col-sm-12">
@@ -78,6 +81,9 @@
                                     </div>
                                     <div class="col-md-12">
                                         <h5 style="float: left">Neto: </h5> <p style="float: right">@{{ neto }}</p>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <h5 style="float: left">Devuelta: </h5> <p style="float: right"> @{{ devuelta }}</p>
                                     </div>
                                 </div>
                             </div>

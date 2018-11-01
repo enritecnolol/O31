@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('anja/{id}', 'ApisController@update' );// api para actualizar los productos
     Route::post('eliminar/producto', 'ApisController@eliminarproducto' );// Eliminar productos
     Route::post('/itbis/producto', 'ApisController@itbisporproducto' );// Eliminar productos
-    Route::post('/ultima/facture', 'ApisController@ultimoid' );// Eliminar productos
+    Route::post('/reportes/resultado', 'ApisController@ultimoid' );//
 
     Route::get('ver/categoria/get', 'ApisController@cargarcategoria' );// api para actualizar los productos
 
@@ -88,10 +88,17 @@ Route::group(['middleware' => 'auth'], function () {
     /*=================================\- Reportes- /======================================================*/
     Route::get('/reportes', 'ReportesController@index');// muesta las vista
     Route::get('/reportes/resultado', 'ReportesController@busqueda'); // busca las facturas por rango de fecha
+    Route::get('/reportes/{start}/{end}', 'ReportesController@reporteporproductos'); //
+    Route::get('/reportes/imprimir/{start}/{end}', 'ReportesController@imprimirventas'); //
+    Route::get('/reportes/productos/{start}/{end}', 'ReportesController@reporteproducto'); //
+    Route::get('/reportes/imprimir/productos/{start}/{end}', 'ReportesController@imprimirreporteproducto'); //
+    Route::get('/reportes/inicio', 'ReportesController@inicio'); //
+    Route::get('/reportes/imprimir', 'ReportesController@imprimir'); //
     /*=================================\- Configuracion- /======================================================*/
     Route::get('/configuracion','ConfiguracionesController@index');//muestra vista para configurar la compania
     Route::post('/configuracion/store','ConfiguracionesController@store'); // guardar configuracion
     Route::post('/configuracion/edit','ConfiguracionesController@update');// editar configuracion
+    Route::get('/configuracion/cliente/preferencial','ConfiguracionesController@clientepreferencialindex');// editar configuracion
     /*=================================\- itbis- /======================================================*/
     Route::get('/configuracion/itbis','ImpuestosController@itbis');
     Route::post('/nuevo/itbis','ImpuestosController@store');
@@ -104,6 +111,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/impuestoref/ingresar/rango','ImpuestosrefsController@ingresarrango');
     Route::post('/impuestoref/editar/rango','ImpuestosrefsController@editarrango');
     Route::post('/impuestoref/datos/producto','ImpuestosrefsController@datosimpuestorefproducto');
+    /*=================================\- Clientes -/======================================================*/
+    Route::get('/clientes','ClientesController@index');
+
 
 });
 

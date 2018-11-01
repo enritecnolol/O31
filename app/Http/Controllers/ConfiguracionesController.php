@@ -87,4 +87,8 @@ class ConfiguracionesController extends Controller
         return redirect('/configuracion');
     }
 
+    public function clientepreferencialindex()
+    {
+        return view('configuracion.clientepreferencial.index');
+    }
 }

@@ -23,7 +23,7 @@
             </li>
             <li class="">
                 <a href="/caja/historico/ventas" >
-                    <i class="fas fa-book"></i><strong>HISTORIAL DE VENTAS</strong></a>
+                    <i class="fas fa-book"></i><strong>VENTAS DEL DIA</strong></a>
             </li>
             <li class="">
                 <a href="/reportes" >
@@ -47,7 +47,7 @@
                     <i class="zmdi zmdi-settings"></i><strong>CONFIGURACION</strong></a>
                 <ul class="list-unstyled navbar__sub-list js-sub-list">
                     <li>
-                        <a href="/configuracion">Compania</a>
+                        <a href="/configuracion">COMPANIA</a>
                     </li>
                     <li>
                         <a href="/configuracion/itbis">ITBIS</a>

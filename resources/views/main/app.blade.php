@@ -21,6 +21,7 @@
     <link href="{{ URL::asset('bootstrap-4.1/bootstrap.min.css')}}" rel="stylesheet" media="all">
     <link href="{{ URL::asset('notificaciones/toastr.css')}}" rel="stylesheet" media="all">
     <link href="{{ URL::asset('datepicker/css/datepicker.css')}}" rel="stylesheet" media="all">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <!-- Vendor CSS-->
     <link href="{{ URL::asset('animsition/animsition.min.css')}}" rel="stylesheet" media="all">
@@ -31,6 +32,7 @@
     <link href="{{ URL::asset('slick/slick-theme.css')}}" rel="stylesheet" media="all">
     <link href="{{ URL::asset('select2/select2.min.css')}}" rel="stylesheet" media="all">
     <link href="{{ URL::asset('perfect-scrollbar/perfect-scrollbar.css')}}" rel="stylesheet" media="all">
+    <link href="{{ URL::asset('pagination/pagination.css')}}" rel="stylesheet" media="all">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('DataTables/datatables.min.css') }}"/>
     <!-- Main CSS-->
     <link href="{{ URL::asset('css/theme.css')}}" rel="stylesheet" media="all">

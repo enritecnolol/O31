@@ -163,8 +163,19 @@
                 </div>
             </div>
         </form>
-        <div v-show="cerrada == 'A' && neto > 0" style="width: 320px;position: fixed;bottom: 10px;">
-            <div class="" style="height: 120px;margin-bottom: 5px">
+        <div v-if="cerrada == 'A' && neto > 0" style="width: 320px;position: fixed;bottom: 10px;">
+            <div class="" style="height: 180px;margin-bottom: 5px">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="text" placeholder="Codigo" id="codigo2" v-model="codigop" autofocus class="form-control form-control-sm" @keyup.enter="codigopfactura">
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="number" placeholder="" v-model="cantidadp"  @keyup.enter="codigopfactura" min="0" class="form-control form-control-sm">
+                        </div>
+                    </div>
+                </div>
+                <hr>
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
@@ -189,14 +200,26 @@
             </button>
         </div>
 
-        <div v-show="cerrada == 'A' && neto == 0" style="width: 320px;position: fixed;bottom: 10px;">
+        <div v-else-if="cerrada == 'A' && neto == 0" style="width: 320px;position: fixed;bottom: 10px;">
+            <div class="" style="height: 50px;margin-bottom: 5px">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="text" placeholder="Codigo" id="codigo1" v-model="codigop" class="form-control form-control-sm" autofocus @keyup.enter="codigopfactura">
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="number" placeholder=""  v-model="cantidadp" min="0" @keyup.enter="codigopfactura" class="form-control form-control-sm">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <button data-toggle="modal" disabled data-target="#pago" type="button" style="height: 130px; background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
                 <span style="font-size: 24px"><span style="color: whitesmoke">Pagar <br></span><span style="color: whitesmoke;font-size: 30px">$&nbsp;@{{ neto }}</span></span>
                 <span style="display:none;">Sending…</span>
             </button>
         </div>
 
-        <div v-show="cerrada == 'C'" style="position: fixed;bottom:10px; width: 250px">
+        <div v-else-if="cerrada == 'C'" style="position: fixed;bottom:10px; width: 250px">
             <h4 style="color: red; font-size: 24px">Caja no esta abierta</h4>
             <p style="font-size: small;font-size: 22px">Menu => Caja => Apertura Caja</p>
         </div>
@@ -394,15 +417,15 @@
                                 </div>
                             </div>
                             <div class="col-6">
-                               <div class="form-group">
-                                   <label for="cc-exp" class="control-label mb-1">Billetes<span style="color: red"></span></label>
-                                   <br>
-                                   <button type="button" class="btn btn-secondary" @click="campodinero = 100.00">$100</button>
-                                   <button type="button" class="btn btn-secondary" @click="campodinero = 200.00">$200</button>
-                                   <button type="button" class="btn btn-secondary" @click="campodinero = 500.00">$500</button>
-                                   <button type="button" class="btn btn-secondary" @click="campodinero = 1000.00">$1000</button>
-                                   <button type="button" class="btn btn-secondary" @click="campodinero = 2000.00">$2000</button>
-                               </div>
+                                <div class="form-group">
+                                    <label for="cc-exp" class="control-label mb-1">Billetes<span style="color: red"></span></label>
+                                    <br>
+                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(50) + parseFloat(campodinero)">$50</button>
+                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(100) + parseFloat(campodinero)">$100</button>
+                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(200) + parseFloat(campodinero)">$200</button>
+                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(500) + parseFloat(campodinero)">$500</button>
+                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(1000) + parseFloat(campodinero)">$1000</button>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -410,6 +433,18 @@
                                 <div class="form-group">
                                     <label for="cc-exp" class="control-label mb-1">Tarjeta<span style="color: red">*</span></label>
                                     <input id="tarjetam" name="dinero" required type="number" class="form-control cc-exp"  v-model="montotarjeta">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="cc-exp" class="control-label mb-1">Billetes<span style="color: red"></span></label>
+                                    <br>
+                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(2000) + parseFloat(campodinero)">$2000</button>
+                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(25) + parseFloat(campodinero)">$25</button>
+                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(10) + parseFloat(campodinero)">$10</button>
+                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(5) + parseFloat(campodinero)">$5</button>
+                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(1) + parseFloat(campodinero)">$1</button>
+                                    <button type="button" class="btn btn-secondary" @click="campodinero = 0">$0</button>
                                 </div>
                             </div>
                         </div>
@@ -450,7 +485,7 @@
                         </div>
                         <div class="modal-footer">
                             <div class="" style="margin-right: 55%">
-                                <h4>Devuelta:<span> @{{ devuelta }} </span></h4>
+                                <h4>Devuelta:<span> @{{ devuelta }}</span></h4>
                             </div>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                             <button v-if="suma >= neto" type="button" @click="facturar(), ultimoidfactura()" class="btn btn-primary">&nbsp;Pagar</button>
@@ -472,9 +507,14 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/es-do.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js" > </script>
+
     <script !src="">
 
         $(document).ready(function(){
+            $("#codigo1").focus();
+
+
             $('#funciona').slick({
                 infinite: false,
                 speed: 300,
@@ -530,6 +570,7 @@
     </script>
 
     <script>
+
         var productos = JSON.parse('{!! $productos !!}')
         var caja = '{!! $caja !!}'
         var cerrada = '{!! $cerrada !!}'
@@ -555,6 +596,8 @@
         var app = new Vue({
             el: '#Vue',
             data: {
+                cantidadp:0,
+                codigop:'',
                 referencia:'',
                 buscador:'',
                 montotarjeta:0,
@@ -584,6 +627,8 @@
                 ultfacture: 0,
 
 
+            },
+            mounted() {
             },
             watch:{
                 neto:function(valor){
@@ -666,6 +711,32 @@
                     });
                 },
 
+                codigopfactura:function ()
+                {
+                    _this = this ;
+                    for (var key in _this.productos ){
+                        if (_this.productos[key].barcode  == _this.codigop){
+                            console.log(_this.productos[key].id);
+
+                            if  (parseFloat(_this.cantidadp) == 0){
+                                _this.pfactura(_this.productos[key].id)
+                                _this.codigop = ''
+
+                            }else {
+                                _this.pfactura(_this.productos[key].id);
+                                _this.cambiarcount(_this.productos[key].id, _this.cantidadp)
+                                _this.codigop = ''
+                                _this.cantidadp = 0
+                            }
+
+                            return
+                        }
+                    }
+
+                    toastr.warning('Producto no encontrado');
+
+
+                },
 
                 pfactura: function (id) {
 
@@ -704,43 +775,8 @@
                             return dato
                         });
 
-
-                        // if(cant > 0){
-                        //
-                        //     this.list.map(function (dato){
-                        //         if (dato.id == listid) {
-                        //             dato.count = contador
-                        //             dato.price = total
-                        //         }
-                        //         return dato
-                        //     });
-                        //
-                        // }if(cant < 0 && bar == 'compuesto'){
-                        //
-                        //     this.list.map(function (dato) {
-                        //         if (dato.id == listid) {
-                        //             dato.count = contador
-                        //             dato.price = total
-                        //         }
-                        //         return dato
-                        //     });
-                        //
-                        // }if(cant < 0 && bar != 'compuesto'){
-                        //
-                        //     alert('no tiene mas producto de este');
-                        // }
-
                     }else{
                         this.list.push(this.carrito)
-                        // if(cantidad == 0 && bar == 'compuesto'){
-                        //     this.list.push(this.carrito)
-                        // }
-                        // if(cantidad == 0){
-                        //     alert('no tenemos mas de este producto O es un producto compuesto')
-                        // }else{
-                        //     this.list.push(this.carrito)
-                        // }
-
                     }
                 },
 
@@ -795,7 +831,7 @@
 
                             if (dato.id == listid){
                                 dato.count = parseFloat(countnuevo)
-                                dato.price = parseFloat(totalnuevo)
+                                dato.price = parseFloat(totalnuevo).toFixed(2)
                             }
                             return dato
                         });
