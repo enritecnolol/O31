@@ -529,8 +529,11 @@
         });
 
         $('body').keyup(function(e) {
-            if(e.which == 35){
+            if(e.which === 35){
                 $('#pago').modal('show');
+            }
+            if(e.which ===36){
+                $("#codigo1").focus();
             }
         });
         $(function () {
@@ -713,6 +716,7 @@
                     }
 
                     toastr.warning('Producto no encontrado');
+                    _this.codigop = ''
 
 
                 },
