@@ -275,9 +275,10 @@
                                 <template v-for="p in productos" v-if="cerrada == 'A' && productosbuscados == ''">
                                     <div class="card" style="height: auto;background: #c8f1ff;width: 130px;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)" :title="p.name">
                                         <div class="card-body" style="background: white">
+                                            <span class="badge badge-primary" style="position: absolute; top: 3px; left: 3px">@{{ p.barcode }}</span>
                                             <div class="mx-auto d-block">
                                                 <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;"><span class="badge badge-primary">@{{ p.barcode }}</span> @{{ p.name }}</h6>
+                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ p.name }}</h6>
                                                 <div class="location text-sm-center" style="color: #0062cc">
                                                     <i class="fa fa-money-bill-alt"></i> @{{p.price}}
                                                 </div>
@@ -292,9 +293,10 @@
                                 <template v-for="p in productosbuscados" v-if="cerrada == 'A' && productosbuscados != ''">
                                     <div  class="card"  :title="p.name" style="height: auto;width: 130px;background: #c8f1ff;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)">
                                         <div class="card-body" style="background: white">
+                                            <span class="badge badge-primary" style="position: absolute; top: 3px; left: 3px">@{{ p.barcode }}</span>
                                             <div class="mx-auto d-block">
                                                 <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;"><span class="badge badge-primary">@{{ p.barcode }}</span> @{{ p.name }}</h6>
+                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ p.name }}</h6>
                                                 <div class="location text-sm-center" style="color: #0062cc">
                                                     <i class="fa fa-money-bill-alt"></i> @{{p.price}}
                                                 </div>
@@ -691,7 +693,7 @@
                 {
                     _this = this ;
                     var dos = _this.codigop.split("+")
-                    
+
                     for (var key in _this.productos ){
                         if (_this.productos[key].barcode  == dos[0]){
 
