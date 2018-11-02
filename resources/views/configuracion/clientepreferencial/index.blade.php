@@ -17,7 +17,16 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
+                                <div class="text-center">
+                                    <h3>Cliente</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 15px">
+                                <div class="container">
+                                    <div class="row">
 
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

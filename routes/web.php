@@ -114,7 +114,11 @@ Route::group(['middleware' => 'auth'], function () {
     /*=================================\- Clientes -/======================================================*/
     Route::get('/clientes','ClientesController@index');
 
-
+    /*=================================\- Tipo de tarjeta -/======================================================*/
+    Route::get('/tipo/tarjeta','TipostarjetasController@index');
+    Route::post('/tipo/tarjeta/store','TipostarjetasController@store');
+    Route::post('/tipo/tarjeta/datos/tabla','TipostarjetasController@datostabla');
+    Route::post('/tipo/tarjeta/edit','TipostarjetasController@edit');
 });
 
 Auth::routes();

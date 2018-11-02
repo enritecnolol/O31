@@ -277,7 +277,7 @@
                                         <div class="card-body" style="background: white">
                                             <div class="mx-auto d-block">
                                                 <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ p.name }}</h6>
+                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;"><span class="badge badge-primary">@{{ p.barcode }}</span> @{{ p.name }}</h6>
                                                 <div class="location text-sm-center" style="color: #0062cc">
                                                     <i class="fa fa-money-bill-alt"></i> @{{p.price}}
                                                 </div>
@@ -294,7 +294,7 @@
                                         <div class="card-body" style="background: white">
                                             <div class="mx-auto d-block">
                                                 <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ p.name }}</h6>
+                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;"><span class="badge badge-primary">@{{ p.barcode }}</span> @{{ p.name }}</h6>
                                                 <div class="location text-sm-center" style="color: #0062cc">
                                                     <i class="fa fa-money-bill-alt"></i> @{{p.price}}
                                                 </div>
@@ -690,17 +690,18 @@
                 codigopfactura:function ()
                 {
                     _this = this ;
+                    var dos = _this.codigop.split("+")
+                    
                     for (var key in _this.productos ){
-                        if (_this.productos[key].barcode  == _this.codigop){
-                            console.log(_this.productos[key].id);
+                        if (_this.productos[key].barcode  == dos[0]){
 
-                            if  (parseFloat(_this.cantidadp) == 0){
+                            if  (dos.length == 1){
                                 _this.pfactura(_this.productos[key].id)
                                 _this.codigop = ''
 
                             }else {
                                 _this.pfactura(_this.productos[key].id);
-                                _this.cambiarcount(_this.productos[key].id, _this.cantidadp)
+                                _this.cambiarcount(_this.productos[key].id, dos[1])
                                 _this.codigop = ''
                                 _this.cantidadp = 0
                             }
