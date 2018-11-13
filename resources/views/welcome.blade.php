@@ -112,18 +112,40 @@
 @endsection
 
 @section('aside')
-
     <div class="container">
+        <div class="row" v-if="clientedatos !== ''" style="margin-top: 15px">
+            <div class="col-md-6">
+                <h6 style="float: left">ID: </h6>
+                <h6 style="float:right">&ensp;@{{ clientedatos.matricula }}</h6>
+            </div>
+            <div class="col-md-6">
+                <h6 style="float: left">Tarjeta: </h6>
+                <h6 style="float: right">@{{ clientedatos.codigo }}</h6>
+            </div>
+            <div class="col-md-12">
+                <h6 style="float: left">Cliente: </h6>
+                <h6 style="float:none">&ensp;@{{ clientedatos.nombre }}</h6>
+            </div>
+            <div class="col-md-6">
+                <h6 style="float: left;">Puntos: </h6>
+                <h6 style="float: right" v-if="clientedatos.puntos == null"> 00</h6>
+                <h6 style="float: right" v-else> @{{ clientedatos.puntos }}</h6>
+            </div>
+            <div class="col-md-6">
+                <h6 style="float: left;">Bonos:</h6>
+                <h6 style="float: right">@{{ bonos }}</h6>
+            </div>
+        </div>
         <div class="card-title" style="margin: 0;  margin-top: 15px;">
             <div style="text-align: center; background-color: #4272d7; margin-bottom: 5px;color: white">
                 Factura
             </div>
-            <div v-show="cerrada != 'C'" style="text-align: center; color: white; margin-bottom: 5px">
+            <div v-show="cerrada !== 'C'" style="text-align: center; color: white; margin-bottom: 5px">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fas fa-code"></i></div>
+                        <div class="input-group-text"><i class="fas fa-barcode"></i></div>
                     </div>
-                    <input type="text" placeholder="Codigo" id="codigo1" v-model="codigop" class="form-control form-control-sm" autofocus @keyup.enter="codigopfactura">
+                    <input type="text" placeholder="Codigo" id="codigo1" title="presionar INICIO para hacer focus aqui" v-model="codigop" class="form-control form-control-sm" autofocus @keyup.enter="codigopfactura">
                 </div>
             </div>
 
@@ -162,8 +184,8 @@
                 </div>
             </div>
         </form>
-        <div v-if="cerrada == 'A' && neto > 0" style="width: 320px;position: fixed;bottom: 10px;">
-            <div class="" style="height: 100px;margin-bottom: 5px">
+        <div v-if="cerrada === 'A' && neto > 0 && idticket === ''" style="width: 320px;position: fixed;bottom: 10px;">
+            <div class="" style="height: 120px;margin-bottom: 5px">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
@@ -178,24 +200,57 @@
                         <div class="col-md-12">
                             <h5 style="float: left">Neto: </h5> <p style="float: right">@{{ neto }}</p>
                         </div>
+                        <div class="col-md-12">
+                            <h5 style="float: left">Puntos: </h5> <p style="float: right">@{{ puntosagenerar }}</p>
+                        </div>
+
                     </div>
                 </div>
             </div>
-            <button type="button" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar Compra</button>
-            <button data-toggle="modal" data-target="#pago" type="button" style="height: 130px;background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
+            <button type="button" id="cancelarcompara" title="presionar PAGINA ABAJO" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar Compra</button>
+            <button data-toggle="modal" data-target="#pago" title="presione tecla FIN" type="button" style="height: 130px;background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
+                <span id="payment-button-amount" style="font-size: 20px;color: whitesmoke"> Pagar <br><span style="color: whitesmoke;font-size: 30px">$ @{{ neto }}</span></span>
+                <span id="payment-button-sending" style="display:none;">Sending…</span>
+            </button>
+        </div>
+        <div v-else-if="cerrada === 'A' && idticket !== ''" style="width: 320px;position: fixed;bottom: 10px;">
+            <div class="" style="height: 120px;margin-bottom: 5px">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h5 style="float: left">Bruto: </h5> <p style="float: right">@{{bruto}}</p>
+                        </div>
+                        <div class="col-sm-12">
+                            <h5 style="float: left">Descuento: </h5> <p style="float: right">@{{ totaldescuento }}</p>
+                        </div>
+                        <div class="col-sm-12">
+                            <h5 style="float: left">Itbis: </h5> <p style="float: right">@{{ algoitbis }}</p>
+                        </div>
+                        <div class="col-md-12">
+                            <h5 style="float: left">Neto: </h5> <p style="float: right">@{{ neto }}</p>
+                        </div>
+                        <div class="col-md-12">
+                            <h5 style="float: left">Puntos: </h5> <p style="float: right">@{{ puntosagenerar }}</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="cancelarcompara" title="presionar PAGINA ABAJO" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar Compra</button>
+            <button data-toggle="modal" data-target="#pago" title="presione tecla FIN" type="button" style="height: 130px;background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
                 <span id="payment-button-amount" style="font-size: 20px;color: whitesmoke"> Pagar <br><span style="color: whitesmoke;font-size: 30px">$ @{{ neto }}</span></span>
                 <span id="payment-button-sending" style="display:none;">Sending…</span>
             </button>
         </div>
 
-        <div v-else-if="cerrada == 'A' && neto == 0" style="width: 320px;position: fixed;bottom: 10px;">
+        <div v-else-if="cerrada === 'A' && neto <= 0 && datosticket  === ''" style="width: 320px;position: fixed;bottom: 10px;">
             <button data-toggle="modal" disabled data-target="#pago" type="button" style="height: 130px; background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
                 <span style="font-size: 24px"><span style="color: whitesmoke">Pagar <br></span><span style="color: whitesmoke;font-size: 30px">$&nbsp;@{{ neto }}</span></span>
                 <span style="display:none;">Sending…</span>
             </button>
         </div>
 
-        <div v-else-if="cerrada == 'C'" style="position: fixed;bottom:10px; width: 250px">
+        <div v-else-if="cerrada === 'C'" style="position: fixed;bottom:10px; width: 250px">
             <h4 style="color: red; font-size: 24px">Caja no esta abierta</h4>
             <p style="font-size: small;font-size: 22px">Menu => Caja => Apertura Caja</p>
         </div>
@@ -211,9 +266,9 @@
         <div class="section__content section__content--p30">
             <div class="container-fluid">
                 <div class="row" style="clear: both">
-                    <template v-if="cerrada !='A'"></template>
-                    <template v-if="cerrada == 'no es dia'"></template>
-                    <template v-if="cerrada =='A'">
+                    <template v-if="cerrada !=='A'"></template>
+                    <template v-if="cerrada === 'no es dia'"></template>
+                    <template v-if="cerrada ==='A'">
                         <div class="col-" style="overflow-y: scroll;margin:0; padding:0; height: 90vh;">
                             <div class="text-center" style="margin-bottom: 5px">
                                 <h5>Categorias</h5>
@@ -231,11 +286,11 @@
                                 </div>
                             @endforeach
                         </div>
-                        <div class="col-" v-show="cambio == 'subcategoria' && categoria_subcategoria.length !== 0" style="overflow-y: scroll;height: 90vh;">
+                        <div class="col-" v-show="cambio === 'subcategoria' && categoria_subcategoria.length !== 0" style="overflow-y: scroll;height: 90vh;">
                             <div class="text-center" style="margin-bottom: 5px">
                                 <h6>Subcategoria</h6>
                             </div>
-                            <template v-if="categoria_subcategoria == ''">
+                            <template v-if="categoria_subcategoria === ''">
 
                                 <div class="card" @click="cambio = 'categoria'" style="height: 110px;width: 130px;margin-right: 10px;margin-left: 10px;background: white;cursor: pointer;box-shadow: 3px 3px 10px #888888">
                                     <div class="card-body">
@@ -266,13 +321,13 @@
                     <div class="col" style="box-shadow: 1px 1px 5px #888888;overflow-y: scroll;height: 90vh;">
                         <div class="container">
                             <div class="text-center" style="margin-bottom: 8px">
-                                <button type="button" class="btn btn-lg btn-sm btn-link" v-show="cambio == 'subcategoria' && categoria_subcategoria.length !== 0" @click="cambio = 'categoria'" style="float: left;margin-left: 10px"><i class="fas fa-arrow-left"></i></button>
+                                <button type="button" class="btn btn-lg btn-sm btn-link" v-show="cambio === 'subcategoria' && categoria_subcategoria.length !== 0" @click="cambio = 'categoria'" style="float: left;margin-left: 10px"><i class="fas fa-arrow-left"></i></button>
                                 <h3>Productos</h3>
                                 <input type="search"  class="form-control form-control-sm" v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
                             </div>
 
                             <div class="row">
-                                <template v-for="p in productos" v-if="cerrada == 'A' && productosbuscados == ''">
+                                <template v-for="p in productos" v-if="cerrada === 'A' && productosbuscados === ''">
                                     <div class="card" style="height: auto;background: #c8f1ff;width: 130px;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)" :title="p.name">
                                         <div class="card-body" style="background: white">
                                             <span class="badge badge-primary" style="position: absolute; top: 3px; left: 3px">@{{ p.barcode }}</span>
@@ -290,7 +345,7 @@
                                     </div>
                                 </template>
 
-                                <template v-for="p in productosbuscados" v-if="cerrada == 'A' && productosbuscados != ''">
+                                <template v-for="p in productosbuscados" v-if="cerrada === 'A' && productosbuscados !== ''">
                                     <div  class="card"  :title="p.name" style="height: auto;width: 130px;background: #c8f1ff;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)">
                                         <div class="card-body" style="background: white">
                                             <span class="badge badge-primary" style="position: absolute; top: 3px; left: 3px">@{{ p.barcode }}</span>
@@ -307,7 +362,7 @@
                                         </div>
                                     </div>
                                 </template>
-                                <template v-if="cerrada == 'no es dia'">
+                                <template v-if="cerrada === 'no es dia'">
                                 </template>
                                 <template v-for="p in productos" v-else-if="cerrada == 'C'">
                                 </template>
@@ -320,8 +375,8 @@
     </div>
 
     <!--Para decir que la caja esta cerrada-->
-    <div v-if="cerrada == 'A'"></div>
-    <div v-if="cerrada == 'no es dia'" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div v-if="cerrada === 'A'"></div>
+    <div v-if="cerrada === 'no es dia'" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -345,7 +400,7 @@
             </div>
         </div>
     </div>
-    <div v-if="cerrada == 'C'" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div v-if="cerrada === 'C'" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -383,93 +438,122 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post" novalidate="novalidate">
-                        <div class="text-center" style="margin-bottom: 20px">
-                            <h3 style="font-size: 50px">A PAGAR $: <span style="font-size: 50px; color: red">@{{ neto }}</span></h3>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="cc-exp" class="control-label mb-1">Efectivo<span style="color: red">*</span></label>
-                                    <input id="efectivom" name="dinero" autofocus required v-on:keypress.enter="facturar()" type="number" class="form-control cc-exp"  v-model="campodinero">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="cc-exp" class="control-label mb-1">Billetes<span style="color: red"></span></label>
-                                    <br>
-                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(50) + parseFloat(campodinero)">$50</button>
-                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(100) + parseFloat(campodinero)">$100</button>
-                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(200) + parseFloat(campodinero)">$200</button>
-                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(500) + parseFloat(campodinero)">$500</button>
-                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(1000) + parseFloat(campodinero)">$1000</button>
-                                </div>
+                    <div class="text-center" style="margin-bottom: 20px">
+                        <h3 style="font-size: 50px">A PAGAR $: <span style="font-size: 50px; color: red">@{{ neto }}</span></h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="cc-exp" class="control-label mb-1">Efectivo<span style="color: red">*</span></label>
+                                <input id="efectivom" name="dinero" autofocus required v-on:keypress.enter="facturar()" type="number" class="form-control cc-exp"  v-model="campodinero">
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="cc-exp" class="control-label mb-1">Tarjeta<span style="color: red">*</span></label>
-                                    <input id="tarjetam" name="dinero" required type="number" class="form-control cc-exp"  v-model="montotarjeta">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="cc-exp" class="control-label mb-1">Billetes<span style="color: red"></span></label>
-                                    <br>
-                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(2000) + parseFloat(campodinero)">$2000</button>
-                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(25) + parseFloat(campodinero)">$25</button>
-                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(10) + parseFloat(campodinero)">$10</button>
-                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(5) + parseFloat(campodinero)">$5</button>
-                                    <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(1) + parseFloat(campodinero)">$1</button>
-                                    <button type="button" class="btn btn-secondary" @click="campodinero = 0">$0</button>
-                                </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="cc-exp" class="control-label mb-1">Billetes<span style="color: red"></span></label>
+                                <br>
+                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(50) + parseFloat(campodinero)">$50</button>
+                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(100) + parseFloat(campodinero)">$100</button>
+                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(200) + parseFloat(campodinero)">$200</button>
+                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(500) + parseFloat(campodinero)">$500</button>
+                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(1000) + parseFloat(campodinero)">$1000</button>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="cc-number" class="control-label mb-1">Tipo de tarjeta</label>
-                                    <select name="selectSm"  id="SelectLm" v-model="tipotarjeta" class="form-control-sm form-control">
-                                        <option value="">--Selecciona--</option>
-                                        <option value="visa">Visa</option>
-                                        <option value="mastercard">MasteCard</option>
-                                        <option value="americanexpress">AmericanExpress</option>
-                                    </select>
-                                    <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="banco" class="control-label mb-1">Banco</label>
-                                    <input id="banco" name="banco" v-model="banco" class="form-control cc-exp" type="text">
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="cc-exp" class="control-label mb-1">Tarjeta<span style="color: red">*</span></label>
+                                <input id="tarjetam" name="dinero" required type="number" class="form-control cc-exp"  v-model="montotarjeta">
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="numtarjeta" class="control-label mb-1">Num.Tarjeta <span style="color: red">*</span></label>
-                                    <input id="numtarjeta"  name="numtarjeta" type="text" class="form-control cc-exp" maxlength="16"  v-model="Numtarjeta" data-val="true" data-val-required="Please enter the card expiration" >
-                                    <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <label for="auth" class="control-label mb-1">Autorización<span style="color: red">*</span></label>
-                                <div class="input-group">
-                                    <input id="auth" name="auth"  v-model="auth" maxlength="20" type="text" class="form-control cc-cvc">
-                                </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="cc-exp" class="control-label mb-1">Billetes<span style="color: red"></span></label>
+                                <br>
+                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(2000) + parseFloat(campodinero)">$2000</button>
+                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(25) + parseFloat(campodinero)">$25</button>
+                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(10) + parseFloat(campodinero)">$10</button>
+                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(5) + parseFloat(campodinero)">$5</button>
+                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(1) + parseFloat(campodinero)">$1</button>
+                                <button type="button" class="btn btn-secondary" @click="campodinero = 0">$0</button>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <div class="" style="margin-right: 55%">
-                                <h4>Devuelta:<span> @{{ devuelta }}</span></h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="cc-number" class="control-label mb-1">Tipo de tarjeta</label>
+                                <select name="selectSm"  id="SelectLm" v-model="tipotarjeta" class="form-control-sm form-control">
+                                    <option value="">--Selecciona--</option>
+                                    <option value="visa">Visa</option>
+                                    <option value="mastercard">MasteCard</option>
+                                    <option value="americanexpress">AmericanExpress</option>
+                                </select>
+                                <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
                             </div>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button v-if="suma >= neto" type="button" @click="facturar(), ultimoidfactura()" class="btn btn-primary">&nbsp;Pagar</button>
-                            <button v-else disabled type="button" @click="facturar()" class="btn btn-primary">&nbsp;Pagar</button>
                         </div>
-                    </form>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="banco" class="control-label mb-1">Banco</label>
+                                <input id="banco" name="banco" v-model="banco" class="form-control cc-exp" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="numtarjeta" class="control-label mb-1">Num.Tarjeta <span style="color: red">*</span></label>
+                                <input id="numtarjeta"  name="numtarjeta" type="text" class="form-control cc-exp" maxlength="16"  v-model="Numtarjeta" data-val="true" data-val-required="Please enter the card expiration" >
+                                <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="auth" class="control-label mb-1">Autorización<span style="color: red">*</span></label>
+                            <div class="input-group">
+                                <input id="auth" name="auth"  v-model="auth" maxlength="20" type="text" class="form-control cc-cvc">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 18px" v-if="clientedatos != ''">
+                        <div class="col-12">
+                            <div class="text-center">
+                                <h4>Ticket de Puntos</h4>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="text-center">
+                                <input type="number" v-model="idticket" placeholder="Codigo del Ticket" min="0" @keypress.enter="ticket" class="form-control" id="">
+                            </div>
+                        </div>
+                        <template v-if="datosticket != ''">
+                            <div class="col-6" style="margin-top: 15px">
+                                <h5 style="float: left">Fecha: </h5> <p style="float: right">@{{ datosticket.fecha }}</p>
+                            </div>
+                            <div class="col-6" style="margin-top: 15px">
+                                <h5 style="float: left">Cliente: </h5> <p style="float: right">@{{ datosticket.nombre }}</p>
+                            </div>
+                            <div class="col-6">
+                                <h5 style="float: left">Puntos: </h5> <p style="float: right">@{{ datosticket.puntos }}</p>
+                            </div>
+                            <div class="col-6">
+                                <h5 style="float: left">Balance: </h5> <p style="float: right">@{{ datosticket.balancepuntos }}</p>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="" style="position: absolute; left: 50px">
+                            <h4>Devuelta:<span style="font-size: 25px"> @{{ devuelta }}</span></h4>
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button v-if="suma >= neto" type="button" @click="facturar(), ultimoidfactura()" class="btn btn-primary">&nbsp;Pagar</button>
+                        <button v-else disabled type="button" @click="facturar()" class="btn btn-primary">&nbsp;Pagar</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -478,17 +562,12 @@
     @include('productos.buscarmodal')
 
     @include('modal.modelfacture')
+    @include('modal.modelcliente')
 @endsection
 @section('scriptp')
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/es-do.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js" > </script>
 
     <script !src="">
-
         $(document).ready(function(){
             $("#codigo1").focus();
 
@@ -525,15 +604,23 @@
 
             /*Cerrar caja antes de las 12*/
 
-
         });
 
         $('body').keyup(function(e) {
             if(e.which === 35){
-                $('#pago').modal('show');
+                $('#pago').modal('show', function () {});
+                $('#efectivom').focus();
+            }
+            if(e.which === 119){
+                $('#clientep').modal('show');
+                $("#matriculaa").focus();
+            }
+            if(e.which === 34){
+                $("#cancelarcompara").click();
             }
             if(e.which ===36){
                 $("#codigo1").focus();
+
             }
         });
         $(function () {
@@ -606,10 +693,19 @@
                 descgeneral:0,
                 cuadrogeneral:false,
                 ultfacture: 0,
+                datoscliente:'',
+                idcliente: '',
+                clientedatos:'',
+                configtj:'',
+                bonos:0,
+                idticket:'',
+                datosticket:''
 
 
             },
             mounted() {
+                _this = this
+                _this.cargartablacliente();
             },
             watch:{
                 neto:function(valor){
@@ -642,16 +738,15 @@
                         .catch(function (error) {
                         });
                 },
-
                 cancelarcompra:function(){
                     var txt;
                     var r = confirm("Estas seguro que quieres cancelar la compra ? ");
                     if (r == true){
                         txt = this.carrito = [];
-                        this.list = [];;
+                        this.list = [];
+                        this.clientedatos = '';
                     }
                 },
-
                 cargarcategoria: function () {
                     var _this = this;
 
@@ -662,7 +757,6 @@
                         .catch(function (error) {
                         });
                 },
-
                 buscadorp:function () {
                     var _this = this
                     $.ajax({
@@ -691,9 +785,7 @@
 
                     });
                 },
-
-                codigopfactura:function ()
-                {
+                codigopfactura:function () {
                     _this = this ;
                     var dos = _this.codigop.split("+")
 
@@ -720,7 +812,6 @@
 
 
                 },
-
                 pfactura: function (id) {
 
                     var producto = this.productos[id];
@@ -762,7 +853,6 @@
                         this.list.push(this.carrito)
                     }
                 },
-
                 eliminarp: function (id) {
                     var producto = this.productos[id]
                     var idp = producto.id
@@ -830,7 +920,6 @@
 
 
                 },
-
                 normal:function(e){
                     _this = this;
                     e.preventDefault();
@@ -846,97 +935,185 @@
                     e.preventDefault();
                     _this.cuadrogeneral = false;
                 },
-
                 facturar:function () {
                     if (this.montotarjeta > 0){
-                        if (this.tipotarjeta == '' ||  this.auth == '' || this.Numtarjeta == ''){
+                        if (this.tipotarjeta === '' ||  this.auth === '' || this.Numtarjeta === ''){
                             alert('Faltan Datos por Llenar')
                         }if (this.montotarjeta > this.neto - this.campodinero){
                             alert('La tarjeta no puede ser mayor al precio a pagar');
                         }else{
-                            _this = this;
-                            $.ajax({
-                                url: '/facturacion',
-                                method: 'GET',
-                                data: {
-                                    cliente:this.campocliente,
-                                    devuelta:this.devuelta,
-                                    preciop:this.neto,
-                                    bruto:this.bruto,
-                                    itbis:this.algoitbis,
-                                    neto:this.neto,
-                                    descuento:this.totaldescuento,
-                                    tipop:this.campotipop,
-                                    banco:this.banco,
-                                    auth: this.auth,
-                                    tipotarjeta: this.tipotarjeta,
-                                    Numtarjeta: this.Numtarjeta,
-                                    montotarjeta:this.montotarjeta,
-                                    dinero:this.campodinero,
-                                    detalle: this.list
-                                },
-                                success:function (dato) {
-                                    if (dato == 'bien'){
+                            if (_this.datosticket !== ''){
+                                if (this.datosticket.balancepuntos > this.neto ){
+                                    alert('Si va a utilizar su bonos por favor consumirlo completo')
+                                }else{
+                                    _this = this;
+                                    $.ajax({
+                                        url: '/facturacion',
+                                        method: 'GET',
+                                        data: {
+                                            ticket: this.datosticket.id,
+                                            puntos:this.puntosagenerar,
+                                            cliente:this.clientedatos.id,
+                                            devuelta:this.devuelta,
+                                            preciop:this.neto,
+                                            tipop:this.campotipop,
+                                            banco:this.banco,
+                                            auth: this.auth,
+                                            bruto:this.bruto,
+                                            itbis:this.algoitbis,
+                                            neto:this.neto,
+                                            descuento:this.totaldescuento,
+                                            tipotarjeta: this.tipotarjeta,
+                                            Numtarjeta: this.Numtarjeta,
+                                            montotarjeta:this.montotarjeta,
+                                            dinero:this.campodinero,
+                                            detalle: this.list
+                                        },
+                                        success:function (dato) {
+                                            if (dato == 'bien'){
 
-                                        $('#pago').modal('hide');
-                                        toastr.options.newestOnTop = false;
-                                        toastr.success('Gracias por la compra');
-                                        setTimeout('document.location.reload()',1000);
-                                    }
-                                },
-                                error:function () {
-                                    toastr.error('A ocurrido un error al realizar la venta');
+                                                $('#pago').modal('hide');
+                                                toastr.options.newestOnTop = false;
+                                                toastr.success('Gracias por la compra');
+                                                setTimeout('document.location.reload()',1000);
+
+                                            }
+                                        },
+                                        error:function () {
+                                            toastr.error('A ocurrido un error al realizar la venta');
+                                        }
+
+                                    });
                                 }
+                            }else {
+                                _this = this;
+                                $.ajax({
+                                    url: '/facturacion',
+                                    method: 'GET',
+                                    data: {
+                                        puntos:this.puntosagenerar,
+                                        cliente:this.clientedatos.id,
+                                        devuelta:this.devuelta,
+                                        preciop:this.neto,
+                                        tipop:this.campotipop,
+                                        banco:this.banco,
+                                        auth: this.auth,
+                                        bruto:this.bruto,
+                                        itbis:this.algoitbis,
+                                        neto:this.neto,
+                                        descuento:this.totaldescuento,
+                                        tipotarjeta: this.tipotarjeta,
+                                        Numtarjeta: this.Numtarjeta,
+                                        montotarjeta:this.montotarjeta,
+                                        dinero:this.campodinero,
+                                        detalle: this.list
+                                    },
+                                    success:function (dato) {
+                                        if (dato == 'bien'){
 
-                            });
+                                            $('#pago').modal('hide');
+                                            toastr.options.newestOnTop = false;
+                                            toastr.success('Gracias por la compra');
+                                            setTimeout('document.location.reload()',1000);
+
+                                        }
+                                    },
+                                    error:function () {
+                                        toastr.error('A ocurrido un error al realizar la venta');
+                                    }
+
+                                });
+                            }
                         }
 
                     }else{
-                        if (this.montotarjeta > this.neto){
-                            alert('El Monto de la Tarjeta no puede ser mayor al precio a pagar')
-                        }if (this.montotarjeta == 0 && this.campodinero == 0){
+                        if (this.montotarjeta === 0 && this.campodinero === 0 && this.datosticket.balancepuntos === 0){
                             alert('No puedes hacer una compra de valor 0');
                         }else{
-                            _this = this
-                            $.ajax({
-                                url: '/facturacion',
-                                method: 'GET',
-                                data: {
-                                    cliente:this.campocliente,
-                                    devuelta:this.devuelta,
-                                    preciop:this.neto,
-                                    tipop:this.campotipop,
-                                    banco:this.banco,
-                                    auth: this.auth,
-                                    bruto:this.bruto,
-                                    itbis:this.algoitbis,
-                                    neto:this.neto,
-                                    descuento:this.totaldescuento,
-                                    tipotarjeta: this.tipotarjeta,
-                                    Numtarjeta: this.Numtarjeta,
-                                    montotarjeta:this.montotarjeta,
-                                    dinero:this.campodinero,
-                                    detalle: this.list
-                                },
-                                success:function (dato) {
-                                    if (dato == 'bien'){
+                            if (this.datosticket !== ''){
+                                if (this.datosticket.balancepuntos > this.neto && this.neto < 0 ){
+                                    alert('Si va a utilizar su bonos por favor consumirlo completo')
+                                }else{
+                                    _this = this;
+                                    $.ajax({
+                                        url: '/facturacion',
+                                        method: 'GET',
+                                        data: {
+                                            ticket: this.datosticket.id,
+                                            puntos:this.puntosagenerar,
+                                            cliente:this.clientedatos.id,
+                                            devuelta:this.devuelta,
+                                            preciop:this.neto,
+                                            tipop:this.campotipop,
+                                            banco:this.banco,
+                                            auth: this.auth,
+                                            bruto:this.bruto,
+                                            itbis:this.algoitbis,
+                                            neto:this.neto,
+                                            descuento:this.totaldescuento,
+                                            tipotarjeta: this.tipotarjeta,
+                                            Numtarjeta: this.Numtarjeta,
+                                            montotarjeta:this.montotarjeta,
+                                            dinero:this.campodinero,
+                                            detalle: this.list
+                                        },
+                                        success:function (dato) {
+                                            if (dato == 'bien'){
 
-                                        $('#pago').modal('hide');
-                                        toastr.options.newestOnTop = false;
-                                        toastr.success('Gracias por la compra');
-                                        setTimeout('document.location.reload()',1000);
+                                                $('#pago').modal('hide');
+                                                toastr.options.newestOnTop = false;
+                                                toastr.success('Gracias por la compra');
+                                                setTimeout('document.location.reload()',1000);
 
-                                    }
-                                },
-                                error:function () {
-                                    toastr.error('A ocurrido un error al realizar la venta');
+                                            }
+                                        },
+                                        error:function () {
+                                            toastr.error('A ocurrido un error al realizar la venta');
+                                        }
+
+                                    });
                                 }
+                            }else{
+                                _this = this;
+                                $.ajax({
+                                    url: '/facturacion',
+                                    method: 'GET',
+                                    data: {
+                                        puntos:this.puntosagenerar,
+                                        cliente:this.clientedatos.id,
+                                        devuelta:this.devuelta,
+                                        preciop:this.neto,
+                                        tipop:this.campotipop,
+                                        banco:this.banco,
+                                        auth: this.auth,
+                                        bruto:this.bruto,
+                                        itbis:this.algoitbis,
+                                        neto:this.neto,
+                                        descuento:this.totaldescuento,
+                                        tipotarjeta: this.tipotarjeta,
+                                        Numtarjeta: this.Numtarjeta,
+                                        montotarjeta:this.montotarjeta,
+                                        dinero:this.campodinero,
+                                        detalle: this.list
+                                    },
+                                    success:function (dato) {
+                                        if (dato == 'bien'){
+                                            $('#pago').modal('hide');
+                                            toastr.options.newestOnTop = false;
+                                            toastr.success('Gracias por la compra');
+                                            setTimeout('document.location.reload()',1000);
 
-                            });
+                                        }
+                                    },
+                                    error:function () {
+                                        toastr.error('A ocurrido un error al realizar la venta');
+                                    }
+
+                                });
+                            }
                         }
                     }
                 },
-
                 productocategoria:function (id) {
                     _this = this
                     $.ajax({
@@ -954,10 +1131,6 @@
                     });
 
                 },
-                doThis:function () {
-                    alert('funciona')
-                },
-
                 reducir:function (cantidad) {
                     cant = cantidad.length;
                     if (cant > 10){
@@ -966,7 +1139,6 @@
                         return cantidad;
                     }
                 },
-
                 descuentoagregar:function(idcambio ,desc ){
                     var producto = this.productos[idcambio];
                     var idp = producto.id;
@@ -986,7 +1158,6 @@
                         });
                     }
                 },
-
                 ultimoidfactura:function () {
                     _this = this
 
@@ -998,10 +1169,64 @@
                             console.log(error);
                         });
                 },
+                cargartablacliente: function () {
+                    _this = this
+                    axios.post('/clientes/datos/tabla')
+                        .then(function (response) {
+                            if (response['data'] == 'vacio'){
+                                _this.datoscliente = ''
+                            }else {
+                                _this.datoscliente = response['data'];
+                            }
 
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                },
+                asinarcliente:function (){
+                    _this = this;
+                    for (var key in _this.datoscliente)
+                    {
+                        if (_this.datoscliente[key].matricula === _this.idcliente){
+                            _this.idcliente = _this.datoscliente[key].id;
+                            $('#clientep').modal('hide');
+                            axios.post('/clientes/buscar/cliente', {
+                                id: _this.idcliente,
+                            })
+                                .then(function (response) {
+                                    _this.clientedatos = response['data'][0];
+                                    _this.configtj= JSON.parse(response['data'][0].config);
+                                    _this.bonos = response['data'][0].total;
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
+                            return
+                        }
+                    }
+                },
+                ticket:function () {
+                    _this = this
+
+                    axios.post('/ticket/busqueda', {
+                        id:_this.idticket
+                    })
+                        .then(function (response) {
+                            if (response['data'] === 'no encontrado') {
+                                toastr.warning('ticket no encontrado')
+                            }else{
+                                _this.datosticket = response['data'][0];
+                            }
+                            console.log(response);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
             },
-            computed:{
 
+            computed:{
                 facturatotal:function () {
 
 
@@ -1012,7 +1237,6 @@
                     }
                     return parseFloat(suma).toFixed(2);
                 },
-
                 productototal:function () {
 
                     var suma = 0;
@@ -1023,21 +1247,18 @@
 
                     return suma;
                 },
-
                 suma:function () {
 
                     var suma = (parseFloat(this.campodinero) + parseFloat(this.montotarjeta));
 
                     return suma;
                 },
-
                 devuelta:function () {
                     // var devuelta = suma - this.neto
                     var devuelta = this.suma - this.neto;
 
                     return parseFloat(devuelta).toFixed(2);
                 },
-
                 bruto:function () {
 
                     if (tipoitbis == 'incluido'){
@@ -1063,7 +1284,6 @@
                             var descuento = this.list.find(buscaid).desc;
 
                             var paso1 = descuento/100;
-
                             var itbis = producto.itbis;
                             if (itbis == 'si'){
 
@@ -1073,7 +1293,6 @@
 
                                 var bruto = parseFloat(dinero)/ parseFloat(pitbis);
                                 var paso2 = bruto * parseFloat(paso1).toFixed(3);
-
                                 var brutodescuento = bruto - parseFloat(paso2).toFixed(3);
 
                                 var itbismultiplicado =  parseFloat(brutodescuento).toFixed(3) * parseFloat('0.'+porciento);
@@ -1082,14 +1301,13 @@
 
                                 brutototal = (bruto + brutototal);
 
-                                total = parseFloat(bruto  + total)
+                                total = parseFloat(bruto)  + parseFloat(total)
+
 
                             }else{
-
                                 var paso2 = dinero * parseFloat(paso1).toFixed(3);
                                 var paso3 = dinero - paso2;
                                 total = parseFloat(total + paso3)
-
                             }
                         }
                         return parseFloat(total).toFixed(2);
@@ -1135,7 +1353,20 @@
 
                                 itbistotal = parseFloat(itbismultiplicado);
 
-                                total = parseFloat(bruto) + parseFloat(total)
+                                if  (_this.configtj != ''){
+                                    if  (_this.configtj['Datos']['tipo'] === 'GDescuento'){
+                                        total = parseFloat(bruto)  + parseFloat(total)
+                                        var descuentodos = parseInt(_this.configtj['Datos']['Gdescuento']['descuentog']) / 100;
+                                        var desc = parseFloat(total) * parseFloat(descuentodos).toFixed(3)
+                                        var descmenos = parseFloat(total) - parseFloat(desc).toFixed(3)
+                                        total = parseFloat(descmenos)
+                                    }else {
+                                        total = parseFloat(bruto)  + parseFloat(total)
+                                    }
+                                }else {
+                                    total = parseFloat(bruto)  + parseFloat(total)
+                                }
+
 
                             }else{
                                 var paso2 = dinero * parseFloat(paso1).toFixed(3);
@@ -1147,7 +1378,6 @@
                     }
 
                 },
-
                 algoitbis:function () {
 
                     if (tipoitbis == 'incluido'){
@@ -1184,12 +1414,29 @@
                                 var bruto = parseFloat(dinero)/ parseFloat(pitbis);
                                 var paso2 = bruto * parseFloat(paso1).toFixed(4);
                                 var brutodescuento = bruto - parseFloat(paso2).toFixed(4);
+                                if  (_this.configtj != ''){
+                                    if  (_this.configtj['Datos']['tipo'] === 'GDescuento'){
+                                        var descuentodos = parseInt(_this.configtj['Datos']['Gdescuento']['descuentog']) / 100;
+                                        var desc = parseFloat(brutodescuento) * parseFloat(descuentodos)
+                                        var otro = parseFloat(brutodescuento) - parseFloat(desc)
+                                        var itbismultiplicado =  parseFloat(otro).toFixed(4) * parseFloat('0.'+porciento);
+                                        itbistotal = parseFloat(itbismultiplicado);
+                                        total = parseFloat(itbistotal) + parseFloat(total);
+                                    }else {
+                                        var itbismultiplicado =  parseFloat(brutodescuento).toFixed(4) * parseFloat('0.'+porciento);
 
-                                var itbismultiplicado =  parseFloat(brutodescuento).toFixed(4) * parseFloat('0.'+porciento);
+                                        itbistotal = parseFloat(itbismultiplicado);
 
-                                itbistotal = parseFloat(itbismultiplicado);
+                                        total = parseFloat(itbistotal) + parseFloat(total);
+                                    }
+                                }else {
+                                    var itbismultiplicado =  parseFloat(brutodescuento).toFixed(4) * parseFloat('0.'+porciento);
 
-                                total = parseFloat(itbistotal) + parseFloat(total);
+                                    itbistotal = parseFloat(itbismultiplicado);
+
+                                    total = parseFloat(itbistotal) + parseFloat(total);
+                                }
+
 
                             }else{
 
@@ -1248,7 +1495,6 @@
                         return parseFloat(total).toFixed(2);
                     }
                 },
-
                 totaldescuento:function () {
 
                     if (tipoitbis == 'incluido'){
@@ -1278,7 +1524,6 @@
 
                             var itbis = producto.itbis;
                             if (itbis == 'si'){
-
                                 var porciento = producto.porciento;
 
                                 var pitbis = parseFloat('1.' + porciento);
@@ -1291,12 +1536,32 @@
 
                                 descuentototal = parseFloat(paso2 + descuentototal);
 
-                                total = parseFloat( paso2) + parseFloat(total)
+                                if  (_this.configtj != ''){
+                                    if  (_this.configtj['Datos']['tipo'] === 'GDescuento'){
+                                        var descuentodos = parseInt(_this.configtj['Datos']['Gdescuento']['descuentog']) / 100;
+                                        var desc = parseFloat(bruto) * parseFloat(descuentodos)
+                                        total = parseFloat(desc).toFixed(4) + parseFloat(paso2).toFixed(4) + parseFloat(total)
+                                    }else {
+                                        total = parseFloat( paso2).toFixed(4) + parseFloat(total)
+                                    }
+                                }else {
+                                    total = parseFloat(paso2).toFixed(4) + parseFloat(total)
+                                }
 
                             }else{
-                                var paso2 = dinero * parseFloat(paso1).toFixed(3);
-                                var paso3 = dinero - paso2;
-                                total = parseFloat(total).toFixed(4) + parseFloat(paso2)
+
+                                var paso2 = dinero * parseFloat(paso1).toFixed(4);
+                                if  (_this.configtj != ''){
+                                    if  (_this.configtj['Datos']['tipo'] === 'GDescuento'){
+                                        var descuentodos = parseInt(_this.configtj['Datos']['Gdescuento']['descuentog']) / 100;
+                                        var desc = parseFloat(dinero) * parseFloat(descuentodos).toFixed(4)
+                                        total = desc + parseFloat(total)
+                                    }else {
+                                        total = parseFloat(paso2).toFixed(4) + parseFloat(total)
+                                    }
+                                }else {
+                                    total = parseFloat(paso2).toFixed(4) + parseFloat(total)
+                                }
                             }
                         }
                         return parseFloat(total).toFixed(2);
@@ -1351,19 +1616,39 @@
                         return parseFloat(total).toFixed(2);
                     }
                 },
-
                 neto:function () {
                     _this = this;
                     var total = 0;
                     var id = 0;
 
                     for(var i = 0; i< this.list.length; i++ ){
-                        // var suma = (parseFloat(_this.algoitbis) + (parseFloat(_this.bruto)) - _this.totaldescuento);
-                        var suma = parseFloat(_this.algoitbis) + parseFloat(_this.bruto)  - _this.totaldescuento;
-                        total = suma;
+                        if  (_this.datosticket !== ''){
+                            var suma = (parseFloat(_this.algoitbis) + parseFloat(_this.bruto)  - _this.totaldescuento) - _this.datosticket.balancepuntos;
+                            total = suma;
+                        }else {
+                            var suma = parseFloat(_this.algoitbis) + parseFloat(_this.bruto)  - _this.totaldescuento;
+                            total = suma;
+                        }
+
                     }
-                    return parseFloat(total).toFixed(2);
+                    return parseFloat(Math.round(total)).toFixed(2);
                 },
+                puntosagenerar:function () {
+                    _this = this;
+                    var total = 0;
+
+                    if  (_this.configtj != '')
+                    {
+                        if  (_this.configtj['Datos']['tipo'] === 'GPuntos')
+                        {
+                            for(var i = 0; i< this.list.length; i++ ){
+                                var suma = parseFloat(_this.neto) / parseInt(_this.configtj['Datos']['Gpuntos']['porcada']);
+                                total = parseInt(suma) * parseInt(_this.configtj['Datos']['Gpuntos']['generarpuntos']);
+                            }
+                        }
+                    }
+                    return parseInt(total);
+                }
             }
         });
     </script>

@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Caja;
 use App\Categoria;
+use App\Client;
 use App\Configuracion;
 use App\Detail;
 use App\Facture;
 use App\Product;
+use App\Puntosmovimiento;
 use DemeterChain\C;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -101,7 +103,13 @@ class IndexController extends Controller
         $facture->date = date('Y-m-d');
         $facture->box = 'Caja No.1';
         $facture->cashier = 0;
-        $facture->client = $request->cliente;
+        if ($request->has('cliente')){
+            $facture->client = $request->cliente;
+            $facture->puntos = $request->puntos;
+        }
+        if ($request->has('ticket')){
+            $facture->ticket_id = $request->ticket;
+        }
         $facture->brute = $request->bruto;
         $facture->desc = $request->descuento;
         $facture->itbis = $request->itbis;
@@ -118,6 +126,26 @@ class IndexController extends Controller
         $facture->caja_id = $idcaja->last()->id;
         $facture->user_id = Auth::id();
         $facture->save();
+
+        if ($request->has('cliente')){
+            $puntos = Client::all()->where('id',$request->cliente);
+            if  ($puntos == '[]'){
+                $puntos  = 0;
+            }else{
+                foreach ($puntos as $punto){
+                    $puntos = $punto->puntos;
+                }
+            }
+            $total = $puntos +  $request->puntos;
+            $cliente = Client::find($request->cliente);
+            $cliente->puntos = $total;
+            $cliente->update();
+        }
+        if ($request->has('ticket')){
+            $tic = Puntosmovimiento::find($request->ticket);
+            $tic->balancepuntos = 0;
+            $tic->update();
+        }
 
         $idfacture = Facture::all();
 

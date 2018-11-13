@@ -30,7 +30,12 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PrintArea/2.4.1/jquery.PrintArea.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/es-do.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js" > </script>
+<script src="https://cdn.ckeditor.com/4.11.1/standard/ckeditor.js"></script>
 <!-- Main JS-->
 <script src="{{ URL::asset('js/main.js')}}"></script>
 <script src="{{ URL::asset('teclado/jquery.numpad.js')}}"></script>

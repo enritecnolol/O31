@@ -18,7 +18,7 @@ class CreateTableFacture extends Migration
             $table->date('date');
             $table->string('box');
             $table->integer('cashier');
-            $table->string('client');
+            $table->string('client')->nullable($value = true);
             $table->float('brute');
             $table->float('desc');
             $table->float('itbis');
@@ -26,6 +26,8 @@ class CreateTableFacture extends Migration
             $table->integer('Monto_tarjeta')->nullable($value = true);
             $table->integer('Monto_efectivo')->nullable($value = true);
             $table->integer('returns')->nullable($value = true);
+            $table->integer('puntos')->nullable($value = true);
+            $table->integer('ticket_id')->nullable($value = true);
             $table->string('status');
             $table->string('type_sale');
             $table->string('type_tarject')->nullable($value = true);

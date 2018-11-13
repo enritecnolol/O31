@@ -10,9 +10,10 @@
 {{--<meta name="keywords" content="au theme template">--}}
 <!-- Title Page-->
     <title>@yield('tittle')</title>
+    <link rel="icon" href="{{ URL::asset('logo2.png') }}" type="image/png">
 
     <!-- Fontfaces CSS-->
-    <link href=" {{ URL::asset('css/font-face.css') }}" rel="stylesheet" media="all">
+    <link href="{{ URL::asset('css/font-face.css') }}" rel="stylesheet" media="all">
     <link href="{{ URL::asset('font-awesome-4.7/css/font-awesome.min.css') }}" rel="stylesheet" media="all">
     <link href="{{ URL::asset('font-awesome-5/css/fontawesome-all.min.css') }}" rel="stylesheet" media="all">
     <link href="{{ URL::asset('mdi-font/css/material-design-iconic-font.min.css') }}" rel="stylesheet" media="all">
@@ -45,6 +46,11 @@
     <style>
         ::-webkit-scrollbar {
             width: 8px;
+        }
+
+
+        .fondo {
+            background: url({{ URL::asset('fondo2.png')}});
         }
 
         /* Track */
@@ -251,6 +257,11 @@
                                                 </a>
                                             </div>
                                             <div class="account-dropdown__item">
+                                                <a href="/clientes">
+                                                    <i class="fas fa-users"></i>Clientes
+                                                </a>
+                                            </div>
+                                            <div class="account-dropdown__item">
                                                 <a id="#proximamente" href="#">
                                                     <i class="zmdi zmdi-settings"></i>Configuracion <span class="badge badge-info">Proximamente</span>
                                                 </a>
@@ -278,7 +289,7 @@
     <!-- HEADER DESKTOP-->
         <!-- MENU SIDEBAR-->
         <div id="Vue">
-            <aside class="menu-sidebar2 d-none d-lg-block" style="background: url({{ URL::asset('fondo2.png')}});box-shadow: 1px 1px 6px #888888;">
+            <aside class="menu-sidebar2 d-none d-lg-block {{request()->is('/') ? '' : 'fondo' }}" style="box-shadow: 1px 1px 6px #888888;">
                 {{--<aside class="menu-sidebar2 d-none d-lg-block" style="box-shadow: 1px 1px 6px #888888;">--}}
                 <div class="logo">
                     <a href="/dashboard">

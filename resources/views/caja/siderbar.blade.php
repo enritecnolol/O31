@@ -39,8 +39,11 @@
             </li>
             <li>
                 <a href="/caja/ver/cuadre">
-                    <i class="fas fa-clipboard-list"></i>
-                    <strong>CUADRES DE CAJAS</strong></a>
+                    <i class="fas fa-clipboard-list"></i><strong>CUADRES DE CAJAS</strong></a>
+            </li>
+            <li>
+                <a href="/clientes">
+                    <i class="fas fa-users"></i><strong>CLIENTES</strong></a>
             </li>
             <li class="has-sub">
                 <a class="js-arrow" href="#">
@@ -51,6 +54,9 @@
                     </li>
                     <li>
                         <a href="/configuracion/itbis">ITBIS</a>
+                    </li>
+                    <li>
+                        <a href="/tipo/tarjeta">TARJETA PREFERENCIAL</a>
                     </li>
                 </ul>
             </li>

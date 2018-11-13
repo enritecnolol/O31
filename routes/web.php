@@ -94,12 +94,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/reportes/imprimir/productos/{start}/{end}', 'ReportesController@imprimirreporteproducto'); //
     Route::get('/reportes/inicio', 'ReportesController@inicio'); //
     Route::get('/reportes/imprimir', 'ReportesController@imprimir'); //
-    /*=================================\- Configuracion- /======================================================*/
+    /*=================================\- Configuracion - /======================================================*/
     Route::get('/configuracion','ConfiguracionesController@index');//muestra vista para configurar la compania
     Route::post('/configuracion/store','ConfiguracionesController@store'); // guardar configuracion
     Route::post('/configuracion/edit','ConfiguracionesController@update');// editar configuracion
     Route::get('/configuracion/cliente/preferencial','ConfiguracionesController@clientepreferencialindex');// editar configuracion
-    /*=================================\- itbis- /======================================================*/
+    /*=================================\- itbis - /======================================================*/
     Route::get('/configuracion/itbis','ImpuestosController@itbis');
     Route::post('/nuevo/itbis','ImpuestosController@store');
     Route::post('/itbis/datos','ImpuestosController@datos');
@@ -113,13 +113,33 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/impuestoref/datos/producto','ImpuestosrefsController@datosimpuestorefproducto');
     /*=================================\- Clientes -/======================================================*/
     Route::get('/clientes','ClientesController@index');
+    Route::post('/clientes/store','ClientesController@store');
+    Route::post('/clientes/datos/tabla','ClientesController@datostabla');
+    Route::post('/clientes/datos','ClientesController@clientepuntos');
+    Route::post('/clientes/edit','ClientesController@edit');
+    Route::post('/clientes/buscar/cliente','ClientesController@buscarcliente');
+    Route::post('/clientes/cliente/tarjeta','ClientesController@clientetarjeta');
+    Route::post('/cambio/puntos','ClientesController@cambiopuntos');
+
+    /*=================================\- Tickets -/======================================================*/
+    Route::post('/ticket/busqueda','PuntosmovimientosController@buscadorticket');
 
     /*=================================\- Tipo de tarjeta -/======================================================*/
     Route::get('/tipo/tarjeta','TipostarjetasController@index');
     Route::post('/tipo/tarjeta/store','TipostarjetasController@store');
     Route::post('/tipo/tarjeta/datos/tabla','TipostarjetasController@datostabla');
     Route::post('/tipo/tarjeta/edit','TipostarjetasController@edit');
-});
+
+    /*=================================\- Config Tipo de tarjeta -/======================================================*/
+    Route::post('/config/tipo/tarjeta/store','ConfigtjsController@store');
+    Route::post('/config/tipo/tarjeta/buscar','ConfigtjsController@buscartj');
+    Route::post('/config/tipo/tarjeta/edit','ConfigtjsController@edit');
+
+
+
+
+
+});//
 
 Auth::routes();
 

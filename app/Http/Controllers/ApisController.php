@@ -104,10 +104,10 @@ class ApisController extends Controller
         $id = $request->id;
         $product = Product::find($id);
 
-        if ($request->has('refimpuestoid') != 0){
-            $itbis = 'si';
-        }else{
+        if ($request->has('refimpuestoid') == 0){
             $itbis = 'no';
+        }else{
+            $itbis = 'si';
         }
 
         if ($request->hasFile('img')){

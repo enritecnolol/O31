@@ -19,8 +19,9 @@ class CreateTableClients extends Migration
             $table->string('telefono');
             $table->string('email');
             $table->string('matricula');
-            $table->integer('puntos');
-            $table->integer('descuento');
+            $table->longText('observacion')->nullable($value = true);
+            $table->integer('puntos')->nullable($value = true);
+            $table->integer('descuento')->nullable($value = true);
             $table->integer('tarjeta_id');
             $table->integer('user_id');
             $table->timestamps();
