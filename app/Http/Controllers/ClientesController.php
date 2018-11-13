@@ -136,7 +136,7 @@ class ClientesController extends Controller
 
 
         Mail::send('emails.ticket', $data, function ($message) use ($email){
-            $message->from('enritecnolol@gmail.com', 'Puntos');
+            $message->from('coffebreakpos@outlook.com', 'Puntos');
             $message->to($email)->subject('Ticket Para uso de puntos');
         });
 
