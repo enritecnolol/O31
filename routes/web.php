@@ -123,6 +123,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     /*=================================\- Tickets -/======================================================*/
     Route::post('/ticket/busqueda','PuntosmovimientosController@buscadorticket');
+    Route::post('/ticket/todos','PuntosmovimientosController@tickets');
+    Route::post('/ticket/cliente/tickets','PuntosmovimientosController@movimientocliente');
 
     /*=================================\- Tipo de tarjeta -/======================================================*/
     Route::get('/tipo/tarjeta','TipostarjetasController@index');

@@ -18,8 +18,6 @@
                     <div class="card-body">
                         <div class="container">
                             <div class="row">
-
-
                                 <div class="col-lg-12">
                                     <div class="text-center" style="background: #0062cc">
                                         <span style="color: white; font-size: 24px">Reportes</span>

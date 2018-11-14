@@ -22,6 +22,7 @@
                                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                                 <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Lista de Clientes</a>
                                                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Puntos</a>
+                                                <a class="nav-item nav-link" id="nav-reporte-tab" data-toggle="tab" href="#nav-reporte" role="tab" aria-controls="nav-profile" aria-selected="false">Reporte de Cliente</a>
                                             </div>
                                         </nav>
                                         <div class="tab-content pl-3 pt-2" id="nav-tabContent">
@@ -259,9 +260,89 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="tab-pane fade" id="nav-reporte" role="tabpanel" aria-labelledby="nav-reporte-tab">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-md-12" style="margin-top: 20px">
+                                                            <div class="text-center" style="background: #0062cc">
+                                                                <h3 style="color: white">Reportes por clientes</h3>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12" style="margin-top: 15px">
+                                                            <div class="row form-group">
+                                                                <div class="col">
+                                                                    <select class="select" id="cliente" name="cliente">
+                                                                        <option value="">Selecciona</option>
+                                                                        <option v-for="item in datostable" :value="item.id">@{{ item.nombre }} - @{{ item.matricula }}</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="" id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                                                        <i class="fa fa-calendar"></i>&nbsp;
+                                                                        <span></span> <i class="fa fa-caret-down"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2">
+                                                                    <button type="button" @click="buscarmovimientoscliente" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+                                                                    <button type="button" id="imprimir2" class="btn btn-success"><i class="fas fa-print"></i></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12" id="myPrintArea2" style="margin-top: 20px;">
+                                                            <div class="container" v-if="compania !== ''">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="text-center">
+                                                                            <img :src="'/imagenes/'+compania.img" width="100" alt="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12" style="margin-top: 15px">
+                                                                        <div class="text-left">
+                                                                            <strong>Telefono</strong>: @{{ compania.telefono }}
+                                                                        </div>
+                                                                        <div class="text-left">
+                                                                            <strong>Direccion</strong>: @{{ compania.pais }}, @{{ compania.ciudad }}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <hr style="background: #0062cc">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <table class="table table-bordered table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Fecha</th>
+                                                                        <th scope="col">Cliente</th>
+                                                                        <th scope="col">Puntos</th>
+                                                                        <th scope="col">Balance</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <template v-if="todostickets !== 'vacio'">
+                                                                    <tr v-for="item in todostickets">
+                                                                        <td>@{{ item.fecha }}</td>
+                                                                        <td>@{{ nombrecliente(item.cliente_id) }}</td>
+                                                                        <td>@{{ item.puntos }}</td>
+                                                                        <td>@{{ item.balancepuntos }}</td>
+                                                                    </tr>
+                                                                </template>
+                                                                <template v-else>
+                                                                    <tr>
+                                                                        <td>No</td>
+                                                                        <td>Hay</td>
+                                                                        <td>Resultado</td>
+                                                                        <td>!</td>
+                                                                    </tr>
+                                                                </template>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -274,14 +355,55 @@
 @endsection
 @section('scriptp')
     <script !src="">
+        var startfecha = '';
+        var endfecha = '';
+        var idcliente = '';
+
+
         $( document ).ready(function() {
             $("#imprimir").click(function () {
                 $("div#myPrintArea").printArea();
             });
+            $("#imprimir2").click(function () {
+                $("div#myPrintArea2").printArea();
+            });
+            $('.select').select2();
             // CKEDITOR.replace( 'editor1' );
+
+            $(function() {
+                var start = moment();
+                var end = moment();
+
+                function cb(start, end) {
+                    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                }
+
+                $('#reportrange').daterangepicker({
+                    startDate: start,
+                    endDate: end,
+                    ranges: {
+                        'Hoy': [moment(), moment()],
+                        'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        'Ultimos 7 dias': [moment().subtract(6, 'days'), moment()],
+                        'Ultimos 30 dias': [moment().subtract(29, 'days'), moment()],
+                        'Este Mes': [moment().startOf('month'), moment().endOf('month')],
+                        'Ultimo Mes': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    }
+                }, cb);
+
+                cb(start, end);
+            });
+
+            $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+                startfecha = picker.startDate.format('YYYY-MM-DD');
+                endfecha = picker.endDate.format('YYYY-MM-DD');
+                idcliente = $('#cliente').val();
+            });
+
         });
 
         var dia = moment().format('LLLL');
+
         new Vue({
             el: '#Vue',
             data:{
@@ -309,16 +431,17 @@
                 idcliente2 : '',
                 compania:'',
                 fecha: dia,
-                idticket:0
+                idticket:0,
+                todostickets:'',
 
             },
             mounted(){
                 _this = this;
                 _this.cargartablatp();
                 _this.cargartablacliente();
+                _this.puntosmoviento();
             },
             watch:{
-
             },
 
             methods:{
@@ -494,6 +617,7 @@
                                         _this.compania = response['data'][1][0];
                                         _this.idticket = response['data'][2];
                                         $('#ticketcambio').modal('show');
+                                        _this.puntosmoviento();
                                     }
                                 })
                                 .catch(function (error) {
@@ -506,7 +630,45 @@
                         toastr.warning('Los puntos que quiere cambiar no esta en el rango de los puntos disponibles')
                     }
                 },
+                puntosmoviento:function () {
+                    _this = this
 
+                    axios.post('/ticket/todos')
+                        .then(function (response) {
+                            _this.todostickets = response['data'];
+                            console.log(response);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                },
+                nombrecliente:function (id) {
+                    _this = this
+                    var nombre = '';
+                    for(var key in _this.datostable){
+                        if (_this.datostable[key].id === id){
+                            nombre = _this.datostable[key].nombre
+                        }
+                    }
+                    return nombre
+                },
+                buscarmovimientoscliente:function () {
+                    _this = this
+
+                    axios.post('/ticket/cliente/tickets', {
+                        id: $('#cliente').val(),
+                        inicio: startfecha,
+                        fin: endfecha,
+                    })
+                        .then(function (response) {
+                            _this.todostickets = response['data'][0];
+                            _this.compania = response['data'][1][0];
+                            console.log(response);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
             },
             computed:{
 
