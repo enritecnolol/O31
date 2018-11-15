@@ -69,22 +69,24 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <br>
-                                    <table class="table table-bordered" id="tabla-inicio">
-                                        <thead id="table-header">
-                                        <tr>
-                                            <th scope="col">Fecha</th>
-                                            <th scope="col">No.factura</th>
-                                            <th scope="col">Bruto</th>
-                                            <th scope="col">Desc</th>
-                                            <th scope="col">Itbis</th>
-                                            <th scope="col">Total factura</th>
-                                            <th scope="col">Efectivo</th>
-                                            <th scope="col">tarjeta</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="table-body">
-                                        </tbody>
-                                    </table>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="tabla-inicio">
+                                            <thead id="table-header">
+                                            <tr>
+                                                <th scope="col">Fecha</th>
+                                                <th scope="col">No.factura</th>
+                                                <th scope="col">Bruto</th>
+                                                <th scope="col">Desc</th>
+                                                <th scope="col">Itbis</th>
+                                                <th scope="col">Total factura</th>
+                                                <th scope="col">Efectivo</th>
+                                                <th scope="col">tarjeta</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="table-body">
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <div class="col-lg-12" style="display: none">
                                     <div id="prueba">
