@@ -65,7 +65,7 @@
         .text1 {
             color: white;
             position: absolute;
-            margin: 40%;
+            margin: 35%;
 
         }
         .image1 {
@@ -108,7 +108,7 @@
 @section('tittle',' Cafeteria| Facturacion')
 
 @section('titulo')
-    <h4 style="color: white;font-weight: 400"> <i class="fa fa-arrow-circle-right"></i> Punto de Venta</h4>
+    <MARQUEE width="100%" SCROLLDELAY=200><h5 style="color: white">acceso rapido: tecla inicio - Enfoca el codigo, tecla F8 - buscar cliente, tecla F7 - Crear Cliente, tecla FIN - Cobrar, tecla pagina abajo - Cancelar Compra</h5></MARQUEE>
 @endsection
 
 @section('aside')
@@ -116,24 +116,24 @@
         <div class="row" v-if="clientedatos !== ''" style="margin-top: 15px">
             <div class="col-md-6">
                 <h6 style="float: left">ID: </h6>
-                <h6 style="float:right">&ensp;@{{ clientedatos.matricula }}</h6>
+                <h6 style="float:right;font-style: oblique;font-variant: small-caps">&ensp;@{{ clientedatos.matricula }}</h6>
             </div>
             <div class="col-md-6">
                 <h6 style="float: left">Tarjeta: </h6>
-                <h6 style="float: right">@{{ clientedatos.codigo }}</h6>
+                <h6 style="float: right;font-style: oblique;font-variant: small-caps">@{{ clientedatos.codigo }}</h6>
             </div>
             <div class="col-md-12">
                 <h6 style="float: left">Cliente: </h6>
-                <h6 style="float:none">&ensp;@{{ clientedatos.nombre }}</h6>
+                <h6 style="float:none;font-style: oblique;">&ensp;@{{ clientedatos.nombre }}</h6>
             </div>
             <div class="col-md-6">
                 <h6 style="float: left;">Puntos: </h6>
-                <h6 style="float: right" v-if="clientedatos.puntos == null"> 00</h6>
-                <h6 style="float: right" v-else> @{{ clientedatos.puntos }}</h6>
+                <h6 style="float: right;font-style: oblique;font-variant: small-caps" v-if="clientedatos.puntos == null"> 00</h6>
+                <h6 style="float: right;font-style: oblique;font-variant: small-caps" v-else> @{{ clientedatos.puntos }}</h6>
             </div>
             <div class="col-md-6">
                 <h6 style="float: left;">Bonos:</h6>
-                <h6 style="float: right">@{{ bonos }}</h6>
+                <h6 style="float: right;font-style: oblique;font-variant: small-caps">@{{ bonos }}</h6>
             </div>
         </div>
         <div class="card-title" style="margin: 0;  margin-top: 15px;">
@@ -152,7 +152,7 @@
         </div>
         <form action="" method="post" novalidate="novalidate">
             <div class="form-group has-success">
-                <div class="table-responsive" style="margin-bottom: 5px">
+                <div class="table-responsive" style="margin-bottom: 5px; max-height: 420px; min-height: 300px;overflow-y: scroll">
                     <table class="table table-sm factura-table" >
                         <thead>
                         <tr>
@@ -165,20 +165,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="item in list">
-                            <td style="line-height: 1">@{{item.name}}</td>
-                            <td style="line-height: 1;">@{{item.itbis}}%</td>
-                            <td class="text-center" style="cursor: pointer" @click="cuadro = true" v-if="cuadro == false">@{{item.count}}</td>
-                            <td class="text-center" style="cursor: pointer" v-else>
-                                <input type="number" class="form-control" min="0" style="width: 70px" v-model="item.count" @keypress.enter="normal" @blur="normal" @input.self="cambiarcount(item.id, item.count)">
-                            </td>
-                            <td class="text-center" style="cursor: pointer" v-if="desc == false" @click="desc = true">@{{ item.desc }} %</td>
-                            <td class="text-center" v-else>
-                                <input type="number" class="form-control" min="0" v-model="item.desc" @keypress.enter="normall" @blur="normall" @input.self="descuentoagregar(item.id, item.desc)" style="width: 70px">
-                            </td>
-                            <td class="text-center">@{{item.price}}</td>
-                            <td><button type="button" class="fas fa-minus" style="color: orangered" @click="eliminarp(item.id)"></button></td>
-                        </tr>
+                            <tr v-for="item in list">
+                                <td style="line-height: 1">@{{item.name}}</td>
+                                <td style="line-height: 1;">@{{item.itbis}}%</td>
+                                <td class="text-center" style="cursor: pointer" @click="cuadro = true" v-if="cuadro == false">@{{item.count}}</td>
+                                <td class="text-center" style="cursor: pointer" v-else>
+                                    <input type="number" class="form-control" min="0" style="width: 70px" v-model="item.count" @keypress.enter="normal" @blur="normal" @input.self="cambiarcount(item.id, item.count)">
+                                </td>
+                                <td class="text-center" style="cursor: pointer" v-if="desc == false" @click="desc = true">@{{ item.desc }} %</td>
+                                <td class="text-center" v-else>
+                                    <input type="number" class="form-control" min="0" v-model="item.desc" @keypress.enter="normall" @blur="normall" @input.self="descuentoagregar(item.id, item.desc)" style="width: 70px">
+                                </td>
+                                <td class="text-center">@{{item.price}}</td>
+                                <td><button type="button" class="fas fa-minus" style="color: orangered" @click="eliminarp(item.id)"></button></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -563,6 +563,7 @@
 
     @include('modal.modelfacture')
     @include('modal.modelcliente')
+    @include('modal.modalcrearcliente')
 @endsection
 @section('scriptp')
 
@@ -621,11 +622,15 @@
             if(e.which ===36){
                 $("#codigo1").focus();
 
+            }if(e.which === 118){
+                $('#nuevocliente').modal('show');
             }
         });
+
         $(function () {
             $('#myModal').modal('show');
         })
+
         toastr.options.newestOnTop = 'false';
 
     </script>
@@ -638,7 +643,6 @@
     </script>
 
     <script>
-
         var productos = JSON.parse('{!! $productos !!}')
         var caja = '{!! $caja !!}'
         var cerrada = '{!! $cerrada !!}'
@@ -662,6 +666,7 @@
         var tipoitbis = '{{$config}}';
 
         var app = new Vue({
+
             el: '#Vue',
             data: {
                 cantidadp:0,
@@ -699,13 +704,21 @@
                 configtj:'',
                 bonos:0,
                 idticket:'',
-                datosticket:''
+                datosticket:'',
+                datostj:'',
+                nombre:'',
+                telefono:'',
+                email:'',
+                matricula:'',
+                observacion:'',
+                idtarjeta:'',
 
 
             },
             mounted() {
                 _this = this
                 _this.cargartablacliente();
+                _this.cargartablatp();
             },
             watch:{
                 neto:function(valor){
@@ -739,12 +752,15 @@
                         });
                 },
                 cancelarcompra:function(){
+                    _this = this
                     var txt;
                     var r = confirm("Estas seguro que quieres cancelar la compra ? ");
                     if (r == true){
-                        txt = this.carrito = [];
-                        this.list = [];
-                        this.clientedatos = '';
+
+                        txt = _this.carrito = {};
+                        _this.list = [];
+                        _this.clientedatos = '';
+                        _this.idcliente= '';
                     }
                 },
                 cargarcategoria: function () {
@@ -1223,7 +1239,63 @@
                         .catch(function (error) {
                             console.log(error);
                         });
+                },
+                cargartablatp :function () {
+                    _this = this;
+
+                    axios.post('/tipo/tarjeta/datos/tabla')
+                        .then(function (response) {
+                            if (response['data'] === 'vacio'){
+                                _this.datostj = ''
+                            }else {
+                                _this.datostj = response['data'];
+                            }
+
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                },
+                nuevocliente:function () {
+                    _this = this
+
+                    if (_this.nombre === '' || _this.telefono === '' || _this.email === '' || _this.matricula === ''|| _this.idtarjeta === '')
+                    {
+                        toastr.warning('Por favor llenar los campos importantes');
+                    }
+                    else {
+                        axios.post('/clientes/store', {
+                            nombre: _this.nombre,
+                            telefono: _this.telefono,
+                            email: _this.email,
+                            matricula: _this.matricula,
+                            descuento: _this.descuento,
+                            idtarjeta: _this.idtarjeta,
+                            observacion: _this.observacion
+                        })
+                            .then(function (response) {
+                                console.log(response);
+                                if (response['data'] === 'guardado')
+                                {
+                                    toastr.success('El cliente ha sido ingresado con exito');
+                                    _this.nombre ='';
+                                    _this.telefono = '';
+                                    _this.email = '';
+                                    _this.matricula = '';
+                                    _this.descuento = 0;
+                                    _this.idtarjeta = '';
+                                    _this.observacion = '';
+                                    _this.cargartablacliente();
+                                    $('#nuevocliente').modal('hide');
+                                }
+                            })
+                            .catch(function (error) {
+                                toastr.warning('Se ha prodcido un error');
+                                console.log(error);
+                            });
+                    }
                 }
+
             },
 
             computed:{

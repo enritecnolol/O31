@@ -73,126 +73,104 @@
 
 </head>
 <body class="animsition">
-<div class="page-wrapper" id="app">
+<div class="page-wrapper">
     <!-- HEADER MOBILE-->
-    {{--<header class="header-mobile d-block d-lg-none">--}}
-        {{--<div class="header-mobile__bar">--}}
-            {{--<div class="container-fluid">--}}
-                {{--<div class="header-mobile-inner">--}}
-                    {{--<a class="logo" href="index.html">--}}
-                        {{--<img src="images/icon/logo.png" alt="CoolAdmin" />--}}
-                    {{--</a>--}}
-                    {{--<button class="hamburger hamburger--slider" type="button">--}}
-                            {{--<span class="hamburger-box">--}}
-                                {{--<span class="hamburger-inner"></span>--}}
-                            {{--</span>--}}
-                    {{--</button>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-        {{--<nav class="navbar-mobile">--}}
-            {{--<div class="container-fluid">--}}
-                {{--<ul class="navbar-mobile__list list-unstyled">--}}
-                    {{--<li class="has-sub">--}}
-                        {{--<a class="js-arrow" href="#">--}}
-                            {{--<i class="fas fa-tachometer-alt"></i>Dashboard</a>--}}
-                        {{--<ul class="navbar-mobile-sub__list list-unstyled js-sub-list">--}}
-                            {{--<li>--}}
-                                {{--<a href="index.html">Dashboard 1</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<a href="index2.html">Dashboard 2</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<a href="index3.html">Dashboard 3</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<a href="index4.html">Dashboard 4</a>--}}
-                            {{--</li>--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
-                    {{--<li>--}}
-                        {{--<a href="chart.html">--}}
-                            {{--<i class="fas fa-chart-bar"></i>Charts</a>--}}
-                    {{--</li>--}}
-                    {{--<li>--}}
-                        {{--<a href="table.html">--}}
-                            {{--<i class="fas fa-table"></i>Tables</a>--}}
-                    {{--</li>--}}
-                    {{--<li>--}}
-                        {{--<a href="form.html">--}}
-                            {{--<i class="far fa-check-square"></i>Forms</a>--}}
-                    {{--</li>--}}
-                    {{--<li>--}}
-                        {{--<a href="#">--}}
-                            {{--<i class="fas fa-calendar-alt"></i>Calendar</a>--}}
-                    {{--</li>--}}
-                    {{--<li>--}}
-                        {{--<a href="map.html">--}}
-                            {{--<i class="fas fa-map-marker-alt"></i>Maps</a>--}}
-                    {{--</li>--}}
-                    {{--<li class="has-sub">--}}
-                        {{--<a class="js-arrow" href="#">--}}
-                            {{--<i class="fas fa-copy"></i>Pages</a>--}}
-                        {{--<ul class="navbar-mobile-sub__list list-unstyled js-sub-list">--}}
-                            {{--<li>--}}
-                                {{--<a href="login.html">Login</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<a href="register.html">Register</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<a href="forget-pass.html">Forget Password</a>--}}
-                            {{--</li>--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
-                    {{--<li class="has-sub">--}}
-                        {{--<a class="js-arrow" href="#">--}}
-                            {{--<i class="fas fa-desktop"></i>UI Elements</a>--}}
-                        {{--<ul class="navbar-mobile-sub__list list-unstyled js-sub-list">--}}
-                            {{--<li>--}}
-                                {{--<a href="button.html">Button</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<a href="badge.html">Badges</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<a href="tab.html">Tabs</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<a href="card.html">Cards</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<a href="alert.html">Alerts</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<a href="progress-bar.html">Progress Bars</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<a href="modal.html">Modals</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<a href="switch.html">Switchs</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<a href="grid.html">Grids</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<a href="fontawesome.html">Fontawesome Icon</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<a href="typo.html">Typography</a>--}}
-                            {{--</li>--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
-                {{--</ul>--}}
-            {{--</div>--}}
-        {{--</nav>--}}
-    {{--</header>--}}
+    <header class="header-mobile d-block d-lg-none">
+        <div class="header-mobile__bar">
+            <div class="container-fluid">
+                <div class="header-mobile-inner">
+                    <a href="/dashboard">
+                        <span style="color: #0062cc; font-size: x-large"> <span style="font-weight: 600">ADG</span>POS</span>
+                    </a>
+                    <button class="hamburger hamburger--slider" type="button">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar-mobile">
+            <div class="container-fluid">
+                <ul class="navbar-mobile__list list-unstyled">
+                    <li>
+                        <a href="/dashboard">
+                            <i class="fas fa-chart-line"></i><strong>DASHBOARD</strong></a>
+                    </li>
+                    <li>
+                        <a href="/productos">
+                            <i class="fas fa-utensils"></i><strong>PRODUCTOS</strong></a>
+                    </li>
+                    <li class="active has-sub">
+                        <a class="js-arrow" href="#">
+                            <i class="fas fa-box"></i><strong>CAJA</strong>
+                        </a>
+                        <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">
+                            <li>
+                                <a href="/caja">APERTURA DE CAJA</a>
+                            </li>
+                            <li>
+                                <a href="/cierre/caja">CIERRE DE CAJAS</a>
+                            </li>
+                            <li>
+                                <a href="/caja/ver/cuadre">CUADRES DE CAJAS</a>
+                            </li>
+                            <li>
+                                <a href="/caja/cuadre">CUADRE DE CAJA</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/categorias">
+                            <i class="fas fa-clipboard-check"></i><strong>CATEGORIAS</strong></a>
+                    </li>
+                    <li class="">
+                        <a href="/caja/historico/ventas">
+                            <i class="fas fa-book"></i><strong>VENTAS DEL DIA</strong></a>
+                    </li>
+                    <li class="">
+                        <a href="/reportes">
+                            <i class="fas fa-newspaper"></i><strong>REPORTE DE VENTAS</strong></a>
+                    </li>
+                    <li>
+                        <a href="/clientes">
+                            <i class="fas fa-users"></i><strong>CLIENTES</strong></a>
+                    </li>
+                    <li class="has-sub">
+                        <a class="js-arrow" href="#">
+                            <i class="zmdi zmdi-settings"></i><strong>CONFIGURACION</strong>
+                        </a>
+                        <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">
+                            <li>
+                                <a href="/configuracion">COMPANIA</a>
+                            </li>
+                            <li>
+                                <a href="/configuracion/itbis">ITBIS</a>
+                            </li>
+                            <li>
+                                <a href="/tipo/tarjeta">TARJETA PREFERENCIAL</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
     <!-- END HEADER MOBILE-->
     <!-- PAGE CONTAINER-->
+    @if(!request()->is('/'))
+        <aside class="menu-sidebar2 d-none d-lg-block {{request()->is('/') ? '' : 'fondo' }}" style="box-shadow: 1px 1px 6px #888888;">
+            {{--<aside class="menu-sidebar2 d-none d-lg-block" style="box-shadow: 1px 1px 6px #888888;">--}}
+            <div class="logo">
+                <a href="/dashboard">
+                    <span style="color: white; font-size: x-large"> <span style="font-weight: 600">ADG</span>POS</span>
+                </a>
+            </div>
+            @yield('aside')
+        </aside>
+    @endif
     <div class="page-container">
-        <!-- HEADER DESKTOP-->
+    <!-- HEADER DESKTOP-->
         <header class="header-desktop2">
             <div class="section__content section__content--p30">
                 <div class="container-fluid">
@@ -289,15 +267,19 @@
     <!-- HEADER DESKTOP-->
         <!-- MENU SIDEBAR-->
         <div id="Vue">
-            <aside class="menu-sidebar2 d-none d-lg-block {{request()->is('/') ? '' : 'fondo' }}" style="box-shadow: 1px 1px 6px #888888;">
-                {{--<aside class="menu-sidebar2 d-none d-lg-block" style="box-shadow: 1px 1px 6px #888888;">--}}
-                <div class="logo">
-                    <a href="/dashboard">
-                        <span style="color: white; font-size: x-large"> <span style="font-weight: 600">ADG</span>POS</span>
-                    </a>
-                </div>
-                @yield('aside')
-            </aside>
+
+            @if(request()->is('/'))
+                <aside class="menu-sidebar2 d-none d-lg-block {{request()->is('/') ? '' : 'fondo' }}" style="box-shadow: 1px 1px 6px #888888;">
+                    {{--<aside class="menu-sidebar2 d-none d-lg-block" style="box-shadow: 1px 1px 6px #888888;">--}}
+                    <div class="logo">
+                        <a href="/dashboard">
+                            <span style="color: white; font-size: x-large"> <span style="font-weight: 600">ADG</span>POS</span>
+                        </a>
+                    </div>
+                    @yield('aside')
+                </aside>
+            @endif
+
             <!-- END MENU SIDEBAR-->
 
             <!-- MAIN CONTENT-->

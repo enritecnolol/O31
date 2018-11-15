@@ -2,44 +2,47 @@
     <nav class="navbar-sidebar">
         <ul class="list-unstyled navbar__list">
             <li>
-                <a href="/dashboard" >
+                <a href="/dashboard">
                     <i class="fas fa-chart-line"></i><strong>DASHBOARD</strong></a>
             </li>
             <li>
-                <a href="/" >
+                <a href="/">
                     <i class="fas fa-shopping-cart"></i><strong>PUNTO DE VENTA</strong></a>
             </li>
             <li>
-                <a href="/productos" >
+                <a href="/productos">
                     <i class="fas fa-utensils"></i><strong>PRODUCTOS</strong></a>
             </li>
+            <li class="has-sub">
+                <a class="js-arrow" href="#">
+                    <i class="fas fa-box"></i><strong>CAJA</strong>
+                </a>
+                <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">
+                    <li>
+                        <a href="/caja">APERTURA DE CAJA</a>
+                    </li>
+                    <li>
+                        <a href="/cierre/caja">CIERRE DE CAJAS</a>
+                    </li>
+                    <li>
+                        <a href="/caja/ver/cuadre">CUADRES DE CAJAS</a>
+                    </li>
+                    <li>
+                        <a href="/caja/cuadre">CUADRE DE CAJA</a>
+                    </li>
+                </ul>
+            </li>
             <li>
-                <a href="/categorias" >
+                <a href="/categorias">
                     <i class="fas fa-clipboard-check"></i><strong>CATEGORIAS</strong></a>
             </li>
             <li class="">
-                <a href="/caja" >
-                    <i class="fas fa-folder-open"></i><strong>APERTURA DE CAJA</strong></a>
-            </li>
-            <li class="">
-                <a href="/caja/historico/ventas" >
+                <a href="/caja/historico/ventas">
                     <i class="fas fa-book"></i><strong>VENTAS DEL DIA</strong></a>
             </li>
             <li class="">
-                <a href="/reportes" >
+                <a href="/reportes">
                     <i class="fas fa-newspaper"></i><strong>REPORTE DE VENTAS</strong></a>
-            </li>
-            <li>
-                <a href="/cierre/caja" >
-                    <i class="fas fa-inbox"></i><strong>CIERRE DE CAJAS</strong></a>
-            </li>
-            <li>
-                <a href="/caja/cuadre" >
-                    <i class="fa fa-gavel"></i><strong>CUADRE DE CAJA</strong></a>
-            </li>
-            <li>
-                <a href="/caja/ver/cuadre">
-                    <i class="fas fa-clipboard-list"></i><strong>CUADRES DE CAJAS</strong></a>
             </li>
             <li>
                 <a href="/clientes">
@@ -47,8 +50,9 @@
             </li>
             <li class="has-sub">
                 <a class="js-arrow" href="#">
-                    <i class="zmdi zmdi-settings"></i><strong>CONFIGURACION</strong></a>
-                <ul class="list-unstyled navbar__sub-list js-sub-list">
+                    <i class="zmdi zmdi-settings"></i><strong>CONFIGURACION</strong>
+                </a>
+                <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">
                     <li>
                         <a href="/configuracion">COMPANIA</a>
                     </li>

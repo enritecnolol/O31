@@ -29,9 +29,9 @@
                                             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                                                 <div class="container">
                                                     <div class="row">
-                                                        <div class="col-md-12" style="background: #4272d7">
+                                                        <div class="col-md-12">
                                                             <div class="pull-left" style="margin-top: 5px; margin-bottom: 5px">
-                                                                <h3 style="color: white; font-weight: bolder">Lista de Clientes</h3>
+                                                                <h3 style="font-weight: bolder; color: #4272d7">Lista de Clientes</h3>
                                                             </div>
                                                             <div class="pull-right" v-show="formcliente == false" style="margin-top: 5px; margin-bottom: 5px">
                                                                 <button type="button" @click="formcliente = true" class="btn btn-primary btn-sm">
@@ -118,8 +118,8 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-12" style="margin-top: 15px" v-show="formcliente == false">
-                                                            <div class="container">
+                                                        <div class="col-md-12 " style="margin-top: 15px" v-show="formcliente == false">
+                                                            <div class="table-responsive">
                                                                 <table class="table table-bordered">
                                                                     <thead>
                                                                     <tr>
@@ -174,6 +174,7 @@
                                                                             <option :value="int.matricula">@{{ int.nombre }}</option>
                                                                         </template>
                                                                     </datalist>
+                                                                    <button type="button" class="btn btn-primary" @click="elejircliente">Primary</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -311,12 +312,12 @@
                                                             </div>
                                                             <table class="table table-bordered table-sm">
                                                                 <thead>
-                                                                    <tr>
-                                                                        <th scope="col">Fecha</th>
-                                                                        <th scope="col">Cliente</th>
-                                                                        <th scope="col">Puntos</th>
-                                                                        <th scope="col">Balance</th>
-                                                                    </tr>
+                                                                <tr>
+                                                                    <th scope="col">Fecha</th>
+                                                                    <th scope="col">Cliente</th>
+                                                                    <th scope="col">Puntos</th>
+                                                                    <th scope="col">Balance</th>
+                                                                </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                 <template v-if="todostickets !== 'vacio'">
