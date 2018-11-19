@@ -79,8 +79,8 @@
                                         <td>@{{ v.total_cierre }}</td>
                                         <td>@{{ v.valor_apertura }}</td>
                                         <td>@{{ v.total_venta }}</td>
-                                        <td><span v-if="v.cuadreconf == 'Si'" class="badge badge-info">@{{ v.cuadreconf }}</span></td>
-                                        <td><span v-else class="badge badge-danger">@{{ v.cuadreconf }}</span></td>
+                                        <td v-if="v.cuadreconf == 'Si'"><span class="badge badge-info">@{{ v.cuadreconf }}</span></td>
+                                        <td v-else><span class="badge badge-danger">@{{ v.cuadreconf }}</span></td>
                                         <td><button type="button" @click="desglose(v.id)" class="btn btn-light">Ver Desglose</button></td>
                                     </tr>
                                 </template>
@@ -103,7 +103,6 @@
                 </div>
             </template>
         </div>
-
     </div>
 
 
@@ -114,7 +113,7 @@
     <script !src="">
 
         new Vue({
-            el: '#app',
+            el: '#Vue',
             data() {
                 return{
                     cuadres:[],
