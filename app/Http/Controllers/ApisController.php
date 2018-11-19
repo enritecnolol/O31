@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Response;
 
 class ApisController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function actualizarp(Request $request){
 
         $data = Input::all();

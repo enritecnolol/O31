@@ -203,6 +203,9 @@
                             beginAtZero:true
                         }
                     }]
+                },
+                legend: {
+                    display: false,
                 }
             }
         });
@@ -262,6 +265,9 @@
                             beginAtZero:true
                         }
                     }]
+                },
+                legend: {
+                    display: false,
                 }
             }
         });
@@ -364,7 +370,10 @@
                     ticks: {
                         beginAtZero:false
                     }
-                }]
+                }],
+                legend: {
+                    display: false,
+                }
             }
         });
     </script>
@@ -425,6 +434,9 @@
                             beginAtZero:true
                         }
                     }]
+                },
+                legend: {
+                    display: false,
                 }
             }
         });

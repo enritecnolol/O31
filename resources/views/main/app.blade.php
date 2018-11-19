@@ -178,81 +178,83 @@
                                 @yield('titulo')
                         <div class="header-button">
                             <div class="account-wrap">
-                                <div class="account-item clearfix js-item-menu">
-                                    <div class="image">
+                                @if(request()->is('/'))
+                                    <div class="account-item clearfix js-item-menu">
+                                        <div class="image">
 
-                                    </div>
-                                    <div class="content">
-                                        <a class="js-acc-btn" href="#" style="color: white">Menu</a>
-                                    </div>
-                                    <div class="account-dropdown js-dropdown">
-                                        <div class="info clearfix">
-                                            <div class="image">
-                                                <a href="#">
-                                                    <img src="{{ URL::asset('imagenes/User.png')}}" alt="usuario" />
-                                                </a>
-                                            </div>
-                                            <div class="content">
-                                                <h5 class="name">
-                                                    <a href="#">{{ Auth::user()->name }}</a>
-                                                </h5>
-                                                <span class="email">{{ Auth::user()->email }}</span>
-                                            </div>
                                         </div>
-                                        <div class="account-dropdown__body">
-                                            <div class="account-dropdown__item">
-                                                <a href="/dashboard">
-                                                    <i class="fas fa-chart-line"></i>Dashboard
-                                                </a>
-                                            </div>
-                                            <div class="account-dropdown__item">
-                                                <a href="/productos">
-                                                    <i class="fas fa-utensils"></i>Productos
-                                                </a>
-                                            </div>
-                                            <div class="account-dropdown__item">
-                                                <a href="/">
-                                                    <i class="fas fa-shopping-cart"></i>Vender
-                                                </a>
-                                            </div>
-                                            <div class="account-dropdown__item">
-                                                <a href="/categorias">
-                                                    <i class="fas fa-clipboard-check"></i></i>Categorias
-                                                </a>
-                                            </div>
-                                            <div class="account-dropdown__item">
-                                                <a href="/caja">
-                                                    <i class="zmdi zmdi-money-box"></i>Caja
-                                                </a>
-                                            </div>
-                                            <div class="account-dropdown__item">
-                                                <a href="/reportes">
-                                                    <i class="fas fa-newspaper"></i>Reportes
-                                                </a>
-                                            </div>
-                                            <div class="account-dropdown__item">
-                                                <a href="/clientes">
-                                                    <i class="fas fa-users"></i>Clientes
-                                                </a>
-                                            </div>
-                                            <div class="account-dropdown__item">
-                                                <a id="#proximamente" href="#">
-                                                    <i class="zmdi zmdi-settings"></i>Configuracion <span class="badge badge-info">Proximamente</span>
-                                                </a>
-                                            </div>
+                                        <div class="content">
+                                            <a class="js-acc-btn" href="#" style="color: white">Menu</a>
                                         </div>
-                                        <div class="account-dropdown__footer">
-                                            <a href="{{ route('logout') }}"onclick="event.preventDefault();
+                                        <div class="account-dropdown js-dropdown">
+                                            <div class="info clearfix">
+                                                <div class="image">
+                                                    <a href="#">
+                                                        <img src="{{ URL::asset('imagenes/User.png')}}" alt="usuario" />
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <h5 class="name">
+                                                        <a href="#">{{ Auth::user()->name }}</a>
+                                                    </h5>
+                                                    <span class="email">{{ Auth::user()->email }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="account-dropdown__body">
+                                                <div class="account-dropdown__item">
+                                                    <a href="/dashboard">
+                                                        <i class="fas fa-chart-line"></i>Dashboard
+                                                    </a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="/productos">
+                                                        <i class="fas fa-utensils"></i>Productos
+                                                    </a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="/">
+                                                        <i class="fas fa-shopping-cart"></i>Vender
+                                                    </a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="/categorias">
+                                                        <i class="fas fa-clipboard-check"></i></i>Categorias
+                                                    </a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="/caja">
+                                                        <i class="zmdi zmdi-money-box"></i>Caja
+                                                    </a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="/reportes">
+                                                        <i class="fas fa-newspaper"></i>Reportes
+                                                    </a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="/clientes">
+                                                        <i class="fas fa-users"></i>Clientes
+                                                    </a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a id="#proximamente" href="#">
+                                                        <i class="zmdi zmdi-settings"></i>Configuracion <span class="badge badge-info">Proximamente</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="account-dropdown__footer">
+                                                <a href="{{ route('logout') }}"onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                                <i class="zmdi zmdi-power"></i>Logout
-                                            </a>
-                                            {{--{{ Auth::user()->name }}--}}
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                {{ csrf_field() }}
-                                            </form>
+                                                    <i class="zmdi zmdi-power"></i>Logout
+                                                </a>
+                                                {{--{{ Auth::user()->name }}--}}
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                    {{ csrf_field() }}
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>

@@ -188,7 +188,8 @@
                         <tbody>
                         <tr v-for="item in list">
                             <td style="line-height: 1">@{{item.name}}</td>
-                            <td style="line-height: 1;">@{{item.itbis}}%</td>
+                            <td style="line-height: 1;" v-if="item.itbis != 0">@{{item.itbis}}%</td>
+                            <td style="line-height: 1;" v-else></td>
                             <td class="text-center" style="cursor: pointer" @click="cuadro = true" v-if="cuadro == false">@{{item.count}}</td>
                             <td class="text-center" style="cursor: pointer" v-else>
                                 <input type="number" class="form-control" min="0" style="width: 70px" v-model="item.count" @keypress.enter="normal" @blur="normal" @input.self="cambiarcount(item.id, item.count)">
