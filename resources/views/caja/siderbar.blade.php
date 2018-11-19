@@ -1,5 +1,5 @@
 <div class="menu-sidebar__content js-scrollbar1">
-    <nav class="navbar-sidebar">
+    <nav class="navbar-sidebar2">
         <ul class="list-unstyled navbar__list">
             <li>
                 <a href="/dashboard">
@@ -16,6 +16,9 @@
             <li class="has-sub">
                 <a class="js-arrow" href="#">
                     <i class="fas fa-box"></i><strong>CAJA</strong>
+                    <span class="arrow">
+                        <i class="fas fa-angle-down"></i>
+                    </span>
                 </a>
                 <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">
                     <li>
@@ -36,11 +39,11 @@
                 <a href="/categorias">
                     <i class="fas fa-clipboard-check"></i><strong>CATEGORIAS</strong></a>
             </li>
-            <li class="">
+            <li>
                 <a href="/caja/historico/ventas">
                     <i class="fas fa-book"></i><strong>VENTAS DEL DIA</strong></a>
             </li>
-            <li class="">
+            <li>
                 <a href="/reportes">
                     <i class="fas fa-newspaper"></i><strong>REPORTE DE VENTAS</strong></a>
             </li>
@@ -51,8 +54,11 @@
             <li class="has-sub">
                 <a class="js-arrow" href="#">
                     <i class="zmdi zmdi-settings"></i><strong>CONFIGURACION</strong>
+                    <span class="arrow">
+                        <i class="fas fa-angle-down"></i>
+                    </span>
                 </a>
-                <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">
+                <ul class="list-unstyled navbar__sub-list js-sub-list">
                     <li>
                         <a href="/configuracion">COMPANIA</a>
                     </li>

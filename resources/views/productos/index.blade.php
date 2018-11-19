@@ -8,8 +8,8 @@
     @include('caja.siderbar')
 @endsection
 @section('content')
-    <div class="container">
-        <nav class="navbar navbar-light" style="background-color: #0069d9;">
+    <div class="container" style="margin-top: -20px">
+        <nav class="navbar navbar-light" style="background-color: #0069d9;border-radius: 5px 10px 15px 20px;box-shadow: 1px 2px 18px -1px rgba(0,0,0,0.75);">
             <a class="navbar-brand" href="#" style="color: whitesmoke"><i class="fas fa-list-ul"></i> Lista de Productos</a>
             <input type="search" class="form-control col-md-3 " v-model="buscador"  v-on:input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
 
@@ -17,96 +17,98 @@
         </nav>
     </div>
     @include('productos.newproduct')
-    <div id="edit">
 
-        <div class="section__content section__content--p30" v-if="buscador == ''" >
-            <div class="row m-t-30">
-                <div class="col-md-12">
-                    <!-- DATA TABLE-->
-                    <div class="table-responsive m-b-40">
-                        <table class="table table-borderless table-data3 table-hover">
-                            <thead>
+
+    <div class="container" v-if="buscador == ''" >
+        <div class="row m-t-30">
+            <div class="col-md-12">
+                <!-- DATA TABLE-->
+                <div class="table-responsive" style="border-radius: 5px 10px 15px 20px;box-shadow: 1px 2px 18px -1px rgba(0,0,0,0.75);">
+                    <table class="table table-borderless table-data3 table-hover" style="">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nombre</th>
+                            <th>Codigo</th>
+                            <th>Existencia</th>
+                            <th>Precio</th>
+                            <th>Impuesto</th>
+                            <th>Editar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($productos as $producto)
                             <tr>
-                                <th></th>
-                                <th>Nombre</th>
-                                <th>Codigo</th>
-                                <th>Existencia</th>
-                                <th>Precio</th>
-                                <th>Impuesto</th>
-                                <th>Editar</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($productos as $producto)
-                                <tr>
-                                    <td><img class="rounded-circle mx-auto d-block" src="imagenes/{{$producto->img }}" alt="" style="width: 60px"></td>
-                                    <td>{{ $producto->name }}</td>
-                                    <td>{{$producto->barcode}}</td>
-                                    <td>{{$producto->existence}}</td>
-                                    <td><strong>{{$producto->price}}.00</strong></td>
-                                    <td>{{$producto->porciento}}%</td>
-                                    <td>
-                                        <button type="button" v-on:click="producto('<?php echo $producto->id; ?>')" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-outline-danger btn-sm" @click="confimar('<?php echo $producto->id; ?>')" title="Eliminar Producto">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                        <div class="pull-right">
-
-                            {{ $productos->links() }}
-                        </div>
-                    </div>
-                    <!-- END DATA TABLE-->
-                </div>
-            </div>
-        </div>
-
-        <div class="section__content section__content--p30" v-else>
-            <div class="row m-t-30">
-                <div class="col-md-12">
-                    <!-- DATA TABLE-->
-                    <div class="table-responsive m-b-40">
-                        <table class="table table-borderless table-data3 table-hover">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Nombre</th>
-                                <th>Codigo</th>
-                                <th>Existencia</th>
-                                <th>Precio</th>
-                                <th>Impuesto</th>
-                                <th>Editar</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="p in productos">
-                                <td><img class="rounded-circle mx-auto d-block" :src="'imagenes/'+p.img" alt="" style="width: 60px"></td>
-                                <td>@{{ p.name }}</td>
-                                <td>@{{p.barcode}}</td>
-                                <td>@{{p.existence}}</td>
-                                <td><strong>@{{p.price}}.00</strong></td>
-                                <td>@{{p.impost}}</td>
+                                <td><img class="rounded-circle mx-auto d-block" src="imagenes/{{$producto->img }}" alt="" style="width: 60px"></td>
+                                <td>{{ $producto->name }}</td>
+                                <td>{{$producto->barcode}}</td>
+                                <td>{{$producto->existence}}</td>
+                                <td><strong>{{$producto->price}}.00</strong></td>
+                                <td>{{$producto->porciento}}%</td>
                                 <td>
-                                    <button type="button" v-on:click="producto(p.id)" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
+                                    <button type="button" v-on:click="producto('<?php echo $producto->id; ?>')" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button type="button" class="btn btn-outline-danger btn-sm" @click="confimar(p.id)" title="Eliminar Producto">
+                                    <button type="button" class="btn btn-outline-danger btn-sm" @click="confimar('<?php echo $producto->id; ?>')" title="Eliminar Producto">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </td>
                             </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- END DATA TABLE-->
-
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
+                <br>
+                <div class="pull-right">
+                    {{ $productos->links() }}
+                </div>
+                <br>
+                <br>
+                <br>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container" v-else>
+        <div class="row m-t-30">
+            <div class="col-md-12">
+                <!-- DATA TABLE-->
+                <div class="table-responsive m-b-40">
+                    <table class="table table-borderless table-data3 table-hover">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nombre</th>
+                            <th>Codigo</th>
+                            <th>Existencia</th>
+                            <th>Precio</th>
+                            <th>Impuesto</th>
+                            <th>Editar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="p in productos">
+                            <td><img class="rounded-circle mx-auto d-block" :src="'imagenes/'+p.img" alt="" style="width: 60px"></td>
+                            <td>@{{ p.name }}</td>
+                            <td>@{{p.barcode}}</td>
+                            <td>@{{p.existence}}</td>
+                            <td><strong>@{{p.price}}.00</strong></td>
+                            <td>@{{p.impost}}</td>
+                            <td>
+                                <button type="button" v-on:click="producto(p.id)" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-danger btn-sm" @click="confimar(p.id)" title="Eliminar Producto">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- END DATA TABLE-->
+
             </div>
         </div>
     </div>

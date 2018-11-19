@@ -2262,11 +2262,11 @@ section {
 }
 
 .navbar-sidebar2 .navbar__sub-list li {
-    background: #f5f5f5;
+    background: #fcffec;
 }
 
 .navbar-sidebar2 .navbar__sub-list li a {
-    border-color: #ebebeb;
+    border-color: #fcffec;
 }
 
 .inbox-num {

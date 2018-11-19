@@ -27,7 +27,7 @@ class ProductsController extends Controller
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
             ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
             ->where('products.user_id', $id)
-            ->select(DB::raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->paginate(7);
+            ->select(DB::raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->paginate(8);
 
         return view('productos.index', compact('productos'));
     }

@@ -108,7 +108,28 @@
 @section('tittle',' Cafeteria| Facturacion')
 
 @section('titulo')
-    <MARQUEE width="100%" SCROLLDELAY=200><h5 style="color: white">acceso rapido: tecla inicio - Enfoca el codigo, tecla F8 - buscar cliente, tecla F7 - Crear Cliente, tecla FIN - Cobrar, tecla pagina abajo - Cancelar Compra</h5></MARQUEE>
+    {{--<MARQUEE width="100%" SCROLLDELAY=200><h5 style="color: white">acceso rapido: tecla inicio - Enfoca el codigo, tecla F8 - buscar cliente, tecla F7 - Crear Cliente, tecla FIN - Cobrar, tecla pagina abajo - Cancelar Compra</h5></MARQUEE>--}}
+    <div class="" style="width: 100%">
+        <h4 style="color: white;float: left"><i class="fas fa-arrow-right"></i> PUNTO DE VENTA </h4>
+        <h4 style="color: white; float: right;cursor: help; margin-right: 15px" title="
+            acceso rapido:
+            tecla inicio : Enfoca el codigo,
+            tecla F8 : buscar cliente,
+            tecla F7 : Crear Cliente,
+            tecla FIN : Cobrar,
+            tecla pagina abajo : Cancelar Compra,
+            tecla F2 : Buscar Producto">
+            AYUDA
+            <i class="fas fa-question" title="
+            acceso rapido:
+            tecla inicio : Enfoca el codigo,
+            tecla F8 : buscar cliente,
+            tecla F7 : Crear Cliente,
+            tecla FIN : Cobrar,
+            tecla pagina abajo : Cancelar Compra,
+            tecla F2 : Buscar Producto"></i>
+        </h4>
+    </div>
 @endsection
 
 @section('aside')
@@ -152,7 +173,7 @@
         </div>
         <form action="" method="post" novalidate="novalidate">
             <div class="form-group has-success">
-                <div class="table-responsive" style="margin-bottom: 5px; max-height: 420px; min-height: 300px;overflow-y: scroll">
+                <div class="table-responsive" id="tabeldiv" style="margin-bottom: 5px; max-height: 420px; min-height: 300px;overflow-y: scroll">
                     <table class="table table-sm factura-table" >
                         <thead>
                         <tr>
@@ -165,20 +186,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in list">
-                                <td style="line-height: 1">@{{item.name}}</td>
-                                <td style="line-height: 1;">@{{item.itbis}}%</td>
-                                <td class="text-center" style="cursor: pointer" @click="cuadro = true" v-if="cuadro == false">@{{item.count}}</td>
-                                <td class="text-center" style="cursor: pointer" v-else>
-                                    <input type="number" class="form-control" min="0" style="width: 70px" v-model="item.count" @keypress.enter="normal" @blur="normal" @input.self="cambiarcount(item.id, item.count)">
-                                </td>
-                                <td class="text-center" style="cursor: pointer" v-if="desc == false" @click="desc = true">@{{ item.desc }} %</td>
-                                <td class="text-center" v-else>
-                                    <input type="number" class="form-control" min="0" v-model="item.desc" @keypress.enter="normall" @blur="normall" @input.self="descuentoagregar(item.id, item.desc)" style="width: 70px">
-                                </td>
-                                <td class="text-center">@{{item.price}}</td>
-                                <td><button type="button" class="fas fa-minus" style="color: orangered" @click="eliminarp(item.id)"></button></td>
-                            </tr>
+                        <tr v-for="item in list">
+                            <td style="line-height: 1">@{{item.name}}</td>
+                            <td style="line-height: 1;">@{{item.itbis}}%</td>
+                            <td class="text-center" style="cursor: pointer" @click="cuadro = true" v-if="cuadro == false">@{{item.count}}</td>
+                            <td class="text-center" style="cursor: pointer" v-else>
+                                <input type="number" class="form-control" min="0" style="width: 70px" v-model="item.count" @keypress.enter="normal" @blur="normal" @input.self="cambiarcount(item.id, item.count)">
+                            </td>
+                            <td class="text-center" style="cursor: pointer" v-if="desc == false" @click="desc = true">@{{ item.desc }} %</td>
+                            <td class="text-center" v-else>
+                                <input type="number" class="form-control" min="0" v-model="item.desc" @keypress.enter="normall" @blur="normall" @input.self="descuentoagregar(item.id, item.desc)" style="width: 70px">
+                            </td>
+                            <td class="text-center">@{{item.price}}</td>
+                            <td><button type="button" class="fas fa-minus" style="color: orangered" @click="eliminarp(item.id)"></button></td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -624,6 +645,8 @@
 
             }if(e.which === 118){
                 $('#nuevocliente').modal('show');
+            }if(e.which === 113){
+                $('#busca').focus();
             }
         });
 
@@ -641,6 +664,8 @@
             });
         });
     </script>
+
+
 
     <script>
         var productos = JSON.parse('{!! $productos !!}')
@@ -829,7 +854,7 @@
 
                 },
                 pfactura: function (id) {
-
+                    $("#tabeldiv").animate({ scrollTop: $('#tabeldiv').prop("scrollHeight")}, 420);
                     var producto = this.productos[id];
                     this.carrito = {
                         id : producto.id,

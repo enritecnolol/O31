@@ -23,6 +23,9 @@ class PuntosmovimientosController extends Controller
     {
         $iduser = Auth::id();
         $tickets = Puntosmovimiento::all()->where('user_id', $iduser)->where('fecha', date('Y-m-d'));
+        if ($tickets == '[]'){
+            $tickets = 'vacio';
+        }
         return $tickets;
     }
     public function movimientocliente(Request $request)

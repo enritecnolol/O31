@@ -12,7 +12,7 @@
     <div class="container" style="margin-top: -40px">
         <div class="row">
             <div class="col-lg-12">
-                <div class="card">
+                <div class="card" style="box-shadow: 1px 2px 18px -1px rgba(0,0,0,0.75);border-radius: 5px 10px 15px 20px;">
                     <div class="card-body">
                         <div class="container">
                             <div class="row">
@@ -118,7 +118,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-12 " style="margin-top: 15px" v-show="formcliente == false">
+                                                        <div class="col-md-12 " style="margin-top: 15px;margin-bottom: 10px" v-show="formcliente == false">
                                                             <div class="table-responsive">
                                                                 <table class="table table-bordered">
                                                                     <thead>
@@ -174,7 +174,7 @@
                                                                             <option :value="int.matricula">@{{ int.nombre }}</option>
                                                                         </template>
                                                                     </datalist>
-                                                                    <button type="button" class="btn btn-primary" @click="elejircliente">Primary</button>
+                                                                    <button type="button" class="btn btn-primary" @click="elejircliente"> <i class="fas fa-search"></i> Buscar</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -441,6 +441,7 @@
                 _this.cargartablatp();
                 _this.cargartablacliente();
                 _this.puntosmoviento();
+
             },
             watch:{
             },
@@ -637,7 +638,6 @@
                     axios.post('/ticket/todos')
                         .then(function (response) {
                             _this.todostickets = response['data'];
-                            console.log(response);
                         })
                         .catch(function (error) {
                             console.log(error);
