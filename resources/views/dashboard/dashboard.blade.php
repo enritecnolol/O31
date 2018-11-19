@@ -27,6 +27,7 @@
                                 <div class="icon">
                                     <i class="zmdi zmdi-hc-5x zmdi-money"></i>
                                 </div>
+                                <br>
                                 <div class="text">
                                     <h3>${{$totaldias}}.00</h3>
                                     <span>Total del dia</span>
@@ -42,6 +43,7 @@
                                 <div class="icon">
                                     <i class="zmdi zmdi-shopping-cart"></i>
                                 </div>
+                                <br>
                                 <div class="text">
                                     <h3>${{$ventassemana}}.00</h3>
                                     <span>total semana</span>
@@ -58,6 +60,7 @@
                                 <div class="icon">
                                     <i class="zmdi zmdi-calendar-note"></i>
                                 </div>
+                                <br>
                                 <div class="text">
                                     <h3>${{$ventasmes}}.00</h3>
                                     <span>Total del mes</span>
@@ -74,6 +77,7 @@
                                 <div class="icon">
                                     <i class="zmdi zmdi-money"></i>
                                 </div>
+                                <br>
                                 <div class="text">
                                     <h3>${{$totalventas}}.00</h3>
                                     <span>Total Ventas - año</span>

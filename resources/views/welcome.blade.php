@@ -109,7 +109,7 @@
 
 @section('titulo')
     {{--<MARQUEE width="100%" SCROLLDELAY=200><h5 style="color: white">acceso rapido: tecla inicio - Enfoca el codigo, tecla F8 - buscar cliente, tecla F7 - Crear Cliente, tecla FIN - Cobrar, tecla pagina abajo - Cancelar Compra</h5></MARQUEE>--}}
-    <div class="" style="width: 100%">
+    <div class="" style="width: 90%">
         <h4 style="color: white;float: left"><i class="fas fa-arrow-right"></i> PUNTO DE VENTA </h4>
         <h4 style="color: white; float: right;cursor: help; margin-right: 15px" title="
             acceso rapido:
@@ -120,14 +120,7 @@
             tecla pagina abajo : Cancelar Compra,
             tecla F2 : Buscar Producto">
             AYUDA
-            <i class="fas fa-question" title="
-            acceso rapido:
-            tecla inicio : Enfoca el codigo,
-            tecla F8 : buscar cliente,
-            tecla F7 : Crear Cliente,
-            tecla FIN : Cobrar,
-            tecla pagina abajo : Cancelar Compra,
-            tecla F2 : Buscar Producto"></i>
+            <i class="fas fa-question"></i>
         </h4>
     </div>
 @endsection
@@ -169,7 +162,6 @@
                     <input type="text" placeholder="Codigo" id="codigo1" title="presionar INICIO para hacer focus aqui" v-model="codigop" class="form-control form-control-sm" autofocus @keyup.enter="codigopfactura">
                 </div>
             </div>
-
         </div>
         <form action="" method="post" novalidate="novalidate">
             <div class="form-group has-success">
@@ -282,6 +274,7 @@
 
 
 @endsection
+
 @section('content')
     <div id="p" style="margin-top: -80px">
         <br>
@@ -587,6 +580,7 @@
     @include('modal.modelcliente')
     @include('modal.modalcrearcliente')
 @endsection
+
 @section('scriptp')
 
 

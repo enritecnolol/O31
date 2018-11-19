@@ -4,10 +4,10 @@
 <head>
     <!-- Required meta tags-->
     <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="au theme template">
-<meta name="author" content="Hau Nguyen">
-<meta name="keywords" content="au theme template">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="au theme template">
+    <meta name="author" content="Hau Nguyen">
+    <meta name="keywords" content="au theme template">
 <!-- Title Page-->
     <title>@yield('tittle')</title>
     <link rel="icon" href="{{ URL::asset('logo2.png') }}" type="image/png">
@@ -184,7 +184,7 @@
 
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#" style="color: white">Menu</a>
+                                            <a class="js-acc-btn" href="#" style="color: white"><i class="fas fa-2x fa-bars"></i></a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
