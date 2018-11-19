@@ -35,7 +35,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('eliminar/producto', 'ApisController@eliminarproducto' );// Eliminar productos
     Route::post('/itbis/producto', 'ApisController@itbisporproducto' );// Eliminar productos
     Route::post('/reportes/resultado', 'ApisController@ultimoid' );//
-
     Route::get('ver/categoria/get', 'ApisController@cargarcategoria' );// api para actualizar los productos
 
     ///////////////////////////////////////-Categoria-////////////////////////////////////////////////////
