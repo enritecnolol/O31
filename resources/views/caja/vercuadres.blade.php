@@ -22,24 +22,24 @@
             </nav>
 
 
-            <template v-if="cuadres == ''">
-                <div class="card">
-                    <div class="card-header">
-                        <Strong>Historial de Ventas</Strong>
-                    </div>
-                    <div class="card-body">
-                        <div class="text-center" style="margin-top: 10%;margin-bottom: 10%">
-                            <h2>Presiona el boton para ver el Historial de Cuadres</h2>
-                        </div>
-                        <div class="text-center">
+            {{--<template v-if="cuadres == ''">--}}
+                {{--<div class="card">--}}
+                    {{--<div class="card-header">--}}
+                        {{--<Strong>Historial de Ventas</Strong>--}}
+                    {{--</div>--}}
+                    {{--<div class="card-body">--}}
+                        {{--<div class="text-center" style="margin-top: 10%;margin-bottom: 10%">--}}
+                            {{--<h2>Presiona el boton para ver el Historial de Cuadres</h2>--}}
+                        {{--</div>--}}
+                        {{--<div class="text-center">--}}
 
-                            <button type="button" @click="cargarcuadres()" class="btn btn-lg btn-outline-success">Ver</button>
-                        </div>
-                    </div>
-                </div>
-            </template>
+                            {{--<button type="button" @click="cargarcuadres()" class="btn btn-lg btn-outline-success">Ver</button>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</template>--}}
 
-            <template v-else>
+            <template>
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive m-b-40">
@@ -126,6 +126,14 @@
                     cuadresbuscadas:[],
                 }
             },
+            mounted(){
+                _this = this;
+                _this.cargarcuadres();
+            },
+            created: function () {
+                _this = this;
+                _this.cargarcuadres();
+            },
             methods:{
                 cargarcuadres:function () {
                     this.loading = true;
@@ -134,7 +142,6 @@
 
                         .then(function (response) {
 
-                            // console.log(response)
                             _this.loading = false;
                             _this.cuadres = response.data;
                         })
