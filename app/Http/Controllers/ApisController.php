@@ -161,8 +161,8 @@ class ApisController extends Controller
     public function cuadres(){
 
         $id = Auth::id();
-        $caja = Caja::all()->where('user_id', '==', $id);
-
+//        $caja = Caja::all()->where('user_id', '==', $id)->orderBy('id', 'desc');
+        $caja = DB::table('cajas')->orderBy('id', 'desc')->get();
         return $caja;
 
     }
