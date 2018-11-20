@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Milon\Barcode\DNS1D;
 use Milon\Barcode\DNS2D;
 use LaravelQRCode\Facades\QRCode;
+
 class ClientesController extends Controller
 {
     public function index()
@@ -35,7 +36,18 @@ class ClientesController extends Controller
     }
     public function datostabla()
     {
+//        $clientes = Client::all()->where('user_id',Auth::id())->paginate(2);
+        $clientes = Client::paginate(5);
+        if ($clientes == '[]')
+        {
+            $clientes = 'vacio';
+        }
+        return $clientes;
+    }
+    public function datostabla2()
+    {
         $clientes = Client::all()->where('user_id',Auth::id());
+//        $clientes = Client::paginate(5);
         if ($clientes == '[]')
         {
             $clientes = 'vacio';

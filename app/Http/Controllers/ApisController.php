@@ -22,6 +22,7 @@ class ApisController extends Controller
         $this->middleware('auth');
     }
 
+
     public function actualizarp(Request $request){
 
         $data = Input::all();

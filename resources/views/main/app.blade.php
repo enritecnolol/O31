@@ -180,9 +180,7 @@
                             <div class="account-wrap">
                                 @if(request()->is('/'))
                                     <div class="account-item clearfix js-item-menu">
-                                        <div class="image">
 
-                                        </div>
                                         <div class="content">
                                             <a class="js-acc-btn" href="#" style="color: white"><i class="fas fa-2x fa-bars"></i></a>
                                         </div>

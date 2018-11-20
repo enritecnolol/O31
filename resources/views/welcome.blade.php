@@ -1207,7 +1207,7 @@
                 },
                 cargartablacliente: function () {
                     _this = this
-                    axios.post('/clientes/datos/tabla')
+                    axios.post('/clientes/datos/tabla2')
                         .then(function (response) {
                             if (response['data'] == 'vacio'){
                                 _this.datoscliente = ''

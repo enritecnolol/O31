@@ -65,7 +65,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <button type="button" id="imprimirboton" class="btn btn-success"><i class="fas fa-print"></i></button>
+                                    <button type="button" id="imprimirboton" class="btn btn-success"><i class="fas fa-print"></i> Imprimir</button>
                                 </div>
                                 <div class="col-lg-12">
                                     <br>

@@ -114,6 +114,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/clientes','ClientesController@index');
     Route::post('/clientes/store','ClientesController@store');
     Route::post('/clientes/datos/tabla','ClientesController@datostabla');
+    Route::post('/clientes/datos/tabla2','ClientesController@datostabla2');
     Route::post('/clientes/datos','ClientesController@clientepuntos');
     Route::post('/clientes/edit','ClientesController@edit');
     Route::post('/clientes/buscar/cliente','ClientesController@buscarcliente');

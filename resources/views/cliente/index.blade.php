@@ -133,7 +133,7 @@
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                    <tr v-for="item in datostable">
+                                                                    <tr v-for="item in datostable.data">
                                                                         <td>@{{ item.nombre }}</td>
                                                                         <td>@{{ item.telefono }}</td>
                                                                         <td>@{{ item.email }}</td>
@@ -149,6 +149,30 @@
                                                                     </tr>
                                                                     </tbody>
                                                                 </table>
+                                                                <br>
+                                                                <nav v-if="pagination.last_page>1" aria-label="Page navigation example">
+                                                                    <ul class="pagination justify-content-center">
+                                                                        <li v-if="pagination.current_page==1" class="page-item disabled">
+                                                                            <a class="page-link" href="#" tabindex="-1">Anterior</a>
+                                                                        </li>
+                                                                        <li v-else class="page-item">
+                                                                            <a class="page-link" href="#" tabindex="-1" @click="cargartablacliente(pagination.prev_page_url)">Anterior</a>
+                                                                        </li>
+
+                                                                        <li v-for="page in pagination.last_page" v-if="pagination.current_page==page" class="page-item active">
+                                                                            <a class="page-link" href="#">@{{ page }}</a>
+                                                                        </li>
+                                                                        <li v-else class="page-item">
+                                                                            <a class="page-link" href="#" @click="cargartablacliente(pagination.path+'?page='+page)">@{{ page }}</a>
+                                                                        </li>
+                                                                        <li v-if="pagination.current_page==pagination.last_page" class="page-item disabled">
+                                                                            <a class="page-link" href="#">Siguiente</a>
+                                                                        </li>
+                                                                        <li v-else class="page-item">
+                                                                            <a class="page-link" href="#" @click="cargartablacliente(pagination.next_page_url)">Siguiente</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </nav>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -170,7 +194,7 @@
                                                                     </div>
                                                                     <input type="text" id="matriculaa" v-model="idcliente" list="list" @keypress.capture="elejircliente" placeholder="Codigo" class="form-control" autofocus>
                                                                     <datalist id="list">
-                                                                        <template v-for="int in datostable">
+                                                                        <template v-for="int in datostable.data">
                                                                             <option :value="int.matricula">@{{ int.nombre }}</option>
                                                                         </template>
                                                                     </datalist>
@@ -274,7 +298,7 @@
                                                                 <div class="col">
                                                                     <select class="select" id="cliente" name="cliente">
                                                                         <option value="">Selecciona</option>
-                                                                        <option v-for="item in datostable" :value="item.id">@{{ item.nombre }} - @{{ item.matricula }}</option>
+                                                                        <option v-for="item in datostable.data" :value="item.id">@{{ item.nombre }} - @{{ item.matricula }}</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="col">
@@ -434,6 +458,7 @@
                 fecha: dia,
                 idticket:0,
                 todostickets:'',
+                pagination:{}
 
             },
             mounted(){
@@ -502,20 +527,36 @@
                             console.log(error);
                         });
                 },
-                cargartablacliente: function () {
+                cargartablacliente: function (url) {
                     _this = this
-                    axios.post('/clientes/datos/tabla')
+                    url = url || '/clientes/datos/tabla';
+                    axios.post(url)
                         .then(function (response) {
-                            if (response['data'] === 'vacio'){
+                            if (response['data'] == 'vacio'){
                                 _this.datostable = ''
                             }else {
                                 _this.datostable = response['data'];
+                                _this.setpaginator(response['data'])
                             }
 
                         })
                         .catch(function (error) {
                             console.log(error);
                         });
+                },
+                setpaginator:function (data){
+                    _this = this
+
+                    let pagination = {
+                        current_page: data.current_page,
+                        path: data.path,
+                        last_page: data.last_page,
+                        first_page_url: data.first_page_url,
+                        next_page_url: data.next_page_url,
+                        prev_page_url: data.prev_page_url,
+                        last_page_url: data.last_page_url
+                    }
+                    _this.pagination = pagination;
                 },
                 tarjetaid:function (id) {
                     _this = this
@@ -530,19 +571,18 @@
                 },
                 formeditar:function (id) {
                     _this = this;
-
-                    for (var key in _this.datostable)
+                    for (var key in _this.datostable.data)
                     {
-                        if (_this.datostable[key].id === id)
+                        if (_this.datostable.data[key].id == id)
                         {
-                            _this.cliente = _this.datostable[key].id;
-                            _this.nombre = _this.datostable[key].nombre;
-                            _this.telefono =_this.datostable[key].telefono;
-                            _this.email =_this.datostable[key].email;
-                            _this.matricula =_this.datostable[key].matricula;
-                            _this.descuento=_this.datostable[key].descuento;
-                            _this.idtarjeta=_this.datostable[key].tarjeta_id;
-                            _this.observacion = _this.datostable[key].observacion;
+                            _this.cliente = _this.datostable.data[key].id;
+                            _this.nombre = _this.datostable.data[key].nombre;
+                            _this.telefono =_this.datostable.data[key].telefono;
+                            _this.email =_this.datostable.data[key].email;
+                            _this.matricula =_this.datostable.data[key].matricula;
+                            _this.descuento=_this.datostable.data[key].descuento;
+                            _this.idtarjeta=_this.datostable.data[key].tarjeta_id;
+                            _this.observacion = _this.datostable.data[key].observacion;
                             _this.formcliente = true;
                             _this.edit = true;
                         }
@@ -583,17 +623,17 @@
                 elejircliente:function () {
                     _this = this
 
-                    for (var key in _this.datostable){
+                    for (var key in _this.datostable.data){
 
-                        if (_this.datostable[key].matricula === _this.idcliente){
-                            _this.idcliente2 = _this.datostable[key].id;
-                            _this.nombre2 = _this.datostable[key].nombre;
-                            _this.telefono2 = _this.datostable[key].telefono;
-                            _this.email2 = _this.datostable[key].email;
-                            _this.matricula2 = _this.datostable[key].matricula;
-                            _this.tarjeta2 = _this.datostable[key].tarjeta_id;
-                            _this.puntos2 = _this.datostable[key].puntos;
-                            _this.observacion2 = _this.datostable[key].observacion;
+                        if (_this.datostable.data[key].matricula === _this.idcliente){
+                            _this.idcliente2 = _this.datostable.data[key].id;
+                            _this.nombre2 = _this.datostable.data[key].nombre;
+                            _this.telefono2 = _this.datostable.data[key].telefono;
+                            _this.email2 = _this.datostable.data[key].email;
+                            _this.matricula2 = _this.datostable.data[key].matricula;
+                            _this.tarjeta2 = _this.datostable.data[key].tarjeta_id;
+                            _this.puntos2 = _this.datostable.data[key].puntos;
+                            _this.observacion2 = _this.datostable.data[key].observacion;
                         }
                     }
                 },
@@ -646,9 +686,9 @@
                 nombrecliente:function (id) {
                     _this = this
                     var nombre = '';
-                    for(var key in _this.datostable){
-                        if (_this.datostable[key].id === id){
-                            nombre = _this.datostable[key].nombre
+                    for(var key in _this.datostable.data){
+                        if (_this.datostable.data[key].id === id){
+                            nombre = _this.datostable.data[key].nombre
                         }
                     }
                     return nombre
@@ -669,7 +709,8 @@
                         .catch(function (error) {
                             console.log(error);
                         });
-                }
+                },
+
             },
             computed:{
 
