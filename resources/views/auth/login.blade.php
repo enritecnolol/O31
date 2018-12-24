@@ -25,7 +25,7 @@
                             </div>
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label>Contraseña</label>
-                                <input class="au-input au-input--full" type="password" name="password" placeholder="Password">
+                                <input class="au-input au-input--full" type="password" name="password" placeholder="Contraseña">
                                 @if ($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -34,7 +34,7 @@
                             </div>
                             <div class="login-checkbox">
                                 <label>
-                                    <input type="checkbox" name="remember"{{ old('remember') ? 'checked' : '' }}>Recordar
+                                    <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>Recordar
                                 </label>
                                 <label>
 

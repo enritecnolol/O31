@@ -20,9 +20,9 @@
                 <div class="text-center">
                     <div class="alert alert-warning" role="alert" style="width: 500px; margin-left: 30%">
                         <h4 class="alert-heading">No hay una caja abierta!!</h4>
-                        <p>Para poder cerrar la caja debes hacer una apertura, luego Vender.</p>
+                        <p>Para poder cerrar la caja debes hacer una apertura y procede a Vender.</p>
                         <hr>
-                        <p class="mb-0">Luego de vender debe cuadrar la caja, si la naja no esta cuadrada no se le permitira abrir otra caja.</p>
+                        <p class="mb-0">Luego de vender ya podra cerrar la caja, despues cuadre la caja, si la caja no esta cuadrada no se le permitira abrir otra caja.</p>
                     </div>
                 </div>
             </div>
@@ -30,11 +30,11 @@
         <div v-else class="card" style="width: 100%;">
             <div class="card-header">
                 <strong>Cierre</strong>
-                <button v-if="caja[0].total_cierre == 0" class="btn btn-success btn-sm pull-right" @click="confimar()" type="button"><i class="fas fa-lock">&nbsp; Cerrar Caja</i></button>
+                <button v-if="caja[0].status == 'A'" class="btn btn-success btn-sm pull-right" @click="confimar()" type="button"><i class="fas fa-lock">&nbsp; Cerrar Caja</i></button>
                 <button v-else disabled class="btn btn-success btn-sm pull-right"  type="button"><i class="fas fa-lock">&nbsp; Cerrar Caja</i></button>
             </div>
             <div class="card-body">
-                <div class="row" v-if="caja[0].total_cierre == 0">
+                <div class="row" v-if="caja[0].status == 'A'">
                     <div class="col-md-3">
                         <strong>Cierre de caja:</strong> No.1
                     </div>
@@ -58,12 +58,12 @@
                         <strong>Total de Ventas:</strong> @{{ ventas }}  - @{{ total }}
                     </div>
                 </div>
-                <div v-else class="text-center">
-                    <h1>La caja esta <strong style="color: red">Cerrada</strong></h1>
+                <div v-if="caja[0].status == 'C'" class="text-center">
+                    <h1>La ultima caja esta <strong style="color: red">Cerrada</strong></h1>
                     <br>
                     <br>
                     <hr>
-                    <a href="/caja/cuadre">Si quiere Cuadrar su caja presione <strong style="color: red">AQUI</strong></a>
+                    <a href="/caja/cuadre">Si desea cuadrar una caja presione <strong style="color: red">AQUI</strong></a>
                 </div>
             </div>
         </div>

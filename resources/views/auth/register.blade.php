@@ -1,13 +1,13 @@
 @include('layouts.header')
 <body class="animsition">
-<div class="page-wrapper">
+<div class="page-wrapper" style="overflow: scroll">
     <div class="page-content--bge5">
         <div class="container">
             <div class="login-wrap">
                 <div class="login-content">
                     <div class="login-logo">
                         <a href="#">
-                            <img src="{{ URL::asset('imagenes/logo.png')}}" style="width: 200px" alt="CoolAdmin">
+                            <img src="{{ URL::asset('imagenes/logo.png')}}" style="width: 150px" alt="CoolAdmin">
                         </a>
                     </div>
                     <div class="login-form">

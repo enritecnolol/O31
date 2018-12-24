@@ -25,6 +25,18 @@
                             <th>Fecha</th>
                         </tr>
                         </thead>
+                        <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>Total&nbsp;&nbsp;&nbsp;=</th>
+                            <th>{{$total}}.00</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -39,7 +51,9 @@
                 serverSide: true,
                 order: [[ 0, "desc" ]],
                 ajax: '/historico/venta',
+                // method:'POST',
                 columns: [
+
                     {data: "id"},
                     {data: "box"},
                     {data: "client"},
@@ -52,6 +66,5 @@
             } );
 
         });
-
     </script>
 @endsection

@@ -29,7 +29,6 @@
             </div>
         </div>
     </div>
-
     <div v-else-if="nose == 'NoCuadrada'" class="section__content section__content--p30">
         <div class="container-fluid">
             <div class="card">
