@@ -73,4 +73,9 @@ class CategoriasController extends Controller
         return $categoria;
 
     }
+    public function allcategories()
+    {
+        $categorias = Categoria::all()->where('user_id', Auth::id());
+        return $categorias;
+    }
 }

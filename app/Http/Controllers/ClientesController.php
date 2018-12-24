@@ -154,4 +154,12 @@ class ClientesController extends Controller
 
         return ['guardado', $compania, $movimientoid->last()->id];
     }
+    public function nombrecliente(Request $request)
+    {
+        $cliente = Client::all()->where('id',$request->id);
+        if ($cliente == '[]'){
+            $cliente = null;
+        }
+        return $cliente;
+    }
 }

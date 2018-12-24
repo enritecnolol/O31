@@ -555,7 +555,7 @@
                         next_page_url: data.next_page_url,
                         prev_page_url: data.prev_page_url,
                         last_page_url: data.last_page_url
-                    }
+                    };
                     _this.pagination = pagination;
                 },
                 tarjetaid:function (id) {
@@ -684,7 +684,7 @@
                         });
                 },
                 nombrecliente:function (id) {
-                    _this = this
+                    _this = this;
                     var nombre = '';
                     for(var key in _this.datostable.data){
                         if (_this.datostable.data[key].id === id){

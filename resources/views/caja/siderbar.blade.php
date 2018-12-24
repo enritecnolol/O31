@@ -22,26 +22,51 @@
                 </a>
                 <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">
                     <li>
-                        <a href="/caja">APERTURA DE CAJA</a>
+                        <a style="padding-left: 90px" href="/caja">APERTURA DE CAJA</a>
                     </li>
                     <li>
-                        <a href="/cierre/caja">CIERRE DE CAJAS</a>
+                        <a style="padding-left: 90px" href="/cierre/caja">CIERRE DE CAJAS</a>
                     </li>
                     <li>
-                        <a href="/caja/ver/cuadre">CUADRES DE CAJAS</a>
+                        <a style="padding-left: 90px" href="/caja/ver/cuadre">CUADRES DE CAJAS</a>
                     </li>
                     <li>
-                        <a href="/caja/cuadre">CUADRE DE CAJA</a>
+                        <a style="padding-left: 90px" href="/caja/cuadre">CUADRE DE CAJA</a>
                     </li>
                 </ul>
             </li>
             <li>
                 <a href="/categorias">
-                    <i class="fas fa-clipboard-check"></i><strong>CATEGORIAS</strong></a>
+                    <i class="fas fa-clipboard-check"></i><strong>CATEGORIAS</strong>
+                </a>
             </li>
             <li>
-                <a href="/caja/historico/ventas">
-                    <i class="fas fa-book"></i><strong>VENTAS DEL DIA</strong></a>
+                <a href="/control/inventario">
+                    <i class="fas fa-boxes"></i><strong>CONTROL DE INVENTARIO</strong>
+                </a>
+            </li>
+            <li>
+                <a href="/devolucion">
+                    <i class="fas fa-undo"></i><strong>DEVOLUCION</strong></a>
+            </li>
+            <li class="has-sub">
+                <a class="js-arrow" href="#">
+                    <i class="fas fa-minus"></i><strong>GASTOS Y COMPRAS</strong>
+                    <span class="arrow">
+                        <i class="fas fa-angle-down"></i>
+                    </span>
+                </a>
+                <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">
+                    <li>
+                        <a style="padding-left: 90px" href="/provedores">Provedores</a>
+                    </li>
+                    <li>
+                        <a style="padding-left: 90px" href="/entrada/comprobante">Entrada de Comprobante</a>
+                    </li>
+                    <li>
+                        <a style="padding-left: 90px" href="/pago/entrada/comprobante">Pago de Comprobante</a>
+                    </li>
+                </ul>
             </li>
             <li>
                 <a href="/reportes">
@@ -60,13 +85,13 @@
                 </a>
                 <ul class="list-unstyled navbar__sub-list js-sub-list">
                     <li>
-                        <a href="/configuracion">COMPANIA</a>
+                        <a style="padding-left: 90px" href="/configuracion">COMPANIA</a>
                     </li>
                     <li>
-                        <a href="/configuracion/itbis">ITBIS</a>
+                        <a style="padding-left: 90px" href="/configuracion/itbis">ITBIS</a>
                     </li>
                     <li>
-                        <a href="/tipo/tarjeta">TARJETA PREFERENCIAL</a>
+                        <a style="padding-left: 90px" href="/tipo/tarjeta">TARJETA PREFERENCIAL</a>
                     </li>
                 </ul>
             </li>

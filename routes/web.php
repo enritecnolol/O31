@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
 
+    Route::get('/prueba', 'IndexController@prueba');
     /*=================================\Pagina inicio/======================================================*/
     Route::get('/', 'IndexController@index'); //pagina donde se vende
 
@@ -29,12 +30,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/historico/venta/busqueda', 'ApisController@ventasbusqueda');// api para cerrar la caja en BD
     Route::get('/caja/cuadrarcaja', 'CajasController@cuadrarcj');//api para guardar el cuadre de la casa
     Route::get('/buscar/producto', 'ApisController@buscarproducto'); // api para buscar producto
+    Route::post('/buscar/producto/ordenes', 'ApisController@buscarproductoordenes'); // api para buscar producto
     Route::get('/buscar', 'ApisController@buscarp'); // api para buscar producto
     Route::get('/buscar/producto/referencia', 'ApisController@buscarproductoreferencia'); // api para buscar producto
     Route::post('anja/{id}', 'ApisController@update' );// api para actualizar los productos
     Route::post('eliminar/producto', 'ApisController@eliminarproducto' );// Eliminar productos
     Route::post('/itbis/producto', 'ApisController@itbisporproducto' );// Eliminar productos
     Route::post('/reportes/resultado', 'ApisController@ultimoid' );//
+    Route::post('/productos/paginate', 'ApisController@productospaginado' );//
     Route::get('ver/categoria/get', 'ApisController@cargarcategoria' );// api para actualizar los productos
 
     ///////////////////////////////////////-Categoria-////////////////////////////////////////////////////
@@ -42,25 +45,24 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/ver/categoria', 'ApisController@cargarcategoria');// api ver categoria
     Route::post('vender/productos/categoria', 'ApisController@productoscategoria' );// api para sacar las categoria en la pantalla de vender
     Route::get('productos/categoria', 'ApisController@productosporcategoria' );//productos por categoria
+    Route::post('/productos/categoria/ordenes', 'ApisController@productosporcategoriaordenes' );//productos por categoria
 
     ///////////////////////////////////////-Cuadre-/////////////////////////////////////////////////////////
-    ///
     Route::post('/caja/cuadres/ver', 'ApisController@buscarcuadre'); // Ver Cuadre vista buscador
     Route::post('/caja/cuadres', 'ApisController@cuadres'); // Ver Cuadre vista
     Route::get('/formato/cuadre/{id}', 'CajasController@idcuadre'); //desglose un el id del cuadre
     Route::post('/cuadre/infocaja', 'CajasController@infocaja'); //buscar informacion de la caja para hacer el cuadre
 
-
-
     /*=================================\Productos/======================================================*/
     Route::resource('/productos', 'ProductsController'); // controller de manejo de los productos
-
+    Route::post('/all/productos', 'ApisController@allproduct'); // controller de manejo de los productos
 
     /*=================================\Categorias/======================================================*/
     Route::get('categorias', 'CategoriasController@index'); // controller de manejo de los productos
     Route::post('categorias/nueva', 'CategoriasController@nuevacategoria'); // controller de manejo de los productos
     Route::post('categorias/edit', 'CategoriasController@editarcategoria'); // controller de manejo de los productos
     Route::get('categoria/editar/{id}', 'CategoriasController@buscarcategoria'); // controller de manejo de los productos
+    Route::post('/all/categories', 'CategoriasController@allcategories'); // controller de manejo de los productos
 
     /*=================================\Sub -- Categorias/======================================================*/
     Route::post('nueva/subcategoria', 'SubcategoriasController@crearsubcategoria'); //Controller para ingresar nueva subtarea
@@ -98,6 +100,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/configuracion/store','ConfiguracionesController@store'); // guardar configuracion
     Route::post('/configuracion/edit','ConfiguracionesController@update');// editar configuracion
     Route::get('/configuracion/cliente/preferencial','ConfiguracionesController@clientepreferencialindex');// editar configuracion
+    Route::post('/configuracion/existencia','ConfiguracionesController@existencia');// editar configuracion
     /*=================================\- itbis - /======================================================*/
     Route::get('/configuracion/itbis','ImpuestosController@itbis');
     Route::post('/nuevo/itbis','ImpuestosController@store');
@@ -120,6 +123,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/clientes/buscar/cliente','ClientesController@buscarcliente');
     Route::post('/clientes/cliente/tarjeta','ClientesController@clientetarjeta');
     Route::post('/cambio/puntos','ClientesController@cambiopuntos');
+    Route::post('/cliente/buscar/nombre','ClientesController@nombrecliente');
 
     /*=================================\- Tickets -/======================================================*/
     Route::post('/ticket/busqueda','PuntosmovimientosController@buscadorticket');
@@ -137,12 +141,61 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/config/tipo/tarjeta/buscar','ConfigtjsController@buscartj');
     Route::post('/config/tipo/tarjeta/edit','ConfigtjsController@edit');
 
+    /*=================================\- Devolucion -/======================================================*/
+    Route::get('/devolucion','DevolucionesController@index');
+    Route::post('/devolucion/buscar/factura','DevolucionesController@buscarfactura');
+    Route::post('/devolucion/buscando/producto','DevolucionesController@buscandoproductos');
+    Route::post('/devolucion/store','DevolucionesController@store');
 
+    /*=================================\- Provedores -/======================================================*/
+    Route::get('/provedores', 'ProvedoresController@index');
+    Route::post('/provedores/store', 'ProvedoresController@store');
+    Route::post('/provedores/edit', 'ProvedoresController@edit');
+    Route::post('/provedores/todos/datos', 'ProvedoresController@todosdatos');
+    Route::post('/provedores/todos/provedores', 'ProvedoresController@todosprovedores');
 
+    /*=================================\- Tipo Cuentas por pagar -/======================================================*/
+    Route::post('/tcxp/store', 'TcxpsController@store');
+    Route::post('/tcxp/datos/todos', 'TcxpsController@todosdatos');
 
+    /*=================================\- Tipo comprobantes -/======================================================*/
+    Route::post('/tipo/comprobante/store', 'TipocomprobantesController@store');
+    Route::post('/tipo/comprobante/datos/tabla', 'TipocomprobantesController@datostabla');
 
-});//
+    /*=================================\- Gastos -/======================================================*/
+    Route::get('/entrada/comprobante', 'GastosController@index');
+    Route::get('/pago/entrada/comprobante', 'GastosController@pagoindex');
+    Route::post('/entrada/comprobante/store', 'EntradacomprobantesController@store');
+    Route::post('/entrada/comprobante/provedor', 'EntradacomprobantesController@comprobanteporprovedor');
+    Route::post('/entrada/comprobante/pago', 'EntradacomprobantesController@pago');
+
+    /*=================================\- Tipo Factura -/======================================================*/
+    Route::post('/tipo/factura/store', 'TipofacturasController@store');
+    Route::post('/tipo/factura/datos', 'TipofacturasController@datos');
+
+    /*=================================\- Pago de Comprobante -/======================================================*/
+    Route::post('/pago/comprobante', 'PagocomprobantesController@store');
+
+    /*=================================\- Control de Inventario -/======================================================*/
+    Route::get('/control/inventario', 'ControlinventariosController@index');
+    Route::post('/todos/productos', 'ControlinventariosController@todosproductos');
+    Route::post('/store/compra', 'ControlinventariosController@storecompra');
+//    Route::post('', '');
+    /*=================================\- Facturacion -/======================================================*/
+    Route::get('/facturacion', 'FacturacionesController@index');
+
+    /*=================================\- Corotos -/======================================================*/
+    Route::post('/salvar/coroto', 'CorotosController@store');
+    Route::post('/edit/coroto', 'CorotosController@edit');
+    Route::post('/delete/coroto', 'CorotosController@delete');
+    Route::post('/corotos/all', 'CorotosController@allcorotos');
+    Route::post('/save/edit/corotos', 'CorotosController@saveeditcorotos');
+
+    /*=================================\- Areas -/======================================================*/
+    Route::post('/save/area', 'AreasController@store');
+    Route::post('/all/area', 'AreasController@allareas');
+});
 
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home');
+

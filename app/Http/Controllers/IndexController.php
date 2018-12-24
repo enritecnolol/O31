@@ -175,10 +175,24 @@ class IndexController extends Controller
             $detalle->facture_id = $idfacture->last()->id;
             $detalle->save();
 
+            if ($request->existencias == 'si')
+            {
+                $producto = Product::find($d["id"]);
+                if ($producto->compuesto == 'no')
+                {
+                    $producto->existence = $producto->existence - $d["count"];
+                    $producto->update();
+                }
+            }
+
         }
         return 'bien';
         echo $count;
 
+    }
+    public function prueba()
+    {
+        return view('nose');
     }
 
 }

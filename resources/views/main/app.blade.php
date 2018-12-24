@@ -180,9 +180,8 @@
                             <div class="account-wrap">
                                 @if(request()->is('/'))
                                     <div class="account-item clearfix js-item-menu">
-
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#" style="color: white"><i class="fas fa-2x fa-bars"></i></a>
+                                            <a class="js-acc-btn" href="#" style="color: white"> <h4 style="position:absolute;left: 0px;top: 14px;color: white">MENU</h4> <i class="fas fa-1x fa-bars"></i></a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
@@ -235,8 +234,8 @@
                                                     </a>
                                                 </div>
                                                 <div class="account-dropdown__item">
-                                                    <a id="#proximamente" href="#">
-                                                        <i class="zmdi zmdi-settings"></i>Configuracion <span class="badge badge-info">Proximamente</span>
+                                                    <a id="" href="/configuracion">
+                                                        <i class="zmdi zmdi-settings"></i>Configuracion
                                                     </a>
                                                 </div>
                                             </div>
@@ -289,7 +288,6 @@
         <!-- END PAGE CONTAINER-->
     </div>
 </div>
-
 @include('layouts.scripts')
 @yield('scriptp')
 <script !src="">

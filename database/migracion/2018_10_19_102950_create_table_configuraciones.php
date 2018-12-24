@@ -23,7 +23,7 @@ class CreateTableConfiguraciones extends Migration
             $table->string('img');
             $table->string('impuesto');
             $table->string('descuento');
-            $table->boolean('config_clp_puntos_dinero');
+            $table->string('controlinv');
             $table->integer('config_clp_dn_part');
             $table->integer('config_clp_punt_generar');
             $table->integer('user_id');

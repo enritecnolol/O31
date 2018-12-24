@@ -86,6 +86,13 @@ class ApisController extends Controller
         $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->get();
         return $productos;
     }
+    public function buscarproductoordenes(){
+        $id = Auth::id();
+        $data = Input::all();
+        $producto = $data["producto"];
+        $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->get();
+        return $productos;
+    }
     public function buscarproductoreferencia(){
         $id = Auth::id();
         $data = Input::all();
@@ -130,6 +137,7 @@ class ApisController extends Controller
                 $product->itbis = $itbis;
                 $product->categoria_id = $request->categoria;
                 $product->subcategoria_id = $request->subcategoria;
+                $product->compuesto = $request->compuesto;
                 $product->update();
 
             }else{
@@ -143,6 +151,7 @@ class ApisController extends Controller
                 $product->itbis = $itbis;
                 $product->categoria_id = $request->categoria;
                 $product->subcategoria_id = $request->subcategoria;
+                $product->compuesto = $request->compuesto;
                 $product->update();
             }
         }else{
@@ -155,6 +164,7 @@ class ApisController extends Controller
             $product->itbis = $itbis;
             $product->categoria_id = $request->categoria;
             $product->subcategoria_id = $request->subcategoria;
+            $product->compuesto = $request->compuesto;
             $product->update();
         }
         return redirect('/productos');
@@ -213,6 +223,20 @@ class ApisController extends Controller
     public function productosporcategoria(Request $request){
 
         $productos = Product::all()->where('categoria_id', '==', $request->id)->where('user_id', '==', Auth::id());
+        if ($request->id == 0)
+        {
+            $productos = Product::all()->where('user_id', Auth::id());
+        }
+        return $productos;
+    }
+    public function productosporcategoriaordenes(Request $request){
+
+        $productos = Product::all()->where('categoria_id', '==', $request->id)->where('user_id', '==', Auth::id());
+
+        if ($request->id == 0)
+        {
+            $productos = Product::all()->where('user_id', Auth::id());
+        }
         return $productos;
     }
     public function eliminarproducto(Request $request){
@@ -294,6 +318,29 @@ class ApisController extends Controller
         $ultimoid = Facture::all()->where('user_id', '==', $id)->last()->id;
 
         return $ultimoid;
+    }
+    public function productospaginado(Request $request)
+    {
+        $id = Auth::id();
+
+        $productos = DB::table('products')
+            ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
+            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
+            ->where('products.user_id', $id)
+            ->select(DB::raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->paginate($request->paginate);
+
+        return $productos;
+    }
+    public function allproduct()
+    {
+        $id = Auth::id();
+        $productos = DB::table('products')
+            ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
+            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
+            ->where('products.user_id', $id)
+            ->select(DB::raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
+
+        return $productos;
     }
 
 }

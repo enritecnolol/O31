@@ -79,6 +79,18 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row form-group">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="" class=" form-control-label"><strong>Control inventario?</strong></label>
+                                            <select required name="inventario" class="form-control">
+                                                <option value="">Selecciona</option>
+                                                <option value=true>Si</option>
+                                                <option value=false>No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                             <div class="card-footer" style="background: white;box-shadow:rgb(136, 136, 136) 1px 1px 4px;">
@@ -152,6 +164,18 @@
                                                 <option value="">Selecciona</option>
                                                 <option value="si">si</option>
                                                 <option value="si">no</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="" class=" form-control-label"><strong>Control inventario?</strong></label>
+                                            <select required :disabled="editar == false" v-model="infoconfig.controlinv" name="inventario" class="form-control">
+                                                <option value="">Selecciona</option>
+                                                <option value="si">Si</option>
+                                                <option value="no">No</option>
                                             </select>
                                         </div>
                                     </div>

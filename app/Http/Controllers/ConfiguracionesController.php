@@ -36,6 +36,7 @@ class ConfiguracionesController extends Controller
             $configuracion->img = $file->getClientOriginalName();
             $configuracion->impuesto = $request->impuesto;
             $configuracion->descuento = $request->descuento;
+            $configuracion->controlinv = $request->inventario;
             $configuracion->user_id = Auth::id();
             $configuracion->save();
 
@@ -50,6 +51,7 @@ class ConfiguracionesController extends Controller
             $configuracion->img = 'default.jpg';
             $configuracion->impuesto = $request->impuesto;
             $configuracion->descuento = $request->descuento;
+            $configuracion->controlinv = $request->inventario;
             $configuracion->user_id = Auth::id();
             $configuracion->save();
         }
@@ -71,6 +73,7 @@ class ConfiguracionesController extends Controller
             $configuracion->img = $file->getClientOriginalName();
             $configuracion->impuesto = $request->impuesto;
             $configuracion->descuento = $request->descuento;
+            $configuracion->controlinv = $request->inventario;
             $configuracion->update();
 
         }else{
@@ -81,6 +84,7 @@ class ConfiguracionesController extends Controller
             $configuracion->direccion = $request->direccion;
             $configuracion->impuesto = $request->impuesto;
             $configuracion->descuento = $request->descuento;
+            $configuracion->controlinv = $request->inventario;
             $configuracion->update();
         }
 
@@ -90,5 +94,15 @@ class ConfiguracionesController extends Controller
     public function clientepreferencialindex()
     {
         return view('configuracion.clientepreferencial.index');
+    }
+
+    public function existencia()
+    {
+        $existencias = Configuracion::all()->where('user_id', Auth::id());
+        foreach($existencias as $existencia)
+        {
+            $existencia = $existencia->controlinv;
+        }
+        return $existencia;
     }
 }

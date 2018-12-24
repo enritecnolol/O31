@@ -74,12 +74,13 @@ class ProductsController extends Controller
                 $product->img = $file->getClientOriginalName();
                 $product->existence = 0;
                 $product->impost = 0;
-                $product->status = 1;
+                $product->status = 0;
                 $product->impuestoref_id = $request->input('refimpuestoid');
                 $product->itbis = $itbis;
                 $product->user_id = Auth::id();
                 $product->categoria_id = $request->input('categoria');
                 $product->subcategoria_id = $request->input('subcategoria');
+                $product->compuesto = $request->input('compuesto');
                 $product->save();
 
             }else{
@@ -89,13 +90,14 @@ class ProductsController extends Controller
                 $product->barcode = $request->input('barcode');
                 $product->existence = 0;
                 $product->impost = 0;
-                $product->status = 1;
+                $product->status = 0;
                 $product->impuestoref_id = $request->input('refimpuestoid');
                 $product->itbis = $itbis;
-                $product->img = 'default.jpg';
+                $product->img = 'plate.png';
                 $product->user_id = Auth::id();
                 $product->categoria_id = $request->input('categoria');
                 $product->subcategoria_id = $request->input('subcategoria');
+                $product->compuesto = $request->input('compuesto');
 //            $product->unity_id = 0;
                 $product->save();
 
@@ -112,12 +114,13 @@ class ProductsController extends Controller
                 $product->img = $file->getClientOriginalName();
                 $product->existence = 0;
                 $product->impost = 0;
-                $product->status = 1;
+                $product->status = 0;
                 $product->impuestoref_id = $request->input('refimpuestoid');
                 $product->itbis = $itbis;
                 $product->user_id = Auth::id();
                 $product->categoria_id = $request->input('categoria');
                 $product->subcategoria_id = $request->input('subcategoria');
+                $product->compuesto = $request->input('compuesto');
                 $product->save();
 
             }else{
@@ -126,13 +129,14 @@ class ProductsController extends Controller
                 $product->barcode = $request->input('barcode');
                 $product->existence = 0;
                 $product->impost = 0;
-                $product->status = 1;
+                $product->status = 0;
                 $product->impuestoref_id = $request->input('refimpuestoid');
                 $product->itbis = $itbis;
-                $product->img = 'default.jpg';
+                $product->img = 'plate.png';
                 $product->user_id = Auth::id();
                 $product->categoria_id = $request->input('categoria');
                 $product->subcategoria_id = $request->input('subcategoria');
+                $product->compuesto = $request->input('compuesto');
                 $product->save();
 
             }

@@ -28,9 +28,17 @@
                                 </div>
                             @endif
                         </div>
-
-
-
+                        <div class="form-group" v-show="existenciarep == 'si'">
+                            <label for="" class="control-label mb-1">El producto es Compuesto?</label>
+                            <div class="container">
+                                <div class="row">
+                                    <select class="form-control form-control-sm" v-model="datos.compuesto"  name="compuesto" id="exampleFormControlSelect1">
+                                        <option value="no">No</option>
+                                        <option value="si">Si</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="" class="control-label mb-1">Grabado de itbis ? </label>
                             <button type="button" class="btn btn-outline-secondary btn-sm" @click="check = false">No</button>

@@ -24,7 +24,17 @@
                                 <label for="precio" class="control-label mb-1" >Precio</label>
                                 <input type="number" id="precio" min="0" value="{{ old('precio') }}" name="precio" required placeholder="$" class="input-sm form-control-sm form-control">
                             </div>
-
+                            <div class="form-group" v-show="existenciarep == 'si'">
+                                <label for="" class="control-label mb-1">El producto es Compuesto?</label>
+                                <div class="container">
+                                    <div class="row">
+                                        <select class="form-control form-control-sm" name="compuesto" id="exampleFormControlSelect1">
+                                            <option value="no">No</option>
+                                            <option value="si">Si</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="Cbarra" class="control-label mb-1" >codigo</label>
                                 <input type="text" id="Cbarra"  required name="barcode"  value="{{ old('barcode') }}" class="input-sm form-control-sm form-control">
@@ -66,7 +76,6 @@
                                             <button type="button" data-toggle="modal" data-target="#nuevacategoria"><span style="color: green"><i class="fas fa-plus"></i></span></button>
                                         </div>
                                     </div>
-
                                     <select class="form-control" v-model="idsubcategoria" @change="subcategoria()" required name="categoria" id="exampleFormControlSelect1">
                                         <option value="">-selecciona-</option>
                                         <template v-for="c in listacategoria">

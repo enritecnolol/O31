@@ -5,7 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+// require('./bootstrap');
 
 window.Vue = require('vue');
 
@@ -18,8 +18,15 @@ window.Vue = require('vue');
 
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('devolucion', require('./components/tableDevolucion.vue'));
+Vue.component('prueba', require('./components/prueba.vue'));
+Vue.component('floorview', require('./components/floorview.vue'));
 
+import draggable from 'vuedraggable'
+import mouseMenu from 'vue-mouse-menu'
 new Vue({
-    el: '#Vue'
+    el: '#Vue',
+    components:{
+        draggable,
+        mouseMenu
+    }
 });

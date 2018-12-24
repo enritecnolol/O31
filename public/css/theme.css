@@ -2262,11 +2262,11 @@ section {
 }
 
 .navbar-sidebar2 .navbar__sub-list li {
-    background: #fcffec;
+    background: #fafaee;
 }
 
 .navbar-sidebar2 .navbar__sub-list li a {
-    border-color: #fcffec;
+    border-color: #fafaee;
 }
 
 .inbox-num {
@@ -2570,7 +2570,7 @@ section {
 }
 
 .header-desktop3 {
-    background: #393939;
+    background: #4272d7;
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
