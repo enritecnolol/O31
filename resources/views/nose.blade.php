@@ -10,5 +10,6 @@
 @endsection
 
 @section('scriptp')
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <script src="/js/app.js"></script>
 @endsection

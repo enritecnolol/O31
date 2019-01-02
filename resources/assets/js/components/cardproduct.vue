@@ -12,7 +12,7 @@
 <script !src="">
     export default {
         name:'cardproduct',
-        props:['producto', 'index', 'id', 'mesa'],
+        props:['producto', 'index', 'id', 'mesa', 'detalle'],
         components:{},
         data()
         {
@@ -23,14 +23,30 @@
         methods:{
             productoselect()
             {
-                this.$emit('productoagregar',{
-                    index:this.index,
-                    producto:this.producto,
-                    mesa:this.mesa,
-                    cantidad:1,
-                    total:parseFloat(this.producto.price).toFixed(2),
-                });
-                this.$emit('bajarscroll')
+                if (this.detalle.length == 0)
+                {
+                    this.$emit('productoagregar',{
+                        index:this.index,
+                        id:0,
+                        orden:{},
+                        producto:this.producto,
+                        mesa:this.mesa,
+                        cantidad:1,
+                        total:parseFloat(this.producto.price).toFixed(2),
+                    });
+                    this.$emit('bajarscroll')
+                }else{
+                    this.$emit('productoagregar',{
+                        index:this.index,
+                        id:0,
+                        orden:this.detalle['orden'][0],
+                        producto:this.producto,
+                        mesa:this.mesa,
+                        cantidad:1,
+                        total:parseFloat(this.producto.price).toFixed(2),
+                    });
+                    this.$emit('bajarscroll')
+                }
             }
         },
         mounted() {

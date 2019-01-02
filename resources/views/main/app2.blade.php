@@ -198,6 +198,7 @@
 @include('layouts.scripts')
 @yield('scriptp')
 <!-- Main JS-->
+<script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
 <script src="js/main.js"></script>
 
 </body>

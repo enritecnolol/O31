@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="row-horizon">
-                <template v-for="(item, index) in mesasocupadas">
-                    <span class="categorias" style="margin-left: 2px;cursor: pointer" :class="{selectcategories : item.active}">{{item.mesa.name}}</span>
+                <template v-for="(item, index) in mesasocupadasv2">
+                    <span class="categorias" style="margin-left: 2px;cursor: pointer" :class="{selectcategories : item.active}" @click="buscarordenmesa(item.id, index)">{{item.mesa.name}}</span>
                 </template>
             </div>
         </div>
@@ -27,7 +27,7 @@
                                     <div class="text-center">
                                         <div class="row">
                                             <div class="col"><i class="fas fa-1x fa-users"></i></div>
-                                            <div class="col"> <h3 style="float: right">{{invitadott}}</h3></div>
+                                            <div class="col"> <h3 style="float: right">{{invitado}}</h3></div>
                                         </div>
                                     </div>
                                 </div>
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12" style="height: 700px;overflow-y:auto;background: url('../../../../local/fondo6.png')" id="listacarrito">
+                    <div class="col-md-12" style="height: 530px;overflow-y:auto;background: url('../../../../local/fondo6.png')" id="listacarrito">
                         <template v-if="productoselecionado.length == 0">
                             <div class="messageVide" style="margin-top: 15px">
                                 NO HAY PRODUCTOS
@@ -63,67 +63,67 @@
                             </div>
                         </template>
                         <template v-for="(item, index) in productoselecionado">
-                            <itemcarrito @cambiarcantidad="cambiarcantidad" :index="index" :productoselecionado="item" ></itemcarrito>
+                            <itemcarrito @cambiarcantidad="cambiarcantidad" :index="index" :productoselecionado="item"></itemcarrito>
                         </template>
                     </div>
                     <div class="col-md-12" style="background: white">
-                        <!--<div class="table-responsive col-sm-12 totalTab">-->
-                            <!--<table class="table table-sm">-->
-                                <!--<tbody>-->
-                                <!--<tr>-->
-                                    <!--<td class="active" width="40%">-->
-                                        <!--SubTotal-->
-                                    <!--</td>-->
-                                    <!--<td class="whiteBg" width="60%">-->
-                                        <!--<span id="Subtot">-->
-                                            <!--430.00-->
-                                        <!--</span>-->
-                                        <!--SAR-->
-                                        <!--<span class="float-right">-->
-                                            <!--<b id="ItemsNum">-->
-                                                <!--<span>43-->
-                                                <!--</span> items-->
-                                            <!--</b>-->
-                                        <!--</span>-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-                                <!--<tr>-->
-                                    <!--<td class="active">Impuesto IVA</td>-->
-                                    <!--<td class="whiteBg">-->
-                                        <!--<input type="text" value="12%" class="total-input" placeholder="N/A" maxlength="8" aria-haspopup="true" role="textbox">-->
-                                        <!--<span class="float-right">-->
-                                            <!--<b id="taxValue">51.60 SAR</b>-->
-                                        <!--</span>-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-                                <!--<tr>-->
-                                    <!--<td class="active">Descuento</td>-->
-                                    <!--<td class="whiteBg">-->
-                                        <!--<input type="text" value="" class="total-input" placeholder="N/A" maxlength="8" aria-haspopup="true" role="textbox">-->
-                                        <!--<span class="float-right">-->
-                                            <!--<b id="RemiseValue">-->
-                                                <!--SAR-->
-                                            <!--</b>-->
-                                        <!--</span>-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-                                <!--<tr>-->
-                                    <!--<td class="active">Total</td>-->
-                                    <!--<td class="whiteBg light-blue text-bold">-->
-                                        <!--<span id="total">-->
-                                            <!--481.60-->
-                                        <!--</span>-->
-                                        <!--SAR-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-                                <!--</tbody>-->
-                            <!--</table>-->
-                        <!--</div>-->
+                        <div class="table-responsive col-sm-12 totalTab">
+                            <table class="table table-sm">
+                                <tbody>
+                                <tr>
+                                    <td class="active" width="40%">
+                                        SubTotal
+                                    </td>
+                                    <td class="whiteBg" width="60%">
+                                        <span id="Subtot">
+                                            {{subtotal}}
+                                        </span>
+                                        RD
+                                        <span class="float-right">
+                                            <b id="ItemsNum">
+                                                <span>{{cantidaditems}}
+                                                </span> items
+                                            </b>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">Impuesto IVA</td>
+                                    <td class="whiteBg">
+                                        <input type="text" value="12%" class="total-input" placeholder="N/A" maxlength="8" aria-haspopup="true" role="textbox">
+                                        <span class="float-right">
+                                            <b id="taxValue">51.60 RD</b>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">Descuento</td>
+                                    <td class="whiteBg">
+                                        <input type="text" value="" class="total-input" placeholder="N/A" maxlength="8" aria-haspopup="true" role="textbox">
+                                        <span class="float-right">
+                                            <b id="RemiseValue">
+                                                RD
+                                            </b>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">Total</td>
+                                    <td class="whiteBg light-blue text-bold">
+                                        <span id="total">
+                                            481.60
+                                        </span>
+                                        RD
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="col-md-12" style="margin-top: 10px">
                         <div class="row">
                             <div class="col"><button type="button" class="btn btn-danger btn-lg btn-block "><i class="fas fa-times-circle"></i> Cancelar Compra</button></div>
-                            <div class="col"><button type="button" class="btn btn-success btn-lg btn-block"><i class="fas fa-clipboard-list"></i> Ordenar</button></div>
+                            <div class="col"><button type="button" class="btn btn-success btn-lg btn-block" @click="ordenar"><i class="fas fa-clipboard-list"></i> Ordenar</button></div>
                         </div>
                     </div>
                 </div>
@@ -135,56 +135,90 @@
     import itemcarrito from './itemcarrito'
     export default {
         name:'carrito',
-        props:['mesasocupadas', 'mesa', 'productoselecionado', 'bus'],
+        props:['mesasocupadas', 'mesa', 'productoselecionado', 'bus', 'detalle'],
         components:{itemcarrito},
         data()
         {
             return{
                 invitadott:0,
                 invitadoturno:1,
+                mesav1:this.mesa,
+                productos:[],
+                productoselecionadov2:this.productoselecionado,
+                mesasocupadasv2:this.mesasocupadas
             }
         },
         methods:{
+            buscarordenmesa(i, index)
+            {
+                this.$emit('productopormesa',
+                    {
+                        index:index,
+                        id:i
+                    })
+            },
             cambiarcantidad(i)
             {
-              this.$emit('cambiarcantidad',i)
-            },
-            invitado(accion)
-            {
-                for (var key in this.mesasocupadas)
-                {
-                    if (this.mesasocupadas[key].id == this.mesa)
-                    {
-                        this.invitadott = this.mesasocupadas[key].personas;
-                        if (accion == 'mas')
-                        {
-                            this.invitadoturno++;
-                            if (this.invitadoturno > this.mesasocupadas[key].personas)
-                            {
-                                this.invitadoturno = this.mesasocupadas[key].personas;
-                            }
-                        }else if (accion == 'menos') {
-                            this.invitadoturno = this.invitadoturno -1;
-                            if (this.invitadoturno < 1 )
-                            {
-                                this.invitadoturno = 1;
-                            }
-                        }else{
-                            this.invitadott = this.mesasocupadas[key].personas;
-                        }
-                    }
-                }
+                this.$emit('cambiarcantidad', {obt:i,subtotal:this.subtotal})
             },
             bajarscroll()
             {
                 $("#listacarrito").animate({scrollTop:$('#listacarrito').prop("scrollHeight")},420);
+            },
+            ordenar()
+            {
+                if (this.subtotal != 0)
+                {
+                    axios.post('/ordenar/mesa/store', {
+                        productos:this.productoselecionado,
+                        mesa:this.mesa,
+                        invitados:this.invitadott,
+                        subtotal:this.subtotal
+                    })
+                        .then((response) => {
+                            toastr.success('La orden se ha realizado','Validador')
+                            this.$emit('volverpant')
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }else {
+                    toastr.warning('Por Favor Seleccionar los productos', 'Validador')
+                }
             }
 
         },
         computed:{
+            cantidaditems()
+            {
+                return this.productoselecionado.length;
+            },
+            subtotal()
+            {
+                var suma = 0;
+                for (var key in this.productoselecionado)
+                {
+                    suma = parseFloat(parseFloat(suma) + parseFloat(this.productoselecionado[key].total))
+                }
+                return parseFloat(suma).toFixed(2);
+            },
+            invitado()
+            {
+                for (var key in this.mesasocupadasv2){
+
+                    if (this.mesasocupadasv2[key].id == this.mesav1)
+                    {
+                        this.invitadott = this.mesasocupadasv2[key].personas;
+                    }
+                }
+                return this.invitadott
+            }
+        },
+        watch:{
+
         },
         mounted() {
-            this.invitado('nuevo');
+
             this.bus.$on('bajar', this.bajarscroll)
         }
     }

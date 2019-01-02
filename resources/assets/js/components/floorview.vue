@@ -21,11 +21,11 @@
                                 </template>
                             </div>
                         </div>
-                        <div class="col-" style="overflow-y: auto;margin:0; padding:0;height: 800px;">
+                        <div class="col-"  v-dragscroll  style="overflow-y: auto;margin:0; padding:0;height: 800px;">
                             <div class="container">
-                               <div class="text-center">
-                                   <p style="color:#4272d7;font-size: 26px;font-family: cursive"><u>Objetos</u></p>
-                               </div>
+                                <div class="text-center">
+                                    <p style="color:#4272d7;font-size: 26px;font-family: cursive"><u>Objetos</u></p>
+                                </div>
                                 <template v-for="item in objetos">
                                     <div class="text-center" style="margin-top: 5px">
                                         <div class="card-mio" @click="nuevocoroto(item.img,item.name)">
@@ -142,12 +142,14 @@
     import ordenes from './ordenes'
     import vmodal from 'vue-js-modal';
     import VueDraggableResizable from 'vue-draggable-resizable'
+    import VueDragscroll from 'vue-dragscroll'
+    Vue.use(VueDragscroll)
     Vue.use(vmodal);
     Vue.component('vue-draggable-resizable', VueDraggableResizable);
 
     export default {
         name:'Tabitem',
-        components:{Tabs,Tab,VueDragResize,ItemCoroto,ordenes,vmodal,VueDraggableResizable},
+        components:{Tabs,Tab,VueDragResize,ItemCoroto,ordenes,vmodal,VueDraggableResizable,VueDragscroll},
         data()
         {
             return{
@@ -224,31 +226,77 @@
         methods:{
             continuar()
             {
-              if (this.invitados <= 0)
-              {
-                  toastr.warning('ingrese la cantidad de invitados', 'validador');
-              }else{
-                  this.prueba = true;
-                  var mesa;
-                  for (var key in this.corotos)
-                  {
-                      if (this.corotos[key].id == this.mesa)
-                      {
-                          mesa = this.corotos[key];
-                          this.corotos[key].status = 2
-                      }
-                  }
-                         var mesa =
-                      {
-                          id:this.mesa,
-                          mesa:mesa,
-                          personas:this.invitados,
-                          active:true
-                      };
-                  this.mesasocupada.push(mesa);
-                  this.$modal.hide('coroto');
-                  this.invitados = 0
-              }
+                if (this.invitados <= 0)
+                {
+                    toastr.warning('ingrese la cantidad de invitados', 'validador');
+                }else{
+                    this.prueba = true;
+                    var mesa;
+                    for (var key in this.corotos)
+                    {
+                        if (this.corotos[key].id == this.mesa)
+                        {
+                            mesa = this.corotos[key];
+                            this.corotos[key].status = 2
+                        }
+                    }
+                    // var mesa = {
+                    //     id:this.mesa,
+                    //     mesa:mesa,
+                    //     personas:this.invitados,
+                    //     active:true
+                    // };
+                    // this.mesasocupada.push(mesa);
+                    axios.post('/mesa/temp/store', {
+                        id:this.mesa,
+                        personas:this.invitados,
+                    })
+                        .then((response) => {
+                            console.log(response);
+                            this.allmesastemp();
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                    this.$modal.hide('coroto');
+                    this.invitados = 0
+                }
+            },
+            allmesastemp()
+            {
+                axios.post('/mesa/temp/all')
+                    .then((response) => {
+                        var mesa = response.data;
+                        for (var key in mesa)
+                        {
+                            if (mesa[key].coroto_id == this.mesa)
+                            {
+                                var esto = {
+                                    id:mesa[key].coroto_id,
+                                    personas:mesa[key].invitados,
+                                    mesa:{
+                                        name:mesa[key].name
+                                    },
+                                    active:true
+                                }
+                                this.mesasocupada.push(esto);
+                            }
+                            else{
+                                var esto = {
+                                    id:mesa[key].coroto_id,
+                                    personas:mesa[key].invitados,
+                                    mesa:{
+                                        name:mesa[key].name
+                                    },
+                                    active:false
+                                }
+                                this.mesasocupada.push(esto);
+                            }
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             },
             aumentar(accion)
             {
@@ -295,7 +343,7 @@
                     }
                 }else {
                     this.mesa = this.corotos[index].id;
-                        this.$modal.show('coroto');
+                    this.$modal.show('coroto');
                 }
             },
             corotosporarea(id)

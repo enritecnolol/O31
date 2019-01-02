@@ -8,7 +8,7 @@
                     </div>
                 </div>
                 <div class="col-md-5" style="height: 900px;background: #ecf0f1">
-                    <carrito @cambiarcantidad="cambiarcantidad" :mesasocupadas="mesasocupada" :mesa="mesa" :productoselecionado="productoselecionado" :bus="bus"></carrito>
+                    <carrito @volverpant="volverpantalla" @cambiarcantidad="cambiarcantidad" @productopormesa="productopormesa" :mesasocupadas="mesasocupadasv2" :mesa="mesa" :productoselecionado="productoselecionado" :bus="bus" :detalle="detalle" ></carrito>
                 </div>
                 <div class="col-md-7" style="height: 900px;background: #ecf0f1">
                     <div class="row">
@@ -23,10 +23,10 @@
                         <div class="col-md-12" style="margin-top: 5px">
                             <input type="text" id="" placeholder="Buscador" v-model="buscador" @input.self="buscadorp" class="form-control form-control-sm">
                         </div>
-                        <div class="col-md-12" style="height: 800px;overflow: auto">
+                        <div class="col-md-12" v-dragscroll style="height: 800px;overflow: auto;cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;">
                             <div class="row" style="margin-top: 10px">
                                 <template v-for="(item, index) in productos">
-                                    <cardproduct @productoagregar="productoselect" @bajarscroll="bajarscroll" :index="index" :key="index" :producto="item" :mesa="mesa"></cardproduct>
+                                    <cardproduct @productoagregar="productoselect" @bajarscroll="bajarscroll" :index="index" :key="index" :producto="item" :mesa="mesa" :detalle="detalle"></cardproduct>
                                 </template>
                             </div>
                         </div>
@@ -39,15 +39,18 @@
 <script !src="">
     import cardproduct from './cardproduct'
     import carrito from './carrito'
-
+    import VueDragscroll from 'vue-dragscroll'
+    Vue.use(VueDragscroll)
     export default {
         name:'ordenes',
-        components:{cardproduct,carrito},
+        components:{cardproduct,carrito,VueDragscroll},
         props:['mesasocupada', 'mesa'],
         data()
         {
             return{
+                mesasocupadasv2:this.mesasocupada,
                 default1:false,
+                mesav1:this.mesa,
                 categorias:[],
                 productos:[],
                 buscador:'',
@@ -58,17 +61,91 @@
                 },
                 productoselecionado:[],
                 bus: new Vue(),
+                detalle:[],
+                product:''
             }
         },
         methods:{
+            productopormesa(i)
+            {
+                for (var key in this.mesasocupadasv2)
+                {
+                    if (this.mesasocupadasv2[key].active ==true)
+                    {
+                        this.mesasocupadasv2[key].active = false;
+                    }
+                }
+                this.mesasocupadasv2[i.index].active = true;
+                this.productoselecionado = [];
+                axios.post('/buscar/orden/x/mesa', {
+                    id:i.id
+                })
+                    .then((response) => {
+                        this.mesav1 = i.id;
+                        this.detalle = response['data'];
+                        for (var key in this.detalle['detalle'])
+                        {
+                            for (var o in this.productos)
+                            {
+                                if (this.productos[o].id==this.detalle['detalle'][key]['product_id'])
+                                {
+                                    var esto = {
+                                        id:this.detalle['detalle'][key]['id'],
+                                        orden:this.detalle['orden'][0],
+                                        index:0,
+                                        cantidad:this.detalle['detalle'][key]['cantidad'],
+                                        mesa:this.mesav1,
+                                        total: parseFloat(parseFloat(this.detalle['detalle'][key]['cantidad']) * parseFloat(this.productos[o].price)).toFixed(2),
+                                        producto: this.productos[o]
+                                    };
+                                    this.productoselecionado.push(esto);
+                                    break
+                                }
+                            }
+                        }
+                    })
+                    .catch( (error) => {
+                        console.log(error);
+                    });
+            },
             cambiarcantidad(i)
             {
-                if (i.cantidad === 0)
+                console.log(i)
+                if (i.obt.cantidad === 0)
                 {
-                    this.productoselecionado.splice(i.index,1)
+                    this.productoselecionado.splice(i.obt.index,1)
+                    if (this.productoselecionado[i.obt.index]['id'] != 0)
+                    {
+                        axios.post('/producto/orden/eliminar', {
+                            producto:this.productoselecionado[i.obt.index],
+                            orden:this.productoselecionado[i.obt.index]['orden']['id'],
+                            subtotal:i.subtotal
+                        })
+                            .then(function (response) {
+                                console.log(response);
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                    }
                 }else{
-                    this.productoselecionado[i.index].total = parseFloat(this.productoselecionado[i.index].producto.price * i.cantidad).toFixed(2);
-                    this.productoselecionado[i.index].cantidad = i.cantidad;
+                    this.productoselecionado[i.obt.index].total = parseFloat(this.productoselecionado[i.obt.index].producto.price * i.obt.cantidad).toFixed(2);
+                    this.productoselecionado[i.obt.index].cantidad = i.obt.cantidad;
+
+                    if (this.productoselecionado[i.obt.index]['id'] != 0)
+                    {
+                        axios.post('/producto/orden/cambiar/cantidad', {
+                            producto:this.productoselecionado[i.obt.index],
+                            orden:this.productoselecionado[i.obt.index]['orden']['id'],
+                            subtotal:i.subtotal
+                        })
+                            .then(function (response) {
+                                console.log(response);
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                    }
                 }
             },
             productoselect(i)
@@ -96,7 +173,6 @@
                         this.productoselecionado.push(i);
                     }
                 }
-                // console.log(i)
             },
             allcategorias()
             {

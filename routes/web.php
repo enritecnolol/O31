@@ -22,7 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'IndexController@index'); //pagina donde se vende
 
     /*=================================\- API- /======================================================*/
-    Route::get('/facturacion', 'IndexController@store');// api para mandar datos de factura
+    Route::get('/facturacioncar', 'IndexController@store');// api para mandar datos de factura
 //    Route::post('actualizar/producto', 'ApisController@actualizarp'); // api para actualizar los productos
     Route::get('/cierrecaja', 'CajasController@cerrarcaja');// api para cerrar la caja en BD
     Route::get('/historico/venta', 'ApisController@historico');// api para cerrar la caja en BD
@@ -194,6 +194,18 @@ Route::group(['middleware' => 'auth'], function () {
     /*=================================\- Areas -/======================================================*/
     Route::post('/save/area', 'AreasController@store');
     Route::post('/all/area', 'AreasController@allareas');
+
+    /*=================================\- Mesa -/======================================================*/
+    Route::post('/mesa/temp/store', 'MesatempsController@store');
+    Route::post('/mesa/temp/all', 'MesatempsController@all');
+    Route::post('/buscar/orden/x/mesa', 'MesatempsController@ordenxmesa');
+    Route::post('/producto/orden', 'MesatempsController@productoselect');
+
+
+    /*=================================\- Ordenar Mesa -/======================================================*/
+    Route::post('/ordenar/mesa/store', 'OrdensController@store');
+    Route::post('/producto/orden/cambiar/cantidad', 'OrdensController@cambiarcantidad');
+    Route::post('/producto/orden/eliminar', 'OrdensController@eliminarprod');
 });
 
 Auth::routes();
