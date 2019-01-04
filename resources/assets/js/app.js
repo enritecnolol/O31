@@ -21,6 +21,8 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 Vue.component('prueba', require('./components/prueba.vue'));
 Vue.component('floorview', require('./components/floorview.vue'));
 
+Vue.prototype.$eventbus = new Vue();
+
 import draggable from 'vuedraggable'
 import mouseMenu from 'vue-mouse-menu'
 new Vue({

@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="row-horizon">
-                <template v-for="(item, index) in mesasocupadasv2">
+                <template v-for="(item, index) in mesasocupadas">
                     <span class="categorias" style="margin-left: 2px;cursor: pointer" :class="{selectcategories : item.active}" @click="buscarordenmesa(item.id, index)">{{item.mesa.name}}</span>
                 </template>
             </div>
@@ -145,17 +145,36 @@
                 mesav1:this.mesa,
                 productos:[],
                 productoselecionadov2:this.productoselecionado,
-                mesasocupadasv2:this.mesasocupadas
             }
         },
         methods:{
             buscarordenmesa(i, index)
             {
+                console.log(i + '/////////////////' + index)
                 this.$emit('productopormesa',
                     {
                         index:index,
                         id:i
                     })
+            },
+            buscarordenmesa2(i)
+            {
+                if (i == undefined)
+                {
+                    for (var key in this.mesasocupadas)
+                    {
+                        if (this.mesasocupadas[key].id == this.mesav1)
+                        {
+                            console.log('3')
+                            this.$emit('productopormesa',
+                                {
+                                    index:key,
+                                    id:this.mesasocupadas[key].id
+                                });
+                            break
+                        }
+                    }
+                }
             },
             cambiarcantidad(i)
             {
@@ -204,11 +223,11 @@
             },
             invitado()
             {
-                for (var key in this.mesasocupadasv2){
+                for (var key in this.mesasocupadas){
 
-                    if (this.mesasocupadasv2[key].id == this.mesav1)
+                    if (this.mesasocupadas[key].id == this.mesav1)
                     {
-                        this.invitadott = this.mesasocupadasv2[key].personas;
+                        this.invitadott = this.mesasocupadas[key].personas;
                     }
                 }
                 return this.invitadott
@@ -220,6 +239,7 @@
         mounted() {
 
             this.bus.$on('bajar', this.bajarscroll)
+            this.bus.$on('ejecutarmesa2', this.buscarordenmesa2)
         }
     }
 </script>

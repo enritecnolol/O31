@@ -67,7 +67,7 @@
                                     </template>
 
                                     <template v-else>
-                                        <vue-draggable-resizable @activated="modalcoroto(index)" style="cursor: pointer" :x="item.left" :y="item.top"  :minh="10" :minw="10" :w="item.width" :h="item.height" v-on:dragging="onDrag" v-on:resizing="onResize" :parent="true" :resizable="editar" :draggable="editar" @resizing="datoscoroto(item)" @resizestop="datoscoroto(item)" @dragstop="datoscoroto(item)" @dragging="datoscoroto(item)">
+                                        <vue-draggable-resizable @activated="modalcoroto(index, item.status)" style="cursor: pointer" :x="item.left" :y="item.top"  :minh="10" :minw="10" :w="item.width" :h="item.height" v-on:dragging="onDrag" v-on:resizing="onResize" :parent="true" :resizable="editar" :draggable="editar" @resizing="datoscoroto(item)" @resizestop="datoscoroto(item)" @dragstop="datoscoroto(item)" @dragging="datoscoroto(item)">
                                             <div style="">
                                                 <ItemCoroto @eliminarcoroto="eliminarcoroto" :name="item.name" :area="areaid" :numero="item.numero" :editar="editar" :index="index" :key="item.id" :img="item.img" :id="item.id" :status="item.status" :y="item.top" :x="item.left" :w="item.width" :h="item.height"></ItemCoroto>
                                             </div>
@@ -80,9 +80,7 @@
                 </div>
             </div>
         </div>
-
-        <ordenes v-else @prueba="prueba2" :mesasocupada="mesasocupada" :mesa="mesa"></ordenes>
-
+        <ordenes v-else @prueba="prueba2" @mesaocupadaactive="mesaocupadaactive" :mesasocupada="mesasocupada" :bus="bus" :mesa="mesa"></ordenes>
         <modal name="crear" :draggable="true" :height="200">
             <div class="container">
                 <div class="row">
@@ -109,25 +107,84 @@
                 </div>
             </div>
         </modal>
-        <modal name="coroto" :draggable="true">
-            <div class="row" style="background: #fafaed">
-                <div class="col-md-12" style="margin-top: 38px;padding-left: 104px;padding-right: 104px;margin-bottom: 10px">
-                    <div class="text-center" style="background:whitesmoke;box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);border-radius: 10px 10px 10px 10px;margin-bottom: 10px">
-                        <h3 style="">Mesa Disponible</h3>
+        <modal name="coroto" :draggable="true" :height="380">
+            <div class="container">
+                <div class="row" style="background: #fafaed">
+                    <div class="col-md-12" style="margin-top: 10px">
+                        <div class="text-center">
+                            <h2>Cantidad de Invitados</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="margin-top: 10px">
                         <div class="row">
-                            <div class="col-md-12" style="margin-top: 15px">
-                                <h4 style="">Cantidad de invitados</h4>
+                            <div class="col-md-10">
+                                <input type="text" name="" v-model="invitados" maxlength="2" minlength="1"  class="form-control">
                             </div>
-                            <div class="col-md-12" style="margin-top: 15px">
-                                <div class="" style="margin-bottom: 40px">
-                                    <i style="cursor: pointer;" class="fas fa-2x fa-plus-circle" @click="aumentar('mas')"></i> <h3 style="">{{invitados}}</h3> <i @click="aumentar('menos')" class="fas fa-2x fa-minus-circle" style="cursor: pointer"></i>
-                                </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-warning" style="width: 100%" @click="invitados = ''"><i class="fa fa-arrow-left"></i></button>
                             </div>
-                            <div class="col-md-12" style="margin-bottom: 10px">
-                                <div class="text-center" style="">
-                                    <button type="button" class="btn btn-primary btn-sm" @click="continuar">Continuar <i class="fas fa-arrow-right"></i></button>
-                                </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '7'"><h1 style="color: white">7</h1></button>
                             </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '8'"><h1 style="color: white">8</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '9'"><h1 style="color: white">9</h1></button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '4'"><h1 style="color: white">4</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '5'"><h1 style="color: white">5</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '6'"><h1 style="color: white">6</h1></button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '1'"><h1 style="color: white">1</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '2'"><h1 style="color: white">2</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '3'"><h1 style="color: white">3</h1></button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 50px" @click="invitados = invitados + '0'"><h2 style="color: white">0</h2></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-success" style="width: 100%;height: 50px" @click="continuar()"><h2 style="color: white"><i class="fa fa-arrow-right"></i></h2></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </modal>
+        <modal name="ordenabierta" :height="200">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            <h2 style="">Opciones</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="margin-top: 10px">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary" style="width: 100%;height: 125px;" @click="cargarorden">Cargar Orden</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="margin-top: 10px">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success" style="width: 100%;height: 125px;">Pagar</button>
                         </div>
                     </div>
                 </div>
@@ -219,18 +276,44 @@
 
                 ],
                 bus:new Vue(),
-                invitados:0,
+                invitados:'',
                 mesasocupada:[]
             }
         },
         methods:{
+            cargarorden()
+            {
+                this.prueba = true;
+                this.$modal.hide('ordenabierta');
+                for (var index in this.mesasocupada)
+                {
+                    if (this.mesasocupada[index].id == this.mesa)
+                    {
+                        this.bus.$emit('algo')
+                    }
+                }
+            },
+            mesaocupadaactive(i)
+            {
+                for (var key in this.mesasocupada)
+                {
+                    if (this.mesasocupada[key].active == true)
+                    {
+                        this.mesasocupada[key].active = false;
+                    }
+                }
+                this.mesasocupada[i.index].active = true;
+            },
             continuar()
             {
-                if (this.invitados <= 0)
+                if (this.invitados == "")
+                {
+                    this.invitados = '0';
+                }
+                if (parseInt(this.invitados) <= 0)
                 {
                     toastr.warning('ingrese la cantidad de invitados', 'validador');
                 }else{
-                    this.prueba = true;
                     var mesa;
                     for (var key in this.corotos)
                     {
@@ -240,32 +323,26 @@
                             this.corotos[key].status = 2
                         }
                     }
-                    // var mesa = {
-                    //     id:this.mesa,
-                    //     mesa:mesa,
-                    //     personas:this.invitados,
-                    //     active:true
-                    // };
-                    // this.mesasocupada.push(mesa);
                     axios.post('/mesa/temp/store', {
                         id:this.mesa,
-                        personas:this.invitados,
+                        personas:parseInt(this.invitados),
                     })
                         .then((response) => {
-                            console.log(response);
                             this.allmesastemp();
+                            this.prueba = true;
                         })
                         .catch((error) => {
                             console.log(error);
                         });
                     this.$modal.hide('coroto');
-                    this.invitados = 0
+                    this.invitados = ''
                 }
             },
             allmesastemp()
             {
                 axios.post('/mesa/temp/all')
                     .then((response) => {
+                        this.mesasocupada = [];
                         var mesa = response.data;
                         for (var key in mesa)
                         {
@@ -278,7 +355,7 @@
                                         name:mesa[key].name
                                     },
                                     active:true
-                                }
+                                };
                                 this.mesasocupada.push(esto);
                             }
                             else{
@@ -291,6 +368,17 @@
                                     active:false
                                 }
                                 this.mesasocupada.push(esto);
+                            }
+                        }
+                        for (var i in this.corotos)
+                        {
+                            for (var o in this.mesasocupada)
+                            {
+                                if (this.corotos[i].id == this.mesasocupada[o].id)
+                                {
+                                    this.corotos[i].status = 2;
+                                    break;
+                                }
                             }
                         }
                     })
@@ -327,19 +415,27 @@
                 this.x = x;
                 this.y = y;
             },
-            modalcoroto(index)
+            modalcoroto(index, status)
             {
                 this.mesa = this.corotos[index].id;
-                if (this.mesasocupada.length >= 1){
+                if (this.mesasocupada.length != 0){
+                    var existe = false;
                     for (var key in this.mesasocupada){
-                        if (this.mesasocupada[key].id === this.corotos[index].id)
-                        {
-                            this.prueba = true;
-                            break
-                        }else{
-                            this.$modal.show('coroto');
+                        if (this.mesasocupada[key].id == this.mesa) {
+                            console.log(this.mesasocupada[key].id + ' abierta ' + this.mesa)
+                            // this.$modal.show('ordenabierta');
+                            existe = true
                             break
                         }
+                        // }else{
+                        //     this.$modal.show('coroto');
+                        // }
+                    }
+                    if  (existe == true)
+                    {
+                        this.$modal.show('ordenabierta');
+                    }else {
+                        this.$modal.show('coroto');
                     }
                 }else {
                     this.mesa = this.corotos[index].id;
@@ -349,7 +445,8 @@
             corotosporarea(id)
             {
                 this.areaid = id;
-                this.datoscorotos()
+                this.datoscorotos();
+                // this.allmesastemp();
             },
             allareas()
             {
@@ -357,7 +454,6 @@
                     nombre:this.nombrearea
                 })
                     .then( (response) => {
-                        console.log(response);
                         for (var key in response.data)
                         {
                             var data = {
@@ -398,7 +494,8 @@
             },
             prueba2()
             {
-                this.prueba = false
+                this.prueba = false;
+                this.datoscorotos()
             },
             organizarmesas()
             {
@@ -408,7 +505,7 @@
                     if (this.corotos[key].name == 'mesa')
                     {
                         count++;
-                        this.corotos[key].numero = count;
+                        this.corotos[key].numero = count + 2;
                     }
                 }
             },
@@ -516,7 +613,6 @@
                     area:this.areaid
                 })
                     .then( (response) => {
-                        console.log(response);
                         toastr.success('Datos Guardado', 'Validado');
                         this.corotosporarea(this.areaid);
                     })
@@ -539,14 +635,14 @@
                     area:this.areaid
                 })
                     .then( (response) => {
-                        console.log(response.data);
                         if (response.data == "['No Data']")
                         {
                             toastr.warning('No hemos encontrado datos');
                             this.corotos = [];
                         }else{
                             toastr.success('','Gestor de datos');
-                            this.corotos = response.data
+                            this.corotos = response.data;
+                            this.allmesastemp();
                         }
                     })
                     .catch(function (error) {

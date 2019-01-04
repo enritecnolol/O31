@@ -12583,6 +12583,8 @@ Vue.component('example-component', __webpack_require__(14));
 Vue.component('prueba', __webpack_require__(16));
 Vue.component('floorview', __webpack_require__(7));
 
+Vue.prototype.$eventbus = new Vue();
+
 
 
 new Vue({
@@ -13582,6 +13584,63 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13655,19 +13714,38 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
                 height: 100
             }],
             bus: new Vue(),
-            invitados: 0,
+            invitados: '',
             mesasocupada: []
         };
     },
 
     methods: {
+        cargarorden: function cargarorden() {
+            this.prueba = true;
+            this.$modal.hide('ordenabierta');
+            for (var index in this.mesasocupada) {
+                if (this.mesasocupada[index].id == this.mesa) {
+                    this.bus.$emit('algo');
+                }
+            }
+        },
+        mesaocupadaactive: function mesaocupadaactive(i) {
+            for (var key in this.mesasocupada) {
+                if (this.mesasocupada[key].active == true) {
+                    this.mesasocupada[key].active = false;
+                }
+            }
+            this.mesasocupada[i.index].active = true;
+        },
         continuar: function continuar() {
             var _this = this;
 
-            if (this.invitados <= 0) {
+            if (this.invitados == "") {
+                this.invitados = '0';
+            }
+            if (parseInt(this.invitados) <= 0) {
                 toastr.warning('ingrese la cantidad de invitados', 'validador');
             } else {
-                this.prueba = true;
                 var mesa;
                 for (var key in this.corotos) {
                     if (this.corotos[key].id == this.mesa) {
@@ -13675,30 +13753,24 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
                         this.corotos[key].status = 2;
                     }
                 }
-                // var mesa = {
-                //     id:this.mesa,
-                //     mesa:mesa,
-                //     personas:this.invitados,
-                //     active:true
-                // };
-                // this.mesasocupada.push(mesa);
                 axios.post('/mesa/temp/store', {
                     id: this.mesa,
-                    personas: this.invitados
+                    personas: parseInt(this.invitados)
                 }).then(function (response) {
-                    console.log(response);
                     _this.allmesastemp();
+                    _this.prueba = true;
                 }).catch(function (error) {
                     console.log(error);
                 });
                 this.$modal.hide('coroto');
-                this.invitados = 0;
+                this.invitados = '';
             }
         },
         allmesastemp: function allmesastemp() {
             var _this2 = this;
 
             axios.post('/mesa/temp/all').then(function (response) {
+                _this2.mesasocupada = [];
                 var mesa = response.data;
                 for (var key in mesa) {
                     if (mesa[key].coroto_id == _this2.mesa) {
@@ -13721,6 +13793,14 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
                             active: false
                         };
                         _this2.mesasocupada.push(esto);
+                    }
+                }
+                for (var i in _this2.corotos) {
+                    for (var o in _this2.mesasocupada) {
+                        if (_this2.corotos[i].id == _this2.mesasocupada[o].id) {
+                            _this2.corotos[i].status = 2;
+                            break;
+                        }
                     }
                 }
             }).catch(function (error) {
@@ -13750,17 +13830,25 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
             this.x = x;
             this.y = y;
         },
-        modalcoroto: function modalcoroto(index) {
+        modalcoroto: function modalcoroto(index, status) {
             this.mesa = this.corotos[index].id;
-            if (this.mesasocupada.length >= 1) {
+            if (this.mesasocupada.length != 0) {
+                var existe = false;
                 for (var key in this.mesasocupada) {
-                    if (this.mesasocupada[key].id === this.corotos[index].id) {
-                        this.prueba = true;
-                        break;
-                    } else {
-                        this.$modal.show('coroto');
+                    if (this.mesasocupada[key].id == this.mesa) {
+                        console.log(this.mesasocupada[key].id + ' abierta ' + this.mesa);
+                        // this.$modal.show('ordenabierta');
+                        existe = true;
                         break;
                     }
+                    // }else{
+                    //     this.$modal.show('coroto');
+                    // }
+                }
+                if (existe == true) {
+                    this.$modal.show('ordenabierta');
+                } else {
+                    this.$modal.show('coroto');
                 }
             } else {
                 this.mesa = this.corotos[index].id;
@@ -13770,6 +13858,7 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
         corotosporarea: function corotosporarea(id) {
             this.areaid = id;
             this.datoscorotos();
+            // this.allmesastemp();
         },
         allareas: function allareas() {
             var _this3 = this;
@@ -13777,7 +13866,6 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
             axios.post('/all/area', {
                 nombre: this.nombrearea
             }).then(function (response) {
-                console.log(response);
                 for (var key in response.data) {
                     var data = {
                         id: response.data[key].id,
@@ -13813,13 +13901,14 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
         },
         prueba2: function prueba2() {
             this.prueba = false;
+            this.datoscorotos();
         },
         organizarmesas: function organizarmesas() {
             var count = 0;
             for (var key in this.corotos) {
                 if (this.corotos[key].name == 'mesa') {
                     count++;
-                    this.corotos[key].numero = count;
+                    this.corotos[key].numero = count + 2;
                 }
             }
         },
@@ -13916,7 +14005,6 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
                 corotos: this.corotos,
                 area: this.areaid
             }).then(function (response) {
-                console.log(response);
                 toastr.success('Datos Guardado', 'Validado');
                 _this6.corotosporarea(_this6.areaid);
             }).catch(function (error) {
@@ -13937,13 +14025,13 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
             axios.post('/corotos/all', {
                 area: this.areaid
             }).then(function (response) {
-                console.log(response.data);
                 if (response.data == "['No Data']") {
                     toastr.warning('No hemos encontrado datos');
                     _this7.corotos = [];
                 } else {
                     toastr.success('', 'Gestor de datos');
                     _this7.corotos = response.data;
+                    _this7.allmesastemp();
                 }
             }).catch(function (error) {
                 console.log(error);
@@ -14442,10 +14530,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_dragscroll___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'ordenes',
     components: { cardproduct: __WEBPACK_IMPORTED_MODULE_0__cardproduct___default.a, carrito: __WEBPACK_IMPORTED_MODULE_1__carrito___default.a, VueDragscroll: __WEBPACK_IMPORTED_MODULE_2_vue_dragscroll___default.a },
-    props: ['mesasocupada', 'mesa'],
+    props: ['mesasocupada', 'mesa', 'bus'],
     data: function data() {
         return {
-            mesasocupadasv2: this.mesasocupada,
             default1: false,
             mesav1: this.mesa,
             categorias: [],
@@ -14457,9 +14544,10 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_dragscroll___default.a);
                 'border-bottom': '3px solid #f65e48 !important'
             },
             productoselecionado: [],
-            bus: new Vue(),
+            // bus: new Vue(),
             detalle: [],
-            product: ''
+            product: '',
+            data: ''
         };
     },
 
@@ -14467,12 +14555,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_dragscroll___default.a);
         productopormesa: function productopormesa(i) {
             var _this = this;
 
-            for (var key in this.mesasocupadasv2) {
-                if (this.mesasocupadasv2[key].active == true) {
-                    this.mesasocupadasv2[key].active = false;
-                }
-            }
-            this.mesasocupadasv2[i.index].active = true;
+            this.$emit('mesaocupadaactive', i);
             this.productoselecionado = [];
             axios.post('/buscar/orden/x/mesa', {
                 id: i.id
@@ -14501,9 +14584,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_dragscroll___default.a);
             });
         },
         cambiarcantidad: function cambiarcantidad(i) {
-            console.log(i);
             if (i.obt.cantidad === 0) {
-                this.productoselecionado.splice(i.obt.index, 1);
                 if (this.productoselecionado[i.obt.index]['id'] != 0) {
                     axios.post('/producto/orden/eliminar', {
                         producto: this.productoselecionado[i.obt.index],
@@ -14515,15 +14596,19 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_dragscroll___default.a);
                         console.log(error);
                     });
                 }
+                this.productoselecionado.splice(i.obt.index, 1);
             } else {
                 this.productoselecionado[i.obt.index].total = parseFloat(this.productoselecionado[i.obt.index].producto.price * i.obt.cantidad).toFixed(2);
                 this.productoselecionado[i.obt.index].cantidad = i.obt.cantidad;
-
+                var total = 0;
+                for (var key in this.productoselecionado) {
+                    total = parseFloat(this.productoselecionado[key].total) + parseFloat(total);
+                }
                 if (this.productoselecionado[i.obt.index]['id'] != 0) {
                     axios.post('/producto/orden/cambiar/cantidad', {
                         producto: this.productoselecionado[i.obt.index],
                         orden: this.productoselecionado[i.obt.index]['orden']['id'],
-                        subtotal: i.subtotal
+                        subtotal: total
                     }).then(function (response) {
                         console.log(response);
                     }).catch(function (error) {
@@ -14628,13 +14713,20 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_dragscroll___default.a);
         },
         bajarscroll: function bajarscroll() {
             this.bus.$emit('bajar');
+        },
+        buscarordenmesa: function buscarordenmesa(i) {
+            console.log('2');
+            this.bus.$emit('ejecutarmesa2');
         }
     },
     computed: {},
     mounted: function mounted() {
         this.allcategorias();
         this.allproduct();
-    }
+        // this.$eventbus.$on('algo', this.buscarordenmesa());
+        this.bus.$on('algo', this.buscarordenmesa());
+    },
+    created: function created() {}
 });
 
 /***/ }),
@@ -15088,17 +15180,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             invitadoturno: 1,
             mesav1: this.mesa,
             productos: [],
-            productoselecionadov2: this.productoselecionado,
-            mesasocupadasv2: this.mesasocupadas
+            productoselecionadov2: this.productoselecionado
         };
     },
 
     methods: {
         buscarordenmesa: function buscarordenmesa(i, index) {
+            console.log(i + '/////////////////' + index);
             this.$emit('productopormesa', {
                 index: index,
                 id: i
             });
+        },
+        buscarordenmesa2: function buscarordenmesa2(i) {
+            if (i == undefined) {
+                for (var key in this.mesasocupadas) {
+                    if (this.mesasocupadas[key].id == this.mesav1) {
+                        console.log('3');
+                        this.$emit('productopormesa', {
+                            index: key,
+                            id: this.mesasocupadas[key].id
+                        });
+                        break;
+                    }
+                }
+            }
         },
         cambiarcantidad: function cambiarcantidad(i) {
             this.$emit('cambiarcantidad', { obt: i, subtotal: this.subtotal });
@@ -15138,10 +15244,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return parseFloat(suma).toFixed(2);
         },
         invitado: function invitado() {
-            for (var key in this.mesasocupadasv2) {
+            for (var key in this.mesasocupadas) {
 
-                if (this.mesasocupadasv2[key].id == this.mesav1) {
-                    this.invitadott = this.mesasocupadasv2[key].personas;
+                if (this.mesasocupadas[key].id == this.mesav1) {
+                    this.invitadott = this.mesasocupadas[key].personas;
                 }
             }
             return this.invitadott;
@@ -15151,6 +15257,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
 
         this.bus.$on('bajar', this.bajarscroll);
+        this.bus.$on('ejecutarmesa2', this.buscarordenmesa2);
     }
 });
 
@@ -15505,7 +15612,7 @@ var render = function() {
         "div",
         { staticClass: "row-horizon" },
         [
-          _vm._l(_vm.mesasocupadasv2, function(item, index) {
+          _vm._l(_vm.mesasocupadas, function(item, index) {
             return [
               _c(
                 "span",
@@ -15900,7 +16007,7 @@ var render = function() {
             [
               _c("carrito", {
                 attrs: {
-                  mesasocupadas: _vm.mesasocupadasv2,
+                  mesasocupadas: _vm.mesasocupada,
                   mesa: _vm.mesa,
                   productoselecionado: _vm.productoselecionado,
                   bus: _vm.bus,
@@ -17509,7 +17616,10 @@ var render = function() {
                                             },
                                             on: {
                                               activated: function($event) {
-                                                _vm.modalcoroto(index)
+                                                _vm.modalcoroto(
+                                                  index,
+                                                  item.status
+                                                )
                                               },
                                               dragging: [
                                                 _vm.onDrag,
@@ -17575,8 +17685,15 @@ var render = function() {
             )
           ])
         : _c("ordenes", {
-            attrs: { mesasocupada: _vm.mesasocupada, mesa: _vm.mesa },
-            on: { prueba: _vm.prueba2 }
+            attrs: {
+              mesasocupada: _vm.mesasocupada,
+              bus: _vm.bus,
+              mesa: _vm.mesa
+            },
+            on: {
+              prueba: _vm.prueba2,
+              mesaocupadaactive: _vm.mesaocupadaactive
+            }
           }),
       _vm._v(" "),
       _c("modal", { attrs: { name: "crear", draggable: true, height: 200 } }, [
@@ -17662,114 +17779,394 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("modal", { attrs: { name: "coroto", draggable: true } }, [
-        _c(
-          "div",
-          { staticClass: "row", staticStyle: { background: "#fafaed" } },
-          [
+      _c("modal", { attrs: { name: "coroto", draggable: true, height: 380 } }, [
+        _c("div", { staticClass: "container" }, [
+          _c(
+            "div",
+            { staticClass: "row", staticStyle: { background: "#fafaed" } },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "col-md-12",
+                  staticStyle: { "margin-top": "10px" }
+                },
+                [
+                  _c("div", { staticClass: "text-center" }, [
+                    _c("h2", [_vm._v("Cantidad de Invitados")])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "col-md-12",
+                  staticStyle: { "margin-top": "10px" }
+                },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-10" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.invitados,
+                            expression: "invitados"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "",
+                          maxlength: "2",
+                          minlength: "1"
+                        },
+                        domProps: { value: _vm.invitados },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.invitados = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-2" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-warning",
+                          staticStyle: { width: "100%" },
+                          on: {
+                            click: function($event) {
+                              _vm.invitados = ""
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fa fa-arrow-left" })]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "row",
+                      staticStyle: { "margin-top": "10px" }
+                    },
+                    [
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            staticStyle: { width: "100%", height: "60px" },
+                            on: {
+                              click: function($event) {
+                                _vm.invitados = _vm.invitados + "7"
+                              }
+                            }
+                          },
+                          [
+                            _c("h1", { staticStyle: { color: "white" } }, [
+                              _vm._v("7")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            staticStyle: { width: "100%", height: "60px" },
+                            on: {
+                              click: function($event) {
+                                _vm.invitados = _vm.invitados + "8"
+                              }
+                            }
+                          },
+                          [
+                            _c("h1", { staticStyle: { color: "white" } }, [
+                              _vm._v("8")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            staticStyle: { width: "100%", height: "60px" },
+                            on: {
+                              click: function($event) {
+                                _vm.invitados = _vm.invitados + "9"
+                              }
+                            }
+                          },
+                          [
+                            _c("h1", { staticStyle: { color: "white" } }, [
+                              _vm._v("9")
+                            ])
+                          ]
+                        )
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "row",
+                      staticStyle: { "margin-top": "10px" }
+                    },
+                    [
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            staticStyle: { width: "100%", height: "60px" },
+                            on: {
+                              click: function($event) {
+                                _vm.invitados = _vm.invitados + "4"
+                              }
+                            }
+                          },
+                          [
+                            _c("h1", { staticStyle: { color: "white" } }, [
+                              _vm._v("4")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            staticStyle: { width: "100%", height: "60px" },
+                            on: {
+                              click: function($event) {
+                                _vm.invitados = _vm.invitados + "5"
+                              }
+                            }
+                          },
+                          [
+                            _c("h1", { staticStyle: { color: "white" } }, [
+                              _vm._v("5")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            staticStyle: { width: "100%", height: "60px" },
+                            on: {
+                              click: function($event) {
+                                _vm.invitados = _vm.invitados + "6"
+                              }
+                            }
+                          },
+                          [
+                            _c("h1", { staticStyle: { color: "white" } }, [
+                              _vm._v("6")
+                            ])
+                          ]
+                        )
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "row",
+                      staticStyle: { "margin-top": "10px" }
+                    },
+                    [
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            staticStyle: { width: "100%", height: "60px" },
+                            on: {
+                              click: function($event) {
+                                _vm.invitados = _vm.invitados + "1"
+                              }
+                            }
+                          },
+                          [
+                            _c("h1", { staticStyle: { color: "white" } }, [
+                              _vm._v("1")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            staticStyle: { width: "100%", height: "60px" },
+                            on: {
+                              click: function($event) {
+                                _vm.invitados = _vm.invitados + "2"
+                              }
+                            }
+                          },
+                          [
+                            _c("h1", { staticStyle: { color: "white" } }, [
+                              _vm._v("2")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            staticStyle: { width: "100%", height: "60px" },
+                            on: {
+                              click: function($event) {
+                                _vm.invitados = _vm.invitados + "3"
+                              }
+                            }
+                          },
+                          [
+                            _c("h1", { staticStyle: { color: "white" } }, [
+                              _vm._v("3")
+                            ])
+                          ]
+                        )
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "row",
+                      staticStyle: { "margin-top": "10px" }
+                    },
+                    [
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            staticStyle: { width: "100%", height: "50px" },
+                            on: {
+                              click: function($event) {
+                                _vm.invitados = _vm.invitados + "0"
+                              }
+                            }
+                          },
+                          [
+                            _c("h2", { staticStyle: { color: "white" } }, [
+                              _vm._v("0")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success",
+                            staticStyle: { width: "100%", height: "50px" },
+                            on: {
+                              click: function($event) {
+                                _vm.continuar()
+                              }
+                            }
+                          },
+                          [
+                            _c("h2", { staticStyle: { color: "white" } }, [
+                              _c("i", { staticClass: "fa fa-arrow-right" })
+                            ])
+                          ]
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("modal", { attrs: { name: "ordenabierta", height: 200 } }, [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "text-center" }, [
+                _c("h2", {}, [_vm._v("Opciones")])
+              ])
+            ]),
+            _vm._v(" "),
             _c(
               "div",
               {
-                staticClass: "col-md-12",
-                staticStyle: {
-                  "margin-top": "38px",
-                  "padding-left": "104px",
-                  "padding-right": "104px",
-                  "margin-bottom": "10px"
-                }
+                staticClass: "col-md-6",
+                staticStyle: { "margin-top": "10px" }
               },
               [
-                _c(
-                  "div",
-                  {
-                    staticClass: "text-center",
-                    staticStyle: {
-                      background: "whitesmoke",
-                      "box-shadow": "0px 0px 5px 0px rgba(0,0,0,0.75)",
-                      "border-radius": "10px 10px 10px 10px",
-                      "margin-bottom": "10px"
-                    }
-                  },
-                  [
-                    _c("h3", {}, [_vm._v("Mesa Disponible")]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "col-md-12",
-                          staticStyle: { "margin-top": "15px" }
-                        },
-                        [_c("h4", {}, [_vm._v("Cantidad de invitados")])]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "col-md-12",
-                          staticStyle: { "margin-top": "15px" }
-                        },
-                        [
-                          _c(
-                            "div",
-                            { staticStyle: { "margin-bottom": "40px" } },
-                            [
-                              _c("i", {
-                                staticClass: "fas fa-2x fa-plus-circle",
-                                staticStyle: { cursor: "pointer" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.aumentar("mas")
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("h3", {}, [_vm._v(_vm._s(_vm.invitados))]),
-                              _vm._v(" "),
-                              _c("i", {
-                                staticClass: "fas fa-2x fa-minus-circle",
-                                staticStyle: { cursor: "pointer" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.aumentar("menos")
-                                  }
-                                }
-                              })
-                            ]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "col-md-12",
-                          staticStyle: { "margin-bottom": "10px" }
-                        },
-                        [
-                          _c("div", { staticClass: "text-center" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary btn-sm",
-                                attrs: { type: "button" },
-                                on: { click: _vm.continuar }
-                              },
-                              [
-                                _vm._v("Continuar "),
-                                _c("i", { staticClass: "fas fa-arrow-right" })
-                              ]
-                            )
-                          ])
-                        ]
-                      )
-                    ])
-                  ]
-                )
+                _c("div", { staticClass: "text-center" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      staticStyle: { width: "100%", height: "125px" },
+                      attrs: { type: "button" },
+                      on: { click: _vm.cargarorden }
+                    },
+                    [_vm._v("Cargar Orden")]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "col-md-6",
+                staticStyle: { "margin-top": "10px" }
+              },
+              [
+                _c("div", { staticClass: "text-center" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      staticStyle: { width: "100%", height: "125px" },
+                      attrs: { type: "button" }
+                    },
+                    [_vm._v("Pagar")]
+                  )
+                ])
               ]
             )
-          ]
-        )
+          ])
+        ])
       ])
     ],
     1

@@ -8,7 +8,7 @@
                     </div>
                 </div>
                 <div class="col-md-5" style="height: 900px;background: #ecf0f1">
-                    <carrito @volverpant="volverpantalla" @cambiarcantidad="cambiarcantidad" @productopormesa="productopormesa" :mesasocupadas="mesasocupadasv2" :mesa="mesa" :productoselecionado="productoselecionado" :bus="bus" :detalle="detalle" ></carrito>
+                    <carrito @volverpant="volverpantalla" @cambiarcantidad="cambiarcantidad" @productopormesa="productopormesa" :mesasocupadas="mesasocupada" :mesa="mesa" :productoselecionado="productoselecionado" :bus="bus" :detalle="detalle" ></carrito>
                 </div>
                 <div class="col-md-7" style="height: 900px;background: #ecf0f1">
                     <div class="row">
@@ -44,11 +44,10 @@
     export default {
         name:'ordenes',
         components:{cardproduct,carrito,VueDragscroll},
-        props:['mesasocupada', 'mesa'],
+        props:['mesasocupada', 'mesa', 'bus'],
         data()
         {
             return{
-                mesasocupadasv2:this.mesasocupada,
                 default1:false,
                 mesav1:this.mesa,
                 categorias:[],
@@ -60,22 +59,16 @@
                     'border-bottom': '3px solid #f65e48 !important'
                 },
                 productoselecionado:[],
-                bus: new Vue(),
+                // bus: new Vue(),
                 detalle:[],
-                product:''
+                product:'',
+                data:''
             }
         },
         methods:{
             productopormesa(i)
             {
-                for (var key in this.mesasocupadasv2)
-                {
-                    if (this.mesasocupadasv2[key].active ==true)
-                    {
-                        this.mesasocupadasv2[key].active = false;
-                    }
-                }
-                this.mesasocupadasv2[i.index].active = true;
+                this.$emit('mesaocupadaactive',i);
                 this.productoselecionado = [];
                 axios.post('/buscar/orden/x/mesa', {
                     id:i.id
@@ -110,10 +103,8 @@
             },
             cambiarcantidad(i)
             {
-                console.log(i)
                 if (i.obt.cantidad === 0)
                 {
-                    this.productoselecionado.splice(i.obt.index,1)
                     if (this.productoselecionado[i.obt.index]['id'] != 0)
                     {
                         axios.post('/producto/orden/eliminar', {
@@ -128,16 +119,22 @@
                                 console.log(error);
                             });
                     }
+                    this.productoselecionado.splice(i.obt.index,1)
+
                 }else{
                     this.productoselecionado[i.obt.index].total = parseFloat(this.productoselecionado[i.obt.index].producto.price * i.obt.cantidad).toFixed(2);
                     this.productoselecionado[i.obt.index].cantidad = i.obt.cantidad;
-
+                    var total = 0;
+                    for (var key in this.productoselecionado)
+                    {
+                        total = parseFloat(this.productoselecionado[key].total) + parseFloat(total)
+                    }
                     if (this.productoselecionado[i.obt.index]['id'] != 0)
                     {
                         axios.post('/producto/orden/cambiar/cantidad', {
                             producto:this.productoselecionado[i.obt.index],
                             orden:this.productoselecionado[i.obt.index]['orden']['id'],
-                            subtotal:i.subtotal
+                            subtotal:total
                         })
                             .then(function (response) {
                                 console.log(response);
@@ -257,8 +254,11 @@
             },
             bajarscroll(){
                 this.bus.$emit('bajar')
-            }
-
+            },
+            buscarordenmesa(i){
+                console.log('2')
+                this.bus.$emit('ejecutarmesa2');
+            },
         },
         computed:{
 
@@ -266,6 +266,10 @@
         mounted() {
             this.allcategorias();
             this.allproduct();
+            // this.$eventbus.$on('algo', this.buscarordenmesa());
+            this.bus.$on('algo', this.buscarordenmesa());
+        },
+        created() {
         }
     }
 </script>
