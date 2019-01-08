@@ -1,8 +1,8 @@
 @extends('main.app2')
-@section('tittle','Cafeteria | Prueba')
+@section('tittle','Cafeteria | Comanda')
 
 @section('titulo')
-    <h3 style="color: white"><i class="fas fa-arrow-circle-right"></i> Prueba</h3>
+    <h3 style="color: white"><i class="fas fa-arrow-circle-right"></i>Comanda</h3>
 @endsection
 
 @section('content')

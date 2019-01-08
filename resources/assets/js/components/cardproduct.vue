@@ -23,6 +23,12 @@
         methods:{
             productoselect()
             {
+                var index=0;
+                for (var key in this.detalle.orden)
+                {
+                    index = key
+                }
+
                 if (this.detalle.length == 0)
                 {
                     this.$emit('productoagregar',{
@@ -39,7 +45,7 @@
                     this.$emit('productoagregar',{
                         index:this.index,
                         id:0,
-                        orden:this.detalle['orden'][0],
+                        orden:this.detalle.orden[index],
                         producto:this.producto,
                         mesa:this.mesa,
                         cantidad:1,

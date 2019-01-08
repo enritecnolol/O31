@@ -1,5 +1,6 @@
 <template>
     <div class="container-fluid" style="">
+        <div class="loader" v-if="loading == true"></div>
         <div class="" v-if="prueba == false">
             <div class="" style="background: url('../../../../local/fondo6.png')">
                 <div class="container-fluid">
@@ -184,7 +185,7 @@
                     </div>
                     <div class="col-md-6" style="margin-top: 10px">
                         <div class="text-center">
-                            <button type="button" class="btn btn-success" style="width: 100%;height: 125px;">Pagar</button>
+                            <button type="button" class="btn btn-success" style="width: 100%;height: 125px;" @click="pagarorden">Pagar</button>
                         </div>
                     </div>
                 </div>
@@ -277,21 +278,23 @@
                 ],
                 bus:new Vue(),
                 invitados:'',
-                mesasocupada:[]
+                mesasocupada:[],
+                loading:false
             }
         },
         methods:{
+            pagarorden()
+            {
+                this.prueba = true;
+                this.$modal.hide('ordenabierta');
+                // this.$eventbus.$emit('buscarmesa');
+                this.$eventbus.$emit('pagarorden');
+            },
             cargarorden()
             {
                 this.prueba = true;
                 this.$modal.hide('ordenabierta');
-                for (var index in this.mesasocupada)
-                {
-                    if (this.mesasocupada[index].id == this.mesa)
-                    {
-                        this.bus.$emit('algo')
-                    }
-                }
+                this.$eventbus.$emit('buscarmesa');
             },
             mesaocupadaactive(i)
             {
@@ -303,6 +306,7 @@
                     }
                 }
                 this.mesasocupada[i.index].active = true;
+                this.mesa = i.id;
             },
             continuar()
             {
@@ -422,14 +426,10 @@
                     var existe = false;
                     for (var key in this.mesasocupada){
                         if (this.mesasocupada[key].id == this.mesa) {
-                            console.log(this.mesasocupada[key].id + ' abierta ' + this.mesa)
-                            // this.$modal.show('ordenabierta');
-                            existe = true
+                            // console.log(this.mesasocupada[key].id + ' abierta ' + this.mesa)
+                            existe = true;
                             break
                         }
-                        // }else{
-                        //     this.$modal.show('coroto');
-                        // }
                     }
                     if  (existe == true)
                     {
@@ -444,9 +444,9 @@
             },
             corotosporarea(id)
             {
+                this.loading = true;
                 this.areaid = id;
                 this.datoscorotos();
-                // this.allmesastemp();
             },
             allareas()
             {
@@ -644,6 +644,7 @@
                             this.corotos = response.data;
                             this.allmesastemp();
                         }
+                        this.loading = false;
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -658,6 +659,16 @@
     }
 </script>
 <style scoped>
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url("../../../../public/loading2.gif") 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
     .letra{
         z-index: 4;
     }

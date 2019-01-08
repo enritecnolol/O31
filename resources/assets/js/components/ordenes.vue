@@ -1,5 +1,6 @@
 <template>
     <div class="" style="background: url('../../../../local/fondo6.png')">
+        <div class="loader" v-if="loading == true"></div>
         <div class="">
             <div class="row">
                 <div class="col-md-12">
@@ -62,7 +63,8 @@
                 // bus: new Vue(),
                 detalle:[],
                 product:'',
-                data:''
+                data:'',
+                loading:false
             }
         },
         methods:{
@@ -74,8 +76,13 @@
                     id:i.id
                 })
                     .then((response) => {
-                        this.mesav1 = i.id;
+                        // this.mesav1 = i.id;
                         this.detalle = response['data'];
+                        var ord=0;
+                        for (var ind in this.detalle['orden'])
+                        {
+                            ord = ind;
+                        }
                         for (var key in this.detalle['detalle'])
                         {
                             for (var o in this.productos)
@@ -84,7 +91,7 @@
                                 {
                                     var esto = {
                                         id:this.detalle['detalle'][key]['id'],
-                                        orden:this.detalle['orden'][0],
+                                        orden:this.detalle['orden'][ord],
                                         index:0,
                                         cantidad:this.detalle['detalle'][key]['cantidad'],
                                         mesa:this.mesav1,
@@ -96,10 +103,19 @@
                                 }
                             }
                         }
+                        this.loading = false;
+                        // this.generarproductosseleccionado();
                     })
                     .catch( (error) => {
                         console.log(error);
                     });
+
+            },
+            generarproductosseleccionado()
+            {
+                console.log(this.productos);
+                console.log(this.detalle);
+                console.log(this.productoselecionado);
             },
             cambiarcantidad(i)
             {
@@ -188,6 +204,7 @@
                             this.categorias.push(datos)
                         }
                         this.default1 = true;
+                        this.loading = false
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -198,7 +215,7 @@
                 axios.post('/all/productos')
                     .then((response) => {
                         this.productos = response.data;
-                        console.log(response);
+                        this.loading = false
                     })
                     .catch( (error) => {
                         console.log(error);
@@ -255,25 +272,41 @@
             bajarscroll(){
                 this.bus.$emit('bajar')
             },
-            buscarordenmesa(i){
-                console.log('2')
-                this.bus.$emit('ejecutarmesa2');
+            buscarordenmesa(){
+                this.$eventbus.$emit('ejecutarmesa',{});
+                this.allproduct()
+            },
+            pagarorden()
+            {
+                this.$eventbus.$emit('pagarorden2',{});
             },
         },
         computed:{
 
         },
         mounted() {
+            this.loading = true;
             this.allcategorias();
-            this.allproduct();
-            // this.$eventbus.$on('algo', this.buscarordenmesa());
-            this.bus.$on('algo', this.buscarordenmesa());
+            // this.allproduct();
         },
         created() {
+            this.allproduct();
+            this.$eventbus.$on('buscarmesa',this.buscarordenmesa());
+            this.$eventbus.$on('pagarorden', this.pagarorden());
         }
     }
 </script>
 <style>
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url("../../../../public/loading2.gif") 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
     .selectcategories {
         background-color:#6B6B6B !important;
         color:#E2E2E2 !important;

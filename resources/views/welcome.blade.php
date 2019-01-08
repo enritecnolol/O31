@@ -1125,7 +1125,8 @@
               }
             }
 
-          }else{
+          }
+          else{
             if (this.montotarjeta === 0 && this.campodinero === 0 && this.datosticket.balancepuntos === 0){
               alert('No puedes hacer una compra de valor 0');
             }else{

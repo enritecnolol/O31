@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Caja;
+use App\Detail;
 use App\Details_orden;
+use App\Facture;
+use App\Mesa_temp;
 use App\Orden;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -127,5 +131,100 @@ class OrdensController extends Controller
 
         return 'delete';
 
+    }
+    public function cancelarorden(Request $request)
+    {
+        $mesa_temps = Mesa_temp::all()->where('coroto_id', $request->mesa);
+        foreach ($mesa_temps as $mesa_temp)
+        {
+            $mesa_temp = $mesa_temp->id;
+            $mesa_tempsdelete = Mesa_temp::find($mesa_temp);
+            $mesa_tempsdelete->delete();
+        }
+
+        $ordens = Orden::all()->where('estado', 'Abierta')->where('mesa_id', $request->mesa);
+        foreach ($ordens as $orden)
+        {
+            $detail_ordens = Details_orden::all()->where('orden_id', $orden->id);
+            foreach ($detail_ordens as $detail_orden)
+            {
+                $detail_ordendelete = Details_orden::find($detail_orden->id);
+                $detail_ordendelete->delete();
+            }
+            $ordensde = Orden::find($orden->id);
+            $ordensde->delete();
+
+        }
+        return 'delete';
+
+    }
+    public function facturarorden(Request $request)
+    {
+        $idcaja = Caja::all();
+        $facture = new Facture;
+        $facture->date = date('Y-m-d');
+        $facture->box = 'Caja No.1';
+        $facture->cashier = 0;
+        $facture->brute = $request->bruto;
+        $facture->desc = $request->descuento;
+        $facture->itbis = $request->itbis;
+        $facture->total_facture = $request->neto;
+        $facture->Monto_tarjeta = $request->montotarjeta;
+        $facture->Monto_efectivo = $request->dinero;
+        $facture->returns = $request->devuelta;
+        $facture->status = 'Pago';
+        $facture->type_sale = 'no usada';
+        $facture->type_tarject = $request->tipotarjeta;
+        $facture->Numbertar = $request->Numtarjeta;
+        $facture->banco = $request->banco;
+        $facture->auth = $request->auth;
+        $facture->caja_id = $idcaja->last()->id;
+        $facture->user_id = Auth::id();
+        $facture->save();
+        $idfacture = Facture::all();
+
+        $count = 0;
+
+        foreach ($request->get('detalle') as $d) {
+            $count++;
+
+            $detalle = new Detail;
+
+            $detalle->date = now();
+            $detalle->name_product = $d["producto"]["name"];
+            $detalle->descuento = 0;
+            $detalle->quanlity = $d["cantidad"];
+            $detalle->price = $d["total"];
+            $itbisp = $d['total'] / floatval('1.'.$d["producto"]['porciento']);
+            if ($itbisp == $d['total']){
+                $itbisp = 0;
+            }else{
+                $itbisp = $itbisp;
+            }
+            $bruto = floatval($itbisp) * floatval('0.'.$d["producto"]['porciento']);
+            $detalle->depot = $bruto;
+            $detalle->impost = $itbisp;
+            $detalle->product_id = $d["producto"]["id"];
+            $detalle->facture_id = $idfacture->last()->id;
+            $detalle->save();
+
+            $orden = Orden::find($d["orden"]["id"]);
+            $orden->estado = "Cerrada";
+            $orden->fecha_cierre = now();
+            $orden->update();
+        }
+
+        $mesa_temps = Mesa_temp::all()->where('coroto_id', $request->mesa);
+        foreach ($mesa_temps as $mesa_temp)
+        {
+            $mesa_tempsdelete = Mesa_temp::find($mesa_temp->id);
+            $mesa_tempsdelete->delete();
+        }
+
+        return $mesa_temps;
+    }
+    public function Comanda()
+    {
+        return view('comanda');
     }
 }

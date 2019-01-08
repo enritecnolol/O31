@@ -6,6 +6,7 @@ use App\Configuracion;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ConfiguracionesController extends Controller
 {
@@ -104,5 +105,18 @@ class ConfiguracionesController extends Controller
             $existencia = $existencia->controlinv;
         }
         return $existencia;
+    }
+    public function manejoitbis()
+    {
+        $config = DB::table('configuracions')->select('impuesto')->where('user_id', Auth::id())->get();
+
+        if ($config == '[]'){
+            $config = 'vacio';
+        }elseif($config == '[{"impuesto":"incluido"}]'){
+            $config = 'incluido';
+        }elseif ($config == '[{"impuesto":"sumado"}]'){
+            $config = 'sumado';
+        }
+        return $config;
     }
 }
