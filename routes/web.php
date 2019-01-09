@@ -211,6 +211,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/producto/orden/eliminar', 'OrdensController@eliminarprod');
     Route::post('/orden/cancelar/orden', 'OrdensController@cancelarorden');
     Route::post('/orden/facturar', 'OrdensController@facturarorden');
+
+    /*=================================\- Vistas de ordenes -/======================================================*/
+    Route::get('/ordenes/preparar', 'OrdensController@viewprepararordenes');
+    Route::post('/all/ordens/open', 'OrdensController@allordenesabiertas');
+    Route::post('/all/ordens/details', 'OrdensController@allordenesdetalle');
+    Route::post('/cambio/estado/item/orden', 'OrdensController@cambioestadoordenitem');
+
 });
 
 Auth::routes();

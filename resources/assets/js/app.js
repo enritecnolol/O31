@@ -7,6 +7,17 @@
 
 // require('./bootstrap');
 
+// import Echo from 'laravel-echo'
+
+// window.Pusher = require('pusher-js');
+//
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: 'd9d6cd806b81b1004f5b',
+//     cluster: 'us2',
+//     encrypted: true
+// });
+
 window.Vue = require('vue');
 
 /**
@@ -20,6 +31,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('prueba', require('./components/prueba.vue'));
 Vue.component('floorview', require('./components/floorview.vue'));
+Vue.component('comanda-ordenes', require('./components/comandaordenes'));
 
 Vue.prototype.$eventbus = new Vue();
 

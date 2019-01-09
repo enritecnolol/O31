@@ -20,6 +20,7 @@ class CreateTableDetailsOrdens extends Migration
             $table->integer('cantidad');
             $table->float('itbis');
             $table->float('bruto');
+            $table->string('estado')->nullable($value = true);
             $table->integer('user_id');
             $table->timestamps();
         });

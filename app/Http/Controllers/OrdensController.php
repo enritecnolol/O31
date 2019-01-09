@@ -10,6 +10,7 @@ use App\Mesa_temp;
 use App\Orden;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrdensController extends Controller
 {
@@ -96,6 +97,9 @@ class OrdensController extends Controller
                 }
             }
         }
+
+        broadcast(new NewOrdenNotification($orden, $details));
+
     }
     public function cambiarcantidad(Request $request)
     {
@@ -226,5 +230,28 @@ class OrdensController extends Controller
     public function Comanda()
     {
         return view('comanda');
+    }
+    public function viewprepararordenes()
+    {
+        return view('comandaordenes');
+    }
+    public function allordenesabiertas()
+    {
+//        $ordenes = Orden::all()->where('estado', 'Abierta');
+        $ordenes = DB::select("SELECT ordens.*, corotos.name FROM ordens, corotos WHERE ordens.estado = 'Abierta' AND ordens.mesa_id = corotos.id ORDER BY ordens.id ASC");
+        return $ordenes;
+    }
+    public function allordenesdetalle(Request $request)
+    {
+//        $detalle = Details_orden::all()->where('orden_id', $request->id);
+        $detalle = DB::select("SELECT details_ordens.*, products.name, products.compuesto FROM details_ordens , products WHERE details_ordens.product_id = products.id and details_ordens.orden_id =".$request->id."");
+        return $detalle;
+    }
+    public function cambioestadoordenitem(Request $request)
+    {
+        $detalle = Details_orden::find($request->id);
+        $detalle->estado = 'preparando';
+        $detalle->update();
+        return 'guardado';
     }
 }

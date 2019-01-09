@@ -233,14 +233,13 @@
 <script>
     import itemcarrito from './itemcarrito'
     import vmodal from 'vue-js-modal';
-    import CuteModal from 'vue-cute-modal'
     import modalpagar from './modalpago'
-    Vue.use(CuteModal);
+
     Vue.use(vmodal);
     export default {
         name:'carrito',
         props:['mesasocupadas', 'mesa', 'productoselecionado', 'bus', 'detalle'],
-        components:{itemcarrito,vmodal,CuteModal,modalpagar},
+        components:{itemcarrito,vmodal,modalpagar},
         data()
         {
             return{
