@@ -53,7 +53,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
-                                                <ItemCoroto @eliminarcoroto="eliminarcoroto" :name="item.name" :area="areaid" :numero="item.numero" :editar="editar" :index="index" :key="item.id" :img="item.img" :id="item.id" :status="item.status" :y="item.top" :x="item.left" :w="item.width" :h="item.height"></ItemCoroto>
+                                                <ItemCoroto @eliminarcoroto="eliminarcoroto"  @cambiarnombre="cambiarnombre" :name="item.name" :area="areaid" :numero="item.numero" :editar="editar" :index="index" :key="item.id" :img="item.img" :id="item.id" :status="item.status" :y="item.top" :x="item.left" :w="item.width" :h="item.height"></ItemCoroto>
                                             </div>
                                         </div>
                                     </vue-draggable-resizable>
@@ -62,7 +62,7 @@
                                     <template v-if="item.name === 'caja' || item.name == 'pared' || item.name == 'mata' || item.name == 'puerta'">
                                         <vue-draggable-resizable :x="item.left" :y="item.top"  :minh="10" :minw="10" :w="item.width" :h="item.height" v-on:dragging="onDrag" v-on:resizing="onResize" :parent="true" :resizable="editar" :draggable="editar" @resizing="datoscoroto(item)" @resizestop="datoscoroto(item)" @dragstop="datoscoroto(item)" @dragging="datoscoroto(item)">
                                             <div style="">
-                                                <ItemCoroto @eliminarcoroto="eliminarcoroto" :name="item.name" :area="areaid" :numero="item.numero" :editar="editar" :index="index" :key="item.id" :img="item.img" :id="item.id" :status="item.status" :y="item.top" :x="item.left" :w="item.width" :h="item.height"></ItemCoroto>
+                                                <ItemCoroto @eliminarcoroto="eliminarcoroto"  @cambiarnombre="cambiarnombre" :name="item.name" :area="areaid" :numero="item.numero" :editar="editar" :index="index" :key="item.id" :img="item.img" :id="item.id" :status="item.status" :y="item.top" :x="item.left" :w="item.width" :h="item.height"></ItemCoroto>
                                             </div>
                                         </vue-draggable-resizable>
                                     </template>
@@ -70,7 +70,7 @@
                                     <template v-else>
                                         <vue-draggable-resizable @activated="modalcoroto(index, item.status)" style="cursor: pointer" :x="item.left" :y="item.top"  :minh="10" :minw="10" :w="item.width" :h="item.height" v-on:dragging="onDrag" v-on:resizing="onResize" :parent="true" :resizable="editar" :draggable="editar" @resizing="datoscoroto(item)" @resizestop="datoscoroto(item)" @dragstop="datoscoroto(item)" @dragging="datoscoroto(item)">
                                             <div style="">
-                                                <ItemCoroto @eliminarcoroto="eliminarcoroto" :name="item.name" :area="areaid" :numero="item.numero" :editar="editar" :index="index" :key="item.id" :img="item.img" :id="item.id" :status="item.status" :y="item.top" :x="item.left" :w="item.width" :h="item.height"></ItemCoroto>
+                                                <ItemCoroto @eliminarcoroto="eliminarcoroto" @cambiarnombre="cambiarnombre" :name="item.name" :area="areaid" :numero="item.numero" :editar="editar" :index="index" :key="item.id" :img="item.img" :id="item.id" :status="item.status" :y="item.top" :x="item.left" :w="item.width" :h="item.height"></ItemCoroto>
                                             </div>
                                         </vue-draggable-resizable>
                                     </template>
@@ -108,10 +108,14 @@
                 </div>
             </div>
         </modal>
-        <modal name="coroto" :draggable="true" :height="380">
+        <modal name="coroto" :draggable="true" :height="400">
             <div class="container">
                 <div class="row" style="background: #fafaed">
-                    <div class="col-md-12" style="margin-top: 10px">
+                    <div class="col-md-12">
+                        <h3 style="float: left">{{ nombremesa }}</h3>
+                        <span style="float: right;font-size: 18px;cursor: pointer" @click="closemod">&times;</span>
+                    </div>
+                    <div class="col-md-12" style="margin-top: 5px">
                         <div class="text-center">
                             <h2>Cantidad de Invitados</h2>
                         </div>
@@ -279,10 +283,30 @@
                 bus:new Vue(),
                 invitados:'',
                 mesasocupada:[],
-                loading:false
+                loading:false,
+                nombremesa:'',
             }
         },
         methods:{
+            closemod()
+            {
+                this.$modal.hide('coroto');
+            },
+            cambiarnombre(i)
+            {
+                this.corotos[i.index].name = i.nombre;
+                axios.post('/change/name/coroto', {
+                    id:i.id,
+                    nombre:i.nombre,
+                    corotos:this.corotos
+                })
+                    .then( (response) => {
+                        toastr.success('Datos guardado con exito', 'Validador')
+                    })
+                    .catch( (error) => {
+                        console.log(error);
+                    });
+            },
             pagarorden()
             {
                 this.prueba = true;
@@ -439,6 +463,7 @@
                     }
                 }else {
                     this.mesa = this.corotos[index].id;
+                    this.nombremesa = this.corotos[index].name;
                     this.$modal.show('coroto');
                 }
             },
@@ -608,6 +633,7 @@
             salvar()
             {
                 this.editar = false;
+                console.log(this.corotos)
                 axios.post('/save/edit/corotos',{
                     corotos: this.corotos,
                     area:this.areaid

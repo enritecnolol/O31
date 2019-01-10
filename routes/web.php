@@ -190,6 +190,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/delete/coroto', 'CorotosController@delete');
     Route::post('/corotos/all', 'CorotosController@allcorotos');
     Route::post('/save/edit/corotos', 'CorotosController@saveeditcorotos');
+    Route::post('/change/name/coroto', 'CorotosController@changename');
 
     /*=================================\- Areas -/======================================================*/
     Route::post('/save/area', 'AreasController@store');
@@ -217,6 +218,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/all/ordens/open', 'OrdensController@allordenesabiertas');
     Route::post('/all/ordens/details', 'OrdensController@allordenesdetalle');
     Route::post('/cambio/estado/item/orden', 'OrdensController@cambioestadoordenitem');
+
+    /*=================================\- Camareros -/======================================================*/
+    Route::get('/camareros', 'CamarerosController@index');
+    Route::post('/camareros/store', 'CamarerosController@store');
+    Route::post('/camareros/edit', 'CamarerosController@edit');
+    Route::post('/camareros/delete', 'CamarerosController@delete');
+    Route::post('/camareros/all', 'CamarerosController@allcamareros');
+    Route::post('/camareros/all/pagination', 'CamarerosController@allcamarerospagination');
 
 });
 

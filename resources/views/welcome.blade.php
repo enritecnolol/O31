@@ -110,7 +110,14 @@
 @section('titulo')
   {{--<MARQUEE width="100%" SCROLLDELAY=200><h5 style="color: white">acceso rapido: tecla inicio - Enfoca el codigo, tecla F8 - buscar cliente, tecla F7 - Crear Cliente, tecla FIN - Cobrar, tecla pagina abajo - Cancelar Compra</h5></MARQUEE>--}}
   <div class="" style="width: 90%">
-    <h4 style="color: white;float: left"><i class="fas fa-arrow-right"></i> PUNTO DE VENTA </h4>
+    <h4 style="color: white;float: left">
+      <i class="fas fa-arrow-right"></i> PUNTO DE VENTA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="/comanda" style="color: #FF9800">
+        <i class="fas fa-hand-pointer"></i>
+        RESTAURANTE
+        <i class="fas fa-utensils"></i>
+      </a>
+    </h4>
     <h4 style="color: white; float: right;cursor: help; margin-right: 15px" title="
               acceso rapido:
               tecla inicio : Enfoca el codigo,

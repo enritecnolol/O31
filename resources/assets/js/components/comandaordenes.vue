@@ -27,7 +27,7 @@
                 ordenes:[],
                 ordensdetailsall:[],
                 loading:false,
-                detailsdata:[]
+                detailsdata:[],
             }
         },
         methods:{
@@ -49,6 +49,8 @@
             },
             ordensdetails()
             {
+                this.ordenes =[];
+                this.ordensdetailsall=[];
                 this.loading = true;
                 axios.post('/all/ordens/open')
                     .then( (response) => {
@@ -89,9 +91,9 @@
                 })
                     .then((response) => {
                         console.log(response);
-                        this.proceso = true
+                        // this.proceso = true
                     })
-                    .catch(function (error) {
+                    .catch( (error) => {
                         console.log(error);
                     });
             }
@@ -99,6 +101,11 @@
         computed:{
         },
         mounted(){
+            window.Echo.channel('Orden')
+                .listen(".App\\Events\\NewOrdenNotification", (e)=>{
+                    console.log(e);
+                    this.ordensdetails();
+                })
         },
         created(){
             this.ordensdetails();

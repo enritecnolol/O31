@@ -3,7 +3,7 @@
 namespace App\Events;
 
 
-use App\Details_orden;
+//use App\Details_orden;
 use App\Orden;
 
 use Illuminate\Broadcasting\Channel;
@@ -20,15 +20,15 @@ class NewOrdenNotification implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    protected $orden;
-    protected $details;
+    public $orden;
+    public $details;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Orden $orden, Details_orden $details)
+    public function __construct(Orden $orden,  $details)
     {
         $this->orden = $orden;
         $this->details = $details;

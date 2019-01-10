@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Caja;
 use App\Detail;
 use App\Details_orden;
+use App\Events\NewOrdenNotification;
 use App\Facture;
 use App\Mesa_temp;
 use App\Orden;
@@ -97,9 +98,7 @@ class OrdensController extends Controller
                 }
             }
         }
-
-        broadcast(new NewOrdenNotification($orden, $details));
-
+        broadcast(new NewOrdenNotification($orden, $request->get('productos')));
     }
     public function cambiarcantidad(Request $request)
     {
@@ -122,6 +121,7 @@ class OrdensController extends Controller
         $detailsedit->itbis = $bruto;
         $detailsedit->bruto = $itbisp2;
         $detailsedit->update();
+        broadcast(new NewOrdenNotification($orden, $detailsedit));
         return 'save';
     }
     public function eliminarprod(Request $request)
@@ -133,8 +133,8 @@ class OrdensController extends Controller
         $orden->subtotal = $request->subtotal;
         $orden->update();
 
+        broadcast(new NewOrdenNotification($orden, $detailsedit));
         return 'delete';
-
     }
     public function cancelarorden(Request $request)
     {
@@ -159,8 +159,11 @@ class OrdensController extends Controller
             $ordensde->delete();
 
         }
+        if (empty($ordens))
+        {
+            broadcast(new NewOrdenNotification($ordens, $detail_ordens));
+        }
         return 'delete';
-
     }
     public function facturarorden(Request $request)
     {
@@ -224,6 +227,8 @@ class OrdensController extends Controller
             $mesa_tempsdelete = Mesa_temp::find($mesa_temp->id);
             $mesa_tempsdelete->delete();
         }
+
+        broadcast(new NewOrdenNotification($orden, $request->get('detalle')));
 
         return $mesa_temps;
     }

@@ -18,7 +18,7 @@
     </div>
 </template>
 <script>
-    import comandaordenitemitem from './comandaordenitemitem'
+    import comandaordenitemitem from './comandaordenitemitem';
     export default {
         name:'comandaordenitem',
         components:{comandaordenitemitem},

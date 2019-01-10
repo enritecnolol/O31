@@ -544,7 +544,7 @@
             {
                 if (this.descuento == '')
                 {
-                    this.descuento = '0'
+                    this.descuento = '0';
                 }
                 var paso1 = parseFloat(this.descuento)/100;
                 var paso2 = parseFloat(this.totalsuma) * parseFloat(paso1);

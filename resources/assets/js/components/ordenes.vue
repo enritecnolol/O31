@@ -270,11 +270,11 @@
                     });
             },
             bajarscroll(){
-                this.bus.$emit('bajar')
+                this.bus.$emit('bajar');
             },
             buscarordenmesa(){
                 this.$eventbus.$emit('ejecutarmesa',{});
-                this.allproduct()
+                this.allproduct();
             },
             pagarorden()
             {
