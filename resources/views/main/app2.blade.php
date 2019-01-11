@@ -179,7 +179,7 @@
 
         @yield('content')
 
-        <section class="p-t-60 p-b-20">
+        <section class="p-t-60 p-b-20" style="padding-top:20%">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -198,7 +198,8 @@
 @include('layouts.scripts')
 @yield('scriptp')
 <!-- Main JS-->
-<script src="js/main.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+<script src="/js/main.js"></script>
 
 </body>
 

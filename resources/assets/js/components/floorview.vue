@@ -1,5 +1,6 @@
 <template>
     <div class="container-fluid" style="">
+        <div class="loader" v-if="loading == true"></div>
         <div class="" v-if="prueba == false">
             <div class="" style="background: url('../../../../local/fondo6.png')">
                 <div class="container-fluid">
@@ -21,11 +22,11 @@
                                 </template>
                             </div>
                         </div>
-                        <div class="col-" style="overflow-y: auto;margin:0; padding:0;height: 800px;">
+                        <div class="col-"  v-dragscroll  style="overflow-y: auto;margin:0; padding:0;height: 800px;">
                             <div class="container">
-                               <div class="text-center">
-                                   <p style="color:#4272d7;font-size: 26px;font-family: cursive"><u>Objetos</u></p>
-                               </div>
+                                <div class="text-center">
+                                    <p style="color:#4272d7;font-size: 26px;font-family: cursive"><u>Objetos</u></p>
+                                </div>
                                 <template v-for="item in objetos">
                                     <div class="text-center" style="margin-top: 5px">
                                         <div class="card-mio" @click="nuevocoroto(item.img,item.name)">
@@ -52,7 +53,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
-                                                <ItemCoroto @eliminarcoroto="eliminarcoroto" :name="item.name" :area="areaid" :numero="item.numero" :editar="editar" :index="index" :key="item.id" :img="item.img" :id="item.id" :status="item.status" :y="item.top" :x="item.left" :w="item.width" :h="item.height"></ItemCoroto>
+                                                <ItemCoroto @eliminarcoroto="eliminarcoroto"  @cambiarnombre="cambiarnombre" :name="item.name" :area="areaid" :numero="item.numero" :editar="editar" :index="index" :key="item.id" :img="item.img" :id="item.id" :status="item.status" :y="item.top" :x="item.left" :w="item.width" :h="item.height"></ItemCoroto>
                                             </div>
                                         </div>
                                     </vue-draggable-resizable>
@@ -61,15 +62,14 @@
                                     <template v-if="item.name === 'caja' || item.name == 'pared' || item.name == 'mata' || item.name == 'puerta'">
                                         <vue-draggable-resizable :x="item.left" :y="item.top"  :minh="10" :minw="10" :w="item.width" :h="item.height" v-on:dragging="onDrag" v-on:resizing="onResize" :parent="true" :resizable="editar" :draggable="editar" @resizing="datoscoroto(item)" @resizestop="datoscoroto(item)" @dragstop="datoscoroto(item)" @dragging="datoscoroto(item)">
                                             <div style="">
-                                                <ItemCoroto @eliminarcoroto="eliminarcoroto" :name="item.name" :area="areaid" :numero="item.numero" :editar="editar" :index="index" :key="item.id" :img="item.img" :id="item.id" :status="item.status" :y="item.top" :x="item.left" :w="item.width" :h="item.height"></ItemCoroto>
+                                                <ItemCoroto @eliminarcoroto="eliminarcoroto"  @cambiarnombre="cambiarnombre" :name="item.name" :area="areaid" :numero="item.numero" :editar="editar" :index="index" :key="item.id" :img="item.img" :id="item.id" :status="item.status" :y="item.top" :x="item.left" :w="item.width" :h="item.height"></ItemCoroto>
                                             </div>
                                         </vue-draggable-resizable>
                                     </template>
-
                                     <template v-else>
-                                        <vue-draggable-resizable @activated="modalcoroto(index)" style="cursor: pointer" :x="item.left" :y="item.top"  :minh="10" :minw="10" :w="item.width" :h="item.height" v-on:dragging="onDrag" v-on:resizing="onResize" :parent="true" :resizable="editar" :draggable="editar" @resizing="datoscoroto(item)" @resizestop="datoscoroto(item)" @dragstop="datoscoroto(item)" @dragging="datoscoroto(item)">
+                                        <vue-draggable-resizable @activated="modalcoroto(index, item.status)" style="cursor: pointer" :x="item.left" :y="item.top"  :minh="10" :minw="10" :w="item.width" :h="item.height" v-on:dragging="onDrag" v-on:resizing="onResize" :parent="true" :resizable="editar" :draggable="editar" @resizing="datoscoroto(item)" @resizestop="datoscoroto(item)" @dragstop="datoscoroto(item)" @dragging="datoscoroto(item)">
                                             <div style="">
-                                                <ItemCoroto @eliminarcoroto="eliminarcoroto" :name="item.name" :area="areaid" :numero="item.numero" :editar="editar" :index="index" :key="item.id" :img="item.img" :id="item.id" :status="item.status" :y="item.top" :x="item.left" :w="item.width" :h="item.height"></ItemCoroto>
+                                                <ItemCoroto @eliminarcoroto="eliminarcoroto" @cambiarnombre="cambiarnombre" :name="item.name" :area="areaid" :numero="item.numero" :editar="editar" :index="index" :key="item.id" :img="item.img" :id="item.id" :status="item.status" :y="item.top" :x="item.left" :w="item.width" :h="item.height"></ItemCoroto>
                                             </div>
                                         </vue-draggable-resizable>
                                     </template>
@@ -80,9 +80,7 @@
                 </div>
             </div>
         </div>
-
-        <ordenes v-else @prueba="prueba2" :mesasocupada="mesasocupada" :mesa="mesa"></ordenes>
-
+        <ordenes v-else @prueba="prueba2" @mesaocupadaactive="mesaocupadaactive" :camarero="camarero" :mesasocupada="mesasocupada" :bus="bus" :mesa="mesa"></ordenes>
         <modal name="crear" :draggable="true" :height="200">
             <div class="container">
                 <div class="row">
@@ -109,24 +107,155 @@
                 </div>
             </div>
         </modal>
-        <modal name="coroto" :draggable="true">
-            <div class="row" style="background: #fafaed">
-                <div class="col-md-12" style="margin-top: 38px;padding-left: 104px;padding-right: 104px;margin-bottom: 10px">
-                    <div class="text-center" style="background:whitesmoke;box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);border-radius: 10px 10px 10px 10px;margin-bottom: 10px">
-                        <h3 style="">Mesa Disponible</h3>
+
+        <modal name="coroto" :draggable="true" :clickToClose="false" :height="400">
+            <div class="container">
+                <div class="row" style="background: #fafaed">
+                    <div class="col-md-12">
+                        <h3 style="float: left">{{ nombremesa }}</h3>
+                        <span style="float: right;font-size: 18px;cursor: pointer" @click="closemod">&times;</span>
+                    </div>
+                    <div class="col-md-12" style="margin-top: 5px">
+                        <div class="text-center">
+                            <h2>Cantidad de Invitados</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="margin-top: 10px">
                         <div class="row">
-                            <div class="col-md-12" style="margin-top: 15px">
-                                <h4 style="">Cantidad de invitados</h4>
+                            <div class="col-md-10">
+                                <input type="text" name="" v-model="invitados" maxlength="2" minlength="1"  class="form-control">
                             </div>
-                            <div class="col-md-12" style="margin-top: 15px">
-                                <div class="" style="margin-bottom: 40px">
-                                    <i style="cursor: pointer;" class="fas fa-2x fa-plus-circle" @click="aumentar('mas')"></i> <h3 style="">{{invitados}}</h3> <i @click="aumentar('menos')" class="fas fa-2x fa-minus-circle" style="cursor: pointer"></i>
-                                </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-warning" style="width: 100%" @click="invitados = ''"><i class="fa fa-arrow-left"></i></button>
                             </div>
-                            <div class="col-md-12" style="margin-bottom: 10px">
-                                <div class="text-center" style="">
-                                    <button type="button" class="btn btn-primary btn-sm" @click="continuar">Continuar <i class="fas fa-arrow-right"></i></button>
-                                </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '7'"><h1 style="color: white">7</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '8'"><h1 style="color: white">8</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '9'"><h1 style="color: white">9</h1></button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '4'"><h1 style="color: white">4</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '5'"><h1 style="color: white">5</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '6'"><h1 style="color: white">6</h1></button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '1'"><h1 style="color: white">1</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '2'"><h1 style="color: white">2</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="invitados = invitados + '3'"><h1 style="color: white">3</h1></button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 50px" @click="invitados = invitados + '0'"><h2 style="color: white">0</h2></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-success" style="width: 100%;height: 50px" @click="continuar()"><h2 style="color: white"><i class="fa fa-arrow-right"></i></h2></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </modal>
+
+        <modal name="ordenabierta" :height="200">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            <h2 style="">Opciones</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="margin-top: 10px">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary" style="width: 100%;height: 125px;" @click="cargarorden">Cargar Orden</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="margin-top: 10px">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success" style="width: 100%;height: 125px;" @click="pagarorden">Pagar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </modal>
+
+        <modal name="camareroacces" :height="400" :clickToClose="false">
+            <div class="container">
+                <div class="row" style="background: #fafaed">
+                    <div class="col-md-12">
+                        <span style="float: right;font-size: 18px;cursor: pointer" @click="closemod2">&times;</span>
+                    </div>
+                    <div class="col-md-12" style="margin-top: 5px">
+                        <div class="text-center">
+                            <h2>Codigo Camarero</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="margin-top: 10px">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <input type="text" name="" v-model="camarero" maxlength="2" minlength="1"  class="form-control">
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-warning" style="width: 100%" @click="camarero = ''"><i class="fa fa-arrow-left"></i></button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '7'"><h1 style="color: white">7</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '8'"><h1 style="color: white">8</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '9'"><h1 style="color: white">9</h1></button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '4'"><h1 style="color: white">4</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '5'"><h1 style="color: white">5</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '6'"><h1 style="color: white">6</h1></button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '1'"><h1 style="color: white">1</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '2'"><h1 style="color: white">2</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '3'"><h1 style="color: white">3</h1></button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 50px" @click="camarero = camarero + '0'"><h2 style="color: white">0</h2></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-success" style="width: 100%;height: 50px" @click="continuarmodalcamarero"><h2 style="color: white"><i class="fa fa-arrow-right"></i></h2></button>
                             </div>
                         </div>
                     </div>
@@ -142,12 +271,14 @@
     import ordenes from './ordenes'
     import vmodal from 'vue-js-modal';
     import VueDraggableResizable from 'vue-draggable-resizable'
+    import VueDragscroll from 'vue-dragscroll'
+    Vue.use(VueDragscroll)
     Vue.use(vmodal);
     Vue.component('vue-draggable-resizable', VueDraggableResizable);
 
     export default {
         name:'Tabitem',
-        components:{Tabs,Tab,VueDragResize,ItemCoroto,ordenes,vmodal,VueDraggableResizable},
+        components:{Tabs,Tab,VueDragResize,ItemCoroto,ordenes,vmodal,VueDraggableResizable,VueDragscroll},
         data()
         {
             return{
@@ -217,38 +348,158 @@
 
                 ],
                 bus:new Vue(),
-                invitados:0,
-                mesasocupada:[]
+                invitados:'',
+                mesasocupada:[],
+                loading:false,
+                nombremesa:'',
+                camarero:'',
+                camarerosall:[],
+                index:'',
             }
         },
         methods:{
+            allcamareros()
+            {
+                axios.post('/camareros/all')
+                    .then( (response) => {
+                        this.camarerosall = response.data;
+                    })
+                    .catch( (error) => {
+                        console.log(error);
+                    });
+            },
+            closemod()
+            {
+                this.$modal.hide('coroto');
+            },
+            closemod2()
+            {
+                this.$modal.hide('camareroacces');
+            },
+            cambiarnombre(i)
+            {
+                this.corotos[i.index].name = i.nombre;
+                axios.post('/change/name/coroto', {
+                    id:i.id,
+                    nombre:i.nombre,
+                    corotos:this.corotos
+                })
+                    .then( (response) => {
+                        toastr.success('Datos guardado con exito', 'Validador')
+                    })
+                    .catch( (error) => {
+                        console.log(error);
+                    });
+            },
+            pagarorden()
+            {
+                this.prueba = true;
+                this.$modal.hide('ordenabierta');
+                // this.$eventbus.$emit('buscarmesa');
+                this.$eventbus.$emit('pagarorden');
+            },
+            cargarorden()
+            {
+                this.prueba = true;
+                this.$modal.hide('ordenabierta');
+                this.$eventbus.$emit('buscarmesa');
+            },
+            mesaocupadaactive(i)
+            {
+                for (var key in this.mesasocupada)
+                {
+                    if (this.mesasocupada[key].active == true)
+                    {
+                        this.mesasocupada[key].active = false;
+                    }
+                }
+                this.mesasocupada[i.index].active = true;
+                this.mesa = i.id;
+            },
             continuar()
             {
-              if (this.invitados <= 0)
-              {
-                  toastr.warning('ingrese la cantidad de invitados', 'validador');
-              }else{
-                  this.prueba = true;
-                  var mesa;
-                  for (var key in this.corotos)
-                  {
-                      if (this.corotos[key].id == this.mesa)
-                      {
-                          mesa = this.corotos[key];
-                          this.corotos[key].status = 2
-                      }
-                  }
-                         var mesa =
-                      {
-                          id:this.mesa,
-                          mesa:mesa,
-                          personas:this.invitados,
-                          active:true
-                      };
-                  this.mesasocupada.push(mesa);
-                  this.$modal.hide('coroto');
-                  this.invitados = 0
-              }
+                if (this.invitados == "")
+                {
+                    this.invitados = '0';
+                }
+                if (parseInt(this.invitados) <= 0)
+                {
+                    toastr.warning('ingrese la cantidad de invitados', 'validador');
+                }else{
+                    var mesa;
+                    for (var key in this.corotos)
+                    {
+                        if (this.corotos[key].id == this.mesa)
+                        {
+                            mesa = this.corotos[key];
+                            this.corotos[key].status = 2
+                        }
+                    }
+                    axios.post('/mesa/temp/store', {
+                        id:this.mesa,
+                        personas:parseInt(this.invitados),
+                        camarero:this.camarero,
+                    })
+                        .then((response) => {
+                            this.allmesastemp();
+                            this.prueba = true;
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                    this.$modal.hide('coroto');
+                    this.invitados = ''
+                }
+            },
+            allmesastemp()
+            {
+                axios.post('/mesa/temp/all')
+                    .then((response) => {
+                        this.mesasocupada = [];
+                        var mesa = response.data;
+                        for (var key in mesa)
+                        {
+                            if (mesa[key].coroto_id == this.mesa)
+                            {
+                                var esto = {
+                                    id:mesa[key].coroto_id,
+                                    personas:mesa[key].invitados,
+                                    camarero:mesa[key].camarero,
+                                    mesa:{
+                                        name:mesa[key].name
+                                    },
+                                    active:true
+                                };
+                                this.mesasocupada.push(esto);
+                            }
+                            else{
+                                var esto = {
+                                    id:mesa[key].coroto_id,
+                                    personas:mesa[key].invitados,
+                                    camarero:mesa[key].camarero,
+                                    mesa:{
+                                        name:mesa[key].name
+                                    },
+                                    active:false
+                                }
+                                this.mesasocupada.push(esto);
+                            }
+                        }
+                        for (var i in this.corotos)
+                        {
+                            for (var o in this.mesasocupada)
+                            {
+                                if (this.corotos[i].id == this.mesasocupada[o].id)
+                                {
+                                    this.corotos[i].status = 2;
+                                    break;
+                                }
+                            }
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             },
             aumentar(accion)
             {
@@ -279,29 +530,71 @@
                 this.x = x;
                 this.y = y;
             },
+            continuarmodalcamarero()
+            {
+                var existe = 0;
+                for (var key in this.camarerosall)
+                {
+                    if (this.camarerosall[key].codigo == this.camarero)
+                    {
+                        existe++;
+                        break;
+                    }
+                }
+                if (existe == 1)
+                {
+                    toastr.success('Codigo Correcto', 'Validador');
+                    this.$modal.hide('camareroacces');
+                    this.modalcoroto(this.index);
+                }else{
+                    toastr.warning('Codigo de Camarero Incorrecto', 'Validador');
+                }
+            },
             modalcoroto(index)
             {
-                this.mesa = this.corotos[index].id;
-                if (this.mesasocupada.length >= 1){
-                    for (var key in this.mesasocupada){
-                        if (this.mesasocupada[key].id === this.corotos[index].id)
-                        {
-                            this.prueba = true;
-                            break
-                        }else{
-                            this.$modal.show('coroto');
-                            break
-                        }
-                    }
-                }else {
+                if (this.camarero == '')
+                {
+                    this.index = index;
+                    this.$modal.show('camareroacces');
+                }else{
                     this.mesa = this.corotos[index].id;
+                    if (this.mesasocupada.length != 0){
+                        var existe = false;
+                        var cam = false;
+                        for (var key in this.mesasocupada){
+                            if (this.mesasocupada[key].id == this.mesa) {
+                                // console.log(this.mesasocupada[key].id + ' abierta ' + this.mesa)
+                                if (this.mesasocupada[key].camarero == this.camarero)
+                                {
+                                    cam = true;
+                                }
+                                existe = true;
+                                break
+                            }
+                        }
+                        if  (existe == true)
+                        {
+                            if (cam == true)
+                            {
+                                this.$modal.show('ordenabierta');
+                            }else {
+                                toastr.warning('Esta mesa no te corresponde');
+                            }
+                        }else {
+                            this.$modal.show('coroto');
+                        }
+                    }else {
+                        this.mesa = this.corotos[index].id;
+                        this.nombremesa = this.corotos[index].name;
                         this.$modal.show('coroto');
+                    }
                 }
             },
             corotosporarea(id)
             {
+                this.loading = true;
                 this.areaid = id;
-                this.datoscorotos()
+                this.datoscorotos();
             },
             allareas()
             {
@@ -309,7 +602,6 @@
                     nombre:this.nombrearea
                 })
                     .then( (response) => {
-                        console.log(response);
                         for (var key in response.data)
                         {
                             var data = {
@@ -350,7 +642,9 @@
             },
             prueba2()
             {
-                this.prueba = false
+                this.camarero = '';
+                this.prueba = false;
+                this.datoscorotos()
             },
             organizarmesas()
             {
@@ -360,7 +654,7 @@
                     if (this.corotos[key].name == 'mesa')
                     {
                         count++;
-                        this.corotos[key].numero = count;
+                        this.corotos[key].numero = count + 2;
                     }
                 }
             },
@@ -463,12 +757,12 @@
             salvar()
             {
                 this.editar = false;
+                console.log(this.corotos)
                 axios.post('/save/edit/corotos',{
                     corotos: this.corotos,
                     area:this.areaid
                 })
                     .then( (response) => {
-                        console.log(response);
                         toastr.success('Datos Guardado', 'Validado');
                         this.corotosporarea(this.areaid);
                     })
@@ -491,15 +785,16 @@
                     area:this.areaid
                 })
                     .then( (response) => {
-                        console.log(response.data);
                         if (response.data == "['No Data']")
                         {
                             toastr.warning('No hemos encontrado datos');
                             this.corotos = [];
                         }else{
                             toastr.success('','Gestor de datos');
-                            this.corotos = response.data
+                            this.corotos = response.data;
+                            this.allmesastemp();
                         }
+                        this.loading = false;
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -509,11 +804,22 @@
         },
         mounted() {
             // this.datoscorotos();
+            this.allcamareros();
             this.allareas();
         }
     }
 </script>
 <style scoped>
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url("../../../../public/loading2.gif") 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
     .letra{
         z-index: 4;
     }

@@ -323,17 +323,17 @@
 
                 buscadorp:function () {
                     var _this = this
-                    $.ajax({
-                        url: '/buscar',
-                        method: 'GET',
-                        data: {
-                            producto: this.buscador
-                        },
-                        success:function (data) {
-                            _this.productos = data;
-                        }
-
-                    });
+                    // $.ajax({
+                    //     url: '/buscar',
+                    //     method: 'GET',
+                    //     data: {
+                    //         producto: this.buscador
+                    //     },
+                    //     success:function (data) {
+                    //         _this.productos = data;
+                    //     }
+                    //
+                    // });
                 },
 
                 crearcategoria: function (id) {
@@ -377,7 +377,9 @@
                     _this.loading = true
                     url = url || '/productos/paginate';
 
-                    axios.post(url,{paginate:_this.paginate})
+                    axios.post(url, {
+                            paginate:_this.paginate
+                    })
                         .then(function (response) {
                             console.log(response);
                             _this.productospag = response['data'].data;

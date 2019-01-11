@@ -76,7 +76,7 @@
 
     /* width */
     ::-webkit-scrollbar {
-      width: 8px;
+      width: 12px;
     }
 
     /* Track */
@@ -105,20 +105,32 @@
 
   </style>
 @endsection
-@section('tittle',' Cafeteria| Facturacion')
+@section('tittle',' Cafeteria| Punto Venta')
 
 @section('titulo')
   {{--<MARQUEE width="100%" SCROLLDELAY=200><h5 style="color: white">acceso rapido: tecla inicio - Enfoca el codigo, tecla F8 - buscar cliente, tecla F7 - Crear Cliente, tecla FIN - Cobrar, tecla pagina abajo - Cancelar Compra</h5></MARQUEE>--}}
   <div class="" style="width: 90%">
-    <h4 style="color: white;float: left"><i class="fas fa-arrow-right"></i> PUNTO DE VENTA </h4>
+    <h4 style="color: white;float: left">
+      <i class="fas fa-arrow-right"></i> PUNTO DE VENTA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="/comanda" style="color: #FF9800">
+        <i class="fas fa-hand-pointer"></i>
+        RESTAURANTE
+        <i class="fas fa-utensils"></i>
+      </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="/ordenes/preparar" style="color: #FF9800">
+        <i class="fas fa-hand-pointer"></i>
+        Lista de Ordenes
+        <i class="fas fa-clipboard-list"></i>
+      </a>
+    </h4>
     <h4 style="color: white; float: right;cursor: help; margin-right: 15px" title="
-            acceso rapido:
-            tecla inicio : Enfoca el codigo,
-            tecla F8 : buscar cliente,
-            tecla F7 : Crear Cliente,
-            tecla FIN : Cobrar,
-            tecla pagina abajo : Cancelar Compra,
-            tecla F2 : Buscar Producto">
+              acceso rapido:
+              tecla inicio : Enfoca el codigo,
+              tecla F8 : buscar cliente,
+              tecla F7 : Crear Cliente,
+              tecla FIN : Cobrar,
+              tecla pagina abajo : Cancelar Compra,
+              tecla F2 : Buscar Producto">
       AYUDA
       <i class="fas fa-question"></i>
     </h4>
@@ -191,17 +203,19 @@
                 <input type="number" class="form-control" min="0" v-model="item.desc" @keypress.enter="normall" @blur="normall" @input.self="descuentoagregar(item.id, item.desc)" style="width: 70px">
               </td>
               <td class="text-center">@{{item.price}}</td>
-              <td><button type="button" class="fas fa-minus" style="color: orangered" @click="eliminarp(item.id)"></button></td>
+              <td><i class="fas fa-minus" style="color: orangered;font-size: 20px;cursor: pointer;" @click="eliminarp(item.id)"></i></td>
             </tr>
             </tbody>
           </table>
         </div>
-        <div class="pull-left">
-          <h5>items: @{{ cantidaditems }}</h5>
-        </div>
-        <div class="text-center">
-          <h5>@{{ cantidaditemsall }}</h5>
-        </div>
+        <template v-if="list.length != 0">
+          <div class="pull-left">
+            <h5>items: @{{ cantidaditems }}</h5>
+          </div>
+          <div class="text-center">
+            <h5>@{{ cantidaditemsall }}</h5>
+          </div>
+        </template>
       </div>
     </form>
     <div v-if="cerrada === 'A' && neto > 0 && idticket === ''" style="width: 320px;position: fixed;bottom: 10px;">
@@ -304,7 +318,7 @@
                 </div>
               @endforeach
             </div>
-            <div class="col-" v-show="cambio === 'subcategoria' && categoria_subcategoria.length !== 0" style="overflow-y: scroll;height: 90vh;">
+            <div class="col- dragscroll" v-show="cambio === 'subcategoria' && categoria_subcategoria.length !== 0" style="cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;overflow-y: scroll;height: 90vh;">
               <div class="text-center" style="margin-bottom: 5px">
                 <h6>Subcategoria</h6>
               </div>
@@ -336,16 +350,14 @@
             </div>
           </template>
           <br>
-          <div class="col" style="box-shadow: 1px 1px 5px #888888;overflow-y: scroll;height: 90vh;">
+          <div class="col" style="box-shadow: 1px 1px 5px #888888;">
             <div class="container">
               <div class="text-center" style="margin-bottom: 8px">
                 <button type="button" class="btn btn-lg btn-sm btn-link" v-show="cambio === 'subcategoria' && categoria_subcategoria.length !== 0" @click="cambio = 'categoria'" style="float: left;margin-left: 10px"><i class="fas fa-arrow-left"></i></button>
                 <h3>Productos</h3>
-                <input type="search"  class="form-control form-control-sm" v-model="buscador"  @
-                       input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
+                <input type="search"  class="form-control form-control-sm" v-model="buscador"  @input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
               </div>
-
-              <div class="row">
+              <div class="row dragscroll" style="overflow-y: auto;height: 84vh;cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;">
                 <template v-for="p in productos" v-if="cerrada === 'A' && productosbuscados === ''">
                   <div class="card" style="height: auto;background: #c8f1ff;width: 130px;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)" :title="p.name">
                     <div class="card-body" style="background: white">
@@ -389,12 +401,12 @@
                         </div>
                       </div>
                     </div>
-                    <template v-show="existenciarep == 'no'">
+                    <template v-if="existenciarep == 'no'">
                       <div class="overlay1">
                         <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
                       </div>
                     </template>
-                    <template v-show="existenciarep == 'si'">
+                    <template v-if="existenciarep == 'si'">
                       <div class="overlay1" v-if="p.existence > 0 && p.compuesto == 'no'">
                         <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
                       </div>
@@ -596,7 +608,7 @@
               <h4>Devuelta:<span style="font-size: 25px"> @{{ devuelta }}</span></h4>
             </div>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button v-if="suma >= neto" type="button" @click="facturar(), ultimoidfactura()" class="btn btn-primary">&nbsp;Pagar</button>
+            <button v-if="suma >= neto" type="button" @click="facturar()" class="btn btn-primary">&nbsp;Pagar</button>
             <button v-else disabled type="button" @click="facturar()" class="btn btn-primary">&nbsp;Pagar</button>
           </div>
         </div>
@@ -681,7 +693,9 @@
     toastr.options.newestOnTop = 'false';
 
   </script>
+  <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
   <script>
+
     $( document ).ready(function() {
       $("#imprimir").click(function () {
         $("div#myPrintArea").printArea();
@@ -1044,7 +1058,7 @@
                 }else{
                   _this = this;
                   $.ajax({
-                    url: '/facturacion',
+                    url: '/facturacioncar',
                     method: 'GET',
                     data: {
                       existencias: this.existenciarep,
@@ -1067,13 +1081,12 @@
                       detalle: this.list
                     },
                     success:function (dato) {
+                      alert('aqui')
                       if (dato == 'bien'){
-
                         $('#pago').modal('hide');
                         toastr.options.newestOnTop = false;
                         toastr.success('Gracias por la compra');
                         setTimeout('document.location.reload()',1000);
-
                       }
                     },
                     error:function () {
@@ -1085,7 +1098,7 @@
               }else {
                 _this = this;
                 $.ajax({
-                  url: '/facturacion',
+                  url: '/facturacioncar',
                   method: 'GET',
                   data: {
                     existencias: this.existenciarep,
@@ -1107,8 +1120,8 @@
                     detalle: this.list
                   },
                   success:function (dato) {
+                    alert('aqui2')
                     if (dato == 'bien'){
-
                       $('#pago').modal('hide');
                       toastr.options.newestOnTop = false;
                       toastr.success('Gracias por la compra');
@@ -1124,7 +1137,8 @@
               }
             }
 
-          }else{
+          }
+          else{
             if (this.montotarjeta === 0 && this.campodinero === 0 && this.datosticket.balancepuntos === 0){
               alert('No puedes hacer una compra de valor 0');
             }else{
@@ -1134,7 +1148,7 @@
                 }else{
                   _this = this;
                   $.ajax({
-                    url: '/facturacion',
+                    url: '/facturacioncar',
                     method: 'GET',
                     data: {
                       existencias: this.existenciarep,
@@ -1157,13 +1171,12 @@
                       detalle: this.list
                     },
                     success:function (dato) {
+                      alert('aqui3')
                       if (dato == 'bien'){
-
                         $('#pago').modal('hide');
                         toastr.options.newestOnTop = false;
                         toastr.success('Gracias por la compra');
                         setTimeout('document.location.reload()',1000);
-
                       }
                     },
                     error:function () {
@@ -1175,7 +1188,7 @@
               }else{
                 _this = this;
                 $.ajax({
-                  url: '/facturacion',
+                  url: '/facturacioncar',
                   method: 'GET',
                   data: {
                     existencias: this.existenciarep,
@@ -1202,13 +1215,11 @@
                       toastr.options.newestOnTop = false;
                       toastr.success('Gracias por la compra');
                       setTimeout('document.location.reload()',1000);
-
                     }
                   },
                   error:function () {
                     toastr.error('A ocurrido un error al realizar la venta');
                   }
-
                 });
               }
             }

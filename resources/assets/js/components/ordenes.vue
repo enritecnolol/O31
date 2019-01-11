@@ -1,5 +1,6 @@
 <template>
     <div class="" style="background: url('../../../../local/fondo6.png')">
+        <div class="loader" v-if="loading == true"></div>
         <div class="">
             <div class="row">
                 <div class="col-md-12">
@@ -8,7 +9,7 @@
                     </div>
                 </div>
                 <div class="col-md-5" style="height: 900px;background: #ecf0f1">
-                    <carrito @cambiarcantidad="cambiarcantidad" :mesasocupadas="mesasocupada" :mesa="mesa" :productoselecionado="productoselecionado" :bus="bus"></carrito>
+                    <carrito @volverpant="volverpantalla" :camarero="camarero" @cambiarcantidad="cambiarcantidad" @productopormesa="productopormesa" :mesasocupadas="mesasocupada" :mesa="mesa" :productoselecionado="productoselecionado" :bus="bus" :detalle="detalle" ></carrito>
                 </div>
                 <div class="col-md-7" style="height: 900px;background: #ecf0f1">
                     <div class="row">
@@ -23,10 +24,10 @@
                         <div class="col-md-12" style="margin-top: 5px">
                             <input type="text" id="" placeholder="Buscador" v-model="buscador" @input.self="buscadorp" class="form-control form-control-sm">
                         </div>
-                        <div class="col-md-12" style="height: 800px;overflow: auto">
+                        <div class="col-md-12" v-dragscroll style="height: 800px;overflow: auto;cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;">
                             <div class="row" style="margin-top: 10px">
                                 <template v-for="(item, index) in productos">
-                                    <cardproduct @productoagregar="productoselect" @bajarscroll="bajarscroll" :index="index" :key="index" :producto="item" :mesa="mesa"></cardproduct>
+                                    <cardproduct @productoagregar="productoselect" @bajarscroll="bajarscroll" :index="index" :key="index" :producto="item" :mesa="mesa" :detalle="detalle"></cardproduct>
                                 </template>
                             </div>
                         </div>
@@ -39,15 +40,17 @@
 <script !src="">
     import cardproduct from './cardproduct'
     import carrito from './carrito'
-
+    import VueDragscroll from 'vue-dragscroll'
+    Vue.use(VueDragscroll)
     export default {
         name:'ordenes',
-        components:{cardproduct,carrito},
-        props:['mesasocupada', 'mesa'],
+        components:{cardproduct,carrito,VueDragscroll},
+        props:['mesasocupada', 'mesa', 'bus', 'camarero'],
         data()
         {
             return{
                 default1:false,
+                mesav1:this.mesa,
                 categorias:[],
                 productos:[],
                 buscador:'',
@@ -57,18 +60,105 @@
                     'border-bottom': '3px solid #f65e48 !important'
                 },
                 productoselecionado:[],
-                bus: new Vue(),
+                // bus: new Vue(),
+                detalle:[],
+                product:'',
+                data:'',
+                loading:false
             }
         },
         methods:{
+            productopormesa(i)
+            {
+                this.$emit('mesaocupadaactive',i);
+                this.productoselecionado = [];
+                axios.post('/buscar/orden/x/mesa', {
+                    id:i.id
+                })
+                    .then((response) => {
+                        // this.mesav1 = i.id;
+                        this.detalle = response['data'];
+                        var ord=0;
+                        for (var ind in this.detalle['orden'])
+                        {
+                            ord = ind;
+                        }
+                        for (var key in this.detalle['detalle'])
+                        {
+                            for (var o in this.productos)
+                            {
+                                if (this.productos[o].id==this.detalle['detalle'][key]['product_id'])
+                                {
+                                    var esto = {
+                                        id:this.detalle['detalle'][key]['id'],
+                                        orden:this.detalle['orden'][ord],
+                                        index:0,
+                                        cantidad:this.detalle['detalle'][key]['cantidad'],
+                                        mesa:this.mesav1,
+                                        total: parseFloat(parseFloat(this.detalle['detalle'][key]['cantidad']) * parseFloat(this.productos[o].price)).toFixed(2),
+                                        producto: this.productos[o]
+                                    };
+                                    this.productoselecionado.push(esto);
+                                    break
+                                }
+                            }
+                        }
+                        this.loading = false;
+                        // this.generarproductosseleccionado();
+                    })
+                    .catch( (error) => {
+                        console.log(error);
+                    });
+
+            },
+            generarproductosseleccionado()
+            {
+                console.log(this.productos);
+                console.log(this.detalle);
+                console.log(this.productoselecionado);
+            },
             cambiarcantidad(i)
             {
-                if (i.cantidad === 0)
+                if (i.obt.cantidad === 0)
                 {
-                    this.productoselecionado.splice(i.index,1)
+                    if (this.productoselecionado[i.obt.index]['id'] != 0)
+                    {
+                        axios.post('/producto/orden/eliminar', {
+                            producto:this.productoselecionado[i.obt.index],
+                            orden:this.productoselecionado[i.obt.index]['orden']['id'],
+                            subtotal:i.subtotal
+                        })
+                            .then(function (response) {
+                                console.log(response);
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                    }
+                    this.productoselecionado.splice(i.obt.index,1)
+
                 }else{
-                    this.productoselecionado[i.index].total = parseFloat(this.productoselecionado[i.index].producto.price * i.cantidad).toFixed(2);
-                    this.productoselecionado[i.index].cantidad = i.cantidad;
+                    this.productoselecionado[i.obt.index].total = parseFloat(this.productoselecionado[i.obt.index].producto.price * i.obt.cantidad).toFixed(2);
+                    this.productoselecionado[i.obt.index].cantidad = i.obt.cantidad;
+                    var total = 0;
+                    for (var key in this.productoselecionado)
+                    {
+                        total = parseFloat(this.productoselecionado[key].total) + parseFloat(total)
+                    }
+                    if (this.productoselecionado[i.obt.index]['id'] != 0)
+                    {
+                        axios.post('/producto/orden/cambiar/cantidad', {
+                            producto:this.productoselecionado[i.obt.index],
+                            orden:this.productoselecionado[i.obt.index]['orden']['id'],
+                            subtotal:total
+                        })
+                            .then(function (response) {
+                                console.log(response);
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                    }
                 }
             },
             productoselect(i)
@@ -96,7 +186,6 @@
                         this.productoselecionado.push(i);
                     }
                 }
-                // console.log(i)
             },
             allcategorias()
             {
@@ -115,6 +204,7 @@
                             this.categorias.push(datos)
                         }
                         this.default1 = true;
+                        this.loading = false
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -125,7 +215,7 @@
                 axios.post('/all/productos')
                     .then((response) => {
                         this.productos = response.data;
-                        console.log(response);
+                        this.loading = false
                     })
                     .catch( (error) => {
                         console.log(error);
@@ -180,20 +270,43 @@
                     });
             },
             bajarscroll(){
-                this.bus.$emit('bajar')
-            }
-
+                this.bus.$emit('bajar');
+            },
+            buscarordenmesa(){
+                this.$eventbus.$emit('ejecutarmesa',{});
+                this.allproduct();
+            },
+            pagarorden()
+            {
+                this.$eventbus.$emit('pagarorden2',{});
+            },
         },
         computed:{
 
         },
         mounted() {
+            this.loading = true;
             this.allcategorias();
+            // this.allproduct();
+        },
+        created() {
             this.allproduct();
+            this.$eventbus.$on('buscarmesa',this.buscarordenmesa());
+            this.$eventbus.$on('pagarorden', this.pagarorden());
         }
     }
 </script>
 <style>
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url("../../../../public/loading2.gif") 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
     .selectcategories {
         background-color:#6B6B6B !important;
         color:#E2E2E2 !important;

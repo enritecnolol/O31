@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Caja;
+use App\Configuracion;
 use App\Detail;
 use App\Facture;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\String_;
@@ -138,6 +140,53 @@ class   CajasController extends Controller
         $caja->status = 'C';
         $caja->update();
 
+        $configs = Configuracion::all()->where('user_id', Auth::id());
+        foreach ($configs as $config)
+        {
+            $email = $config->emailinfo;
+        }
+
+        $totaldias = DB::table('factures')->select(DB::raw('SUM(total_facture) as total'))->where('date', $caja->fecha_apertura)->where('user_id', Auth::id())->get();
+        if ($totaldias == '[{"total":null}]'){
+            $totaldias = number_format(0);
+        }else{
+            $totaldias = number_format($totaldias[0]->total);
+        }
+        $totalgasto = DB::table('entradacomprobantes')->select(DB::raw('SUM(netototal) as total'))->where('created_at', $caja->fecha_apertura)->where('user_id', Auth::id())->get();
+        if ($totalgasto == '[{"total":null}]'){
+            $totalgasto = number_format(0);
+        }else{
+            $totalgasto = number_format($totalgasto[0]->total);
+        }
+
+        $totaldevolucion = DB::table('devolucions')->select(DB::raw('SUM(total_devolucion) as total'))->where('date', $caja->fecha_apertura)->where('user_id', Auth::id())->get();
+        if ($totaldevolucion == '[{"total":null}]'){
+            $totaldevolucion = number_format(0);
+        }else{
+            $totaldevolucion = number_format($totaldevolucion[0]->total);
+        }
+
+        $productosvendidos = DB::select("SELECT products.name AS nombre, sum(details.price) AS cantidad FROM products, details WHERE products.id = details.product_id AND products.user_id = ".Auth::id()." AND DATE(details.date) = ".$caja->fecha_apertura." GROUP BY nombre ORDER BY cantidad DESC LIMIT 5");
+
+        $ventasmes = DB::select("SELECT SUM(total_facture) as total FROM factures where user_id = ".Auth::id()." AND month(date) = MONTH(CURDATE())");
+        if ($ventasmes == '[{"total":null}]'){
+            $ventasmes = number_format(0);
+        }else{
+            $ventasmes = number_format($ventasmes[0]->total);
+        }
+
+        $data = array(
+            'fecha'=> $caja->fecha_apertura,
+            'totalvendido' => $totaldias,
+            'totalgastos' => $totalgasto,
+            'totaldevolucion' => $totaldevolucion,
+            'totalmes' => $ventasmes,
+            'compania' => $configs[0],
+        );
+
+        Mail::send('emails.resumendia', $data, function ($message) use ($email){
+            $message->to($email)->subject(' CoffeBreakPOS | Resumen del Dia');
+        });
 
         return 'Actualizado';
 

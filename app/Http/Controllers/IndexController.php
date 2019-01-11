@@ -184,11 +184,9 @@ class IndexController extends Controller
                     $producto->update();
                 }
             }
-
         }
         return 'bien';
         echo $count;
-
     }
     public function prueba()
     {

@@ -24,7 +24,7 @@
                                 <label for="precio" class="control-label mb-1" >Precio</label>
                                 <input type="number" id="precio" min="0" value="{{ old('precio') }}" name="precio" required placeholder="$" class="input-sm form-control-sm form-control">
                             </div>
-                            <div class="form-group" v-show="existenciarep == 'si'">
+                            <div class="form-group">
                                 <label for="" class="control-label mb-1">El producto es Compuesto?</label>
                                 <div class="container">
                                     <div class="row">

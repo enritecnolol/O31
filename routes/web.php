@@ -17,12 +17,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/prueba', 'IndexController@prueba');
     /*=================================\Pagina inicio/======================================================*/
     Route::get('/', 'IndexController@index'); //pagina donde se vende
 
     /*=================================\- API- /======================================================*/
-    Route::get('/facturacion', 'IndexController@store');// api para mandar datos de factura
+    Route::get('/facturacioncar', 'IndexController@store');// api para mandar datos de factura
 //    Route::post('actualizar/producto', 'ApisController@actualizarp'); // api para actualizar los productos
     Route::get('/cierrecaja', 'CajasController@cerrarcaja');// api para cerrar la caja en BD
     Route::get('/historico/venta', 'ApisController@historico');// api para cerrar la caja en BD
@@ -99,8 +98,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/configuracion','ConfiguracionesController@index');//muestra vista para configurar la compania
     Route::post('/configuracion/store','ConfiguracionesController@store'); // guardar configuracion
     Route::post('/configuracion/edit','ConfiguracionesController@update');// editar configuracion
-    Route::get('/configuracion/cliente/preferencial','ConfiguracionesController@clientepreferencialindex');// editar configuracion
-    Route::post('/configuracion/existencia','ConfiguracionesController@existencia');// editar configuracion
+    Route::get('/configuracion/cliente/preferencial','ConfiguracionesController@clientepreferencialindex');
+    Route::post('/configuracion/existencia','ConfiguracionesController@existencia');
+    Route::post('/configuracion/manejo/itbis','ConfiguracionesController@manejoitbis');
     /*=================================\- itbis - /======================================================*/
     Route::get('/configuracion/itbis','ImpuestosController@itbis');
     Route::post('/nuevo/itbis','ImpuestosController@store');
@@ -190,10 +190,43 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/delete/coroto', 'CorotosController@delete');
     Route::post('/corotos/all', 'CorotosController@allcorotos');
     Route::post('/save/edit/corotos', 'CorotosController@saveeditcorotos');
+    Route::post('/change/name/coroto', 'CorotosController@changename');
 
     /*=================================\- Areas -/======================================================*/
     Route::post('/save/area', 'AreasController@store');
     Route::post('/all/area', 'AreasController@allareas');
+
+    /*=================================\- Comanda -/======================================================*/
+    Route::get('/comanda', 'OrdensController@Comanda');
+
+    /*=================================\- Mesa -/======================================================*/
+    Route::post('/mesa/temp/store', 'MesatempsController@store');
+    Route::post('/mesa/temp/all', 'MesatempsController@all');
+    Route::post('/buscar/orden/x/mesa', 'MesatempsController@ordenxmesa');
+    Route::post('/producto/orden', 'MesatempsController@productoselect');
+
+
+    /*=================================\- Ordenar Mesa -/======================================================*/
+    Route::post('/ordenar/mesa/store', 'OrdensController@store');
+    Route::post('/producto/orden/cambiar/cantidad', 'OrdensController@cambiarcantidad');
+    Route::post('/producto/orden/eliminar', 'OrdensController@eliminarprod');
+    Route::post('/orden/cancelar/orden', 'OrdensController@cancelarorden');
+    Route::post('/orden/facturar', 'OrdensController@facturarorden');
+
+    /*=================================\- Vistas de ordenes -/======================================================*/
+    Route::get('/ordenes/preparar', 'OrdensController@viewprepararordenes');
+    Route::post('/all/ordens/open', 'OrdensController@allordenesabiertas');
+    Route::post('/all/ordens/details', 'OrdensController@allordenesdetalle');
+    Route::post('/cambio/estado/item/orden', 'OrdensController@cambioestadoordenitem');
+
+    /*=================================\- Camareros -/======================================================*/
+    Route::get('/camareros', 'CamarerosController@index');
+    Route::post('/camareros/store', 'CamarerosController@store');
+    Route::post('/camareros/edit', 'CamarerosController@edit');
+    Route::post('/camareros/delete', 'CamarerosController@delete');
+    Route::post('/camareros/all', 'CamarerosController@allcamareros');
+    Route::post('/camareros/all/pagination', 'CamarerosController@allcamarerospagination');
+
 });
 
 Auth::routes();

@@ -114,4 +114,38 @@ class CorotosController extends Controller
         }
         return 'Todo Bien';
     }
+    public function changename(Request $request)
+    {
+//        $coroto = Coroto::find($request->id);
+//        $coroto->name = $request->nombre;
+//        $coroto->update();
+        foreach ($request->corotos as $coroto) {
+            if ($coroto['id'] == 0) {
+                $corotonew = new Coroto();
+                $corotonew->name = $coroto['name'];
+                $corotonew->img = $coroto['img'];
+                $corotonew->numero = $coroto['numero'];
+                $corotonew->width = $coroto['width'];
+                $corotonew->height = $coroto['height'];
+                $corotonew->status = $coroto['status'];
+                $corotonew->top = $coroto['top'];
+                $corotonew->left = $coroto['left'];
+                $corotonew->area_id = $request->area;
+                $corotonew->user_id = Auth::id();
+                $corotonew->save();
+            }else{
+                $corotoedit = Coroto::find($coroto['id']);
+                $corotoedit->name = $coroto['name'];
+                $corotoedit->img = $coroto['img'];
+                $corotoedit->numero = $coroto['numero'];
+                $corotoedit->width = $coroto['width'];
+                $corotoedit->height = $coroto['height'];
+                $corotoedit->top = $coroto['top'];
+                $corotoedit->left = $coroto['left'];
+                $corotoedit->update();
+            }
+        }
+        return 'update';
+
+    }
 }
