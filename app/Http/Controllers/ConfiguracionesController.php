@@ -38,6 +38,7 @@ class ConfiguracionesController extends Controller
             $configuracion->impuesto = $request->impuesto;
             $configuracion->descuento = $request->descuento;
             $configuracion->controlinv = $request->inventario;
+            $configuracion->emailinfo = $request->emailinfo;
             $configuracion->user_id = Auth::id();
             $configuracion->save();
 
@@ -53,6 +54,7 @@ class ConfiguracionesController extends Controller
             $configuracion->impuesto = $request->impuesto;
             $configuracion->descuento = $request->descuento;
             $configuracion->controlinv = $request->inventario;
+            $configuracion->emailinfo = $request->emailinfo;
             $configuracion->user_id = Auth::id();
             $configuracion->save();
         }
@@ -75,6 +77,7 @@ class ConfiguracionesController extends Controller
             $configuracion->impuesto = $request->impuesto;
             $configuracion->descuento = $request->descuento;
             $configuracion->controlinv = $request->inventario;
+            $configuracion->emailinfo = $request->emailinfo;
             $configuracion->update();
 
         }else{
@@ -86,6 +89,7 @@ class ConfiguracionesController extends Controller
             $configuracion->impuesto = $request->impuesto;
             $configuracion->descuento = $request->descuento;
             $configuracion->controlinv = $request->inventario;
+            $configuracion->emailinfo = $request->emailinfo;
             $configuracion->update();
         }
 
