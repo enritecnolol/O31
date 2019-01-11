@@ -133,7 +133,7 @@
                                                 Ventas del dia
                                             </td>
                                             <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;">
-                                                {!! $totalvendido !!}
+                                               $ {!! $totalvendido !!}
                                             </td>
                                         </tr>
                                         <tr>
@@ -141,7 +141,7 @@
                                                 Total Gastos
                                             </td>
                                             <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                {!! $totalgastos !!}.00
+                                               $ {!! $totalgastos !!}.00
                                             </td>
                                         </tr>
                                         <tr>
@@ -149,7 +149,7 @@
                                                 Total Devoluciones
                                             </td>
                                             <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                {!! $totaldevolucion !!}.00
+                                               $ {!! $totaldevolucion !!}.00
                                             </td>
                                         </tr>
                                     </table>
@@ -163,7 +163,7 @@
                                                 TOTAL MES
                                             </td>
                                             <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                                                {!! $totalmes !!}
+                                               $ {!! $totalmes !!}
                                             </td>
                                         </tr>
                                     </table>
