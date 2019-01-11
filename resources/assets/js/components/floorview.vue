@@ -395,7 +395,6 @@
             {
                 this.prueba = true;
                 this.$modal.hide('ordenabierta');
-                // this.$eventbus.$emit('buscarmesa');
                 this.$eventbus.$emit('pagarorden');
             },
             cargarorden()

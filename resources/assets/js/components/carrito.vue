@@ -334,7 +334,6 @@
             },
             pagarorden(e)
             {
-                // console.log('modal');
                 this.$modal.show('modalcarritopagar');
             },
             cerrarmodal()
