@@ -116,6 +116,11 @@
         <i class="fas fa-hand-pointer"></i>
         RESTAURANTE
         <i class="fas fa-utensils"></i>
+      </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="/ordenes/preparar" style="color: #FF9800">
+        <i class="fas fa-hand-pointer"></i>
+        Lista de Ordenes
+        <i class="fas fa-clipboard-list"></i>
       </a>
     </h4>
     <h4 style="color: white; float: right;cursor: help; margin-right: 15px" title="
@@ -345,14 +350,14 @@
             </div>
           </template>
           <br>
-          <div class="col dragscroll" style="box-shadow: 1px 1px 5px #888888;overflow-y: scroll;height: 90vh;cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;">
+          <div class="col" style="box-shadow: 1px 1px 5px #888888;">
             <div class="container">
               <div class="text-center" style="margin-bottom: 8px">
                 <button type="button" class="btn btn-lg btn-sm btn-link" v-show="cambio === 'subcategoria' && categoria_subcategoria.length !== 0" @click="cambio = 'categoria'" style="float: left;margin-left: 10px"><i class="fas fa-arrow-left"></i></button>
                 <h3>Productos</h3>
                 <input type="search"  class="form-control form-control-sm" v-model="buscador"  @input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
               </div>
-              <div class="row">
+              <div class="row dragscroll" style="overflow-y: auto;height: 84vh;cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;">
                 <template v-for="p in productos" v-if="cerrada === 'A' && productosbuscados === ''">
                   <div class="card" style="height: auto;background: #c8f1ff;width: 130px;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)" :title="p.name">
                     <div class="card-body" style="background: white">
