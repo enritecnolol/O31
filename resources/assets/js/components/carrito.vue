@@ -238,7 +238,7 @@
     Vue.use(vmodal);
     export default {
         name:'carrito',
-        props:['mesasocupadas', 'mesa', 'productoselecionado', 'bus', 'detalle'],
+        props:['mesasocupadas', 'mesa', 'productoselecionado', 'bus', 'detalle', 'camarero'],
         components:{itemcarrito,vmodal,modalpagar},
         data()
         {
@@ -256,7 +256,8 @@
                 banco:'',
                 numerotarjeta:'',
                 autorizacion:'',
-                abrir:false
+                abrir:false,
+                camarerocambio:''
             }
         },
         methods:{
@@ -408,7 +409,8 @@
                         productos:this.productoselecionado,
                         mesa:this.mesa,
                         invitados:this.invitadott,
-                        subtotal:this.subtotal
+                        subtotal:this.subtotal,
+                        camarero:this.camarero
                     })
                         .then((response) => {
                             toastr.success('La orden se ha realizado','Validador')

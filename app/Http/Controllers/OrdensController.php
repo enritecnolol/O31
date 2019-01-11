@@ -26,6 +26,7 @@ class OrdensController extends Controller
                 $orden->num_invitado = $request->invitados;
                 $orden->estado = 'Abierta';
                 $orden->subtotal = $request->subtotal;
+                $orden->camarero = $request->camarero;
                 $orden->fecha_apertura = now();
                 $orden->user_id = Auth::id();
                 $orden->save();
@@ -54,6 +55,7 @@ class OrdensController extends Controller
                 }
                 $details->itbis = $bruto;
                 $details->bruto = $itbisp;
+                $details->camarero = $request->camarero;
                 $details->user_id = Auth::id();
                 $details->save();
             }else{
@@ -76,6 +78,7 @@ class OrdensController extends Controller
                     }
                     $details->itbis = $bruto;
                     $details->bruto = $itbisp;
+                    $details->camarero = $request->camarero;
                     $details->user_id = Auth::id();
                     $details->save();
 
@@ -228,7 +231,7 @@ class OrdensController extends Controller
             $mesa_tempsdelete->delete();
         }
 
-        broadcast(new NewOrdenNotification($orden, $request->get('detalle')));
+        broadcast(new NewOrdenNotification($orden, $request->dinero));
 
         return $mesa_temps;
     }

@@ -142,9 +142,6 @@ class ProductsController extends Controller
             }
 
         }
-
-
-
         return redirect('/productos');
 
 

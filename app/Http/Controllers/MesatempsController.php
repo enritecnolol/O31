@@ -17,6 +17,7 @@ class MesatempsController extends Controller
         $mesa = new Mesa_temp;
         $mesa->coroto_id = $request->id;
         $mesa->invitados = $request->personas;
+        $mesa->camarero = $request->camarero;
         $mesa->save();
         return 'save';
     }

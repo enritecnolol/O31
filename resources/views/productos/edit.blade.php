@@ -7,8 +7,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" @mousemove="cargarcategoria()">
-                <form :action="'/anja/' + datos.id" method="POST"  enctype="multipart/form-data" @mousemove="cargarsubcategoria()">
+            <div class="modal-body">
+                <form :action="'/anja/' + datos.id" method="POST"  enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div>
                         <div class="form-group">
@@ -28,7 +28,7 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="form-group" v-show="existenciarep == 'si'">
+                        <div class="form-group">
                             <label for="" class="control-label mb-1">El producto es Compuesto?</label>
                             <div class="container">
                                 <div class="row">

@@ -333,7 +333,6 @@ class ApisController extends Controller
     public function productospaginado(Request $request)
     {
         $id = Auth::id();
-
         $productos = DB::table('products')
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
             ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))

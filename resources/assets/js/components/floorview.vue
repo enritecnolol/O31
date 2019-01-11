@@ -66,7 +66,6 @@
                                             </div>
                                         </vue-draggable-resizable>
                                     </template>
-
                                     <template v-else>
                                         <vue-draggable-resizable @activated="modalcoroto(index, item.status)" style="cursor: pointer" :x="item.left" :y="item.top"  :minh="10" :minw="10" :w="item.width" :h="item.height" v-on:dragging="onDrag" v-on:resizing="onResize" :parent="true" :resizable="editar" :draggable="editar" @resizing="datoscoroto(item)" @resizestop="datoscoroto(item)" @dragstop="datoscoroto(item)" @dragging="datoscoroto(item)">
                                             <div style="">
@@ -81,7 +80,7 @@
                 </div>
             </div>
         </div>
-        <ordenes v-else @prueba="prueba2" @mesaocupadaactive="mesaocupadaactive" :mesasocupada="mesasocupada" :bus="bus" :mesa="mesa"></ordenes>
+        <ordenes v-else @prueba="prueba2" @mesaocupadaactive="mesaocupadaactive" :camarero="camarero" :mesasocupada="mesasocupada" :bus="bus" :mesa="mesa"></ordenes>
         <modal name="crear" :draggable="true" :height="200">
             <div class="container">
                 <div class="row">
@@ -108,7 +107,8 @@
                 </div>
             </div>
         </modal>
-        <modal name="coroto" :draggable="true" :height="400">
+
+        <modal name="coroto" :draggable="true" :clickToClose="false" :height="400">
             <div class="container">
                 <div class="row" style="background: #fafaed">
                     <div class="col-md-12">
@@ -174,6 +174,7 @@
                 </div>
             </div>
         </modal>
+
         <modal name="ordenabierta" :height="200">
             <div class="container">
                 <div class="row">
@@ -190,6 +191,72 @@
                     <div class="col-md-6" style="margin-top: 10px">
                         <div class="text-center">
                             <button type="button" class="btn btn-success" style="width: 100%;height: 125px;" @click="pagarorden">Pagar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </modal>
+
+        <modal name="camareroacces" :height="400" :clickToClose="false">
+            <div class="container">
+                <div class="row" style="background: #fafaed">
+                    <div class="col-md-12">
+                        <span style="float: right;font-size: 18px;cursor: pointer" @click="closemod2">&times;</span>
+                    </div>
+                    <div class="col-md-12" style="margin-top: 5px">
+                        <div class="text-center">
+                            <h2>Codigo Camarero</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="margin-top: 10px">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <input type="text" name="" v-model="camarero" maxlength="2" minlength="1"  class="form-control">
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-warning" style="width: 100%" @click="camarero = ''"><i class="fa fa-arrow-left"></i></button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '7'"><h1 style="color: white">7</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '8'"><h1 style="color: white">8</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '9'"><h1 style="color: white">9</h1></button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '4'"><h1 style="color: white">4</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '5'"><h1 style="color: white">5</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '6'"><h1 style="color: white">6</h1></button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '1'"><h1 style="color: white">1</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '2'"><h1 style="color: white">2</h1></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 60px" @click="camarero = camarero + '3'"><h1 style="color: white">3</h1></button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col">
+                                <button class="btn btn-primary" style="width: 100%;height: 50px" @click="camarero = camarero + '0'"><h2 style="color: white">0</h2></button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-success" style="width: 100%;height: 50px" @click="continuarmodalcamarero"><h2 style="color: white"><i class="fa fa-arrow-right"></i></h2></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -285,12 +352,29 @@
                 mesasocupada:[],
                 loading:false,
                 nombremesa:'',
+                camarero:'',
+                camarerosall:[],
+                index:'',
             }
         },
         methods:{
+            allcamareros()
+            {
+                axios.post('/camareros/all')
+                    .then( (response) => {
+                        this.camarerosall = response.data;
+                    })
+                    .catch( (error) => {
+                        console.log(error);
+                    });
+            },
             closemod()
             {
                 this.$modal.hide('coroto');
+            },
+            closemod2()
+            {
+                this.$modal.hide('camareroacces');
             },
             cambiarnombre(i)
             {
@@ -354,6 +438,7 @@
                     axios.post('/mesa/temp/store', {
                         id:this.mesa,
                         personas:parseInt(this.invitados),
+                        camarero:this.camarero,
                     })
                         .then((response) => {
                             this.allmesastemp();
@@ -379,6 +464,7 @@
                                 var esto = {
                                     id:mesa[key].coroto_id,
                                     personas:mesa[key].invitados,
+                                    camarero:mesa[key].camarero,
                                     mesa:{
                                         name:mesa[key].name
                                     },
@@ -390,6 +476,7 @@
                                 var esto = {
                                     id:mesa[key].coroto_id,
                                     personas:mesa[key].invitados,
+                                    camarero:mesa[key].camarero,
                                     mesa:{
                                         name:mesa[key].name
                                     },
@@ -443,28 +530,64 @@
                 this.x = x;
                 this.y = y;
             },
-            modalcoroto(index, status)
+            continuarmodalcamarero()
             {
-                this.mesa = this.corotos[index].id;
-                if (this.mesasocupada.length != 0){
-                    var existe = false;
-                    for (var key in this.mesasocupada){
-                        if (this.mesasocupada[key].id == this.mesa) {
-                            // console.log(this.mesasocupada[key].id + ' abierta ' + this.mesa)
-                            existe = true;
-                            break
-                        }
-                    }
-                    if  (existe == true)
+                var existe = 0;
+                for (var key in this.camarerosall)
+                {
+                    if (this.camarerosall[key].codigo == this.camarero)
                     {
-                        this.$modal.show('ordenabierta');
+                        existe++;
+                        break;
+                    }
+                }
+                if (existe == 1)
+                {
+                    toastr.success('Codigo Correcto', 'Validador');
+                    this.$modal.hide('camareroacces');
+                    this.modalcoroto(this.index);
+                }else{
+                    toastr.warning('Codigo de Camarero Incorrecto', 'Validador');
+                }
+            },
+            modalcoroto(index)
+            {
+                if (this.camarero == '')
+                {
+                    this.index = index;
+                    this.$modal.show('camareroacces');
+                }else{
+                    this.mesa = this.corotos[index].id;
+                    if (this.mesasocupada.length != 0){
+                        var existe = false;
+                        var cam = false;
+                        for (var key in this.mesasocupada){
+                            if (this.mesasocupada[key].id == this.mesa) {
+                                // console.log(this.mesasocupada[key].id + ' abierta ' + this.mesa)
+                                if (this.mesasocupada[key].camarero == this.camarero)
+                                {
+                                    cam = true;
+                                }
+                                existe = true;
+                                break
+                            }
+                        }
+                        if  (existe == true)
+                        {
+                            if (cam == true)
+                            {
+                                this.$modal.show('ordenabierta');
+                            }else {
+                                toastr.warning('Esta mesa no te corresponde');
+                            }
+                        }else {
+                            this.$modal.show('coroto');
+                        }
                     }else {
+                        this.mesa = this.corotos[index].id;
+                        this.nombremesa = this.corotos[index].name;
                         this.$modal.show('coroto');
                     }
-                }else {
-                    this.mesa = this.corotos[index].id;
-                    this.nombremesa = this.corotos[index].name;
-                    this.$modal.show('coroto');
                 }
             },
             corotosporarea(id)
@@ -519,6 +642,7 @@
             },
             prueba2()
             {
+                this.camarero = '';
                 this.prueba = false;
                 this.datoscorotos()
             },
@@ -680,6 +804,7 @@
         },
         mounted() {
             // this.datoscorotos();
+            this.allcamareros();
             this.allareas();
         }
     }

@@ -23934,6 +23934,73 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -24010,13 +24077,28 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
             invitados: '',
             mesasocupada: [],
             loading: false,
-            nombremesa: ''
+            nombremesa: '',
+            camarero: '',
+            camarerosall: [],
+            index: ''
         };
     },
 
     methods: {
+        allcamareros: function allcamareros() {
+            var _this = this;
+
+            axios.post('/camareros/all').then(function (response) {
+                _this.camarerosall = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
         closemod: function closemod() {
             this.$modal.hide('coroto');
+        },
+        closemod2: function closemod2() {
+            this.$modal.hide('camareroacces');
         },
         cambiarnombre: function cambiarnombre(i) {
             this.corotos[i.index].name = i.nombre;
@@ -24051,7 +24133,7 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
             this.mesa = i.id;
         },
         continuar: function continuar() {
-            var _this = this;
+            var _this2 = this;
 
             if (this.invitados == "") {
                 this.invitados = '0';
@@ -24068,10 +24150,11 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
                 }
                 axios.post('/mesa/temp/store', {
                     id: this.mesa,
-                    personas: parseInt(this.invitados)
+                    personas: parseInt(this.invitados),
+                    camarero: this.camarero
                 }).then(function (response) {
-                    _this.allmesastemp();
-                    _this.prueba = true;
+                    _this2.allmesastemp();
+                    _this2.prueba = true;
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -24080,38 +24163,40 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
             }
         },
         allmesastemp: function allmesastemp() {
-            var _this2 = this;
+            var _this3 = this;
 
             axios.post('/mesa/temp/all').then(function (response) {
-                _this2.mesasocupada = [];
+                _this3.mesasocupada = [];
                 var mesa = response.data;
                 for (var key in mesa) {
-                    if (mesa[key].coroto_id == _this2.mesa) {
+                    if (mesa[key].coroto_id == _this3.mesa) {
                         var esto = {
                             id: mesa[key].coroto_id,
                             personas: mesa[key].invitados,
+                            camarero: mesa[key].camarero,
                             mesa: {
                                 name: mesa[key].name
                             },
                             active: true
                         };
-                        _this2.mesasocupada.push(esto);
+                        _this3.mesasocupada.push(esto);
                     } else {
                         var esto = {
                             id: mesa[key].coroto_id,
                             personas: mesa[key].invitados,
+                            camarero: mesa[key].camarero,
                             mesa: {
                                 name: mesa[key].name
                             },
                             active: false
                         };
-                        _this2.mesasocupada.push(esto);
+                        _this3.mesasocupada.push(esto);
                     }
                 }
-                for (var i in _this2.corotos) {
-                    for (var o in _this2.mesasocupada) {
-                        if (_this2.corotos[i].id == _this2.mesasocupada[o].id) {
-                            _this2.corotos[i].status = 2;
+                for (var i in _this3.corotos) {
+                    for (var o in _this3.mesasocupada) {
+                        if (_this3.corotos[i].id == _this3.mesasocupada[o].id) {
+                            _this3.corotos[i].status = 2;
                             break;
                         }
                     }
@@ -24143,26 +24228,55 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
             this.x = x;
             this.y = y;
         },
-        modalcoroto: function modalcoroto(index, status) {
-            this.mesa = this.corotos[index].id;
-            if (this.mesasocupada.length != 0) {
-                var existe = false;
-                for (var key in this.mesasocupada) {
-                    if (this.mesasocupada[key].id == this.mesa) {
-                        // console.log(this.mesasocupada[key].id + ' abierta ' + this.mesa)
-                        existe = true;
-                        break;
-                    }
+        continuarmodalcamarero: function continuarmodalcamarero() {
+            var existe = 0;
+            for (var key in this.camarerosall) {
+                if (this.camarerosall[key].codigo == this.camarero) {
+                    existe++;
+                    break;
                 }
-                if (existe == true) {
-                    this.$modal.show('ordenabierta');
-                } else {
-                    this.$modal.show('coroto');
-                }
+            }
+            if (existe == 1) {
+                toastr.success('Codigo Correcto', 'Validador');
+                this.$modal.hide('camareroacces');
+                this.modalcoroto(this.index);
+            } else {
+                toastr.warning('Codigo de Camarero Incorrecto', 'Validador');
+            }
+        },
+        modalcoroto: function modalcoroto(index) {
+            if (this.camarero == '') {
+                this.index = index;
+                this.$modal.show('camareroacces');
             } else {
                 this.mesa = this.corotos[index].id;
-                this.nombremesa = this.corotos[index].name;
-                this.$modal.show('coroto');
+                if (this.mesasocupada.length != 0) {
+                    var existe = false;
+                    var cam = false;
+                    for (var key in this.mesasocupada) {
+                        if (this.mesasocupada[key].id == this.mesa) {
+                            // console.log(this.mesasocupada[key].id + ' abierta ' + this.mesa)
+                            if (this.mesasocupada[key].camarero == this.camarero) {
+                                cam = true;
+                            }
+                            existe = true;
+                            break;
+                        }
+                    }
+                    if (existe == true) {
+                        if (cam == true) {
+                            this.$modal.show('ordenabierta');
+                        } else {
+                            toastr.warning('Esta mesa no te corresponde');
+                        }
+                    } else {
+                        this.$modal.show('coroto');
+                    }
+                } else {
+                    this.mesa = this.corotos[index].id;
+                    this.nombremesa = this.corotos[index].name;
+                    this.$modal.show('coroto');
+                }
             }
         },
         corotosporarea: function corotosporarea(id) {
@@ -24171,7 +24285,7 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
             this.datoscorotos();
         },
         allareas: function allareas() {
-            var _this3 = this;
+            var _this4 = this;
 
             axios.post('/all/area', {
                 nombre: this.nombrearea
@@ -24183,22 +24297,22 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
                         user_id: response.data[key].user_id,
                         active: false
                     };
-                    _this3.dataareas.push(data);
+                    _this4.dataareas.push(data);
                 }
             }).catch(function (error) {
                 console.log(error);
             });
         },
         savearea: function savearea() {
-            var _this4 = this;
+            var _this5 = this;
 
             axios.post('/save/area', {
                 nombre: this.nombrearea
             }).then(function (response) {
                 console.log(response);
                 toastr.success('Datos Guardados', 'Validador');
-                _this4.nombrearea = '';
-                _this4.allareas();
+                _this5.nombrearea = '';
+                _this5.allareas();
             }).catch(function (error) {
                 console.log(error);
             });
@@ -24210,6 +24324,7 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
             this.prueba = true;
         },
         prueba2: function prueba2() {
+            this.camarero = '';
             this.prueba = false;
             this.datoscorotos();
         },
@@ -24288,7 +24403,7 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
             }
         },
         eliminarcoroto: function eliminarcoroto(i) {
-            var _this5 = this;
+            var _this6 = this;
 
             console.log(i);
             this.corotos.splice(i.index, 1);
@@ -24296,7 +24411,7 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
                 id: i.id
             }).then(function (response) {
                 console.log(response);
-                _this5.datoscorotos();
+                _this6.datoscorotos();
             }).catch(function (error) {
                 console.log(error);
             });
@@ -24308,7 +24423,7 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
             i.height = this.height;
         },
         salvar: function salvar() {
-            var _this6 = this;
+            var _this7 = this;
 
             this.editar = false;
             console.log(this.corotos);
@@ -24317,13 +24432,13 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
                 area: this.areaid
             }).then(function (response) {
                 toastr.success('Datos Guardado', 'Validado');
-                _this6.corotosporarea(_this6.areaid);
+                _this7.corotosporarea(_this7.areaid);
             }).catch(function (error) {
                 console.log(error);
             });
         },
         datoscorotos: function datoscorotos() {
-            var _this7 = this;
+            var _this8 = this;
 
             for (var key in this.dataareas) {
                 if (this.dataareas[key].active == true) {
@@ -24338,13 +24453,13 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
             }).then(function (response) {
                 if (response.data == "['No Data']") {
                     toastr.warning('No hemos encontrado datos');
-                    _this7.corotos = [];
+                    _this8.corotos = [];
                 } else {
                     toastr.success('', 'Gestor de datos');
-                    _this7.corotos = response.data;
-                    _this7.allmesastemp();
+                    _this8.corotos = response.data;
+                    _this8.allmesastemp();
                 }
-                _this7.loading = false;
+                _this8.loading = false;
             }).catch(function (error) {
                 console.log(error);
                 toastr.error('Se ha producido un error');
@@ -24353,6 +24468,7 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
     },
     mounted: function mounted() {
         // this.datoscorotos();
+        this.allcamareros();
         this.allareas();
     }
 });
@@ -24833,7 +24949,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_dragscroll___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'ordenes',
     components: { cardproduct: __WEBPACK_IMPORTED_MODULE_0__cardproduct___default.a, carrito: __WEBPACK_IMPORTED_MODULE_1__carrito___default.a, VueDragscroll: __WEBPACK_IMPORTED_MODULE_2_vue_dragscroll___default.a },
-    props: ['mesasocupada', 'mesa', 'bus'],
+    props: ['mesasocupada', 'mesa', 'bus', 'camarero'],
     data: function data() {
         return {
             default1: false,
@@ -25606,7 +25722,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_js_modal___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'carrito',
-    props: ['mesasocupadas', 'mesa', 'productoselecionado', 'bus', 'detalle'],
+    props: ['mesasocupadas', 'mesa', 'productoselecionado', 'bus', 'detalle', 'camarero'],
     components: { itemcarrito: __WEBPACK_IMPORTED_MODULE_0__itemcarrito___default.a, vmodal: __WEBPACK_IMPORTED_MODULE_1_vue_js_modal___default.a, modalpagar: __WEBPACK_IMPORTED_MODULE_2__modalpago___default.a },
     data: function data() {
         return {
@@ -25623,7 +25739,8 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_js_modal___default.a);
             banco: '',
             numerotarjeta: '',
             autorizacion: '',
-            abrir: false
+            abrir: false,
+            camarerocambio: ''
         };
     },
 
@@ -25756,7 +25873,8 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_js_modal___default.a);
                     productos: this.productoselecionado,
                     mesa: this.mesa,
                     invitados: this.invitadott,
-                    subtotal: this.subtotal
+                    subtotal: this.subtotal,
+                    camarero: this.camarero
                 }).then(function (response) {
                     toastr.success('La orden se ha realizado', 'Validador');
                     _this4.$emit('volverpant');
@@ -27941,6 +28059,7 @@ var render = function() {
             [
               _c("carrito", {
                 attrs: {
+                  camarero: _vm.camarero,
                   mesasocupadas: _vm.mesasocupada,
                   mesa: _vm.mesa,
                   productoselecionado: _vm.productoselecionado,
@@ -28599,6 +28718,7 @@ var render = function() {
           ])
         : _c("ordenes", {
             attrs: {
+              camarero: _vm.camarero,
               mesasocupada: _vm.mesasocupada,
               bus: _vm.bus,
               mesa: _vm.mesa
@@ -28692,359 +28812,370 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("modal", { attrs: { name: "coroto", draggable: true, height: 400 } }, [
-        _c("div", { staticClass: "container" }, [
-          _c(
-            "div",
-            { staticClass: "row", staticStyle: { background: "#fafaed" } },
-            [
-              _c("div", { staticClass: "col-md-12" }, [
-                _c("h3", { staticStyle: { float: "left" } }, [
-                  _vm._v(_vm._s(_vm.nombremesa))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticStyle: {
-                      float: "right",
-                      "font-size": "18px",
-                      cursor: "pointer"
-                    },
-                    on: { click: _vm.closemod }
-                  },
-                  [_vm._v("×")]
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-md-12",
-                  staticStyle: { "margin-top": "5px" }
-                },
-                [
-                  _c("div", { staticClass: "text-center" }, [
-                    _c("h2", [_vm._v("Cantidad de Invitados")])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-md-12",
-                  staticStyle: { "margin-top": "10px" }
-                },
-                [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-10" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.invitados,
-                            expression: "invitados"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "",
-                          maxlength: "2",
-                          minlength: "1"
-                        },
-                        domProps: { value: _vm.invitados },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.invitados = $event.target.value
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-2" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-warning",
-                          staticStyle: { width: "100%" },
-                          on: {
-                            click: function($event) {
-                              _vm.invitados = ""
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "fa fa-arrow-left" })]
-                      )
-                    ])
+      _c(
+        "modal",
+        {
+          attrs: {
+            name: "coroto",
+            draggable: true,
+            clickToClose: false,
+            height: 400
+          }
+        },
+        [
+          _c("div", { staticClass: "container" }, [
+            _c(
+              "div",
+              { staticClass: "row", staticStyle: { background: "#fafaed" } },
+              [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("h3", { staticStyle: { float: "left" } }, [
+                    _vm._v(_vm._s(_vm.nombremesa))
                   ]),
                   _vm._v(" "),
                   _c(
-                    "div",
+                    "span",
                     {
-                      staticClass: "row",
-                      staticStyle: { "margin-top": "10px" }
+                      staticStyle: {
+                        float: "right",
+                        "font-size": "18px",
+                        cursor: "pointer"
+                      },
+                      on: { click: _vm.closemod }
                     },
-                    [
-                      _c("div", { staticClass: "col" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            staticStyle: { width: "100%", height: "60px" },
-                            on: {
-                              click: function($event) {
-                                _vm.invitados = _vm.invitados + "7"
-                              }
-                            }
-                          },
-                          [
-                            _c("h1", { staticStyle: { color: "white" } }, [
-                              _vm._v("7")
-                            ])
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            staticStyle: { width: "100%", height: "60px" },
-                            on: {
-                              click: function($event) {
-                                _vm.invitados = _vm.invitados + "8"
-                              }
-                            }
-                          },
-                          [
-                            _c("h1", { staticStyle: { color: "white" } }, [
-                              _vm._v("8")
-                            ])
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            staticStyle: { width: "100%", height: "60px" },
-                            on: {
-                              click: function($event) {
-                                _vm.invitados = _vm.invitados + "9"
-                              }
-                            }
-                          },
-                          [
-                            _c("h1", { staticStyle: { color: "white" } }, [
-                              _vm._v("9")
-                            ])
-                          ]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "row",
-                      staticStyle: { "margin-top": "10px" }
-                    },
-                    [
-                      _c("div", { staticClass: "col" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            staticStyle: { width: "100%", height: "60px" },
-                            on: {
-                              click: function($event) {
-                                _vm.invitados = _vm.invitados + "4"
-                              }
-                            }
-                          },
-                          [
-                            _c("h1", { staticStyle: { color: "white" } }, [
-                              _vm._v("4")
-                            ])
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            staticStyle: { width: "100%", height: "60px" },
-                            on: {
-                              click: function($event) {
-                                _vm.invitados = _vm.invitados + "5"
-                              }
-                            }
-                          },
-                          [
-                            _c("h1", { staticStyle: { color: "white" } }, [
-                              _vm._v("5")
-                            ])
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            staticStyle: { width: "100%", height: "60px" },
-                            on: {
-                              click: function($event) {
-                                _vm.invitados = _vm.invitados + "6"
-                              }
-                            }
-                          },
-                          [
-                            _c("h1", { staticStyle: { color: "white" } }, [
-                              _vm._v("6")
-                            ])
-                          ]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "row",
-                      staticStyle: { "margin-top": "10px" }
-                    },
-                    [
-                      _c("div", { staticClass: "col" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            staticStyle: { width: "100%", height: "60px" },
-                            on: {
-                              click: function($event) {
-                                _vm.invitados = _vm.invitados + "1"
-                              }
-                            }
-                          },
-                          [
-                            _c("h1", { staticStyle: { color: "white" } }, [
-                              _vm._v("1")
-                            ])
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            staticStyle: { width: "100%", height: "60px" },
-                            on: {
-                              click: function($event) {
-                                _vm.invitados = _vm.invitados + "2"
-                              }
-                            }
-                          },
-                          [
-                            _c("h1", { staticStyle: { color: "white" } }, [
-                              _vm._v("2")
-                            ])
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            staticStyle: { width: "100%", height: "60px" },
-                            on: {
-                              click: function($event) {
-                                _vm.invitados = _vm.invitados + "3"
-                              }
-                            }
-                          },
-                          [
-                            _c("h1", { staticStyle: { color: "white" } }, [
-                              _vm._v("3")
-                            ])
-                          ]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "row",
-                      staticStyle: { "margin-top": "10px" }
-                    },
-                    [
-                      _c("div", { staticClass: "col" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            staticStyle: { width: "100%", height: "50px" },
-                            on: {
-                              click: function($event) {
-                                _vm.invitados = _vm.invitados + "0"
-                              }
-                            }
-                          },
-                          [
-                            _c("h2", { staticStyle: { color: "white" } }, [
-                              _vm._v("0")
-                            ])
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-success",
-                            staticStyle: { width: "100%", height: "50px" },
-                            on: {
-                              click: function($event) {
-                                _vm.continuar()
-                              }
-                            }
-                          },
-                          [
-                            _c("h2", { staticStyle: { color: "white" } }, [
-                              _c("i", { staticClass: "fa fa-arrow-right" })
-                            ])
-                          ]
-                        )
-                      ])
-                    ]
+                    [_vm._v("×")]
                   )
-                ]
-              )
-            ]
-          )
-        ])
-      ]),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-md-12",
+                    staticStyle: { "margin-top": "5px" }
+                  },
+                  [
+                    _c("div", { staticClass: "text-center" }, [
+                      _c("h2", [_vm._v("Cantidad de Invitados")])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-md-12",
+                    staticStyle: { "margin-top": "10px" }
+                  },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-10" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.invitados,
+                              expression: "invitados"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            name: "",
+                            maxlength: "2",
+                            minlength: "1"
+                          },
+                          domProps: { value: _vm.invitados },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.invitados = $event.target.value
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-warning",
+                            staticStyle: { width: "100%" },
+                            on: {
+                              click: function($event) {
+                                _vm.invitados = ""
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-arrow-left" })]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "row",
+                        staticStyle: { "margin-top": "10px" }
+                      },
+                      [
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.invitados = _vm.invitados + "7"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("7")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.invitados = _vm.invitados + "8"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("8")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.invitados = _vm.invitados + "9"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("9")
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "row",
+                        staticStyle: { "margin-top": "10px" }
+                      },
+                      [
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.invitados = _vm.invitados + "4"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("4")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.invitados = _vm.invitados + "5"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("5")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.invitados = _vm.invitados + "6"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("6")
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "row",
+                        staticStyle: { "margin-top": "10px" }
+                      },
+                      [
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.invitados = _vm.invitados + "1"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("1")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.invitados = _vm.invitados + "2"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("2")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.invitados = _vm.invitados + "3"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("3")
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "row",
+                        staticStyle: { "margin-top": "10px" }
+                      },
+                      [
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "50px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.invitados = _vm.invitados + "0"
+                                }
+                              }
+                            },
+                            [
+                              _c("h2", { staticStyle: { color: "white" } }, [
+                                _vm._v("0")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-success",
+                              staticStyle: { width: "100%", height: "50px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.continuar()
+                                }
+                              }
+                            },
+                            [
+                              _c("h2", { staticStyle: { color: "white" } }, [
+                                _c("i", { staticClass: "fa fa-arrow-right" })
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c("modal", { attrs: { name: "ordenabierta", height: 200 } }, [
         _c("div", { staticClass: "container" }, [
@@ -29100,7 +29231,357 @@ var render = function() {
             )
           ])
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "modal",
+        { attrs: { name: "camareroacces", height: 400, clickToClose: false } },
+        [
+          _c("div", { staticClass: "container" }, [
+            _c(
+              "div",
+              { staticClass: "row", staticStyle: { background: "#fafaed" } },
+              [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c(
+                    "span",
+                    {
+                      staticStyle: {
+                        float: "right",
+                        "font-size": "18px",
+                        cursor: "pointer"
+                      },
+                      on: { click: _vm.closemod2 }
+                    },
+                    [_vm._v("×")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-md-12",
+                    staticStyle: { "margin-top": "5px" }
+                  },
+                  [
+                    _c("div", { staticClass: "text-center" }, [
+                      _c("h2", [_vm._v("Codigo Camarero")])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-md-12",
+                    staticStyle: { "margin-top": "10px" }
+                  },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-10" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.camarero,
+                              expression: "camarero"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            name: "",
+                            maxlength: "2",
+                            minlength: "1"
+                          },
+                          domProps: { value: _vm.camarero },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.camarero = $event.target.value
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-warning",
+                            staticStyle: { width: "100%" },
+                            on: {
+                              click: function($event) {
+                                _vm.camarero = ""
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-arrow-left" })]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "row",
+                        staticStyle: { "margin-top": "10px" }
+                      },
+                      [
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.camarero = _vm.camarero + "7"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("7")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.camarero = _vm.camarero + "8"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("8")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.camarero = _vm.camarero + "9"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("9")
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "row",
+                        staticStyle: { "margin-top": "10px" }
+                      },
+                      [
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.camarero = _vm.camarero + "4"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("4")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.camarero = _vm.camarero + "5"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("5")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.camarero = _vm.camarero + "6"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("6")
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "row",
+                        staticStyle: { "margin-top": "10px" }
+                      },
+                      [
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.camarero = _vm.camarero + "1"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("1")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.camarero = _vm.camarero + "2"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("2")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "60px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.camarero = _vm.camarero + "3"
+                                }
+                              }
+                            },
+                            [
+                              _c("h1", { staticStyle: { color: "white" } }, [
+                                _vm._v("3")
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "row",
+                        staticStyle: { "margin-top": "10px" }
+                      },
+                      [
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              staticStyle: { width: "100%", height: "50px" },
+                              on: {
+                                click: function($event) {
+                                  _vm.camarero = _vm.camarero + "0"
+                                }
+                              }
+                            },
+                            [
+                              _c("h2", { staticStyle: { color: "white" } }, [
+                                _vm._v("0")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-success",
+                              staticStyle: { width: "100%", height: "50px" },
+                              on: { click: _vm.continuarmodalcamarero }
+                            },
+                            [
+                              _c("h2", { staticStyle: { color: "white" } }, [
+                                _c("i", { staticClass: "fa fa-arrow-right" })
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
+          ])
+        ]
+      )
     ],
     1
   )

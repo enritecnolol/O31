@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <div class="col-md-5" style="height: 900px;background: #ecf0f1">
-                    <carrito @volverpant="volverpantalla" @cambiarcantidad="cambiarcantidad" @productopormesa="productopormesa" :mesasocupadas="mesasocupada" :mesa="mesa" :productoselecionado="productoselecionado" :bus="bus" :detalle="detalle" ></carrito>
+                    <carrito @volverpant="volverpantalla" :camarero="camarero" @cambiarcantidad="cambiarcantidad" @productopormesa="productopormesa" :mesasocupadas="mesasocupada" :mesa="mesa" :productoselecionado="productoselecionado" :bus="bus" :detalle="detalle" ></carrito>
                 </div>
                 <div class="col-md-7" style="height: 900px;background: #ecf0f1">
                     <div class="row">
@@ -45,7 +45,7 @@
     export default {
         name:'ordenes',
         components:{cardproduct,carrito,VueDragscroll},
-        props:['mesasocupada', 'mesa', 'bus'],
+        props:['mesasocupada', 'mesa', 'bus', 'camarero'],
         data()
         {
             return{
