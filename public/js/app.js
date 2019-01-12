@@ -24115,7 +24115,6 @@ Vue.component('vue-draggable-resizable', __WEBPACK_IMPORTED_MODULE_5_vue_draggab
         pagarorden: function pagarorden() {
             this.prueba = true;
             this.$modal.hide('ordenabierta');
-            // this.$eventbus.$emit('buscarmesa');
             this.$eventbus.$emit('pagarorden');
         },
         cargarorden: function cargarorden() {
@@ -25809,7 +25808,6 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_js_modal___default.a);
             }
         },
         pagarorden: function pagarorden(e) {
-            // console.log('modal');
             this.$modal.show('modalcarritopagar');
         },
         cerrarmodal: function cerrarmodal() {
@@ -30008,6 +30006,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             console.log(e);
             _this4.ordensdetails();
         });
+
+        setInterval(function () {
+            _this4.ordensdetails();
+        }, 30000);
     },
     created: function created() {
         this.ordensdetails();
