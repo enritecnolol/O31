@@ -30006,6 +30006,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             console.log(e);
             _this4.ordensdetails();
         });
+
+        setInterval(function () {
+            _this4.ordensdetails();
+        }, 30000);
     },
     created: function created() {
         this.ordensdetails();

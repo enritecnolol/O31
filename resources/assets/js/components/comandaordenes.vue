@@ -105,7 +105,9 @@
                 .listen(".App\\Events\\NewOrdenNotification", (e)=>{
                     console.log(e);
                     this.ordensdetails();
-                })
+                });
+
+            setInterval(() =>{this.ordensdetails()},30000);
         },
         created(){
             this.ordensdetails();

@@ -121,6 +121,11 @@
         <i class="fas fa-hand-pointer"></i>
         Lista de Ordenes
         <i class="fas fa-clipboard-list"></i>
+      </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="/camareros" style="color: #FF9800">
+        <i class="fas fa-hand-pointer"></i>
+        Camareros
+        <i class="fas fa-user-tie"></i>
       </a>
     </h4>
     <h4 style="color: white; float: right;cursor: help; margin-right: 15px" title="
@@ -1081,7 +1086,6 @@
                       detalle: this.list
                     },
                     success:function (dato) {
-                      alert('aqui')
                       if (dato == 'bien'){
                         $('#pago').modal('hide');
                         toastr.options.newestOnTop = false;
