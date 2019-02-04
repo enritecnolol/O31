@@ -226,6 +226,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/camareros/delete', 'CamarerosController@delete');
     Route::post('/camareros/all', 'CamarerosController@allcamareros');
     Route::post('/camareros/all/pagination', 'CamarerosController@allcamarerospagination');
+    /*=================================\- Comprobantes -/======================================================*/
+    Route::get("/comprobantes", "ComprobantesController@index");
 
 });
 

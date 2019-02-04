@@ -45,6 +45,7 @@ Vue.component('prueba', require('./components/prueba.vue'));
 Vue.component('floorview', require('./components/floorview.vue'));
 Vue.component('comanda-ordenes', require('./components/comandaordenes'));
 Vue.component('pantallacamarero', require('./components/pantallacamarero.vue'));
+Vue.component('panelcomprobante', require('./components/secuanciacomprobante/panelcomprobante.vue'));
 
 Vue.prototype.$eventbus = new Vue();
 
