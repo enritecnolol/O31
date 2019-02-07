@@ -97,7 +97,18 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="row form-group">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="" class=" form-control-label"><strong>Genera comprobante fiscal</strong></label>
+                                            <select required name="generacomprobante" class="form-control">
+                                                <option value="">Selecciona</option>
+                                                <option value="si">Si</option>
+                                                <option value="no">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-footer" style="background: white;box-shadow:rgb(136, 136, 136) 1px 1px 4px;">
                                 <div class="text-center">
@@ -189,6 +200,18 @@
                                         <div class="form-group">
                                             <label for="" class=" form-control-label"><strong>Email resumen del dia</strong></label>
                                             <input type="text" :disabled="editar == false" class="form-control" v-model="infoconfig.emailinfo" name="emailinfo" aria-describedby="emailHelp" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="" class=" form-control-label"><strong>Genera comprobante fiscal</strong></label>
+                                            <select required :disabled="editar == false" v-model="infoconfig.generacomprobante" name="generacomprobante" class="form-control">
+                                                <option value="">Selecciona</option>
+                                                <option value="si">Si</option>
+                                                <option value="no">No</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

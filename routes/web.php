@@ -101,6 +101,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/configuracion/cliente/preferencial','ConfiguracionesController@clientepreferencialindex');
     Route::post('/configuracion/existencia','ConfiguracionesController@existencia');
     Route::post('/configuracion/manejo/itbis','ConfiguracionesController@manejoitbis');
+    Route::post('/configuracion/sale','ConfiguracionesController@setting');
     /*=================================\- itbis - /======================================================*/
     Route::get('/configuracion/itbis','ImpuestosController@itbis');
     Route::post('/nuevo/itbis','ImpuestosController@store');
@@ -228,6 +229,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/camareros/all/pagination', 'CamarerosController@allcamarerospagination');
     /*=================================\- Comprobantes -/======================================================*/
     Route::get("/comprobantes", "ComprobantesController@index");
+    Route::post("/comprobantes/store", "ComprobantesController@store");
+    Route::post("/comprobantes/all/header", "ComprobantesController@allheader");
+    Route::post("/comprobantes/find/header/details", "ComprobantesController@findheader");
+    Route::post("/comprobantes/find/header/details", "ComprobantesController@findheader");
+    Route::post("/comprobantes/edit/detail/sequence", "ComprobantesController@editdetail");
+
+    Route::get('/pru', 'IndexController@prueba');
 
 });
 

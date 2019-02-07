@@ -50,11 +50,11 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <h5 style="float: left">Bruto</h5>
-                                                <h5 style="float: right">@{{ datofactura.brute }}</h5>
+                                                <h5 style="float: right">@{{ datofactura.brute }}.00</h5>
                                             </div>
                                             <div class="col-md-4">
                                                 <h5 style="float: left">Descuento</h5>
-                                                <h5 style="float: right">@{{ datofactura.desc }}</h5>
+                                                <h5 style="float: right">@{{ datofactura.desc }}.00</h5>
                                             </div>
                                             <div class="col-md-4">
                                                 <h5 style="float: left">Itbis</h5>
@@ -62,7 +62,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <h5 style="float: left">devuelta</h5>
-                                                <h5 style="float: right">@{{ datofactura.returns }}</h5>
+                                                <h5 style="float: right">@{{ datofactura.returns }}.00</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -369,13 +369,18 @@
                         axios.post('/cliente/buscar/nombre', {
                             id:i
                         })
-                            .then(function (response) {
+                            .then( (response) =>{
                                 if (response['data'] == null)
                                 {
                                     _this.clientenombre = ''
                                 }else
                                 {
-                                    _this.clientenombre = response['data'][0].nombre;
+                                    for (var key in response['data'])
+                                    {
+                                        if (i == response['data'][key].id){
+                                            _this.clientenombre = response['data'][key].nombre
+                                        }
+                                    }
                                 }
                             })
                             .catch(function (error) {

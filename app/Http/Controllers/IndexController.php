@@ -7,6 +7,7 @@ use App\Categoria;
 use App\Client;
 use App\Configuracion;
 use App\Detail;
+use App\Detallesecuencia;
 use App\Facture;
 use App\Product;
 use App\Puntosmovimiento;
@@ -56,10 +57,10 @@ class IndexController extends Controller
         if ($caja == '[]'){
             $cerrada = 'C';
         }if($caja->fecha_apertura != date("Y-m-d") and $caja->status == 'A'){
-            $cerrada = 'no es dia';
-        }else{
-            $cerrada = $caja->status;
-        }
+        $cerrada = 'no es dia';
+    }else{
+        $cerrada = $caja->status;
+    }
         $categoria = Categoria::all()->where('user_id', '==', $id);
 
         $config = DB::table('configuracions')->select('impuesto')->where('user_id', $id)->get();
@@ -123,9 +124,47 @@ class IndexController extends Controller
         $facture->Numbertar = $request->Numtarjeta;
         $facture->banco = $request->banco;
         $facture->auth = $request->auth;
+        $nfc = '';
+        $aviso = '';
+        if ($request->setting['generacomprobante'] == 'si'){
+            $facture->tipo_nfc = $request->tiponfc;
+
+            $headers = DB::select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento AND user_id =".Auth::id()."");
+            foreach ($headers as $header)
+            {
+                $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc',$request->tiponfc);
+                foreach ($details as $detail)
+                {
+                    if (($detail->actual + $detail->aviso) >= $detail->secuencia_final){
+                        $aviso = "En la Solicitud #". $header->id. " Serie: ". $detail->serie. ", Tipo de NCF: ".$request->tiponfc . " Se estan agotando";
+                    }
+                    if ($detail->actual < $detail->secuencia_final)
+                    {
+                        $nfc = $detail->serie."".$detail->tipo_nfc."".str_pad($detail->actual,8,"0",STR_PAD_LEFT);
+                        $d = Detallesecuencia::find($detail->id);
+                        $d->actual = $detail->actual+1;
+                        $d->update();
+                        break;
+                    }
+                }
+            }
+            if ($nfc == '')
+            {
+                return 'No es posible hacer la factura por falta de Comprobantes';
+            }
+            $facture->nfc = $nfc;
+//            $facture->nfc = ;
+            if ($request->tiponfc != '02')
+            {
+                $facture->telefono_nfc = $request->datancf['telefono'];
+                $facture->rnc_nfc = $request->datancf['rnc'];
+                $facture->razon_nfc = $request->datancf['razon'];
+            }
+        }
         $facture->caja_id = $idcaja->last()->id;
         $facture->user_id = Auth::id();
         $facture->save();
+
 
         if ($request->has('cliente')){
             $puntos = Client::all()->where('id',$request->cliente);
@@ -185,12 +224,29 @@ class IndexController extends Controller
                 }
             }
         }
-        return 'bien';
-        echo $count;
+
+        return ['bien', $nfc, $idfacture->last()->id, $aviso];
     }
     public function prueba()
     {
-        return view('nose');
+        $nfc = '';
+        $headers = DB::select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento AND user_id =".Auth::id()."");
+        foreach ($headers as $header)
+        {
+            $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc','02');
+            foreach ($details as $detail)
+            {
+                if ($detail->actual < $detail-> secuencia_final)
+                {
+                    $nfc = $detail->actual;
+                    return $detail->serie."".$detail->tipo_nfc."".str_pad($nfc,8,"0",STR_PAD_LEFT);
+                }
+            }
+        }
+        if ($nfc == '')
+        {
+            return 'No es posible hacer la factura por falta de Comprobantes';
+        }
     }
 
 }

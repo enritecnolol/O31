@@ -7,74 +7,121 @@
                 <th scope="col">Tipo NCF</th>
                 <th scope="col">Desde</th>
                 <th scope="col">Hasta</th>
-                <th scope="col">Aviso</th>
                 <th scope="col">Actual</th>
+                <th scope="col">Aviso</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th scope="row"><input type="text" style="width: 100px" v-model="serie" class="form-control form-control-sm" placeholder="A|B|C"></th>
-                <td>
-                    <select class="form-control form-control-sm" v-model="tiponfc">
-                        <option selected value="">Selecionar</option>
-                        <option value="01">01 | Credito Fiscal</option>
-                        <option value="02">02 | Facturas de Consumo</option>
-                        <option value="03">03 | Notas de Debito</option>
-                        <option value="04">04 | Notas de Credito</option>
-                        <option value="11">11 | Provedores Informales</option>
-                        <option value="12">12 | Registro Unico de Ingresos</option>
-                        <option value="13">13 | Registro de Gastos Menores</option>
-                        <option value="14">14 | Regímenes Especiales de Tributación</option>
-                        <option value="15">15 | Comprobantes Gubernamentales</option>
-                    </select>
-                </td>
-                <td>
-                    <datepicker v-model="desde"
-                                 class="form-control form-control-sm animated-placeholder"
-                                 :input-class="'inputdate'"
-                                 name="fechavencimiento"></datepicker>
-                </td>
-
-                <td>
-                    <datepicker
-                        v-model="hasta"
-                        class="form-control form-control-sm"
-                        :input-class="'inputdate'"
-                        name="fechavencimiento"></datepicker>
-                </td>
-
-                <td><input type="text" v-model="aviso" class="form-control form-control-sm" placeholder=""></td>
-                <td><input type="text" v-model="actual" class="form-control form-control-sm" placeholder=""></td>
-            </tr>
+            <template v-for="(item, index) in detalle_secuencia">
+                <itemtable :fechaemision="fechaemision" @changeitem="changeitem" :fechavencimiento="fechavencimiento" :detalle="item" :key="index" :index="index"></itemtable>
+            </template>
+           <template v-for="(item, key) in tabladatos">
+               <itemedit :item="item" :index="key" @editando="editando"></itemedit>
+           </template>
             </tbody>
         </table>
     </div>
 </template>
 <script>
+    import itemtable from './itemtable';
     import Datepicker from 'vuejs-datepicker';
-    export default{
+    import itemedit from './itemtableedit';
+    export default {
         name:"tablasecuencia",
         components:{
-            Datepicker
+            Datepicker,
+            itemtable,
+            itemedit
         },
         data()
         {
             return {
-                hasta:'',
-                desde:'',
-                aviso:'',
-                actual:'',
-                serie:'',
-                tiponfc:'',
-
+                detalle_secuencia:[{
+                    serie:'',
+                    tipo_ncf:'',
+                    desde:'',
+                    hasta:'',
+                    aviso:'',
+                    actual:''
+                }],
             }
         },
-        props:[],
+        props:['fechaemision', 'fechavencimiento', 'tabladatos', 'id'],
         methods:{
+            editando()
+            {
+                this.$emit('buttonedit');
+            },
+            customFormatter(date) {
+                return moment(date).format('d MMMM  YYYY');
+            },
+            columnatable(accion)
+            {
+                console.log(accion.accion);
+                if (accion.accion === 'plus') {
+                    this.detalle_secuencia.push({
+                        serie:'',
+                        tipo_ncf:'',
+                        desde:'',
+                        hasta:'',
+                        aviso:'',
+                        actual:''
+                    });
+                }else{
 
+                }
+            },
+            changeitem(i){
+                this.detalle_secuencia.splice(i.index, 1, i.datos);
+            },
+            savedata()
+            {
+                var valid =0;
+                for (var key in this.detalle_secuencia)
+                {
+                    if  (this.detalle_secuencia[key].serie == "")
+                    {
+                        valid++;
+                        return;
+                    }
+                }
+                if (valid == 0)
+                {
+                    axios.post('/comprobantes/store', {
+                        id:this.id,
+                        fecha_emision:this.fecha_emision,
+                        fecha_vecimiento:this.fecha_vecimiento,
+                        details:this.detalle_secuencia
+                    })
+                        .then( (response) => {
+                            toastr.success("datos Guardados");
+                            this.detalle_secuencia = [];
+                            this.$emit('saved');
+                            console.log(response);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }else{
+                    toastr.warning("Por favor revisar los datos", "Validador")
+                }
+            },
+            passdata()
+            {
+                this.$eventbus.$emit('itemdata')
+            },
+            actualizaritem()
+            {
+                this.$eventbus.$emit('actualizartablaitem');
+            }
         },
         computed:{
 
+        },
+        mounted() {
+            this.$eventbus.$on('columnatabla', (accion) => {this.columnatable(accion);})
+            this.$eventbus.$on('actualizartabla', () => {this.actualizaritem();})
+            this.$eventbus.$on('passdata', () => {this.passdata(); setTimeout(this.savedata(), 1000)});
         }
     }
 </script>

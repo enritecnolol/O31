@@ -1,7 +1,10 @@
 @extends('main.app')
 @section('style')
     <style>
-
+        .imp:hover{
+            color: #3ca5ea;
+            cursor: pointer;
+        }
         #plus{
             -webkit-transition: all .6s ease-in-out;    /* safari - Chrome*/
             -moz-transition: all .6s ease-in-out;       /* Firefox */
@@ -504,6 +507,14 @@
                         <h3 style="font-size: 50px">A PAGAR $: <span style="font-size: 50px; color: red">@{{ neto }}</span></h3>
                     </div>
                     <div class="row">
+                        <div class="col-12">
+                            <div class="text-right">
+                                <span @click="facturaimp = true" v-if="!facturaimp" class="imp"><u>Imprimir Factura</u></span>
+                                <span v-else><u>por imprimir</u></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="cc-exp" class="control-label mb-1">Efectivo<span style="color: red">*</span></label>
@@ -531,7 +542,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="cc-exp" class="control-label mb-1">Billetes<span style="color: red"></span></label>
+                                <label for="cc-exp" class="control-label mb-1">Monedas<span style="color: red"></span></label>
                                 <br>
                                 <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(2000) + parseFloat(campodinero)">$2000</button>
                                 <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(25) + parseFloat(campodinero)">$25</button>
@@ -577,6 +588,48 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row" v-if="setting.generacomprobante == 'si'">
+                        <div class="col-md-12">
+                            <div class="text-center">
+                                <button type="button" v-if="fiscal == false" class="btn btn-primary" @click="fiscalconfirm" >Documento Fiscal?</button>
+                                <template v-else>
+                                    <label for="" class="control-label mb-1"><strong>Tipo NFC</strong></label>
+                                    <select class="form-control form-control-sm" v-model="tiponfc">
+                                        <option value="01">01 | Credito Fiscal</option>
+                                        <option value="02" selected>02 | Facturas de Consumo</option>
+                                        <option value="03">03 | Notas de Debito</option>
+                                        <option value="04">04 | Notas de Credito</option>
+                                        <option value="11">11 | Provedores Informales</option>
+                                        <option value="12">12 | Registro Unico de Ingresos</option>
+                                        <option value="13">13 | Registro de Gastos Menores</option>
+                                        <option value="14">14 | Regímenes Especiales de Tributación</option>
+                                        <option value="15">15 | Comprobantes Gubernamentales</option>
+                                    </select>
+                                    <hr>
+                                    <div class="row" v-if="tiponfc != 02">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="" class="control-label mb-1">Telefono</label>
+                                                <input id="" name="" v-model="datancf.telefono" class="form-control form-control-sm" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="" class="control-label mb-1">Numero RNC</label>
+                                                <input id="" name="" v-model="datancf.rnc" class="form-control form-control-sm" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="" class="control-label mb-1">Razon social</label>
+                                                <input id="" name="" v-model="datancf.razon" class="form-control form-control-sm" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-12">
                             <hr>
@@ -614,7 +667,7 @@
                         </div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                         <button v-if="suma >= neto" type="button" @click="facturar()" class="btn btn-primary">&nbsp;Pagar</button>
-                        <button v-else disabled type="button" @click="facturar()" class="btn btn-primary">&nbsp;Pagar</button>
+                        <button v-else disabled type="button" class="btn btn-primary">&nbsp;Pagar</button>
                     </div>
                 </div>
             </div>
@@ -781,14 +834,24 @@
                 observacion:'',
                 idtarjeta:'',
                 existenciarep:'',
-
-
+                setting:'',
+                fiscal:false,
+                tiponfc:'02',
+                datancf:{
+                    telefono:'',
+                    rnc:'',
+                    razon:''
+                },
+                facturaimp:false,
+                rncdevf:'',
+                lastid:'',
             },
             mounted() {
                 _this = this;
                 _this.cargartablacliente();
                 _this.cargartablatp();
                 _this.existencia();
+                _this.config();
             },
             watch:{
                 neto:function(valor){
@@ -796,6 +859,21 @@
                 },
             },
             methods:{
+                fiscalconfirm(){
+                    this.fiscal = true;
+                    this.tiponfc = '01';
+                },
+                config(){
+                    axios.post('/configuracion/sale')
+                        .then(function (response) {
+                            for(var key in response['data']){
+                                _this.setting = response["data"][key]
+                                break;
+                            }
+                        })
+                        .catch(function (error) {
+                        });
+                },
                 subcategoriaproductos:function (id) {
 
                     _this = this;
@@ -1061,11 +1139,24 @@
                                 if (this.datosticket.balancepuntos > this.neto ){
                                     alert('Si va a utilizar su bonos por favor consumirlo completo')
                                 }else{
+                                    if (this.setting.generacomprobante === 'si')
+                                    {
+                                        if  (this.tiponfc != '02')
+                                        {
+                                            if (!this.datancf.telefono || !this.datancf.rnc || !this.datancf.razon ){
+                                                toastr.warning("Llenar datos de NFC");
+                                                return;
+                                            }
+                                        }
+                                    }
                                     _this = this;
                                     $.ajax({
                                         url: '/facturacioncar',
                                         method: 'GET',
                                         data: {
+                                            setting:this.setting,
+                                            tiponfc:this.tiponfc,
+                                            datancf:this.datancf,
                                             existencias: this.existenciarep,
                                             ticket: this.datosticket.id,
                                             puntos:this.puntosagenerar,
@@ -1085,12 +1176,28 @@
                                             dinero:this.campodinero,
                                             detalle: this.list
                                         },
-                                        success:function (dato) {
-                                            if (dato == 'bien'){
+                                        success: (dato) => {
+                                            var _this = this;
+                                            if  (dato == "No es posible hacer la factura por falta de Comprobantes")
+                                            {
+                                                toastr.warning(dato, "validador");
+                                                return;
+                                            }
+                                            if (dato[0] == 'bien'){
                                                 $('#pago').modal('hide');
                                                 toastr.options.newestOnTop = false;
                                                 toastr.success('Gracias por la compra');
-                                                setTimeout('document.location.reload()',1000);
+                                                this.rncdevf = dato[1];
+                                                this.lastid = dato[2];
+                                                if  (this.facturaimp === false){
+                                                    setTimeout('document.location.reload()',1000);
+                                                    return;
+                                                }
+                                                if  (dato[3] != "")
+                                                {
+                                                    toastr.info(dato[3], "Aviso");
+                                                }
+                                                $('#pagofactura').modal('show');
                                             }
                                         },
                                         error:function () {
@@ -1100,11 +1207,24 @@
                                     });
                                 }
                             }else {
+                                if (this.setting.generacomprobante == 'si')
+                                {
+                                    if  (this.tiponfc != '02')
+                                    {
+                                        if (!this.datancf.telefono || !this.datancf.rnc || !this.datancf.razon ){
+                                            toastr.warning("Llenar datos de NFC");
+                                            return;
+                                        }
+                                    }
+                                }
                                 _this = this;
                                 $.ajax({
                                     url: '/facturacioncar',
                                     method: 'GET',
                                     data: {
+                                        setting:this.setting,
+                                        tiponfc:this.tiponfc,
+                                        datancf:this.datancf,
                                         existencias: this.existenciarep,
                                         puntos:this.puntosagenerar,
                                         cliente:this.clientedatos.id,
@@ -1123,14 +1243,29 @@
                                         dinero:this.campodinero,
                                         detalle: this.list
                                     },
-                                    success:function (dato) {
-                                        alert('aqui2')
-                                        if (dato == 'bien'){
+                                    success: (dato) => {
+                                        var _this = this;
+                                        console.log(' 3 '+dato[1])
+                                        if  (dato == "No es posible hacer la factura por falta de Comprobantes")
+                                        {
+                                            toastr.warning(dato, "validador");
+                                            return;
+                                        }
+                                        if (dato[0] == 'bien'){
                                             $('#pago').modal('hide');
                                             toastr.options.newestOnTop = false;
                                             toastr.success('Gracias por la compra');
-                                            setTimeout('document.location.reload()',1000);
-
+                                            this.rncdevf = dato[1];
+                                            this.lastid = dato[2];
+                                            if  (this.facturaimp === false){
+                                                setTimeout('document.location.reload()',1000);
+                                                return;
+                                            }
+                                            if  (dato[3] != "")
+                                            {
+                                                toastr.info(dato[3], "Aviso");
+                                            }
+                                            $('#pagofactura').modal('show');
                                         }
                                     },
                                     error:function () {
@@ -1150,11 +1285,24 @@
                                 if (this.datosticket.balancepuntos > this.neto && this.neto < 0 ){
                                     alert('Si va a utilizar su bonos por favor consumirlo completo')
                                 }else{
+                                    if (this.setting.generacomprobante == 'si')
+                                    {
+                                        if  (this.tiponfc != '02')
+                                        {
+                                            if (!this.datancf.telefono || !this.datancf.rnc || !this.datancf.razon ){
+                                                toastr.warning("Llenar datos de NFC");
+                                                return;
+                                            }
+                                        }
+                                    }
                                     _this = this;
                                     $.ajax({
                                         url: '/facturacioncar',
                                         method: 'GET',
                                         data: {
+                                            setting:this.setting,
+                                            tiponfc:this.tiponfc,
+                                            datancf:this.datancf,
                                             existencias: this.existenciarep,
                                             ticket: this.datosticket.id,
                                             puntos:this.puntosagenerar,
@@ -1174,13 +1322,29 @@
                                             dinero:this.campodinero,
                                             detalle: this.list
                                         },
-                                        success:function (dato) {
-                                            alert('aqui3')
-                                            if (dato == 'bien'){
+                                        success: (dato) => {
+                                            var _this = this;
+                                            console.log(' 3 '+dato[1])
+                                            if  (dato == "No es posible hacer la factura por falta de Comprobantes")
+                                            {
+                                                toastr.warning(dato, "validador");
+                                                return;
+                                            }
+                                            if (dato[0] == 'bien'){
                                                 $('#pago').modal('hide');
                                                 toastr.options.newestOnTop = false;
                                                 toastr.success('Gracias por la compra');
-                                                setTimeout('document.location.reload()',1000);
+                                                this.rncdevf = dato[1];
+                                                this.lastid = dato[2];
+                                                if  (this.facturaimp === false){
+                                                    setTimeout('document.location.reload()',1000);
+                                                    return;
+                                                }
+                                                if  (dato[3] != "")
+                                                {
+                                                    toastr.info(dato[3], "Aviso");
+                                                }
+                                                $('#pagofactura').modal('show');
                                             }
                                         },
                                         error:function () {
@@ -1190,11 +1354,24 @@
                                     });
                                 }
                             }else{
+                                if (this.setting.generacomprobante == 'si')
+                                {
+                                    if  (this.tiponfc != '02')
+                                    {
+                                        if (!this.datancf.telefono || !this.datancf.rnc || !this.datancf.razon ){
+                                            toastr.warning("Llenar datos de NFC");
+                                            return;
+                                        }
+                                    }
+                                }
                                 _this = this;
                                 $.ajax({
                                     url: '/facturacioncar',
                                     method: 'GET',
                                     data: {
+                                        setting:this.setting,
+                                        tiponfc:this.tiponfc,
+                                        datancf:this.datancf,
                                         existencias: this.existenciarep,
                                         puntos:this.puntosagenerar,
                                         cliente:this.clientedatos.id,
@@ -1213,13 +1390,31 @@
                                         dinero:this.campodinero,
                                         detalle: this.list
                                     },
-                                    success:function (dato) {
-                                        if (dato == 'bien'){
+                                    success: (dato) => {
+                                        var _this = this;
+                                        if  (dato == "No es posible hacer la factura por falta de Comprobantes")
+                                        {
+                                            toastr.warning(dato, "validador");
+                                            return;
+                                        }
+                                        if (dato[0] == 'bien'){
                                             $('#pago').modal('hide');
                                             toastr.options.newestOnTop = false;
                                             toastr.success('Gracias por la compra');
-                                            setTimeout('document.location.reload()',1000);
+                                            this.rncdevf = dato[1];
+                                            this.lastid = dato[2];
+                                            console.log(this.rncdevf + " || " + this.lastid )
+                                            if  (this.facturaimp === false){
+                                                setTimeout('document.location.reload()',1000);
+                                                return;
+                                            }
+                                            if  (dato[3] != "")
+                                            {
+                                                toastr.info(dato[3], "Aviso");
+                                            }
+                                            $('#pagofactura').modal('show');
                                         }
+
                                     },
                                     error:function () {
                                         toastr.error('A ocurrido un error al realizar la venta');

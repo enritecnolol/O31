@@ -39,6 +39,7 @@ class ConfiguracionesController extends Controller
             $configuracion->descuento = $request->descuento;
             $configuracion->controlinv = $request->inventario;
             $configuracion->emailinfo = $request->emailinfo;
+            $configuracion->generacomprobante = $request->generacomprobante;
             $configuracion->user_id = Auth::id();
             $configuracion->save();
 
@@ -55,6 +56,7 @@ class ConfiguracionesController extends Controller
             $configuracion->descuento = $request->descuento;
             $configuracion->controlinv = $request->inventario;
             $configuracion->emailinfo = $request->emailinfo;
+            $configuracion->generacomprobante = $request->generacomprobante;
             $configuracion->user_id = Auth::id();
             $configuracion->save();
         }
@@ -78,6 +80,7 @@ class ConfiguracionesController extends Controller
             $configuracion->descuento = $request->descuento;
             $configuracion->controlinv = $request->inventario;
             $configuracion->emailinfo = $request->emailinfo;
+            $configuracion->generacomprobante = $request->generacomprobante;
             $configuracion->update();
 
         }else{
@@ -90,6 +93,7 @@ class ConfiguracionesController extends Controller
             $configuracion->descuento = $request->descuento;
             $configuracion->controlinv = $request->inventario;
             $configuracion->emailinfo = $request->emailinfo;
+            $configuracion->generacomprobante = $request->generacomprobante;
             $configuracion->update();
         }
 
@@ -122,5 +126,10 @@ class ConfiguracionesController extends Controller
             $config = 'sumado';
         }
         return $config;
+    }
+    public function setting()
+    {
+        $setting = Configuracion::all()->where('user_id', Auth::id());
+        return $setting;
     }
 }
