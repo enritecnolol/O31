@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Caja;
 use App\Detail;
 use App\Details_orden;
+use App\Detallesecuencia;
 use App\Events\NewOrdenNotification;
 use App\Facture;
 use App\Mesa_temp;
@@ -188,6 +189,43 @@ class OrdensController extends Controller
         $facture->Numbertar = $request->Numtarjeta;
         $facture->banco = $request->banco;
         $facture->auth = $request->auth;
+        $nfc = '';
+        $aviso = '';
+        if ($request->setting['generacomprobante'] == 'si'){
+            $facture->tipo_nfc = $request->tiponfc;
+
+            $headers = DB::select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento AND user_id =".Auth::id()."");
+            foreach ($headers as $header)
+            {
+                $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc',$request->tiponfc);
+                foreach ($details as $detail)
+                {
+                    if (($detail->actual + $detail->aviso) >= $detail->secuencia_final){
+                        $aviso = "En la Solicitud #". $header->id. " Serie: ". $detail->serie. ", Tipo de NCF: ".$request->tiponfc . " Se estan agotando";
+                    }
+                    if ($detail->actual < $detail->secuencia_final)
+                    {
+                        $nfc = $detail->serie."".$detail->tipo_nfc."".str_pad($detail->actual,8,"0",STR_PAD_LEFT);
+                        $d = Detallesecuencia::find($detail->id);
+                        $d->actual = $detail->actual+1;
+                        $d->update();
+                        break;
+                    }
+                }
+            }
+            if ($nfc == '')
+            {
+                return 'No es posible hacer la factura por falta de Comprobantes';
+            }
+            $facture->nfc = $nfc;
+//            $facture->nfc = ;
+            if ($request->tiponfc != '02')
+            {
+                $facture->telefono_nfc = $request->datancf['telefono'];
+                $facture->rnc_nfc = $request->datancf['rnc'];
+                $facture->razon_nfc = $request->datancf['razon'];
+            }
+        }
         $facture->caja_id = $idcaja->last()->id;
         $facture->user_id = Auth::id();
         $facture->save();
@@ -233,7 +271,7 @@ class OrdensController extends Controller
 
         broadcast(new NewOrdenNotification($orden, $request->dinero));
 
-        return $mesa_temps;
+        return ['bien', $nfc, $idfacture->last()->id, $aviso];
     }
     public function Comanda()
     {

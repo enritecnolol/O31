@@ -309,7 +309,7 @@
                     <template v-if="cerrada !=='A'"></template>
                     <template v-if="cerrada === 'no es dia'"></template>
                     <template v-if="cerrada ==='A'">
-                        <div class="col-" style="overflow-y: scroll;margin:0; padding:0; height: 90vh;">
+                        <div class="col- dragscroll" style="overflow-y: scroll;margin:0; padding:0; height: 90vh;">
                             <div class="text-center" style="margin-bottom: 5px">
                                 <h5>Categorias</h5>
                             </div>
@@ -616,7 +616,7 @@
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="" class="control-label mb-1">Numero RNC</label>
-                                                <input id="" name="" v-model="datancf.rnc" class="form-control form-control-sm" type="text">
+                                                <input id="" name="" v-model="datancf.rnc" class="form-control form-control-sm" @keypress.enter="buscar_rnc" type="text">
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -859,15 +859,33 @@
                 },
             },
             methods:{
+                buscar_rnc()
+                {
+                    axios.post('/data/rnc', {
+                        rnc: this.datancf.rnc
+                    })
+                        .then( (response) => {
+                            for(var key in response.data){
+                                this.datancf.telefono = response.data[key].telefono_nfc;
+                                this.datancf.razon = response.data[key].razon_nfc;
+                                break;
+                            }
+                            if (response.data.length == 0){
+                                toastr.warning("No se ha encotrado este RNC")
+                            }
+                        })
+                        .catch(function (error) {
+                        });
+                },
                 fiscalconfirm(){
                     this.fiscal = true;
                     this.tiponfc = '01';
                 },
                 config(){
                     axios.post('/configuracion/sale')
-                        .then(function (response) {
+                        .then( (response) => {
                             for(var key in response['data']){
-                                _this.setting = response["data"][key]
+                                this.setting = response["data"][key]
                                 break;
                             }
                         })

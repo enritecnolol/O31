@@ -21,28 +21,28 @@
                         <hr>
                         <br>
                         <div class="col-md-12">
-                            <div class="form-group text-left">
+                            <div class="form-group text-left" style="margin: 0">
                                 <label for="cc-exp" class="control-label mb-1"><strong>No.factura: </strong> </label>
                                 <label for="cc-exp" class="control-label mb-1"># @{{ lastid }}</label>
                             </div>
-                            <div class="form-group text-left">
+                            <div class="form-group text-left" style="margin: 0">
                                 <label for="cc-exp" class="control-label mb-1"><strong>Fecha: </strong> </label>
                                 <label for="cc-exp" class="control-label mb-1"><?php echo date('d-m-Y h:i:s A')?></label>
                             </div>
-                            <div class="form-group text-left" v-if="setting.generacomprobante=='si'">
+                            <div class="form-group text-left" v-if="setting.generacomprobante=='si'" style="margin: 0">
                                 <label for="cc-exp" class="control-label mb-1"><strong>NCF: </strong> </label>
                                 <label for="cc-exp" class="control-label mb-1">@{{rncdevf}}</label>
                             </div>
                             <template v-if="setting.generacomprobante=='si' && datancf.rnc">
-                                <div class="form-group text-left">
+                                <div class="form-group text-left" style="margin: 0">
                                     <label for="cc-exp" class="control-label mb-1"><strong>Razon Social: </strong> </label>
                                     <label for="cc-exp" class="control-label mb-1">@{{datancf.razon}}</label>
                                 </div>
-                                <div class="form-group text-left" v-if="fiscal">
+                                <div class="form-group text-left" v-if="fiscal" style="margin: 0">
                                     <label for="cc-exp" class="control-label mb-1"><strong>RNC: </strong> </label>
                                     <label for="cc-exp" class="control-label mb-1">@{{datancf.rnc}}</label>
                                 </div>
-                                <div class="form-group text-left" v-if="fiscal">
+                                <div class="form-group text-left" v-if="fiscal" style="margin: 0">
                                     <label for="cc-exp" class="control-label mb-1"><strong>Telefono: </strong> </label>
                                     <label for="cc-exp" class="control-label mb-1">@{{datancf.telefono}}</label>
                                 </div>

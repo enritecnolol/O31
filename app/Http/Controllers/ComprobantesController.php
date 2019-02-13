@@ -7,6 +7,7 @@ use App\Headersecuencia;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ComprobantesController extends Controller
 {
@@ -81,5 +82,10 @@ class ComprobantesController extends Controller
         $detail->update();
 
         return 'update';
+    }
+    public function datarnc(Request $request)
+    {
+        $rnc = DB::select("SELECT factures.telefono_nfc, factures.rnc_nfc, factures.razon_nfc FROM `factures`  WHERE rnc_nfc = ".$request->rnc." and user_id = ".Auth::id()." LIMIT 1");
+        return $rnc;
     }
 }

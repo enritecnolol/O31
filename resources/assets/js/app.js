@@ -19,7 +19,7 @@
 // });
 
 import Echo from 'laravel-echo'
-
+import moment from 'moment'
 window.Pusher = require('pusher-js');
 
 window.Echo = new Echo({
@@ -46,7 +46,8 @@ Vue.component('floorview', require('./components/floorview.vue'));
 Vue.component('comanda-ordenes', require('./components/comandaordenes'));
 Vue.component('pantallacamarero', require('./components/pantallacamarero.vue'));
 Vue.component('panelcomprobante', require('./components/secuanciacomprobante/panelcomprobante.vue'));
-
+Vue.component('reportspanel', require('./components/Reports/panelreports.vue'));
+Vue.prototype.moment = moment;
 Vue.prototype.$eventbus = new Vue();
 
 import draggable from 'vuedraggable'

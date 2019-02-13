@@ -169,6 +169,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/entrada/comprobante/store', 'EntradacomprobantesController@store');
     Route::post('/entrada/comprobante/provedor', 'EntradacomprobantesController@comprobanteporprovedor');
     Route::post('/entrada/comprobante/pago', 'EntradacomprobantesController@pago');
+    Route::post("/entrada/comprobante/data/rnc", "EntradacomprobantesController@datarnc");
 
     /*=================================\- Tipo Factura -/======================================================*/
     Route::post('/tipo/factura/store', 'TipofacturasController@store');
@@ -234,8 +235,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post("/comprobantes/find/header/details", "ComprobantesController@findheader");
     Route::post("/comprobantes/find/header/details", "ComprobantesController@findheader");
     Route::post("/comprobantes/edit/detail/sequence", "ComprobantesController@editdetail");
-
-    Route::get('/pru', 'IndexController@prueba');
+    Route::post("/data/rnc", "ComprobantesController@datarnc");
+    /*=================================\- ReporteriaV2 -/======================================================*/
+    Route::get('/reportv2', 'Reporteriav2Controller@index');
+    Route::post('/reportv2/comprobantes/fiscales', 'Reporteriav2Controller@typenfcdata');
+    Route::post('/reportv2/return/data', 'Reporteriav2Controller@returndata');
 
 });
 

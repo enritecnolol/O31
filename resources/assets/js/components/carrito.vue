@@ -132,101 +132,253 @@
             </div>
         </div>
 
-        <modal name="modalcarritopagar" :clickToClose="false" :width="800" :height="600">
-            <div class="modal-header">
-                <h5 class="modal-title">Pagar Orden</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="cerrarmodal">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="text-center" style="margin-bottom: 20px">
-                    <h3 style="font-size: 50px">A PAGAR $: <span style="font-size: 50px; color: red">{{ total }}</span></h3>
-                </div>
+        <modal name="modalcarritopagar" :clickToClose="false" :width="800" :height="620">
+           <div class="" style="height: 600px;overflow-y: auto">
+               <div class="modal-header">
+                   <h5 class="modal-title">Pagar Orden</h5>
+                   <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="cerrarmodal">
+                       <span aria-hidden="true">&times;</span>
+                   </button>
+               </div>
+               <div class="modal-body">
+                   <div class="text-center" style="margin-bottom: 20px">
+                       <h3 style="font-size: 50px">A PAGAR $: <span style="font-size: 50px; color: red">{{ total }}</span></h3>
+                   </div>
+                   <div class="row">
+                       <div class="col-6">
+                           <div class="form-group">
+                               <label class="control-label mb-1">Efectivo<span style="color: red">*</span></label>
+                               <input id="efectivom" name="dinero" v-model="efectivo" autofocus required type="number" class="form-control cc-exp" >
+                           </div>
+                       </div>
+                       <div class="col-6">
+                           <div class="form-group">
+                               <label class="control-label mb-1">Billetes<span style="color: red"></span></label>
+                               <br>
+                               <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(50) + parseFloat(efectivo)">$50</button>
+                               <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(100) + parseFloat(efectivo)">$100</button>
+                               <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(200) + parseFloat(efectivo)">$200</button>
+                               <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(500) + parseFloat(efectivo)">$500</button>
+                               <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(1000) + parseFloat(efectivo)">$1000</button>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row">
+                       <div class="col-6">
+                           <div class="form-group">
+                               <label class="control-label mb-1">Tarjeta<span style="color: red">*</span></label>
+                               <input id="tarjetam" name="dinero" required v-model="tarjeta" type="number" class="form-control cc-exp">
+                           </div>
+                       </div>
+                       <div class="col-6">
+                           <div class="form-group">
+                               <label class="control-label mb-1">Billetes<span style="color: red"></span></label>
+                               <br>
+                               <button type="button" class="btn btn-secondary"  @click="efectivo = parseFloat(2000) + parseFloat(efectivo)">$2000</button>
+                               <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(25) + parseFloat(efectivo)">$25</button>
+                               <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(10) + parseFloat(efectivo)">$10</button>
+                               <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(5) + parseFloat(efectivo)">$5</button>
+                               <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(1) + parseFloat(efectivo)">$1</button>
+                               <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(0)">$0</button>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row">
+                       <div class="col-6">
+                           <div class="form-group">
+                               <label for="" class="control-label mb-1">Tipo de tarjeta</label>
+                               <select name="selectSm"  v-model="tipotarjeta" id="SelectLm" class="form-control-sm form-control">
+                                   <option value="">--Selecciona--</option>
+                                   <option value="visa">Visa</option>
+                                   <option value="mastercard">MasteCard</option>
+                                   <option value="americanexpress">AmericanExpress</option>
+                               </select>
+                               <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
+                           </div>
+                       </div>
+                       <div class="col-6">
+                           <div class="form-group">
+                               <label for="banco" class="control-label mb-1">Banco</label>
+                               <input id="banco" name="banco" v-model="banco" class="form-control cc-exp" type="text">
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row">
+                       <div class="col-6">
+                           <div class="form-group">
+                               <label for="numtarjeta" class="control-label mb-1">Num.Tarjeta <span style="color: red">*</span></label>
+                               <input id="numtarjeta"  name="numtarjeta" v-model="numerotarjeta" type="text" class="form-control cc-exp" maxlength="16" data-val="true" data-val-required="Please enter the card expiration" >
+                               <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
+                           </div>
+                       </div>
+                       <div class="col-6">
+                           <label for="auth" class="control-label mb-1">Autorización<span style="color: red">*</span></label>
+                           <div class="input-group">
+                               <input id="auth" name="auth" maxlength="20" v-model="autorizacion" type="text" class="form-control cc-cvc">
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row" v-if="setting.generacomprobante == 'si'">
+                       <div class="col-md-12">
+                           <div class="text-center">
+                               <button type="button" v-if="fiscal == false" class="btn btn-primary" @click="fiscalconfirm" >Documento Fiscal?</button>
+                               <template v-else>
+                                   <label for="" class="control-label mb-1"><strong>Tipo NFC</strong></label>
+                                   <select class="form-control form-control-sm" v-model="tiponfc">
+                                       <option value="01">01 | Credito Fiscal</option>
+                                       <option value="02" selected>02 | Facturas de Consumo</option>
+                                       <option value="03">03 | Notas de Debito</option>
+                                       <option value="04">04 | Notas de Credito</option>
+                                       <option value="11">11 | Provedores Informales</option>
+                                       <option value="12">12 | Registro Unico de Ingresos</option>
+                                       <option value="13">13 | Registro de Gastos Menores</option>
+                                       <option value="14">14 | Regímenes Especiales de Tributación</option>
+                                       <option value="15">15 | Comprobantes Gubernamentales</option>
+                                   </select>
+                                   <hr>
+                                   <div class="row" v-if="tiponfc != '02'">
+                                       <div class="col-6">
+                                           <div class="form-group">
+                                               <label for="" class="control-label mb-1">Telefono</label>
+                                               <input name="" v-model="datancf.telefono" class="form-control form-control-sm" type="text">
+                                           </div>
+                                       </div>
+                                       <div class="col-6">
+                                           <div class="form-group">
+                                               <label for="" class="control-label mb-1">Numero RNC</label>
+                                               <input name="" v-model="datancf.rnc" class="form-control form-control-sm" type="text">
+                                           </div>
+                                       </div>
+                                       <div class="col-12">
+                                           <div class="form-group">
+                                               <label for="" class="control-label mb-1">Razon social</label>
+                                               <input name="" v-model="datancf.razon" class="form-control form-control-sm" type="text">
+                                           </div>
+                                       </div>
+                                   </div>
+                               </template>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div class="modal-footer">
+                   <div class="" style="position: absolute; left: 50px">
+                       <h4>Devuelta:<span style="font-size: 25px"> {{ devuelta }}</span></h4>
+                   </div>
+                   <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="cerrarmodal">Cancelar</button>
+                   <button type="button"  class="btn btn-primary" :disabled="devuelta<0" @click="pago">&nbsp;Pagar</button>
+               </div>
+           </div>
+        </modal>
+        <modal name="pagofactura" :clickToClose="false" :width="464" :height="700">
+            <div class="container" id="myPrintArea" style="height: 700px;overflow-y: auto;width: 464px">
+                <!--<vue-easy-print tableShow ref="easyPrint">-->
                 <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label class="control-label mb-1">Efectivo<span style="color: red">*</span></label>
-                            <input id="efectivom" name="dinero" v-model="efectivo" autofocus required type="number" class="form-control cc-exp" >
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label class="control-label mb-1">Billetes<span style="color: red"></span></label>
+                    <div class="col-md-12" style="margin-bottom: 26px">
+                        <div class="text-left" style="right: 0px;position: absolute">
+                            <span style="font-size: 24px;cursor: pointer" @click="cerrarpagofactura()" >&times;</span>
                             <br>
-                            <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(50) + parseFloat(efectivo)">$50</button>
-                            <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(100) + parseFloat(efectivo)">$100</button>
-                            <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(200) + parseFloat(efectivo)">$200</button>
-                            <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(500) + parseFloat(efectivo)">$500</button>
-                            <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(1000) + parseFloat(efectivo)">$1000</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label class="control-label mb-1">Tarjeta<span style="color: red">*</span></label>
-                            <input id="tarjetam" name="dinero" required v-model="tarjeta" type="number" class="form-control cc-exp">
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label class="control-label mb-1">Billetes<span style="color: red"></span></label>
                             <br>
-                            <button type="button" class="btn btn-secondary"  @click="efectivo = parseFloat(2000) + parseFloat(efectivo)">$2000</button>
-                            <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(25) + parseFloat(efectivo)">$25</button>
-                            <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(10) + parseFloat(efectivo)">$10</button>
-                            <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(5) + parseFloat(efectivo)">$5</button>
-                            <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(1) + parseFloat(efectivo)">$1</button>
-                            <button type="button" class="btn btn-secondary" @click="efectivo = parseFloat(0)">$0</button>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="" class="control-label mb-1">Tipo de tarjeta</label>
-                            <select name="selectSm"  v-model="tipotarjeta" id="SelectLm" class="form-control-sm form-control">
-                                <option value="">--Selecciona--</option>
-                                <option value="visa">Visa</option>
-                                <option value="mastercard">MasteCard</option>
-                                <option value="americanexpress">AmericanExpress</option>
-                            </select>
-                            <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
+                <div class="row" id="print">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            <img src="imagenes/logo.png" width="100" alt="">
+                            <br>
+                            <h5>COFFEBREAKPOS</h5>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="banco" class="control-label mb-1">Banco</label>
-                            <input id="banco" name="banco" v-model="banco" class="form-control cc-exp" type="text">
+                    <br>
+                    <hr>
+                    <br>
+                    <div class="col-md-12">
+                        <div class="form-group text-left" style="margin: 0">
+                            <label for="cc-exp" class="control-label mb-1"><strong>No.factura: </strong> </label>
+                            <label for="cc-exp" class="control-label mb-1"># {{ lastid }}</label>
+                        </div>
+                        <div class="form-group text-left" style="margin: 0">
+                            <label for="cc-exp" class="control-label mb-1"><strong>Fecha: </strong> </label>
+                            <label for="cc-exp" class="control-label mb-1">{{currentDate()}}</label>
+                        </div>
+                        <div class="form-group text-left" v-if="setting.generacomprobante=='si'" style="margin: 0">
+                            <label for="cc-exp" class="control-label mb-1"><strong>NCF: </strong> </label>
+                            <label for="cc-exp" class="control-label mb-1">{{rncdevf}}</label>
+                        </div>
+                        <template v-if="setting.generacomprobante=='si' && datancf.rnc">
+                            <div class="form-group text-left" style="margin: 0">
+                                <label for="cc-exp" class="control-label mb-1"><strong>Razon Social: </strong> </label>
+                                <label for="cc-exp" class="control-label mb-1">{{datancf.razon}}</label>
+                            </div>
+                            <div class="form-group text-left" v-if="fiscal" style="margin: 0">
+                                <label for="cc-exp" class="control-label mb-1"><strong>RNC: </strong> </label>
+                                <label for="cc-exp" class="control-label mb-1">{{datancf.rnc}}</label>
+                            </div>
+                            <div class="form-group text-left" v-if="fiscal" style="margin: 0">
+                                <label for="cc-exp" class="control-label mb-1"><strong>Telefono: </strong> </label>
+                                <label for="cc-exp" class="control-label mb-1">{{datancf.telefono}}</label>
+                            </div>
+                        </template>
+                    </div>
+                    <hr>
+                    <div class="col-md-12">
+                        <div class="table-responsive" style="margin-bottom: 5px">
+                            <table class="table table-sm factura-table" >
+                                <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Cant.</th>
+                                    <th>Precio</th>
+                                    <th>Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="item in productoselecionado">
+                                    <td style="line-height: 1">{{item.producto.name}}</td>
+                                    <td class="text-center">{{item.cantidad}}</td>
+                                    <td class="text-center">{{item.producto.price}}.00</td>
+                                    <td class="text-center">{{item.total}}</td>
+                                </tr>
+                                </tbody>
+                                <thead>
+                                <tr>
+                                    <th>Total:</th>
+                                    <th class="text-center"></th>
+                                    <th></th>
+                                    <th class="text-center">{{ total }}</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="margin-top: 10px">
+                        <div class="container">
+                            <div class="row text-center">
+                                <div class="col-sm-12">
+                                    <h5 style="float: left">Efectivo: </h5> <p style="float: right"> {{ efectivo }}</p>
+                                </div>
+                                <div class="col-sm-12">
+                                    <h5 style="float: left">Bruto: </h5> <p style="float: right">{{bruto}}</p>
+                                </div>
+                                <div class="col-sm-12">
+                                    <h5 style="float: left">Descuento: </h5> <p style="float: right">{{ descuent }}</p>
+                                </div>
+                                <div class="col-sm-12">
+                                    <h5 style="float: left">Itbis: </h5> <p style="float: right">{{ impuesto }}</p>
+                                </div>
+                                <div class="col-sm-12">
+                                    <h5 style="float: left">Devuelta: </h5> <p style="float: right"> {{ devuelta }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="numtarjeta" class="control-label mb-1">Num.Tarjeta <span style="color: red">*</span></label>
-                            <input id="numtarjeta"  name="numtarjeta" v-model="numerotarjeta" type="text" class="form-control cc-exp" maxlength="16" data-val="true" data-val-required="Please enter the card expiration" >
-                            <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <label for="auth" class="control-label mb-1">Autorización<span style="color: red">*</span></label>
-                        <div class="input-group">
-                            <input id="auth" name="auth" maxlength="20" v-model="autorizacion" type="text" class="form-control cc-cvc">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="" style="position: absolute; left: 50px">
-                    <h4>Devuelta:<span style="font-size: 25px"> {{ devuelta }}</span></h4>
-                </div>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="cerrarmodal">Cancelar</button>
-                <button type="button"  class="btn btn-primary" :disabled="devuelta<0" @click="pago">&nbsp;Pagar</button>
+                <!--</vue-easy-print>-->
+                <button type="button" class="btn btn-success btn-lg btn-block " @click="printDemo"><i class="fas fa-print"></i> imprimir</button>
             </div>
         </modal>
-
     </div>
 </template>
 
@@ -234,15 +386,32 @@
     import itemcarrito from './itemcarrito'
     import vmodal from 'vue-js-modal';
     import modalpagar from './modalpago'
+    // import vueEasyPrint from "vue-easy-print";
+    // var d = new Date(year, month, day, hours, minutes, seconds, milliseconds);
+    import VueHtmlToPaper from 'vue-html-to-paper';
+    const options = {
+        name: '_blank',
+        specs: [
+            'fullscreen=yes',
+            'titlebar=yes',
+            'scrollbars=yes'
+        ],
+        styles: [
+            'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
+            'https://unpkg.com/kidlat-css/css/kidlat.css'
+        ]
+    }
 
+    Vue.use(VueHtmlToPaper, options);
     Vue.use(vmodal);
     export default {
         name:'carrito',
         props:['mesasocupadas', 'mesa', 'productoselecionado', 'bus', 'detalle', 'camarero'],
-        components:{itemcarrito,vmodal,modalpagar},
+        components:{itemcarrito,vmodal,modalpagar,VueHtmlToPaper},
         data()
         {
             return{
+                // fecha:d,
                 invitadott:0,
                 invitadoturno:1,
                 mesav1:this.mesa,
@@ -257,10 +426,51 @@
                 numerotarjeta:'',
                 autorizacion:'',
                 abrir:false,
-                camarerocambio:''
+                camarerocambio:'',
+                setting:'',
+                fiscal:false,
+                tiponfc:'02',
+                datancf:{
+                    telefono:'',
+                    rnc:'',
+                    razon:''
+                },
+                facturaimp:false,
+                rncdevf:'',
+                lastid:'',
             }
         },
         methods:{
+            printDemo(){
+                this.$htmlToPaper('print');
+            },
+            currentDate() {
+                return moment().format('DD/MM/YYYY');
+            },
+            abrirpagofactura()
+            {
+                this.$modal.show('pagofactura');
+            },
+            cerrarpagofactura()
+            {
+                this.$emit('volverpant');
+                this.$modal.hide('pagofactura');
+            },
+            fiscalconfirm(){
+                this.fiscal = true;
+                this.tiponfc = '01';
+            },
+            config(){
+                axios.post('/configuracion/sale')
+                    .then( (response) => {
+                        for(var key in response['data']){
+                            this.setting = response["data"][key];
+                            break;
+                        }
+                    })
+                    .catch(function (error) {
+                    });
+            },
             pago()
             {
                 var mesa = '';
@@ -280,6 +490,9 @@
                         toastr.warning('La tarjeta no puede ser mayor al precio a pagar', 'Validador');
                     }else{
                         axios.post('/orden/facturar', {
+                            setting:this.setting,
+                            tiponfc:this.tiponfc,
+                            datancf:this.datancf,
                             existencias: this.existenciarep,
                             devuelta:this.devuelta,
                             preciop:this.total,
@@ -297,15 +510,28 @@
                             mesa:mesa
                         })
                             .then((response) => {
-                                toastr.success('Venta procesada', 'Validador')
+                                toastr.options.newestOnTop = false;
+                                toastr.success('Venta procesada', 'Validador');
                                 this.cerrarmodal();
+                                this.rncdevf = response.data[1];
+                                this.lastid = response.data[2];
+                                if  (response.data[3] !== "")
+                                {
+                                    console.log(response.data[3])
+                                    toastr.info(response.data[3], "Aviso");
+                                }
+                                this.abrirpagofactura();
+
                             })
-                            .catch(function (error) {
+                            .catch((error)=>{
                                 console.log(error);
                             });
                     }
                 }else{
                     axios.post('/orden/facturar', {
+                        setting:this.setting,
+                        tiponfc:this.tiponfc,
+                        datancf:this.datancf,
                         existencias: this.existenciarep,
                         devuelta:this.devuelta,
                         preciop:this.total,
@@ -323,8 +549,17 @@
                         mesa:this.mesa
                     })
                         .then( (response) => {
+                            toastr.options.newestOnTop = false;
                             toastr.success('Venta procesada', 'Validador');
                             this.cerrarmodal();
+                            this.rncdevf = response.data[1];
+                            this.lastid = response.data[2];
+                            if  (response.data[3] !== "")
+                            {
+                                console.log(response.data[3])
+                                toastr.info(response.data[3], "Aviso");
+                            }
+                            this.abrirpagofactura();
 
                         })
                         .catch(function (error) {
@@ -339,7 +574,7 @@
             cerrarmodal()
             {
                 this.$modal.hide('modalcarritopagar');
-                this.$emit('volverpant');
+                // this.$emit('volverpant');
             },
             cancelarorden()
             {
@@ -569,12 +804,13 @@
 
         },
         mounted() {
+            this.config();
             this.manejoitbis();
             this.bus.$on('bajar', this.bajarscroll);
         },
         created() {
             this.$eventbus.$on('pagarorden2', this.pagarorden('e'));
-            this.$eventbus.$on('ejecutarmesa', this.buscarordenmesa2());
+            this.$eventbus.$on('ejecutarmesa', this.buscarordenmesa2('e'));
         }
     }
 </script>

@@ -6,6 +6,7 @@ use App\Caja;
 use App\Configuracion;
 use App\Detail;
 use App\Facture;
+use App\Orden;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -117,7 +118,12 @@ class   CajasController extends Controller
             $valor_apertura = $apertura[0]->valor_apertura;
         }
 
-        return view('caja.cierrecaja', compact('ventas', $ventas), compact('caja', $caja))->with(compact('total', $total))->with(compact('valor_apertura', $valor_apertura));
+        $ordens = Orden::all()->where('estado', 'Abierta');
+        if ($ordens == '[]'){
+            $ordens = 0;
+        }
+
+        return view('caja.cierrecaja', compact('ventas', $ventas), compact('caja', $caja))->with(compact('total', $total))->with(compact('valor_apertura', $valor_apertura))->with(compact('ordens', $ordens));
 
 
     }
