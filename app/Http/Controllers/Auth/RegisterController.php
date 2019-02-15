@@ -68,8 +68,8 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
-    protected function showRegistrationForm()
-    {
-        return redirect()->to('login')->with('warning', 'El registro de usuarios está desactivado');
-    }
+//    protected function showRegistrationForm()
+//    {
+//        return redirect()->to('register')->with('warning', 'El registro de usuarios está desactivado');
+//    }
 }

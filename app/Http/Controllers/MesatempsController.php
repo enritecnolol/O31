@@ -18,17 +18,18 @@ class MesatempsController extends Controller
         $mesa->coroto_id = $request->id;
         $mesa->invitados = $request->personas;
         $mesa->camarero = $request->camarero;
+        $mesa->user_id = Auth::id();
         $mesa->save();
         return 'save';
     }
     public function all()
     {
-        $mesas = DB::select("SELECT mesa_temps.*, corotos.name FROM mesa_temps, corotos WHERE mesa_temps.coroto_id = corotos.id");
+        $mesas = DB::select("SELECT mesa_temps.*, corotos.name FROM mesa_temps, corotos WHERE mesa_temps.coroto_id = corotos.id and mesa_temp.user_id =".Auth::id());
         return $mesas;
     }
     public function ordenxmesa(Request $request)
     {
-        $orden = Orden::all()->where('mesa_id', $request->id)->where('estado', 'Abierta');
+        $orden = Orden::all()->where('mesa_id', $request->id)->where('estado', 'Abierta')->where("user_id", Auth::id());
         $details = Details_orden::all()->where('orden_id', $orden->last()->id);
         return ['orden' => $orden, 'detalle' => $details];
 //        return $orden->last()->id;

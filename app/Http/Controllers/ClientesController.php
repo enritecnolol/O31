@@ -37,7 +37,7 @@ class ClientesController extends Controller
     public function datostabla()
     {
 //        $clientes = Client::all()->where('user_id',Auth::id())->paginate(2);
-        $clientes = Client::paginate(5);
+        $clientes = Client::where("user_id", Auth::id())->paginate(5);
         if ($clientes == '[]')
         {
             $clientes = 'vacio';
@@ -85,7 +85,7 @@ class ClientesController extends Controller
         return 'guardado';
     }
     public function clientetarjeta(Request $request){
-        $cliente = DB::select("SELECT clients.*, tipotarjetas.codigo FROM clients, tipotarjetas WHERE clients.id = '".$request->id."' AND clients.tarjeta_id = tipotarjetas.id");
+        $cliente = DB::select("SELECT clients.*, tipotarjetas.codigo FROM clients, tipotarjetas WHERE clients.id = '".$request->id."' AND clients.user_id = ".Auth::id()." AND clients.tarjeta_id = tipotarjetas.id");
         if ($cliente == '[]')
         {
             $cliente = 'vacio';

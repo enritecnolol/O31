@@ -73,7 +73,7 @@ class ProvedoresController extends Controller
     }
     public function todosprovedores()
     {
-        $provedores = Provedor::all();
+        $provedores = Provedor::all()->where("user_id", Auth::id());
         return $provedores;
     }
 }

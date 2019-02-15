@@ -62,7 +62,7 @@ class ComprobantesController extends Controller
     }
     public function allheader()
     {
-        $headers = Headersecuencia::all();
+        $headers = Headersecuencia::all()->where("user_id", Auth::id());
         return $headers;
     }
     public function findheader(Request $request)

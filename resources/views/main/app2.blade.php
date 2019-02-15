@@ -137,7 +137,7 @@
                                         </a>
                                     </div>
                                     <div class="account-dropdown__item">
-                                        <a href="/reportes">
+                                        <a href="/reportv2">
                                             <i class="fas fa-newspaper"></i>Reportes
                                         </a>
                                     </div>

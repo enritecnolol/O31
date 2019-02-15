@@ -129,7 +129,7 @@
                             <i class="fas fa-book"></i><strong>VENTAS DEL DIA</strong></a>
                     </li>
                     <li class="">
-                        <a href="/reportes">
+                        <a href="/reportv2">
                             <i class="fas fa-newspaper"></i><strong>REPORTE DE VENTAS</strong></a>
                     </li>
                     <li>
@@ -224,7 +224,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="account-dropdown__item">
-                                                    <a href="/reportes">
+                                                    <a href="/reportv2">
                                                         <i class="fas fa-newspaper"></i>Reportes
                                                     </a>
                                                 </div>

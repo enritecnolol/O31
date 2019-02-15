@@ -200,7 +200,7 @@ class   CajasController extends Controller
     public function historico(){
 
         $fecha = date('Y-m-d');
-        $total = DB::table('factures')->select(DB::raw('SUM(total_facture) as total'))->where("date",$fecha)->get();
+        $total = DB::table('factures')->select(DB::raw('SUM(total_facture) as total'))->where("date",$fecha)->where("user_id", Auth::id())->get();
         if ($total == '[{"total":null}]'){
             $total = 0;
         }else{

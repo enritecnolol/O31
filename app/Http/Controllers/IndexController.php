@@ -233,7 +233,7 @@ class IndexController extends Controller
         $headers = DB::select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento AND user_id =".Auth::id()."");
         foreach ($headers as $header)
         {
-            $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc','02');
+            $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc','02')->where("user_id", Auth::id());
             foreach ($details as $detail)
             {
                 if ($detail->actual < $detail-> secuencia_final)

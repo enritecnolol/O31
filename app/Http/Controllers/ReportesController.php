@@ -20,7 +20,6 @@ class ReportesController extends Controller
 
     public function busqueda(Request $r){
         $id = Auth::id();
-
         $facturas = DB::select("SELECT * FROM `factures` WHERE user_id = ".$id." AND date BETWEEN '".$r->inicio."' AND '".$r->fin."' ORDER BY `id` ASC");
         if ($facturas == '[]'){
             $facturas == 'no resultado';

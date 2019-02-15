@@ -68,10 +68,10 @@
                     </li>
                 </ul>
             </li>
-            <li>
-                <a href="/reportes">
-                    <i class="fas fa-newspaper"></i><strong>REPORTE DE VENTAS</strong></a>
-            </li>
+            {{--<li>--}}
+                {{--<a href="/reportes">--}}
+                    {{--<i class="fas fa-newspaper"></i><strong>REPORTE DE VENTAS</strong></a>--}}
+            {{--</li>--}}
             <li>
                 <a href="/reportv2">
                     <i class="fas fa-newspaper"></i><strong>REPORTERIA V2</strong></a>

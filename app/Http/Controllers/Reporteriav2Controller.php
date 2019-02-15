@@ -27,7 +27,7 @@ class Reporteriav2Controller extends Controller
                     FROM type_ncf
                     LEFT JOIN (SELECT factures.tipo_nfc as tp, COUNT(factures.tipo_nfc) i, SUM(factures.total_facture) as total
                     FROM factures
-                    WHERE factures.user_id = 1 and (factures.date between '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format('Y-m-d')."') GROUP BY tp) as t2
+                    WHERE factures.user_id = ".Auth::id()." and (factures.date between '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format('Y-m-d')."') GROUP BY tp) as t2
                     ON type_ncf.slug = t2.tp
                     ORDER BY type_ncf.id");
                 $header = ['Tipo NCF', 'Cantidad de Ventas', 'Total Monto'];

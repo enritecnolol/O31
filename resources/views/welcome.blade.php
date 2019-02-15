@@ -367,7 +367,7 @@
                             </div>
                             <div class="row dragscroll" style="overflow-y: auto;height: 84vh;cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;">
                                 <template v-for="p in productos" v-if="cerrada === 'A' && productosbuscados === ''">
-                                    <div class="card" style="height: auto;background: #c8f1ff;width: 130px;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)" :title="p.name">
+                                    <div class="card" style="height: auto;background: #c8f1ff;width: 130px;margin-left: 10px;margin-right: 10px;max-height: 184px;" @click="pfactura(p.id)" :title="p.name">
                                         <div class="card-body" style="background: white">
                                             <span class="badge badge-primary" style="position: absolute; top: -6px; left: -8px">@{{ p.barcode }}</span>
                                             <div class="mx-auto d-block">
@@ -398,7 +398,7 @@
                                 </template>
 
                                 <template v-for="p in productosbuscados" v-if="cerrada === 'A' && productosbuscados !== ''">
-                                    <div  class="card"  :title="p.name" style="height: auto;width: 130px;background: #c8f1ff;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)">
+                                    <div  class="card"  :title="p.name" style="height: auto;width: 130px;max-height: 184px;background: #c8f1ff;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)">
                                         <div class="card-body" style="background: white">
                                             <span class="badge badge-primary" style="position: absolute; top: 3px; left: 3px">@{{ p.barcode }}</span>
                                             <div class="mx-auto d-block">

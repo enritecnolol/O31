@@ -73,7 +73,7 @@ class EntradacomprobantesController extends Controller
 
     public function comprobanteporprovedor(Request $request)
     {
-        $comprobante = Entradacomprobantes::all()->where('suplidor_id', $request->id)->where('balance', '>', 0);
+        $comprobante = Entradacomprobantes::all()->where('suplidor_id', $request->id)->where('balance', '>', 0)->where("user_id", Auth::id());
         if ($comprobante == '[]') {
             $comprobante = 'no resultado';
         }

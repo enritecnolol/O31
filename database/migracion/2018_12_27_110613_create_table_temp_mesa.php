@@ -18,6 +18,7 @@ class CreateTableTempMesa extends Migration
             $table->integer('coroto_id');
             $table->integer('invitados');
             $table->string('camarero')->nullable($value = true);
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
