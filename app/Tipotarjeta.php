@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Tipotarjeta extends Model
 {
     //
+    protected $connection = 'client';
 }

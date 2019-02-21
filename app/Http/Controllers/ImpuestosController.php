@@ -11,7 +11,7 @@ class ImpuestosController extends Controller
 {
     public function itbis()
     {
-        $ref = Impuestosref::all()->where('user_id', Auth::id())->last()->id;
+        $ref = Impuestosref::all();
         if  (!$ref){
             $ref = 0;
         }
@@ -31,7 +31,7 @@ class ImpuestosController extends Controller
     public function datos()
     {
         $id = Auth::id();
-        $itbis = Impuesto::all()->where('user_id', '==', $id);
+        $itbis = Impuesto::all();
 
         if ($itbis == '[]'){
             $itbis = 'no resultado';

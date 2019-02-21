@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body" >
-                <div class="card" style="background: white" @mousemove="cargarcategoria()">
+                <div class="card" style="background: white">
                     <div class="card-body">
                         <div class="card-title">
                             <h3 class="text-center title-2" style="color: #0069d9">Agregar Producto</h3>

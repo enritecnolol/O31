@@ -852,6 +852,7 @@
                 _this.cargartablatp();
                 _this.existencia();
                 _this.config();
+                // _this.productosindex();
             },
             watch:{
                 neto:function(valor){
@@ -877,6 +878,15 @@
                         .catch(function (error) {
                         });
                 },
+                productosindex()
+                {
+                    axios.post('/productos/index')
+                        .then( (response) => {
+                            productos = response.data
+                        })
+                        .catch(function (error) {
+                        });
+                },
                 fiscalconfirm(){
                     this.fiscal = true;
                     this.tiponfc = '01';
@@ -885,7 +895,7 @@
                     axios.post('/configuracion/sale')
                         .then( (response) => {
                             for(var key in response['data']){
-                                this.setting = response["data"][key]
+                                this.setting = response["data"][key];
                                 break;
                             }
                         })

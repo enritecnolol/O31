@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Headersecuencia extends Model
 {
     //
+    protected $connection = 'client';
 }

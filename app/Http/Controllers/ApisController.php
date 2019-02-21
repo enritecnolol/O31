@@ -68,12 +68,12 @@ class ApisController extends Controller
     }
     public function ventasbusqueda(){
         $ida = Auth::id();
-        $caja = DB::table('cajas')->select('id')->where('fecha_apertura', date("Y-m-d"))->where('status', 'A')->where('user_id',$ida)->latest()->take(1)->get();
+        $caja = DB::connection('client')->table('cajas')->select('id')->where('fecha_apertura', date("Y-m-d"))->where('status', 'A')->latest()->take(1)->get();
         $id = $caja[0]->id;
         $data = Input::all();
         $fecha = $data["fecha"];
 
-        $factures = DB::table('factures')->where('date', $fecha)->get();
+        $factures = DB::connection('client')->table('factures')->where('date', $fecha)->get();
 
         return $factures;
 
@@ -83,14 +83,14 @@ class ApisController extends Controller
         $id = Auth::id();
         $data = Input::all();
         $producto = $data["producto"];
-        $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->get();
+        $productos = DB::connection('client')->table('products')->where('name', 'like', '%'.$producto.'%')->get();
         return $productos;
     }
     public function buscarproductoordenes(){
         $id = Auth::id();
         $data = Input::all();
         $producto = $data["producto"];
-        $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->get();
+        $productos = DB::connection('client')->table('products')->where('name', 'like', '%'.$producto.'%')->get();
         return $productos;
     }
     public function buscarproductoreferencia(){
@@ -98,7 +98,7 @@ class ApisController extends Controller
         $data = Input::all();
         $referencia = $data["referenciah"];
 //            $productos = Product::all()->where('name', 'LIKE', '%' . $producto . '%');
-        $product = DB::table('products')->where('barcode', 'like', '%'.$referencia.'%')->get();
+        $product = DB::connection('client')->table('products')->where('barcode', 'like', '%'.$referencia.'%')->get();
         return $product;
     }
 
@@ -107,7 +107,7 @@ class ApisController extends Controller
         $data = Input::all();
         $producto = $data["producto"];
 //            $productos = Product::all()->where('name', 'LIKE', '%' . $producto . '%');
-        $productos = DB::table('products')->where('name', 'like', '%'.$producto.'%')->get();
+        $productos = DB::connection('client')->table('products')->where('name', 'like', '%'.$producto.'%')->get();
         return $productos;
     }
 
@@ -173,7 +173,7 @@ class ApisController extends Controller
 
         $id = Auth::id();
 //        $caja = Caja::all()->where('user_id', '==', $id)->orderBy('id', 'desc');
-        $caja = DB::table('cajas')->orderBy('id', 'desc')->get();
+        $caja = DB::connection('client')->table('cajas')->orderBy('id', 'desc')->get();
         return $caja;
 
     }
@@ -181,39 +181,36 @@ class ApisController extends Controller
         $id = Auth::id();
         $data = Input::all();
         $fecha = $data["fecha"];
-        $caja = DB::table('cajas')->where('fecha_apertura', $fecha)->where('user_id', $id)->get();
+        $caja = DB::connection('client')->table('cajas')->where('fecha_apertura', $fecha)->get();
         return $caja;
     }
 
     public function crearcategoriarapida(Request $request){
 
-        $data = $this->validate($request, [
-            'nombre' => 'required|unique:categorias|max:255',
-            'codigo' => 'required|unique:categorias',
-        ]);
-
+//        $data = $this->validate($request, [
+//            'nombre' => 'required|unique:categorias|max:255',
+//            'codigo' => 'required|unique:categorias'
+//        ]);
 
         $categoria = new Categoria;
 
-        $categoria->nombre = $data["nombre"];
-        $categoria->codigo = $data["codigo"];
+        $categoria->nombre = $request["nombre"];
+        $categoria->codigo = $request["codigo"];
         $categoria->img = 'default.jpg';
         $categoria->user_id = Auth::id();
         $categoria->save();
 
         return 'guardado';
 
-
-
     }
     public function cargarcategoria(){
         $id = Auth::id();
-        $categoria = Categoria::all()->where('user_id', '==', $id);
+        $categoria = Categoria::all();
 
         return $categoria;
     }
     public function productos(){
-        return datatables(Product::all()->where('user_id', '==', Auth::id()))->toJson();
+        return datatables(Product::all())->toJson();
     }
 
     public function productoscategoria(Request $request){
@@ -222,10 +219,10 @@ class ApisController extends Controller
 
     public function productosporcategoria(Request $request){
 
-        $productos = Product::all()->where('categoria_id', '==', $request->id)->where('user_id', '==', Auth::id());
+        $productos = Product::all()->where('categoria_id', '==', $request->id);
         if ($request->id == 0)
         {
-            $productos = Product::all()->where('user_id', Auth::id());
+            $productos = Product::all();
         }
         return $productos;
     }
@@ -233,20 +230,20 @@ class ApisController extends Controller
 
 //        $productos = Product::all()->where('categoria_id', '==', $request->id)->where('user_id', '==', Auth::id());
         $id = Auth::id();
-        $productos = DB::table('products')
+        $productos = DB::connection('client')->table('products')
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
-            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
-            ->where('products.user_id', $id)->where('products.categoria_id', $request->id)
-            ->select(DB::raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
+            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
+            ->where('products.categoria_id', $request->id)
+            ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
 
         if ($request->id == 0)
         {
-            $productos = Product::all()->where('user_id', Auth::id());
-            $productos = DB::table('products')
+            $productos = Product::all();
+            $productos = DB::connection('client')->table('products')
                 ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
-                ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
-                ->where('products.user_id', $id)
-                ->select(DB::raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
+                ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
+//                ->where('products.user_id', $id)
+                ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
         }
         return $productos;
     }
@@ -257,14 +254,14 @@ class ApisController extends Controller
     }
     public function dashboard(){
         $id = Auth::id();
-        $ventassemana = DB::select("SELECT SUM(total_facture) as total FROM factures where  user_id = ".$id." AND date between date_sub(now(),INTERVAL 1 WEEK) and now()");
+        $ventassemana = DB::connection('client')->select("SELECT SUM(total_facture) as total FROM factures where  date between date_sub(now(),INTERVAL 1 WEEK) and now()");
 
         if ($ventassemana == '[{"total":null}]'){
             $ventassemana = 0;
         }else{
             $ventassemana = number_format($ventassemana[0]->total);
         }
-        $totalventas = DB::select("SELECT SUM(total_facture) as total FROM factures WHERE user_id = ".$id." and date BETWEEN '2019-01-01' AND '2019-12-31'");
+        $totalventas = DB::connection('client')->select("SELECT SUM(total_facture) as total FROM factures WHERE date BETWEEN '2019-01-01' AND '2019-12-31'");
 
         if ($totalventas == '[{"total":null}]'){
             $totalventas = 0;
@@ -272,29 +269,29 @@ class ApisController extends Controller
             $totalventas = number_format($totalventas[0]->total);
         }
 
-        $totaldias = DB::table('factures')->select(DB::raw('SUM(total_facture) as total'))->where('date', date("Y-m-d"))->where('user_id', $id)->get();
+        $totaldias = DB::connection('client')->table('factures')->select(DB::raw('SUM(total_facture) as total'))->where('date', date("Y-m-d"))->get();
         if ($totaldias == '[{"total":null}]'){
             $totaldias = 0;
         }else{
             $totaldias = number_format($totaldias[0]->total);
         }
-        $ventasmes = DB::select("SELECT SUM(total_facture) as total FROM factures where user_id = ".$id." AND month(date) = MONTH(CURDATE())");
+        $ventasmes = DB::connection('client')->select("SELECT SUM(total_facture) as total FROM factures where month(date) = MONTH(CURDATE())");
         if ($ventasmes == '[{"total":null}]'){
             $ventasmes = 0;
         }else{
             $ventasmes = number_format($ventasmes[0]->total);
         }
 
-        $diasconmasventas = json_encode(DB::select("SELECT (ELT(WEEKDAY(date) + 1, '1', '2', '3', '4', '5', '6', '7')) AS dia,(ELT(WEEKDAY(date) + 1, 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo')) AS DIA_SEMANA, SUM(total_facture) AS total FROM factures where user_id = ".Auth::id()." AND (date between  DATE_FORMAT(NOW() ,'%Y-01-01') AND NOW() )    GROUP BY DIA_SEMANA, dia ORDER BY `dia` ASC"));
+        $diasconmasventas = json_encode(DB::connection('client')->select("SELECT (ELT(WEEKDAY(date) + 1, '1', '2', '3', '4', '5', '6', '7')) AS dia,(ELT(WEEKDAY(date) + 1, 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo')) AS DIA_SEMANA, SUM(total_facture) AS total FROM factures where (date between  DATE_FORMAT(NOW() ,'%Y-01-01') AND NOW() )    GROUP BY DIA_SEMANA, dia ORDER BY `dia` ASC"));
 //        SELECT meses.id, meses.mes, IFNULL(t2.Total, 0) FROM meses LEFT JOIN (SELECT MONTH(factures.date) i, SUM(factures.total_facture) as Total FROM factures GROUP BY i) as t2 ON meses.id = t2.i
-        $pormes = json_encode(DB::select("SELECT meses.id, meses.mes, IFNULL(t2.Total, 0) as cantidad FROM meses LEFT JOIN (SELECT MONTH(factures.date) i, SUM(factures.total_facture) as Total FROM factures  WHERE factures.user_id = ".Auth::id()." and (date between  DATE_FORMAT(NOW() ,'%Y-01-01') AND NOW() ) GROUP BY i) as t2 ON meses.id = t2.i ORDER BY meses.id"));
+        $pormes = json_encode(DB::connection('client')->select("SELECT meses.id, meses.mes, IFNULL(t2.Total, 0) as cantidad FROM meses LEFT JOIN (SELECT MONTH(factures.date) i, SUM(factures.total_facture) as Total FROM factures  WHERE  (date between  DATE_FORMAT(NOW() ,'%Y-01-01') AND NOW() ) GROUP BY i) as t2 ON meses.id = t2.i ORDER BY meses.id"));
 //        SELECT (ELT(WEEKDAY(date) + 1, 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo')) AS DIA_SEMANA, SUM(total_facture) FROM factures GROUP BY DIA_SEMANA
-        $productosmasvendidos = json_encode(DB::select("SELECT products.name AS nombre, sum(details.price) AS catidad FROM products, details WHERE products.id = details.product_id AND products.user_id = ".Auth::id()." AND (date between  DATE_FORMAT(NOW() ,'%Y-01-01') AND NOW() ) GROUP BY nombre ORDER BY catidad DESC LIMIT 5"));
+        $productosmasvendidos = json_encode(DB::connection('client')->select("SELECT products.name AS nombre, sum(details.price) AS catidad FROM products, details WHERE products.id = details.product_id AND (date between  DATE_FORMAT(NOW() ,'%Y-01-01') AND NOW() ) GROUP BY nombre ORDER BY catidad DESC LIMIT 5"));
 //        SELECT (ELT(WEEKDAY(date) + 1, 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo')) AS DIA_SEMANA, SUM(total_facture) FROM factures where date between date_sub(now(),INTERVAL 1 WEEK) and now() GROUP BY DIA_SEMANA
-        $ventassemanapasada = json_encode(DB::select("SELECT (ELT(WEEKDAY(date) + 1, 1, 2, 3, 4, 5, 6, 7)) AS DIA, (ELT(WEEKDAY(date) + 1, 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo')) AS DIA_SEMANA, SUM(total_facture) AS total FROM factures where date between date_sub(now(),INTERVAL 1 WEEK) and now() AND factures.user_id = ".$id." GROUP BY date ORDER BY `DIA` ASC"));
-        $ventasporhoras = json_encode(DB::select("SELECT HOUR(created_at) AS horaa ,DATE_FORMAT(created_at, '%h %p') as hora,SUM(total_facture) as total FROM factures where user_id = ".$id." AND month(date) = MONTH(CURDATE()) GROUP BY hora,horaa ORDER BY `horaa` ASC"));
+        $ventassemanapasada = json_encode(DB::connection('client')->select("SELECT (ELT(WEEKDAY(date) + 1, 1, 2, 3, 4, 5, 6, 7)) AS DIA, (ELT(WEEKDAY(date) + 1, 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo')) AS DIA_SEMANA, SUM(total_facture) AS total FROM factures where date between date_sub(now(),INTERVAL 1 WEEK) and now() GROUP BY date ORDER BY `DIA` ASC"));
+        $ventasporhoras = json_encode(DB::connection('client')->select("SELECT HOUR(created_at) AS horaa ,DATE_FORMAT(created_at, '%h %p') as hora,SUM(total_facture) as total FROM factures where month(date) = MONTH(CURDATE()) GROUP BY hora,horaa ORDER BY `horaa` ASC"));
 
-        $graficogrande = json_encode(DB::select("SELECT date, SUM(factures.total_facture) as total FROM factures where factures.user_id = ".Auth::id()." GROUP BY date"));
+        $graficogrande = json_encode(DB::connection('client')->select("SELECT date, SUM(factures.total_facture) as total FROM factures GROUP BY date"));
 
         return view('dashboard.dashboard',
             compact('totalventas'),
@@ -312,7 +309,7 @@ class ApisController extends Controller
     {
         $iduser = Auth::id();
         $id = $request->id;
-        $porciento = DB::select("SELECT products.*, impuestosrefs.descripcion, rangoimpuestos.porciento FROM products, impuestosrefs, rangoimpuestos WHERE products.impuestoref_id = impuestosrefs.id AND rangoimpuestos.referenciaitbis_id = impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta AND products.user_id = ".$iduser." AND products.id =".$id);
+        $porciento = DB::connection('client')->select("SELECT products.*, impuestosrefs.descripcion, rangoimpuestos.porciento FROM products, impuestosrefs, rangoimpuestos WHERE products.impuestoref_id = impuestosrefs.id AND rangoimpuestos.referenciaitbis_id = impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta AND products.user_id = ".$iduser." AND products.id =".$id);
 
         if ($porciento == []){
             $porciento = 0;
@@ -326,29 +323,29 @@ class ApisController extends Controller
     {
         $id = Auth::id();
 
-        $ultimoid = Facture::all()->where('user_id', '==', $id)->last()->id;
+        $ultimoid = Facture::all()->last()->id;
 
         return $ultimoid;
     }
     public function productospaginado(Request $request)
     {
         $id = Auth::id();
-        $productos = DB::table('products')
+        $productos = DB::connection('client')->table('products')
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
-            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
-            ->where('products.user_id', $id)
-            ->select(DB::raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->paginate($request->paginate);
+            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
+//            ->where('products.user_id', $id)
+            ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->paginate($request->paginate);
 
         return $productos;
     }
     public function allproduct()
     {
         $id = Auth::id();
-        $productos = DB::table('products')
+        $productos = DB::connection('client')->table('products')
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
-            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
-            ->where('products.user_id', $id)
-            ->select(DB::raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
+            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
+//            ->where('products.user_id', $id)
+            ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
 
         return $productos;
     }

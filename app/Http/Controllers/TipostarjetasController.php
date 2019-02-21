@@ -11,14 +11,14 @@ class TipostarjetasController extends Controller
     public function index()
     {
         $id = Auth::id();
-        $tp = Tipotarjeta::all()->where('user_id',$id);
+        $tp = Tipotarjeta::all();
         return view('configuracion.tipotarjeta.index')
             ->with(compact('tp'));
     }
 
     public function store(Request $request)
     {
-        $compa = Tipotarjeta::all()->where('user_id', Auth::id())->where('codigo', $request->codigo);
+        $compa = Tipotarjeta::all()->where('codigo', $request->codigo);
         if ($compa != '[]')
         {
             return 'ya existe';
@@ -36,7 +36,7 @@ class TipostarjetasController extends Controller
     public function datostabla()
     {
         $id = Auth::id();
-        $tp = Tipotarjeta::all()->where('user_id', $id);
+        $tp = Tipotarjeta::all();
         if ($tp == '[]'){
             $tp = 'vacio';
         }

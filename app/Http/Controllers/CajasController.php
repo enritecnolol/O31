@@ -26,7 +26,7 @@ class   CajasController extends Controller
     public function index()
     {
         $id = Auth::id();
-        $fecha = Caja::all()->where('user_id',$id)->last();
+        $fecha = Caja::all()->last();
 
         if ($fecha == '[]'){
             $cerrad = 'no tiene';
@@ -92,7 +92,7 @@ class   CajasController extends Controller
 
         $fecha = date('Y-m-d');
         $id = Auth::id();
-        $caja = DB::table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num', 'cuadreconf')->where('user_id',$id)->latest()->take(1)->get();
+        $caja = DB::connection('client')->table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num', 'cuadreconf')->latest()->take(1)->get();
         if ($caja == '[]'){
             $idcaja = 0;
         }else{
@@ -102,7 +102,7 @@ class   CajasController extends Controller
 
         $ventas = Facture::all()->where('caja_id', $idcaja)->count();
 
-        $totalcierre = DB::table('factures')->select(DB::raw('SUM(total_facture) as total'))->where('caja_id', $idcaja)->get();
+        $totalcierre = DB::connection('client')->table('factures')->select(DB::raw('SUM(total_facture) as total'))->where('caja_id', $idcaja)->get();
 
         if ($totalcierre == '[{"total":null}]'){
             $total = 0;
@@ -110,7 +110,7 @@ class   CajasController extends Controller
             $total = $totalcierre[0]->total;
         }
 
-        $apertura = DB::table('cajas')->select(DB::raw('valor_apertura'))->where("id",$idcaja)->get();
+        $apertura = DB::connection('client')->table('cajas')->select(DB::raw('valor_apertura'))->where("id",$idcaja)->get();
 
         if ($apertura == '[]'){
             $valor_apertura = 0;
@@ -146,35 +146,35 @@ class   CajasController extends Controller
         $caja->status = 'C';
         $caja->update();
 
-        $configs = Configuracion::all()->where('user_id', Auth::id());
+        $configs = Configuracion::all();
         foreach ($configs as $config)
         {
             $email = $config->emailinfo;
         }
 
-        $totaldias = DB::table('factures')->select(DB::raw('SUM(total_facture) as total'))->where('date', $caja->fecha_apertura)->where('user_id', Auth::id())->get();
+        $totaldias = DB::connection('client')->table('factures')->select(DB::connection('client')->raw('SUM(total_facture) as total'))->where('date', $caja->fecha_apertura)->get();
         if ($totaldias == '[{"total":null}]'){
             $totaldias = number_format(0);
         }else{
             $totaldias = number_format($totaldias[0]->total);
         }
-        $totalgasto = DB::table('entradacomprobantes')->select(DB::raw('SUM(netototal) as total'))->where('created_at', $caja->fecha_apertura)->where('user_id', Auth::id())->get();
+        $totalgasto = DB::connection('client')->table('entradacomprobantes')->select(DB::connection('client')->raw('SUM(netototal) as total'))->where('created_at', $caja->fecha_apertura)->get();
         if ($totalgasto == '[{"total":null}]'){
             $totalgasto = number_format(0);
         }else{
             $totalgasto = number_format($totalgasto[0]->total);
         }
 
-        $totaldevolucion = DB::table('devolucions')->select(DB::raw('SUM(total_devolucion) as total'))->where('date', $caja->fecha_apertura)->where('user_id', Auth::id())->get();
+        $totaldevolucion = DB::connection('client')->table('devolucions')->select(DB::connection('client')->raw('SUM(total_devolucion) as total'))->where('date', $caja->fecha_apertura)->get();
         if ($totaldevolucion == '[{"total":null}]'){
             $totaldevolucion = number_format(0);
         }else{
             $totaldevolucion = number_format($totaldevolucion[0]->total);
         }
 
-        $productosvendidos = DB::select("SELECT products.name AS nombre, sum(details.price) AS cantidad FROM products, details WHERE products.id = details.product_id AND products.user_id = ".Auth::id()." AND DATE(details.date) = ".$caja->fecha_apertura." GROUP BY nombre ORDER BY cantidad DESC LIMIT 5");
+        $productosvendidos = DB::connection('client')->select("SELECT products.name AS nombre, sum(details.price) AS cantidad FROM products, details WHERE products.id = details.product_id AND DATE(details.date) = ".$caja->fecha_apertura." GROUP BY nombre ORDER BY cantidad DESC LIMIT 5");
 
-        $ventasmes = DB::select("SELECT SUM(total_facture) as total FROM factures where user_id = ".Auth::id()." AND month(date) = MONTH(CURDATE())");
+        $ventasmes = DB::connection('client')->select("SELECT SUM(total_facture) as total FROM factures where month(date) = MONTH(CURDATE())");
         if ($ventasmes == '[{"total":null}]'){
             $ventasmes = number_format(0);
         }else{
@@ -200,7 +200,7 @@ class   CajasController extends Controller
     public function historico(){
 
         $fecha = date('Y-m-d');
-        $total = DB::table('factures')->select(DB::raw('SUM(total_facture) as total'))->where("date",$fecha)->where("user_id", Auth::id())->get();
+        $total = DB::connection('client')->table('factures')->select(DB::connection('client')->raw('SUM(total_facture) as total'))->where("date",$fecha)->get();
         if ($total == '[{"total":null}]'){
             $total = 0;
         }else{
@@ -267,7 +267,7 @@ class   CajasController extends Controller
 //            ->with(compact('cerrada'))->with(compact('nose'));
 
         $id = Auth::id();
-        $cajas = DB::table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num', 'cuadreconf')->where('status', 'C')->where('cuadreconf','No')->where('user_id',$id)->get();
+        $cajas = DB::connection('client')->table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num', 'cuadreconf')->where('status', 'C')->where('cuadreconf','No')->get();
         return view('caja.cuadrecaja3', compact('cajas'));
 
 
@@ -276,12 +276,12 @@ class   CajasController extends Controller
 
         $idcaja = $request->id;
         $id = Auth::id();
-        $cajas = DB::table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num', 'cuadreconf')->where('id',$idcaja)->where('user_id',$id)->get();
+        $cajas = DB::connection('client')->table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num', 'cuadreconf')->where('id',$idcaja)->get();
 
-        $ventastotal = DB::table('factures')->select(DB::raw('SUM(total_facture) as total'))->where('caja_id', $idcaja)->get();
-        $ventasmonto_tarjeta = DB::table('factures')->select(DB::raw('SUM(Monto_tarjeta) as total_tarjeta'))->where('caja_id', $idcaja)->get();
-        $ventasmonto_efectivo = DB::table('factures')->select(DB::raw('SUM(Monto_efectivo) as total_efectivo'))->where('caja_id', $idcaja)->get();
-        $ventasmonto_devueltas = DB::table('factures')->select(DB::raw('SUM(returns) as total_devuelta'))->where('caja_id', $idcaja)->get();
+        $ventastotal = DB::connection('client')->table('factures')->select(DB::connection('client')->raw('SUM(total_facture) as total'))->where('caja_id', $idcaja)->get();
+        $ventasmonto_tarjeta = DB::connection('client')->table('factures')->select(DB::connection('client')->raw('SUM(Monto_tarjeta) as total_tarjeta'))->where('caja_id', $idcaja)->get();
+        $ventasmonto_efectivo = DB::connection('client')->table('factures')->select(DB::connection('client')->raw('SUM(Monto_efectivo) as total_efectivo'))->where('caja_id', $idcaja)->get();
+        $ventasmonto_devueltas = DB::connection('client')->table('factures')->select(DB::connection('client')->raw('SUM(returns) as total_devuelta'))->where('caja_id', $idcaja)->get();
         if ($ventastotal == '[{"total":null}]'){
             $total = 00;
         }else{

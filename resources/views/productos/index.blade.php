@@ -17,8 +17,6 @@
         </nav>
     </div>
     @include('productos.newproduct')
-
-
     <div class="container" v-if="buscador == ''" >
         <div class="row m-t-30">
             <div class="col-md-12">

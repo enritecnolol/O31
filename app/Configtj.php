@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Configtj extends Model
 {
     //
+    protected $connection = 'client';
 }

@@ -30,7 +30,7 @@ class ImpuestosrefsController extends Controller
                 $ref->user_id = Auth::id();
                 $ref->save();
 
-                $refid = Impuestosref::all()->where('user_id', Auth::id());
+                $refid = Impuestosref::all();
 
                 $rango = new Rangoimpuesto;
                 $rango->desde = $request->fechadesde;
@@ -51,7 +51,7 @@ class ImpuestosrefsController extends Controller
     public function datos(Request $request)
     {
         $iduser = Auth::id();
-        $ref = Impuestosref::all()->where('id', $request->codigo)->where('user_id',$iduser );
+        $ref = Impuestosref::all()->where('id', $request->codigo);
 
         if($ref == '[]'){
             return 'no resultado con ese id';
@@ -59,7 +59,7 @@ class ImpuestosrefsController extends Controller
             foreach ($ref as $ref){
                 $id = $ref->id;
             }
-            $rango = Rangoimpuesto::all()->where('referenciaitbis_id', $id)->where('user_id',$iduser );
+            $rango = Rangoimpuesto::all()->where('referenciaitbis_id', $id);
 
             if ($rango == '[]')
             {
@@ -81,7 +81,7 @@ class ImpuestosrefsController extends Controller
 
         if (strtotime($fechainicio )< strtotime($fechafin)){
 
-            $compararfecha  = DB::select("SELECT * FROM rangoimpuestos WHERE  referenciaitbis_id = ".$request->id." and '".$fechainicio."' BETWEEN desde AND hasta and user_id = ".$iduser);
+            $compararfecha  = DB::connection('client')->select("SELECT * FROM rangoimpuestos WHERE  referenciaitbis_id = ".$request->id." and '".$fechainicio."' BETWEEN desde AND hasta ");
 
             if ($compararfecha == [])
             {
@@ -121,7 +121,7 @@ class ImpuestosrefsController extends Controller
     public function datosimpuestorefproducto()
     {
         $id = Auth::id();
-        $ref = DB::select("SELECT impuestosrefs.* FROM impuestosrefs, rangoimpuestos WHERE impuestosrefs.id = rangoimpuestos.referenciaitbis_id AND impuestosrefs.user_id = ".$id."  AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta");
+        $ref = DB::connection('client')->select("SELECT impuestosrefs.* FROM impuestosrefs, rangoimpuestos WHERE impuestosrefs.id = rangoimpuestos.referenciaitbis_id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta");
         return $ref;
     }
 }

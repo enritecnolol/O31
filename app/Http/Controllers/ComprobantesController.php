@@ -62,7 +62,7 @@ class ComprobantesController extends Controller
     }
     public function allheader()
     {
-        $headers = Headersecuencia::all()->where("user_id", Auth::id());
+        $headers = Headersecuencia::all();
         return $headers;
     }
     public function findheader(Request $request)
@@ -85,7 +85,7 @@ class ComprobantesController extends Controller
     }
     public function datarnc(Request $request)
     {
-        $rnc = DB::select("SELECT factures.telefono_nfc, factures.rnc_nfc, factures.razon_nfc FROM `factures`  WHERE rnc_nfc = ".$request->rnc." and user_id = ".Auth::id()." LIMIT 1");
+        $rnc = DB::connection('client')->select("SELECT factures.telefono_nfc, factures.rnc_nfc, factures.razon_nfc FROM `factures`  WHERE rnc_nfc = ".$request->rnc." LIMIT 1");
         return $rnc;
     }
 }

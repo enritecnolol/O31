@@ -23,11 +23,11 @@ class Reporteriav2Controller extends Controller
         if ($request->type_report == "resumido"){
             if ($request->ncf == "all")
             {
-                $datatable = DB::select("SELECT type_ncf.id, type_ncf.slug,(type_ncf.tipo) AS tipo ,IFNULL(t2.i, 0) AS cantidad ,IFNULL(t2.total, 0) as total
+                $datatable = DB::connection('client')->select("SELECT type_ncf.id, type_ncf.slug,(type_ncf.tipo) AS tipo ,IFNULL(t2.i, 0) AS cantidad ,IFNULL(t2.total, 0) as total
                     FROM type_ncf
                     LEFT JOIN (SELECT factures.tipo_nfc as tp, COUNT(factures.tipo_nfc) i, SUM(factures.total_facture) as total
                     FROM factures
-                    WHERE factures.user_id = ".Auth::id()." and (factures.date between '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format('Y-m-d')."') GROUP BY tp) as t2
+                    WHERE (factures.date between '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format('Y-m-d')."') GROUP BY tp) as t2
                     ON type_ncf.slug = t2.tp
                     ORDER BY type_ncf.id");
                 $header = ['Tipo NCF', 'Cantidad de Ventas', 'Total Monto'];
@@ -57,7 +57,7 @@ class Reporteriav2Controller extends Controller
         $fechafin = new DateTime($request->date[1]);
         if ($request->seleccionado == "Ventas")
         {
-            $facturas = DB::select("SELECT id, date, IFNULL(factures.client, 'General') AS cliente, concat('$', format(brute, 2)) as bruto, concat('$', format(itbis, 2)) as itbis, concat('$', format(total_facture, 2)) as total_factura, IFNULL(factures.tipo_nfc, '') AS tipo_nfc, IFNULL(factures.nfc, '') AS nfc, IFNULL(factures.telefono_nfc, '') AS telefono_nfc , IFNULL(factures.rnc_nfc, '') AS rnc_nfc, IFNULL(factures.razon_nfc, '') AS razon_nfc FROM `factures` WHERE user_id = ".Auth::id()." AND date BETWEEN '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format('Y-m-d')."' ORDER BY `id` DESC");
+            $facturas = DB::connection('client')->select("SELECT id, date, IFNULL(factures.client, 'General') AS cliente, concat('$', format(brute, 2)) as bruto, concat('$', format(itbis, 2)) as itbis, concat('$', format(total_facture, 2)) as total_factura, IFNULL(factures.tipo_nfc, '') AS tipo_nfc, IFNULL(factures.nfc, '') AS nfc, IFNULL(factures.telefono_nfc, '') AS telefono_nfc , IFNULL(factures.rnc_nfc, '') AS rnc_nfc, IFNULL(factures.razon_nfc, '') AS razon_nfc FROM `factures` WHERE  date BETWEEN '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format('Y-m-d')."' ORDER BY `id` DESC");
             $header = ["#Factura", "Fecha", "Cliente", "Bruto", "Itbis", "Total Factura", "Tipo NFC", "NFC", "RNC", "Razon"];
             return ['data' => $facturas, 'header' => $header];
         }
@@ -75,7 +75,7 @@ class Reporteriav2Controller extends Controller
         }
         if ($request->seleccionado == "Gastos")
         {
-            $cajas = DB::select("SELECT entradacomprobantes.tiponcf_id as tipo_ncf, entradacomprobantes.nfc_nfc, entradacomprobantes.razon_nfc, provedors.nombre as suplidor, entradacomprobantes.factura_ref, 
+            $cajas = DB::connection('client')->select("SELECT entradacomprobantes.tiponcf_id as tipo_ncf, entradacomprobantes.nfc_nfc, entradacomprobantes.razon_nfc, provedors.nombre as suplidor, entradacomprobantes.factura_ref, 
                 entradacomprobantes.date as fecha, entradacomprobantes.tipogasto as tipo_gasto,concat('$', format(entradacomprobantes.subtotal, 2)) as subtotal, concat('$', format(entradacomprobantes.descuento, 2)) as descuento,
                 concat('$', format(entradacomprobantes.itbispagado , 2)) as itbis_pagado, concat('$', format(entradacomprobantes.netototal , 2)) as netototal, concat('$', format(entradacomprobantes.balance , 2)) as balance, IFNULL(entradacomprobantes.montoapagar, 0.00) as monto_apagar 
                  FROM entradacomprobantes, provedors 

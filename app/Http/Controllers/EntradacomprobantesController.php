@@ -14,10 +14,10 @@ class EntradacomprobantesController extends Controller
     {
         $entradacomprobante = new Entradacomprobantes();
         $entradacomprobante->tiponcf_id = $request->ncf;
+        $nfc = '';
+        $aviso = '';
         if ($request->setting['generacomprobante'] == 'si'){
-            $nfc = '';
-            $aviso = '';
-            $headers = DB::select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento AND user_id =".Auth::id()."");
+            $headers = DB::connection('client')->select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento AND user_id =".Auth::id()."");
             foreach ($headers as $header)
             {
                 $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc',$request->ncf);
@@ -73,14 +73,14 @@ class EntradacomprobantesController extends Controller
 
     public function comprobanteporprovedor(Request $request)
     {
-        $comprobante = Entradacomprobantes::all()->where('suplidor_id', $request->id)->where('balance', '>', 0)->where("user_id", Auth::id());
+        $comprobante = Entradacomprobantes::all()->where('suplidor_id', $request->id)->where('balance', '>', 0);
         if ($comprobante == '[]') {
             $comprobante = 'no resultado';
         }
         return $comprobante;
     }
     public function datarnc(Request $request){
-        $rnc = DB::select("SELECT telefono_nfc, rnc_nfc, razon_nfc FROM entradacomprobantes WHERE rnc_nfc = ".$request->rnc." and user_id = ".Auth::id()." LIMIT 1");
+        $rnc = DB::connection('client')->select("SELECT telefono_nfc, rnc_nfc, razon_nfc FROM entradacomprobantes WHERE rnc_nfc = ".$request->rnc." LIMIT 1");
         return $rnc;
     }
 

@@ -192,29 +192,32 @@
                 '    <td>@{{ tipogasto }}</td>\n' +
                 '    <td>@{{ netototal }}</td>\n' +
                 '    <td>@{{ balance }}</td>\n' +
-                '    <td><input type="number" style="width: 100px" v-model="apagar"  min="0" class="form-control" id="" placeholder=""></td>\n' +
+                '    <td><input type="number" style="width: 100px" v-model="apagarra"  min="0" class="form-control" id="" placeholder=""></td>\n' +
                 '    <td>@{{ balancenuevo }}</td>\n' +
                 '</tr>',
             props:['id', 'fecha', 'factura' ,'tipogasto', 'netototal', 'balance', 'apagar', 'provedor', 'bus'],
             data() {
                 return {
                     montopagar:0,
+                    apagarra:this.apagar
                 }
             },
             methods:{
                 pagarrr()
                 {
                     _this = this;
-                    if  (_this.apagar != 0)
+                    if  (_this.apagarra != 0)
                     {
                         axios.post('/pago/comprobante', {
                             idcomprobante:_this.id,
                             balance:_this.balancenuevo,
                             suplidor:_this.provedor,
-                            montopagado:_this.apagar
+                            montopagado:_this.apagarra
                         })
                             .then(function (response) {
-                                toastr.success('Guardado con exito', 'Validador')
+                                toastr.success('Guardado con exito', 'Validador');
+                                _this.provedor = '';
+                                _this.comprobantesprovedor ='';
                             })
                             .catch(function (error) {
                                 toastr.error('Se ha producido un error')
@@ -226,7 +229,7 @@
                 balancenuevo()
                 {
                     _this = this;
-                    var resta = parseFloat(_this.balance) - parseFloat(_this.apagar);
+                    var resta = parseFloat(_this.balance) - parseFloat(_this.apagarra);
 
                     if(resta < 0){
                         return 0;
@@ -244,7 +247,7 @@
 
         });
 
-
+        /*=============================================================================================================================*/
         new Vue({
             el: '#Vue',
             data(){
@@ -295,7 +298,7 @@
                     axios.post('/entrada/comprobante/provedor', {
                         id:i
                     })
-                        .then(function (response) {
+                        .then( (response) => {
                             _this.comprobantesprovedor = response['data'];
                             _this.loading= false;
                         })
@@ -350,7 +353,8 @@
                 {
                     _this = this;
                     this.bus.$emit('ejecutar');
-                    setTimeout('_this.buscarcomprobanteprovedor(_this.idprovedor)',1000);
+                    // console.log(this.idprovedor);
+                    setTimeout(this.buscarcomprobanteprovedor(this.idprovedor),1000);
                 }
             },
             computed:{

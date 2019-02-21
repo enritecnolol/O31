@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Caja;
 use App\Categoria;
 use App\Client;
+use App\Client_database;
 use App\Configuracion;
+use App\Core\ClientDbSwitcher;
 use App\Detail;
 use App\Detallesecuencia;
 use App\Facture;
@@ -15,15 +17,16 @@ use DemeterChain\C;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\Types\String_;
 
 
 class IndexController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
 
 
     /**
@@ -47,23 +50,27 @@ class IndexController extends Controller
         }
 
         $id = Auth::id();
-        $caja = Caja::all()->where('user_id','==',$id)->last();
-        $productos = DB::table('products')
+        $caja =  Caja::all()->last();
+        $productos = DB::connection('client')->table('products')
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
-            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
-            ->where('products.user_id', $id)
-            ->select(DB::raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
+            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
+//            ->where('products.user_id', $id)
+            ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
+//        $productos = DB::connection('client')->select("SELECT products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, \"\") AS descripcion FROM products LEFT JOIN impuestosrefs ON products.impuestoref_id = impuestosrefs.id LEFT JOIN rangoimpuestos ON rangoimpuestos.referenciaitbis_id = impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta");
 
-        if ($caja == '[]'){
+        if ($caja == '[]' || $caja == null){
             $cerrada = 'C';
-        }if($caja->fecha_apertura != date("Y-m-d") and $caja->status == 'A'){
-        $cerrada = 'no es dia';
-    }else{
-        $cerrada = $caja->status;
-    }
-        $categoria = Categoria::all()->where('user_id', '==', $id);
+        }else{
+            if($caja->fecha_apertura != date("Y-m-d") and $caja->status == 'A'){
+                $cerrada = 'no es dia';
+            }else{
+                $cerrada = $caja->status;
+            }
+        }
 
-        $config = DB::table('configuracions')->select('impuesto')->where('user_id', $id)->get();
+        $categoria = Categoria::all();
+
+        $config = DB::connection('client')->table('configuracions')->select('impuesto')->get();
 
         if ($config == '[]'){
             $config = 'vacio';
@@ -73,7 +80,9 @@ class IndexController extends Controller
             $config = 'sumado';
         }
 
-        return view('welcome', ['productos' => json_encode($productos)], ['caja' => json_encode($caja)])
+//        dd($productos);
+
+        return view('welcome',['caja' => json_encode($caja)] ,['productos' => json_encode($productos)])
             ->with(compact('cerrada', $cerrada))
             ->with(compact('categoria', $categoria))
             ->with(compact('alerta'))
@@ -85,9 +94,26 @@ class IndexController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function productos()
     {
-        //
+//        $productos = DB::connection('client')->table('products')
+//            ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
+//            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
+//            ->where('products.user_id', Auth::id())->get();
+//            ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
+//        dd($productos);
+        $productos = DB::connection('client')->table('products')
+            ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
+            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
+//            ->where('products.user_id', Auth::id())
+            ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
+
+//        foreach($productos as $producto)
+//        {
+//            echo json_encode($producto);
+//        }
+
+        return response($productos);
     }
 
     /**
@@ -129,7 +155,7 @@ class IndexController extends Controller
         if ($request->setting['generacomprobante'] == 'si'){
             $facture->tipo_nfc = $request->tiponfc;
 
-            $headers = DB::select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento AND user_id =".Auth::id()."");
+            $headers = DB::connection('client')->select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento");
             foreach ($headers as $header)
             {
                 $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc',$request->tiponfc);
@@ -230,10 +256,10 @@ class IndexController extends Controller
     public function prueba()
     {
         $nfc = '';
-        $headers = DB::select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento AND user_id =".Auth::id()."");
+        $headers = DB::connection('client')->select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento");
         foreach ($headers as $header)
         {
-            $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc','02')->where("user_id", Auth::id());
+            $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc','02');
             foreach ($details as $detail)
             {
                 if ($detail->actual < $detail-> secuencia_final)

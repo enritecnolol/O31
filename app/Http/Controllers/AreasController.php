@@ -18,7 +18,7 @@ class AreasController extends Controller
     }
     public function allareas()
     {
-        $areas = Area::all()->where('user_id', Auth::id());
+        $areas = Area::all();
         return $areas;
     }
 }

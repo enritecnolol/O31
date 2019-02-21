@@ -17,7 +17,7 @@ class ControlinventariosController extends Controller
 
     public  function todosproductos()
     {
-        $productos = Product::all()->where('user_id', Auth::id());
+        $productos = Product::all();
         return $productos;
     }
     public function storecompra(Request $request)

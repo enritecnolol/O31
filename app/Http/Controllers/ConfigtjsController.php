@@ -22,7 +22,7 @@ class ConfigtjsController extends Controller
     }
     public function buscartj(Request $request)
     {
-       $datos = Configtj::all()->where('user_id', Auth::id())->where('tarjeta_id',$request->id);
+       $datos = Configtj::all()->where('tarjeta_id',$request->id);
        if ($datos == '[]'){
            $lista = 'vacio';
        }else{

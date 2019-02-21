@@ -218,7 +218,6 @@
                                                         <input type="text" id="descuento" placeholder="" v-model="descuento" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
-                                                <hr>
                                                 <div class="row form-group">
                                                     <div class="col-sm-4">
                                                         <label for="itbispagado" class=" form-control-label">Itbis Pagado <span style="color: red">*</span></label>
@@ -243,6 +242,7 @@
                                                         <input type="text" id="total" placeholder="" disabled v-model="totalneto" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
+                                                <hr>
                                             </div>
 
                                         </div>

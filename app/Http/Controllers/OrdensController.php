@@ -32,7 +32,7 @@ class OrdensController extends Controller
                 $orden->user_id = Auth::id();
                 $orden->save();
 
-                $idorden = Orden::all()->where('user_id', Auth::id());
+                $idorden = Orden::all();
 
                 $details = new Details_orden();
                 if ($producto['orden'])
@@ -194,7 +194,7 @@ class OrdensController extends Controller
         if ($request->setting['generacomprobante'] == 'si'){
             $facture->tipo_nfc = $request->tiponfc;
 
-            $headers = DB::select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento AND user_id =".Auth::id()."");
+            $headers = DB::connection('client')->select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento ");
             foreach ($headers as $header)
             {
                 $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc',$request->tiponfc);
@@ -284,7 +284,7 @@ class OrdensController extends Controller
     public function allordenesabiertas()
     {
 //        $ordenes = Orden::all()->where('estado', 'Abierta');
-        $ordenes = DB::select("SELECT ordens.*, corotos.name FROM ordens, corotos WHERE ordens.estado = 'Abierta' AND ordens.mesa_id = corotos.id and ordens.user_id = ".Auth::id()." ORDER BY ordens.id ASC");
+        $ordenes = DB::select("SELECT ordens.*, corotos.name FROM ordens, corotos WHERE ordens.estado = 'Abierta' AND ordens.mesa_id = corotos.id ORDER BY ordens.id ASC");
         return $ordenes;
     }
     public function allordenesdetalle(Request $request)
