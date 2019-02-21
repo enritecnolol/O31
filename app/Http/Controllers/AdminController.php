@@ -57,7 +57,8 @@ class AdminController extends Controller
         Artisan::call('migrate', [
             '--force' => true,
             '--database' => 'client',
-            '--path' => 'database/migrations'
+            '--path' => 'database/migrations',
+            '--seed' => true
         ]);
 
         DB::purge('auth');

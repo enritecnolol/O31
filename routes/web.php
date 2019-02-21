@@ -256,6 +256,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/reportv2/comprobantes/fiscales', 'Reporteriav2Controller@typenfcdata');
     Route::post('/reportv2/return/data', 'Reporteriav2Controller@returndata');
 
+    /*=================================\- Password -/======================================================*/
+    Route::post('/change/pass', 'ConfiguracionesController@changepass');
 });
 
 Auth::routes();
