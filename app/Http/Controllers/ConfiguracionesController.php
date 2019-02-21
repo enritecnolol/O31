@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Configuracion;
+use App\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -133,5 +134,13 @@ class ConfiguracionesController extends Controller
         $setting = DB::connection('client')->table('configuracions')->get();
 //        dd($setting);
         return json_encode($setting);
+    }
+    public function changepass(Request $request)
+    {
+        $passold = User::find(Auth::id());
+        $passold->password = bcrypt($request->newpass);
+        $passold->update();
+
+        return 'change';
     }
 }

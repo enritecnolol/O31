@@ -18,9 +18,13 @@
                         <strong style="font-size: 24px;color: white"><i class="far fa-building"></i> Compañia</strong>
                         <small style="color: white">Formulario</small>
                     </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="text-right">
+                        <button type="button" class="btn btn-sm btn-primary" @click="openmodal"><i class="fa fa-key"></i> Cambiar Contraseña</button>
+                    </div>
                     <br>
                 </div>
-
                 <div class="col-md-12" v-if="infoconfig == 'no'">
                     <form action="/configuracion/store" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -28,33 +32,33 @@
                             <div class="card-body card-block">
                                 <div class="form-group">
                                     <label for="company" class=" form-control-label"><strong>Nombre Compañia</strong></label>
-                                    <input type="text" id="" required autofocus  name="nombreempresa" placeholder="Ingrese nombre de la compañia" class="form-control">
+                                    <input type="text" required autofocus  name="nombreempresa" placeholder="Ingrese nombre de la compañia" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="vat" class=" form-control-label"><strong>Teléfono</strong></label>
-                                    <input type="text" maxlength="11"  required name="telefono" id="" placeholder="0000000000" class="form-control">
+                                    <input type="text" maxlength="11"  required name="telefono"  placeholder="0000000000" class="form-control">
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="city" class=" form-control-label"><strong>Ciudad</strong></label>
-                                            <input type="" id="city" required name="ciudad" placeholder="Ciudad" class="form-control">
+                                            <input type=""  required name="ciudad" placeholder="Ciudad" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="postal-code" class=" form-control-label"><strong>País</strong></label>
-                                            <input type="" id="postal-code" required name="pais" placeholder="Pais" class="form-control">
+                                            <input type=""  required name="pais" placeholder="Pais" class="form-control">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="street" class=" form-control-label"><strong>Dirección</strong></label>
-                                    <input type="text" id="" required name="direccion" placeholder="Ingrese la Dirección" class="form-control">
+                                    <input type="text"  required name="direccion" placeholder="Ingrese la Dirección" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="logo" class=" form-control-label"><strong>Logo</strong></label>
-                                    <input type="file" id="" name="img" class="form-control-file">
+                                    <input type="file"  name="img" class="form-control-file">
                                 </div>
                                 <hr>
                                 <div class="row form-group">
@@ -132,35 +136,35 @@
                             <div class="card-body card-block">
                                 <div class="form-group">
                                     <label for="company" class=" form-control-label"><strong>Nombre Compañia</strong></label>
-                                    <input type="text" id=""  :disabled="editar == false" required v-model="infoconfig.nombreempresa" name="nombreempresa" placeholder="Ingrese nombre de la compañia" class="form-control">
+                                    <input type="text"   :disabled="editar == false" required v-model="infoconfig.nombreempresa" name="nombreempresa" placeholder="Ingrese nombre de la compañia" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="vat" class=" form-control-label"><strong>Teléfono</strong></label>
-                                    <input type="text" maxlength="11" :disabled="editar == false" required v-model="infoconfig.telefono"  name="telefono" id="" placeholder="0000000000" class="form-control">
+                                    <input type="text" maxlength="11" :disabled="editar == false" required v-model="infoconfig.telefono"  name="telefono"  placeholder="0000000000" class="form-control">
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="city" class=" form-control-label"><strong>Ciudad</strong></label>
-                                            <input type="" id="city" :disabled="editar == false" required v-model="infoconfig.ciudad"  name="ciudad" placeholder="Ciudad" class="form-control">
+                                            <input type=""  :disabled="editar == false" required v-model="infoconfig.ciudad"  name="ciudad" placeholder="Ciudad" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="postal-code" class=" form-control-label"><strong>País</strong></label>
-                                            <input type="" id="postal-code" required :disabled="editar == false" v-model="infoconfig.pais"  name="pais" placeholder="Pais" class="form-control">
+                                            <input type=""  required :disabled="editar == false" v-model="infoconfig.pais"  name="pais" placeholder="Pais" class="form-control">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="street" class=" form-control-label"><strong>Dirección</strong></label>
-                                    <input type="text" id="" required :disabled="editar == false" v-model="infoconfig.direccion"  name="direccion" placeholder="Ingrese la Dirección" class="form-control">
+                                    <input type="text"  required :disabled="editar == false" v-model="infoconfig.direccion"  name="direccion" placeholder="Ingrese la Dirección" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="logo" class=" form-control-label"><strong>Logo</strong></label>
                                     <br>
                                     <img :src="'imagenes/'+infoconfig.img" style="width: 100px;height: 100px" alt="">
-                                    <input type="file" id="" :disabled="editar == false" name="img" class="form-control-file">
+                                    <input type="file"  :disabled="editar == false" name="img" class="form-control-file">
                                 </div>
                                 <hr>
                                 <div class="row form-group">
@@ -232,6 +236,7 @@
             </div>
         </div>
     </div>
+    @include('modal.changepassword')
 @endsection
 
 @section('scriptp')
@@ -243,11 +248,43 @@
             data: {
                 infoconfig: config,
                 editar:false,
+                oldpass:'',
+                newpass:'',
+                passreplay:''
             },watch: {
 
             },
             methods:{
-
+                openmodal(){
+                    $('#changepass').modal('show');
+                },
+                changepassword()
+                {
+                    if (!this.oldpass || !this.newpass || !this.passreplay)
+                    {
+                        toastr.warning("Por llenar todos los campo de cambio de contrasena");
+                        return;
+                    }
+                    if (this.newpass != this.passreplay){
+                        toastr.warning("Las contrasenas no coinciden");
+                        return;
+                    }
+                    axios.post('/change/pass', {
+                        oldpass:this.oldpass,
+                        newpass:this.newpass,
+                        passreplay:this.passreplay
+                    })
+                        .then( (response) => {
+                            toastr.success("Las Clave ha sido cambiada");
+                            $('#changepass').modal('hide');
+                            this.newpass = "";
+                            this.oldpass = "";
+                            this.passreplay = "";
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
             },
             computed:{
 
