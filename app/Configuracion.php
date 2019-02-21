@@ -7,5 +7,5 @@ use Illuminate\Support\Facades\Auth;
 
 class Configuracion extends Model
 {
-
+    protected $connection = 'client';
 }

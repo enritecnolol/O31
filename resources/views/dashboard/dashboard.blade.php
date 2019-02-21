@@ -96,7 +96,7 @@
                 <div class="col-lg-12">
                     <div class="au-card m-b-30">
                         <div class="au-card-inner">
-                            <h3 class="title-2 m-b-40">Ventas por dias 2018</h3>
+                            <h3 class="title-2 m-b-40">Ventas por dias <?php echo date('Y') ?></h3>
                             <div id="chartdiv" style="width: auto; height: 400px;"></div>
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                 <div class="col-lg-6">
                     <div class="au-card m-b-30">
                         <div class="au-card-inner">
-                            <h3 class="title-2 m-b-40">Dias con mas Ventas 2018</h3>
+                            <h3 class="title-2 m-b-40">Dias con mas Ventas <?php echo date('Y') ?></h3>
                             <canvas id="diasmasventa"></canvas>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
                 <div class="col-lg-6">
                     <div class="au-card m-b-30">
                         <div class="au-card-inner">
-                            <h3 class="title-2 m-b-40">Ventas Por Mes 2018</h3>
+                            <h3 class="title-2 m-b-40">Ventas Por Mes <?php echo date('Y') ?></h3>
                             <canvas id="ventasmes"></canvas>
                         </div>
                     </div>
@@ -128,7 +128,7 @@
                 <div class="col-lg-6">
                     <div class="au-card m-b-30">
                         <div class="au-card-inner">
-                            <h3 class="title-2 m-b-40">Productos Mas Vendidos 2018</h3>
+                            <h3 class="title-2 m-b-40">Productos Mas Vendidos <?php echo date('Y') ?></h3>
                             <canvas id="productomasvendidos"></canvas>
                         </div>
                     </div>
@@ -136,7 +136,7 @@
                 <div class="col-lg-12">
                     <div class="au-card m-b-30">
                         <div class="au-card-inner">
-                            <h3 class="title-2 m-b-40">Ventas por Horas 2018</h3>
+                            <h3 class="title-2 m-b-40">Ventas por Horas <?php echo date('Y') ?></h3>
                             <canvas id="ventaporhoras" height="90"></canvas>
                         </div>
                     </div>

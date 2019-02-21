@@ -39,7 +39,7 @@ class SubcategoriasController extends Controller
     public function mostrarsubcategorias(Request $request)
     {
         $id = Auth::id();
-        $sub = Subcategoria::all()->where('categoria_id', '==', $request->id)->where('user_id', '==', $id);
+        $sub = Subcategoria::all()->where('categoria_id', '==', $request->id);
         return $sub;
     }
     public function editarsubcategoria(Request $request){
@@ -73,7 +73,7 @@ class SubcategoriasController extends Controller
     }
     public function productosubcategoria(Request $request){
         $id = Auth::id();
-        $sub = Subcategoria::all()->where('categoria_id', '==', $request->id)->where('user_id', $id);
+        $sub = Subcategoria::all()->where('categoria_id', '==', $request->id);
         return $sub;
 
     }
@@ -89,18 +89,18 @@ class SubcategoriasController extends Controller
     }
     public function subcategoriavender(Request $request){
         $id = Auth::id();
-        $subcategorias = Subcategoria::all()->where('categoria_id', '==', $request->id)->where('user_id', $id);
+        $subcategorias = Subcategoria::all()->where('categoria_id', '==', $request->id);
         return $subcategorias;
 
     }
     public function subcategoriaproductos(Request $request){
         $id = Auth::id();
-        $productos = Product::all()->where('subcategoria_id', '==', $request->id)->where('user_id',$id);
+        $productos = Product::all()->where('subcategoria_id', '==', $request->id);
         return $productos;
     }
     public function versubcategorias(){
         $id = Auth::id();
-        $sub = Subcategoria::all()->where('user_id', '==', $id);
+        $sub = Subcategoria::all();
         return $sub;
     }
     public function eliminardos(Request $request){

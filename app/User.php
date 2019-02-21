@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
+//    protected $connection = 'auth';
 
     /**
      * The attributes that are mass assignable.

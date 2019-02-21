@@ -13,7 +13,7 @@ class ConfiguracionesController extends Controller
     public function index()
     {
         $id = Auth::id();
-        $config = Configuracion::all()->where('user_id', '==', $id);
+        $config = Configuracion::all();
         if ($config == '[]'){
             $confi = 'no';
         }else{
@@ -39,6 +39,7 @@ class ConfiguracionesController extends Controller
             $configuracion->descuento = $request->descuento;
             $configuracion->controlinv = $request->inventario;
             $configuracion->emailinfo = $request->emailinfo;
+            $configuracion->generacomprobante = $request->generacomprobante;
             $configuracion->user_id = Auth::id();
             $configuracion->save();
 
@@ -55,6 +56,7 @@ class ConfiguracionesController extends Controller
             $configuracion->descuento = $request->descuento;
             $configuracion->controlinv = $request->inventario;
             $configuracion->emailinfo = $request->emailinfo;
+            $configuracion->generacomprobante = $request->generacomprobante;
             $configuracion->user_id = Auth::id();
             $configuracion->save();
         }
@@ -78,6 +80,7 @@ class ConfiguracionesController extends Controller
             $configuracion->descuento = $request->descuento;
             $configuracion->controlinv = $request->inventario;
             $configuracion->emailinfo = $request->emailinfo;
+            $configuracion->generacomprobante = $request->generacomprobante;
             $configuracion->update();
 
         }else{
@@ -90,6 +93,7 @@ class ConfiguracionesController extends Controller
             $configuracion->descuento = $request->descuento;
             $configuracion->controlinv = $request->inventario;
             $configuracion->emailinfo = $request->emailinfo;
+            $configuracion->generacomprobante = $request->generacomprobante;
             $configuracion->update();
         }
 
@@ -103,7 +107,7 @@ class ConfiguracionesController extends Controller
 
     public function existencia()
     {
-        $existencias = Configuracion::all()->where('user_id', Auth::id());
+        $existencias = Configuracion::all();
         foreach($existencias as $existencia)
         {
             $existencia = $existencia->controlinv;
@@ -112,7 +116,7 @@ class ConfiguracionesController extends Controller
     }
     public function manejoitbis()
     {
-        $config = DB::table('configuracions')->select('impuesto')->where('user_id', Auth::id())->get();
+        $config = DB::connection('client')->table('configuracions')->select('impuesto')->get();
 
         if ($config == '[]'){
             $config = 'vacio';
@@ -122,5 +126,12 @@ class ConfiguracionesController extends Controller
             $config = 'sumado';
         }
         return $config;
+    }
+    public function setting()
+    {
+//        $setting = Configuracion::all()->where('user_id', Auth::id())->first();
+        $setting = DB::connection('client')->table('configuracions')->get();
+//        dd($setting);
+        return json_encode($setting);
     }
 }

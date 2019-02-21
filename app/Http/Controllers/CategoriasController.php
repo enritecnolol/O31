@@ -12,7 +12,7 @@ class CategoriasController extends Controller
     public function index(){
         $id = Auth::id();
 //        $categorias = Categoria::all()->where('user_id', '==', $id)->pagination(5);
-        $categorias = DB::table('categorias')->where('user_id', $id)->paginate(5);
+        $categorias = DB::connection('client')->table('categorias')->paginate(5);
         return view('categoria.index2', compact('categorias'));
     }
 
@@ -75,7 +75,7 @@ class CategoriasController extends Controller
     }
     public function allcategories()
     {
-        $categorias = Categoria::all()->where('user_id', Auth::id());
+        $categorias = Categoria::all();
         return $categorias;
     }
 }

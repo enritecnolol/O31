@@ -23,11 +23,11 @@ class ProductsController extends Controller
 //        LEFT JOIN impuestosrefs ON products.impuestoref_id = impuestosrefs.id
 //        LEFT JOIN rangoimpuestos ON rangoimpuestos.referenciaitbis_id = impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta
 
-        $productos = DB::table('products')
+        $productos = DB::connection('client')->table('products')
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
-            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
-            ->where('products.user_id', $id)
-            ->select(DB::raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->paginate(8);
+            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
+//            ->where('products.user_id', $id)
+            ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->paginate(8);
 
         return view('productos.index', compact('productos'));
     }
@@ -52,9 +52,10 @@ class ProductsController extends Controller
     {
         $product = new Product;
 
-        $request->validate([
-            'barcode' => 'bail|required|unique:products|max:255',
-        ]);
+//        $request->validate([
+//            'barcode' => 'bail|required|unique:products|max:255',
+//        ]);
+//        $validat = Product::all()->where("codigo", $request->input('barcode'))->first();
 
         if ($request->has('refimpuestoid') != 0){
             $itbis = 'si';

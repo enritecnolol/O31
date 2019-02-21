@@ -31,17 +31,50 @@
                                             <div class="col-md-6">
                                                 <div class="row form-group">
                                                     <div class="col-sm-4">
-                                                        <label for="TNCF" class=" form-control-label"><a href="#" data-toggle="modal" data-target="#createfc"><u>Tipo NCF </u></a> <span style="color: red">*</span></label>
+                                                        <label for="TNCF" class=" form-control-label"><u>Tipo NCF </u><span style="color: red">*</span></label>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <select class="form-control form-control-sm" v-model="ncf" id="TNCF">
-                                                            <option value="">--Seleccionar--</option>
-                                                            <template v-for="item in datosnfc">
-                                                                <option :value="item.id">@{{ item.nombre }}</option>
-                                                            </template>
+                                                            <option selected value="">Selecionar</option>
+                                                            <option value="01">01 | Credito Fiscal</option>
+                                                            <option value="02">02 | Facturas de Consumo</option>
+                                                            <option value="03">03 | Notas de Debito</option>
+                                                            <option value="04">04 | Notas de Credito</option>
+                                                            <option value="11">11 | Provedores Informales</option>
+                                                            <option value="12">12 | Registro Unico de Ingresos</option>
+                                                            <option value="13">13 | Registro de Gastos Menores</option>
+                                                            <option value="14">14 | Regímenes Especiales de Tributación</option>
+                                                            <option value="15">15 | Comprobantes Gubernamentales</option>
                                                         </select>
                                                     </div>
                                                 </div>
+
+                                                <template v-if="ncf != '02'">
+                                                    <div class="row form-group">
+                                                        <div class="col-sm-4">
+                                                            <label for="rnc_rnc" class=" form-control-label"><u>RNC.</u><span style="color: red">*</span></label>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <input type="text" id="rnc_rnc" v-model="rnc_nfc" placeholder="" maxlength=""  @keypress.enter="buscar_rnc" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row form-group">
+                                                        <div class="col-sm-4">
+                                                            <label for="razon_social" class=" form-control-label"><u>Razon Social</u><span style="color: red">*</span></label>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <input type="text" id="razon_social" v-model="razon_nfc" placeholder="" maxlength=""  class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row form-group">
+                                                        <div class="col-sm-4">
+                                                            <label for="tel" class=" form-control-label"><u>Telefono</u><span style="color: red">*</span></label>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <input type="text" id="tel" v-model="telefono_nfc" placeholder="" maxlength="15"  class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </template>
                                                 <div class="row form-group">
                                                     <div class="col-sm-4">
                                                         <label for="tipoF" class=" form-control-label"><a href="#" data-toggle="modal" data-target="#modaltipof"><u>Tipo Factura</u></a> <span style="color: red">*</span></label>
@@ -185,7 +218,6 @@
                                                         <input type="text" id="descuento" placeholder="" v-model="descuento" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
-                                                <hr>
                                                 <div class="row form-group">
                                                     <div class="col-sm-4">
                                                         <label for="itbispagado" class=" form-control-label">Itbis Pagado <span style="color: red">*</span></label>
@@ -210,6 +242,7 @@
                                                         <input type="text" id="total" placeholder="" disabled v-model="totalneto" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
+                                                <hr>
                                             </div>
 
                                         </div>
@@ -261,15 +294,50 @@
                     descuento:0,
                     itbispagado:0,
                     flete:0,
+                    nfc_nfc:'',
+                    telefono_nfc:'',
+                    rnc_nfc:'',
+                    razon_nfc:'',
+                    setting:''
                 }
             },
             mounted(){
                 _this = this;
-                _this.datostablanfc();
+                // _this.datostablanfc();
                 _this.todosprovedores();
                 _this.datostipofactura();
+                _this.config();
             },
             methods:{
+                config(){
+                    axios.post('/configuracion/sale')
+                        .then( (response) => {
+                            for(var key in response['data']){
+                                this.setting = response["data"][key]
+                                break;
+                            }
+                        })
+                        .catch(function (error) {
+                        });
+                },
+                buscar_rnc()
+                {
+                    axios.post('/entrada/comprobante/data/rnc', {
+                        rnc: this.rnc_nfc
+                    })
+                        .then( (response) => {
+                            for(var key in response.data){
+                                this.telefono_nfc = response.data[key].telefono_nfc;
+                                this.razon_nfc = response.data[key].razon_nfc;
+                                break;
+                            }
+                            if (response.data.length == 0){
+                                toastr.warning("No se ha encotrado este RNC")
+                            }
+                        })
+                        .catch(function (error) {
+                        });
+                },
                 nuevonfc:function () {
                     _this = this;
                     if  (_this.nombrenfc == '')
@@ -345,11 +413,26 @@
                     _this = this;
 
                     if (_this.ncf == '' || _this.tfactura == '' || _this.suplidor == '' || _this.factura_ref == '' || _this.fecha == '' || _this.tipogasto == '' ||
-                        _this.formapago == '' || _this.subtotal == 0  || _this.condiciones == 0|| _this.flete == 0 || _this.netototal == 0)
+                        _this.formapago == '' || _this.subtotal == 0  || _this.condiciones == 0 || _this.netototal == 0)
                     {
                         toastr.warning('Revisar los Campos importante', 'Validador')
                     }else{
+                        if (this.setting.generacomprobante == 'si')
+                        {
+                            if  (this.ncf != '02')
+                            {
+                                if (!this.telefono_nfc || !this.rnc_nfc || !this.razon_nfc ){
+                                    toastr.warning("Llenar datos de NFC");
+                                    return;
+                                }
+                            }
+                        }
                         axios.post('/entrada/comprobante/store', {
+                            setting:_this.setting,
+                            nfc_nfc:_this.nfc_nfc,
+                            telefono_nfc:_this.telefono_nfc,
+                            rnc_nfc:_this.rnc_nfc,
+                            razon_nfc:_this.razon_nfc,
                             ncf: _this.ncf,
                             tfactura: _this.tfactura,
                             suplidor: _this.suplidor,
@@ -369,6 +452,14 @@
                             netototal: _this.totalneto
                         })
                             .then(function (response) {
+                                if  (response.data == "No es posible hacer la factura por falta de Comprobantes")
+                                {
+                                    toastr.warning(response.data, "validador");
+                                    return;
+                                }
+                                if (response.data[2] != ""){
+                                    toastr.info(response.data[2], "Aviso");
+                                }
                                 toastr.success('Los datos se han guardado Correctamente', 'validador')
                                 _this.limpiar();
                             })

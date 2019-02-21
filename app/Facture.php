@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Facture extends Model
 {
+    protected $connection = 'client';
     /**
      * Get the phone record associated with the user.
      */

@@ -47,7 +47,7 @@ class CorotosController extends Controller
     }
     public function allcorotos(Request $request)
     {
-        $corotos = Coroto::all()->where('user_id', Auth::id())->where('area_id', $request->area);
+        $corotos = Coroto::all()->where('area_id', $request->area);
         if ($corotos == '[]')
         {
             $corotos = "['No Data']";

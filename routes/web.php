@@ -15,13 +15,28 @@
 use Illuminate\Support\Facades\Route;
 
 
+//Route::get('/login', 'Auth\Authcontroller@loginview');
+//Route::post('/login', 'Auth\Authcontroller@login');
+
+/*=================================\- Admin -/======================================================*/
+Route::group(['middleware'=>'basicAuth'],function () {
+
+    Route::get('/admin', 'AdminController@index');
+    Route::post('/user/list', 'AdminController@userlist');
+    Route::post('/user/connection/store', 'AdminController@store');
+    Route::post('/user/connection/edit', 'AdminController@edit');
+
+});
+/*=================================\- Admin -/======================================================*/
 Route::group(['middleware' => 'auth'], function () {
 
     /*=================================\Pagina inicio/======================================================*/
     Route::get('/', 'IndexController@index'); //pagina donde se vende
+    Route::post('/productos/index', 'IndexController@productos'); //productos index
+    Route::group(['domain' => '{subdomain}.'.config('app.domain')], function () {});
 
     /*=================================\- API- /======================================================*/
-    Route::get('/facturacioncar', 'IndexController@store');// api para mandar datos de factura
+    Route::get('/facturacioncar', 'IndexController@store'); // api para mandar datos de factura
 //    Route::post('actualizar/producto', 'ApisController@actualizarp'); // api para actualizar los productos
     Route::get('/cierrecaja', 'CajasController@cerrarcaja');// api para cerrar la caja en BD
     Route::get('/historico/venta', 'ApisController@historico');// api para cerrar la caja en BD
@@ -101,6 +116,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/configuracion/cliente/preferencial','ConfiguracionesController@clientepreferencialindex');
     Route::post('/configuracion/existencia','ConfiguracionesController@existencia');
     Route::post('/configuracion/manejo/itbis','ConfiguracionesController@manejoitbis');
+    Route::post('/configuracion/sale','ConfiguracionesController@setting');
     /*=================================\- itbis - /======================================================*/
     Route::get('/configuracion/itbis','ImpuestosController@itbis');
     Route::post('/nuevo/itbis','ImpuestosController@store');
@@ -168,6 +184,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/entrada/comprobante/store', 'EntradacomprobantesController@store');
     Route::post('/entrada/comprobante/provedor', 'EntradacomprobantesController@comprobanteporprovedor');
     Route::post('/entrada/comprobante/pago', 'EntradacomprobantesController@pago');
+    Route::post("/entrada/comprobante/data/rnc", "EntradacomprobantesController@datarnc");
 
     /*=================================\- Tipo Factura -/======================================================*/
     Route::post('/tipo/factura/store', 'TipofacturasController@store');
@@ -226,9 +243,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/camareros/delete', 'CamarerosController@delete');
     Route::post('/camareros/all', 'CamarerosController@allcamareros');
     Route::post('/camareros/all/pagination', 'CamarerosController@allcamarerospagination');
+    /*=================================\- Comprobantes -/======================================================*/
+    Route::get("/comprobantes", "ComprobantesController@index");
+    Route::post("/comprobantes/store", "ComprobantesController@store");
+    Route::post("/comprobantes/all/header", "ComprobantesController@allheader");
+    Route::post("/comprobantes/find/header/details", "ComprobantesController@findheader");
+    Route::post("/comprobantes/find/header/details", "ComprobantesController@findheader");
+    Route::post("/comprobantes/edit/detail/sequence", "ComprobantesController@editdetail");
+    Route::post("/data/rnc", "ComprobantesController@datarnc");
+    /*=================================\- ReporteriaV2 -/======================================================*/
+    Route::get('/reportv2', 'Reporteriav2Controller@index');
+    Route::post('/reportv2/comprobantes/fiscales', 'Reporteriav2Controller@typenfcdata');
+    Route::post('/reportv2/return/data', 'Reporteriav2Controller@returndata');
 
 });
 
 Auth::routes();
-
-

@@ -76,6 +76,7 @@
         var ventas = JSON.parse('{!! $ventas !!}')
         var totalc = '{!! $total !!}'
         var valor_apertura = '{!! $valor_apertura !!}'
+        var ordenes = '{{$ordens}}';
 
         function toObject(arr) {
             var rv = {};
@@ -91,6 +92,7 @@
                 caja: Object.values(caja),
                 ventas: ventas,
                 datos:[],
+                onetime:1
             },
             methods:{
 
@@ -102,21 +104,27 @@
                     }
                 },
                 cerrarcaja: function () {
-
-                    $.ajax({
-                        url: '/cierrecaja',
-                        method: 'GET',
-                        data: {
-                            caja: this.caja,
-                            ventas: this.ventas,
-                            total: this.total,
-                            valor_apertura: this.valor_apertura
-                        },
-                        success:function (dato) {
-                            toastr.success('La caja se a Cerrado');
-                            setTimeout('document.location.reload()',1000);
-                        }
-                    });
+                    if (ordenes != 0){
+                        toastr.warning("Por favor cerrar las ordenes que posee abiertas");
+                        return;
+                    }
+                    if (this.onetime == 1){
+                        this.onetime = 2;
+                        $.ajax({
+                            url: '/cierrecaja',
+                            method: 'GET',
+                            data: {
+                                caja: this.caja,
+                                ventas: this.ventas,
+                                total: this.total,
+                                valor_apertura: this.valor_apertura
+                            },
+                            success:function (dato) {
+                                toastr.success('La caja se a Cerrado');
+                                setTimeout('document.location.reload()',1000);
+                            }
+                        });
+                    }
                 }
             }
         })

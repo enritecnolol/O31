@@ -18,12 +18,13 @@ class MesatempsController extends Controller
         $mesa->coroto_id = $request->id;
         $mesa->invitados = $request->personas;
         $mesa->camarero = $request->camarero;
+        $mesa->user_id = Auth::id();
         $mesa->save();
         return 'save';
     }
     public function all()
     {
-        $mesas = DB::select("SELECT mesa_temps.*, corotos.name FROM mesa_temps, corotos WHERE mesa_temps.coroto_id = corotos.id");
+        $mesas = DB::connection('client')->select("SELECT mesa_temps.*, corotos.name FROM mesa_temps, corotos WHERE mesa_temps.coroto_id = corotos.id ");
         return $mesas;
     }
     public function ordenxmesa(Request $request)
@@ -36,11 +37,12 @@ class MesatempsController extends Controller
     public function productoselect(Request $resquest)
     {
         $id = Auth::id();
-        $productos = DB::table('products')
+        $productos = DB::connection('client')->table('products')
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
-            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
-            ->where('products.user_id', $id)->where('products.id', $resquest->id)
-            ->select(DB::raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
+            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
+//            ->where('products.user_id', $id)
+            ->where('products.id', $resquest->id)
+            ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
         return $productos;
     }
 }

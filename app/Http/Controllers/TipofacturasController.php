@@ -18,7 +18,7 @@ class TipofacturasController extends Controller
     }
     public function datos()
     {
-        $tiposfactura = Tipofactura::all()->where('user_id', Auth::id());
+        $tiposfactura = Tipofactura::all();
         return $tiposfactura;
     }
 }

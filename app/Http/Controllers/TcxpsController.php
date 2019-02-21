@@ -18,7 +18,7 @@ class TcxpsController extends Controller
     }
     public function todosdatos()
     {
-        $tcxp = Tcxp::all()->where('user_id', Auth::id());
+        $tcxp = Tcxp::all();
         return $tcxp;
     }
 }

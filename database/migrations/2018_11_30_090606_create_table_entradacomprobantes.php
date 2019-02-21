@@ -15,7 +15,11 @@ class CreateTableEntradacomprobantes extends Migration
     {
         Schema::create('entradacomprobantes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('tiponcf_id');
+            $table->string('tiponcf_id');
+            $table->string('ncf_ncf')->nullable($value = true);
+            $table->string('telefono_nfc')->nullable($value = true);
+            $table->string('razon_nfc')->nullable($value = true);
+            $table->string('rnc_nfc')->nullable($value = true);
             $table->integer('tipofactura_id');
             $table->integer('suplidor_id');
             $table->string('emisiorrnc')->nullable($value = true);
@@ -33,7 +37,7 @@ class CreateTableEntradacomprobantes extends Migration
             $table->float('flete')->nullable($value = true);
             $table->float('netototal');
             $table->float('balance');
-            $table->integer('montoapagar');
+            $table->integer('montoapagar')->nullable($value = true);
             $table->integer('user_id');
             $table->timestamps();
         });

@@ -12,7 +12,7 @@
                         </a>
                     </div>
                     <div class="login-form">
-                        <form class="" method="POST" action="{{ route('login') }}">
+                        <form class="" method="POST" action="/login">
                             {{ csrf_field() }}
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label>Email</label>

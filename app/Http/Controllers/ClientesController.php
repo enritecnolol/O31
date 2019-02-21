@@ -46,7 +46,7 @@ class ClientesController extends Controller
     }
     public function datostabla2()
     {
-        $clientes = Client::all()->where('user_id',Auth::id());
+        $clientes = Client::all();
 //        $clientes = Client::paginate(5);
         if ($clientes == '[]')
         {
@@ -63,7 +63,7 @@ class ClientesController extends Controller
         LEFT JOIN puntosmovimientos ON puntosmovimientos.cliente_id = clients.id
         WHERE clients.id = 2 AND clients.user_id = 1
         */
-        $clientes = Client::all()->where('user_id',Auth::id());
+        $clientes = Client::all();
         if ($clientes == '[]')
         {
             $clientes = 'vacio';
@@ -85,7 +85,7 @@ class ClientesController extends Controller
         return 'guardado';
     }
     public function clientetarjeta(Request $request){
-        $cliente = DB::select("SELECT clients.*, tipotarjetas.codigo FROM clients, tipotarjetas WHERE clients.id = '".$request->id."' AND clients.tarjeta_id = tipotarjetas.id");
+        $cliente =DB::connection('client')->select("SELECT clients.*, tipotarjetas.codigo FROM clients, tipotarjetas WHERE clients.id = '".$request->id."'AND clients.tarjeta_id = tipotarjetas.id");
         if ($cliente == '[]')
         {
             $cliente = 'vacio';
@@ -95,7 +95,7 @@ class ClientesController extends Controller
     public function buscarcliente(Request $request)
     {
         $iduser = Auth::id();
-        $cliente = DB::select("
+        $cliente = DB::connection('client')->select("
         SELECT clients.*, tipotarjetas.codigo, configtjs.config,
         (
             SELECT IFNULL(sum(puntosmovimientos.balancepuntos), 0) FROM puntosmovimientos WHERE puntosmovimientos.cliente_id = clients.id AND puntosmovimientos.fecha between date_sub(now(),INTERVAL 1 WEEK) and now()
@@ -104,7 +104,6 @@ class ClientesController extends Controller
         INNER JOIN tipotarjetas ON tipotarjetas.id = clients.tarjeta_id
         INNER JOIN configtjs ON configtjs.tarjeta_id = tipotarjetas.id
         WHERE clients.id = ".$request->id."
-        AND clients.user_id = ".Auth::id()."
         ");
         if ($cliente == '[]')
         {
@@ -128,7 +127,7 @@ class ClientesController extends Controller
         $movimiento->user_id = Auth::id();
         $movimiento->save();
 
-        $compania = Configuracion::all()->where('user_id',Auth::id());
+        $compania = Configuracion::all();
 
         $movimientoid = Puntosmovimiento::all();
         $email = $request->email;

@@ -25,6 +25,7 @@ class CreateTableConfiguraciones extends Migration
             $table->string('descuento');
             $table->string('controlinv');
             $table->string('emailinfo');
+            $table->string('generacomprobante');
             $table->integer('config_clp_dn_part');
             $table->integer('config_clp_punt_generar');
             $table->integer('user_id');

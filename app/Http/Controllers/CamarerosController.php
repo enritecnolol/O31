@@ -25,7 +25,7 @@ class CamarerosController extends Controller
     }
     public function allcamareros()
     {
-        $camarero = Camarero::all()->where('user_id', Auth::id());
+        $camarero = Camarero::all();
         return $camarero;
     }
     public function allcamarerospagination()

@@ -29,7 +29,7 @@ class DevolucionesController extends Controller
         if  ($devolucions == '[]'){
             $detall_devolucion = 'vacia';
         }else{
-            $detall_devolucion = DB::select("SELECT factures.id, details.id, details.date, details.name_product, details.descuento, 
+            $detall_devolucion = DB::connection('client')->select("SELECT factures.id, details.id, details.date, details.name_product, details.descuento, 
                             details.quanlity - IFNULL(SUM(detalle_devolucions.quanlity),0) AS quanlity, 
                             details.price - IFNULL(SUM(detalle_devolucions.price),0) AS price, 
                             details.depot - IFNULL(SUM(detalle_devolucions.itbis),0) AS depot, 
@@ -73,10 +73,10 @@ WHERE factures.id = 217 GROUP BY details.id
      * */
     public function buscandoproductos(Request $request)
     {
-        $producto = DB::table('products')
+        $producto = DB::connection('client')->table('products')
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
-            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
-            ->where('products.user_id', Auth::id())
+            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
+//            ->where('products.user_id', Auth::id())
             ->where('products.id', $request->id)
             ->select(DB::raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
 
@@ -144,7 +144,7 @@ WHERE factures.id = 217 GROUP BY details.id
             $detalle_d->user_id = $userid;
             $detalle_d->save();
 
-            $existencias = Configuracion::all()->where('user_id', Auth::id());
+            $existencias = Configuracion::all();
             foreach($existencias as $existencia)
             {
                 $existencia = $existencia->controlinv;
@@ -158,7 +158,7 @@ WHERE factures.id = 217 GROUP BY details.id
 
         }
 
-        $compania = Configuracion::all()->where('user_id', Auth::id());
+        $compania = Configuracion::all();
 
         return [$compania, $precio, date('d-m-Y'), $iddevolucion->last()->id];
 
