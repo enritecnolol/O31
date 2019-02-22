@@ -59456,6 +59456,10 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_js_modal___default.a);
                         detalle: this.productoselecionado,
                         mesa: mesa
                     }).then(function (response) {
+                        if (response.data == "No es posible hacer la factura por falta de Comprobantes") {
+                            toastr.warning(response.data, "validador");
+                            return;
+                        }
                         toastr.options.newestOnTop = false;
                         toastr.success('Venta procesada', 'Validador');
                         _this2.cerrarmodal();
@@ -59491,13 +59495,16 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_js_modal___default.a);
                     detalle: this.productoselecionado,
                     mesa: this.mesa
                 }).then(function (response) {
+                    if (response.data == "No es posible hacer la factura por falta de Comprobantes") {
+                        toastr.warning(response.data, "validador");
+                        return;
+                    }
                     toastr.options.newestOnTop = false;
                     toastr.success('Venta procesada', 'Validador');
                     _this2.cerrarmodal();
                     _this2.rncdevf = response.data[1];
                     _this2.lastid = response.data[2];
                     if (response.data[3] !== "") {
-                        console.log(response.data[3]);
                         toastr.info(response.data[3], "Aviso");
                     }
                     _this2.abrirpagofactura();

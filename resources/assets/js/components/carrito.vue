@@ -510,6 +510,10 @@
                             mesa:mesa
                         })
                             .then((response) => {
+                                if(response.data == "No es posible hacer la factura por falta de Comprobantes"){
+                                    toastr.warning(response.data, "validador");
+                                    return;
+                                }
                                 toastr.options.newestOnTop = false;
                                 toastr.success('Venta procesada', 'Validador');
                                 this.cerrarmodal();
@@ -549,6 +553,10 @@
                         mesa:this.mesa
                     })
                         .then( (response) => {
+                            if(response.data == "No es posible hacer la factura por falta de Comprobantes"){
+                                toastr.warning(response.data, "validador");
+                                return;
+                            }
                             toastr.options.newestOnTop = false;
                             toastr.success('Venta procesada', 'Validador');
                             this.cerrarmodal();
@@ -556,7 +564,6 @@
                             this.lastid = response.data[2];
                             if  (response.data[3] !== "")
                             {
-                                console.log(response.data[3])
                                 toastr.info(response.data[3], "Aviso");
                             }
                             this.abrirpagofactura();
