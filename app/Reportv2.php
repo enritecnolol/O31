@@ -41,7 +41,7 @@ class Reportv2 extends Model
 
     }
     public function scopeCajasdate($query, $first, $second){
-        return DB::table('cajas')
+        return DB::connection('client')->table('cajas')
             ->select("cajas.fecha_apertura", "cajas.fecha_cierre", DB::connection('client')->raw("concat('$', format(cajas.valor_apertura, 2)) as valor_apertura"), "cajas.total_venta" ,DB::connection('client')->raw("concat('$', format(cajas.total_cierre , 2))as total_cierre"))
 //            ->where("cajas.user_id",Auth::id())
             ->whereBetween("cajas.fecha_apertura", [$first, $second])->get();
