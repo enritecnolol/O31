@@ -66781,7 +66781,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     secuencia_inicial: this.desde,
                     secuencia_final: this.hasta,
                     aviso: this.aviso,
-                    actual: this.aviso
+                    actual: this.actual
                 }
             });
         }
@@ -67621,70 +67621,76 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("modal", { attrs: { name: "codigos", draggable: true } }, [
-                    _c("div", { staticStyle: { height: "300px" } }, [
-                      _c("div", { staticClass: "table-responsive" }, [
-                        _c("table", { staticClass: "table" }, [
-                          _c("thead", [
-                            _c("tr", [
-                              _c("th", { attrs: { scope: "col" } }, [
-                                _vm._v("#")
-                              ]),
-                              _vm._v(" "),
-                              _c("th", { attrs: { scope: "col" } }, [
-                                _vm._v("Fecha Emision")
-                              ]),
-                              _vm._v(" "),
-                              _c("th", { attrs: { scope: "col" } }, [
-                                _vm._v("Fecha Vecimiento")
-                              ]),
-                              _vm._v(" "),
-                              _c("th")
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "tbody",
-                            [
-                              _vm._l(_vm.codigos, function(item, index) {
-                                return [
-                                  _c("tr", [
-                                    _c("th", { attrs: { scope: "row" } }, [
-                                      _vm._v(_vm._s(item.id))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(_vm._s(item.fechaemision))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(_vm._s(item.fechavencimiento))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c(
-                                        "u",
-                                        {
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.datasolicitud(
-                                                item.id,
-                                                index
-                                              )
+                    _c(
+                      "div",
+                      {
+                        staticStyle: { height: "300px", "overflow-y": "auto" }
+                      },
+                      [
+                        _c("div", { staticClass: "table-responsive" }, [
+                          _c("table", { staticClass: "table" }, [
+                            _c("thead", [
+                              _c("tr", [
+                                _c("th", { attrs: { scope: "col" } }, [
+                                  _vm._v("#")
+                                ]),
+                                _vm._v(" "),
+                                _c("th", { attrs: { scope: "col" } }, [
+                                  _vm._v("Fecha Emision")
+                                ]),
+                                _vm._v(" "),
+                                _c("th", { attrs: { scope: "col" } }, [
+                                  _vm._v("Fecha Vecimiento")
+                                ]),
+                                _vm._v(" "),
+                                _c("th")
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              [
+                                _vm._l(_vm.codigos, function(item, index) {
+                                  return [
+                                    _c("tr", [
+                                      _c("th", { attrs: { scope: "row" } }, [
+                                        _vm._v(_vm._s(item.id))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(item.fechaemision))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(item.fechavencimiento))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c(
+                                          "u",
+                                          {
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.datasolicitud(
+                                                  item.id,
+                                                  index
+                                                )
+                                              }
                                             }
-                                          }
-                                        },
-                                        [_vm._v(" Seleccionar ")]
-                                      )
+                                          },
+                                          [_vm._v(" Seleccionar ")]
+                                        )
+                                      ])
                                     ])
-                                  ])
-                                ]
-                              })
-                            ],
-                            2
-                          )
+                                  ]
+                                })
+                              ],
+                              2
+                            )
+                          ])
                         ])
-                      ])
-                    ])
+                      ]
+                    )
                   ]),
                   _vm._v(" "),
                   _c(
