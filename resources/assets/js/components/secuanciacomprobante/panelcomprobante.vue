@@ -16,7 +16,7 @@
                             </div>
 
                             <modal name="codigos" :draggable="true">
-                               <div class="" style="height: 300px">
+                               <div class="" style="height: 300px; overflow-y: auto">
                                    <div class="table-responsive">
                                        <table class="table">
                                            <thead>

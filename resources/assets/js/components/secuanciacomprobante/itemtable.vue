@@ -67,7 +67,7 @@ export default {
                         secuencia_inicial:this.desde,
                         secuencia_final:this.hasta,
                         aviso:this.aviso,
-                        actual:this.aviso
+                        actual:this.actual
                     }
                 });
 
