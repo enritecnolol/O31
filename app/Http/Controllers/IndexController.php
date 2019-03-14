@@ -152,10 +152,12 @@ class IndexController extends Controller
         $facture->auth = $request->auth;
         $nfc = '';
         $aviso = '';
+
         if ($request->setting['generacomprobante'] == 'si'){
             $facture->tipo_nfc = $request->tiponfc;
 
             $headers = DB::connection('client')->select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento");
+
             foreach ($headers as $header)
             {
                 $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc',$request->tiponfc);
@@ -179,7 +181,6 @@ class IndexController extends Controller
                 return 'No es posible hacer la factura por falta de Comprobantes';
             }
             $facture->nfc = $nfc;
-//            $facture->nfc = ;
             if ($request->tiponfc != '02')
             {
                 $facture->telefono_nfc = $request->datancf['telefono'];
@@ -190,6 +191,7 @@ class IndexController extends Controller
         $facture->caja_id = $idcaja->last()->id;
         $facture->user_id = Auth::id();
         $facture->save();
+
 
 
         if ($request->has('cliente')){
@@ -212,15 +214,13 @@ class IndexController extends Controller
             $tic->update();
         }
 
-        $idfacture = Facture::all();
 
-        $count = 0;
+        $idfacture = DB::connection('client')->select("SELECT id FROM `factures` ORDER BY id DESC LIMIT 1");
 
-        foreach ($request->get('detalle') as $d) {
 
-            $count++;
+        foreach($request->get('detalle') as $d) {
 
-            $detalle = new Detail;
+            $detalle = new Detail();
 
             $detalle->date = now();
             $detalle->name_product = $d["name"];
@@ -237,7 +237,7 @@ class IndexController extends Controller
             $detalle->depot = $bruto;
             $detalle->impost = $itbisp;
             $detalle->product_id = $d["id"];
-            $detalle->facture_id = $idfacture->last()->id;
+            $detalle->facture_id = $idfacture[0]->id;
             $detalle->save();
 
             if ($request->existencias == 'si')
@@ -251,7 +251,7 @@ class IndexController extends Controller
             }
         }
 
-        return ['bien', $nfc, $idfacture->last()->id, $aviso];
+        return ['bien', $nfc, $idfacture[0]->id, $aviso];
     }
     public function prueba()
     {
