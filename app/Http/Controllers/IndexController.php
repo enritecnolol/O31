@@ -152,10 +152,12 @@ class IndexController extends Controller
         $facture->auth = $request->auth;
         $nfc = '';
         $aviso = '';
+
         if ($request->setting['generacomprobante'] == 'si'){
             $facture->tipo_nfc = $request->tiponfc;
 
             $headers = DB::connection('client')->select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento");
+
             foreach ($headers as $header)
             {
                 $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc',$request->tiponfc);
@@ -179,7 +181,6 @@ class IndexController extends Controller
                 return 'No es posible hacer la factura por falta de Comprobantes';
             }
             $facture->nfc = $nfc;
-//            $facture->nfc = ;
             if ($request->tiponfc != '02')
             {
                 $facture->telefono_nfc = $request->datancf['telefono'];
@@ -190,6 +191,7 @@ class IndexController extends Controller
         $facture->caja_id = $idcaja->last()->id;
         $facture->user_id = Auth::id();
         $facture->save();
+
 
 
         if ($request->has('cliente')){
@@ -212,15 +214,12 @@ class IndexController extends Controller
             $tic->update();
         }
 
-        $idfacture = DB::connection('client')->select("SELECT id FROM `factures` ORDER BY id DESC LIMIT 1");;
+        $idfacture = DB::connection('client')->select("SELECT id FROM `factures` ORDER BY id DESC LIMIT 1");
 
-        $count = 0;
 
-        foreach ($request->get('detalle') as $d) {
+        foreach($request->get('detalle') as $d) {
 
-            $count++;
-
-            $detalle = new Detail;
+            $detalle = new Detail();
 
             $detalle->date = now();
             $detalle->name_product = $d["name"];
