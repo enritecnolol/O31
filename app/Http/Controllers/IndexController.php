@@ -212,7 +212,7 @@ class IndexController extends Controller
             $tic->update();
         }
 
-        $idfacture = Facture::all();
+        $idfacture = DB::connection('client')->select("SELECT id FROM `factures` ORDER BY id DESC LIMIT 1");;
 
         $count = 0;
 
@@ -237,7 +237,7 @@ class IndexController extends Controller
             $detalle->depot = $bruto;
             $detalle->impost = $itbisp;
             $detalle->product_id = $d["id"];
-            $detalle->facture_id = $idfacture->last()->id;
+            $detalle->facture_id = $idfacture[0]->id;
             $detalle->save();
 
             if ($request->existencias == 'si')
@@ -251,7 +251,7 @@ class IndexController extends Controller
             }
         }
 
-        return ['bien', $nfc, $idfacture->last()->id, $aviso];
+        return ['bien', $nfc, $idfacture[0]->id, $aviso];
     }
     public function prueba()
     {

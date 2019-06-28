@@ -89,6 +89,7 @@ class   CajasController extends Controller
     }
 
     public function cierrecaja(){
+        
 
         $fecha = date('Y-m-d');
         $id = Auth::id();
@@ -100,8 +101,7 @@ class   CajasController extends Controller
 
         }
 
-        $ventas = Facture::all()->where('caja_id', $idcaja)->count();
-
+        $ventas = Facture::where('caja_id', $idcaja)->count();
         $totalcierre = DB::connection('client')->table('factures')->select(DB::raw('SUM(total_facture) as total'))->where('caja_id', $idcaja)->get();
 
         if ($totalcierre == '[{"total":null}]'){
