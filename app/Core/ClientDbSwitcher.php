@@ -24,8 +24,8 @@ class ClientDbSwitcher
             "database" => $connection_data['name'],
             "driver"=> 'mysql',
             "host"=> '127.0.0.1',
-            'username'=> 'homestead',
-            'password'=>'secret',
+            'username'=> 'adgsoft',
+            'password'=>'*1010537-130778442*',
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci'
         ]);
