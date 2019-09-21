@@ -30,7 +30,9 @@
     "vue-draggable-resizable": "^1.7.5",
     "vue-dragscroll": "^1.8.1",
     "vue-easy-print": "0.0.7",
+    "vue-html-to-paper": "^1.1.1",
     "vue-js-modal": "^1.3.27",
+    "vue-json-excel": "^0.2.98",
     "vue-mouse-menu": "^1.1.0",
     "vue-nav-tabs": "^0.5.7",
     "vue-search-select": "^2.6.2",
@@ -39,6 +41,7 @@
     "vue2-datepicker": "^2.9.1",
     "vue2-editor": "^2.6.6",
     "vuedraggable": "^2.17.0",
-    "vuejs-datepicker": "^1.5.4"
+    "vuejs-datepicker": "^1.5.4",
+    "xlsx": "^0.15.1"
   }
 }

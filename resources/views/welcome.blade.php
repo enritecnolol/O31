@@ -363,44 +363,13 @@
                             <div class="text-center" style="margin-bottom: 8px">
                                 <button type="button" class="btn btn-lg btn-sm btn-link" v-show="cambio === 'subcategoria' && categoria_subcategoria.length !== 0" @click="cambio = 'categoria'" style="float: left;margin-left: 10px"><i class="fas fa-arrow-left"></i></button>
                                 <h3>Productos</h3>
-                                <input type="search"  class="form-control form-control-sm" v-model="buscador"  @input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
+                                <input type="search"  style="height: 35px;" class="form-control form-control-sm" v-model="buscador"  @input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
                             </div>
                             <div class="row dragscroll" style="overflow-y: auto;height: 84vh;cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;">
-                                <template v-for="p in productos" v-if="cerrada === 'A' && productosbuscados === ''">
+                                <template v-for="p in productosbuscados !== '' ? productosbuscados : productos" v-if="cerrada === 'A'">
                                     <div class="card" style="height: auto;background: #c8f1ff;width: 130px;margin-left: 10px;margin-right: 10px;max-height: 184px;" @click="pfactura(p.id)" :title="p.name">
                                         <div class="card-body" style="background: white">
                                             <span class="badge badge-primary" style="position: absolute; top: -6px; left: -8px">@{{ p.barcode }}</span>
-                                            <div class="mx-auto d-block">
-                                                <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ p.name }}</h6>
-                                                <div class="location text-sm-center" style="color: #0062cc">
-                                                    <i class="fa fa-money-bill-alt"></i> @{{p.price}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <template v-if="existenciarep == 'no'">
-                                            <div class="overlay1">
-                                                <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
-                                            </div>
-                                        </template>
-                                        <template v-if="existenciarep == 'si'">
-                                            <div class="overlay1" v-if="p.existence > 0 && p.compuesto == 'no'">
-                                                <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
-                                            </div>
-                                            <div class="overlay1" v-if="p.existence == 0 && p.compuesto == 'si'">
-                                                <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
-                                            </div>
-                                            <div class="overlay2" v-else-if="p.existence ==0 && p.compuesto =='no'">
-                                                <div class="text1"><i class="fas fa-times fa-3x" id="plus"></i></div>
-                                            </div>
-                                        </template>
-                                    </div>
-                                </template>
-
-                                <template v-for="p in productosbuscados" v-if="cerrada === 'A' && productosbuscados !== ''">
-                                    <div  class="card"  :title="p.name" style="height: auto;width: 130px;max-height: 184px;background: #c8f1ff;margin-left: 10px;margin-right: 10px;" @click="pfactura(p.id)">
-                                        <div class="card-body" style="background: white">
-                                            <span class="badge badge-primary" style="position: absolute; top: 3px; left: 3px">@{{ p.barcode }}</span>
                                             <div class="mx-auto d-block">
                                                 <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
                                                 <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ p.name }}</h6>
@@ -515,46 +484,38 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-group">
                                 <label for="cc-exp" class="control-label mb-1">Efectivo<span style="color: red">*</span></label>
                                 <input id="efectivom" name="dinero" autofocus required v-on:keypress.enter="facturar()" type="number" class="form-control cc-exp"  v-model="campodinero">
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="cc-exp" class="control-label mb-1">Billetes<span style="color: red"></span></label>
-                                <br>
-                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(50) + parseFloat(campodinero)">$50</button>
-                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(100) + parseFloat(campodinero)">$100</button>
-                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(200) + parseFloat(campodinero)">$200</button>
-                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(500) + parseFloat(campodinero)">$500</button>
-                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(1000) + parseFloat(campodinero)">$1000</button>
-                            </div>
+                        <div class="col-8">
+                            <button type="button" class="btn btn-success btn-lg" style="height: 70px;" @click="campodinero = neto">$@{{ parseInt(neto) }}</button>
+                            <button type="button" class="btn btn-secondary btn-lg" style="height: 70px;" @click="campodinero = parseFloat(50) + parseFloat(campodinero)">$50</button>
+                            <button type="button" class="btn btn-secondary btn-lg" style="height: 70px;" @click="campodinero = parseFloat(100) + parseFloat(campodinero)">$100</button>
+                            <button type="button" class="btn btn-secondary btn-lg" style="height: 70px;" @click="campodinero = parseFloat(200) + parseFloat(campodinero)">$200</button>
+                            <button type="button" class="btn btn-secondary btn-lg" style="height: 70px;" @click="campodinero = parseFloat(500) + parseFloat(campodinero)">$500</button>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-group">
                                 <label for="cc-exp" class="control-label mb-1">Tarjeta<span style="color: red">*</span></label>
                                 <input id="tarjetam" name="dinero" required type="number" class="form-control cc-exp"  v-model="montotarjeta">
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="cc-exp" class="control-label mb-1">Monedas<span style="color: red"></span></label>
-                                <br>
-                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(2000) + parseFloat(campodinero)">$2000</button>
-                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(25) + parseFloat(campodinero)">$25</button>
-                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(10) + parseFloat(campodinero)">$10</button>
-                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(5) + parseFloat(campodinero)">$5</button>
-                                <button type="button" class="btn btn-secondary" @click="campodinero = parseFloat(1) + parseFloat(campodinero)">$1</button>
-                                <button type="button" class="btn btn-secondary" @click="campodinero = 0">$0</button>
-                            </div>
+                        <div class="col-8">
+                            <button type="button" class="btn btn-secondary btn-lg" style="height: 70px;" @click="campodinero = parseFloat(1000) + parseFloat(campodinero)">$1000</button>
+                            <button type="button" class="btn btn-secondary btn-lg" style="height: 70px;" @click="campodinero = parseFloat(2000) + parseFloat(campodinero)">$2000</button>
+                            <button type="button" class="btn btn-secondary btn-lg" style="height: 70px;" @click="campodinero = parseFloat(25) + parseFloat(campodinero)">$25</button>
+                            <button type="button" class="btn btn-secondary btn-lg" style="height: 70px;" @click="campodinero = parseFloat(10) + parseFloat(campodinero)">$10</button>
+                            <button type="button" class="btn btn-secondary btn-lg" style="height: 70px;" @click="campodinero = parseFloat(5) + parseFloat(campodinero)">$5</button>
+                            <button type="button" class="btn btn-secondary btn-lg" style="height: 70px;" @click="campodinero = parseFloat(1) + parseFloat(campodinero)">$1</button>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-group">
                                 <label for="cc-number" class="control-label mb-1">Tipo de tarjeta</label>
                                 <select name="selectSm"  id="SelectLm" v-model="tipotarjeta" class="form-control-sm form-control">
@@ -566,7 +527,7 @@
                                 <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-8">
                             <div class="form-group">
                                 <label for="banco" class="control-label mb-1">Banco</label>
                                 <input id="banco" name="banco" v-model="banco" class="form-control cc-exp" type="text">
@@ -574,14 +535,14 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-group">
                                 <label for="numtarjeta" class="control-label mb-1">Num.Tarjeta <span style="color: red">*</span></label>
                                 <input id="numtarjeta"  name="numtarjeta" type="text" class="form-control cc-exp" maxlength="16"  v-model="Numtarjeta" data-val="true" data-val-required="Please enter the card expiration" >
                                 <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-8">
                             <label for="auth" class="control-label mb-1">Autorización<span style="color: red">*</span></label>
                             <div class="input-group">
                                 <input id="auth" name="auth"  v-model="auth" maxlength="20" type="text" class="form-control cc-cvc">
@@ -665,9 +626,10 @@
                         <div class="" style="position: absolute; left: 50px">
                             <h4>Devuelta:<span style="font-size: 25px"> @{{ devuelta }}</span></h4>
                         </div>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button v-if="suma >= neto" type="button" @click="facturar()" class="btn btn-primary">&nbsp;Pagar</button>
-                        <button v-else disabled type="button" class="btn btn-primary">&nbsp;Pagar</button>
+                        <button type="button" class="btn btn-warning btn-lg" @click="campodinero = 0" data-dismiss="modal">Limpiar</button>
+                        <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancelar</button>
+                        <button v-if="suma >= neto" type="button" @click="facturar()" style="width: 112px;" class="btn btn-success btn-lg">&nbsp;Pagar</button>
+                        <button v-else disabled type="button" style="width: 112px;" class="btn btn-primary btn-lg">&nbsp;Pagar</button>
                     </div>
                 </div>
             </div>
