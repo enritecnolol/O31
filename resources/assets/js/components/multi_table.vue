@@ -66,56 +66,6 @@
                                     </div>
                                 </td>
                             </template>
-                            <!--<td>-->
-                                <!--<div class="text-left">-->
-                                    <!--{{item.id}}-->
-                                <!--</div>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<div class="text-center">-->
-                                    <!--{{item.date}}-->
-                                <!--</div>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<div class="text-center">-->
-                                    <!--{{nombrecliente(item.client)}}-->
-                                <!--</div>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<div class="text-right">-->
-                                    <!--${{parseFloat(item.total_facture).toFixed(2)}}-->
-                                <!--</div>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<div class="text-right">-->
-                                    <!--${{parseFloat(item.itbis).toFixed(2)}}-->
-                                <!--</div>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<div class="text-right">-->
-                                    <!--${{parseFloat(item.brute).toFixed(2)}}-->
-                                <!--</div>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<div class="text-center">-->
-                                    <!--{{item.nfc}}-->
-                                <!--</div>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<div class="text-center">-->
-                                    <!--{{item.razon_nfc}}-->
-                                <!--</div>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<div class="text-center">-->
-                                    <!--{{item.rnc_nfc}}-->
-                                <!--</div>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<div class="text-center">-->
-                                    <!--{{item.telefono_nfc}}-->
-                                <!--</div>-->
-                            <!--</td>-->
                         </tr>
                     </template>
                 </template>
@@ -125,6 +75,11 @@
             <br>
         </div>
         <div class="row">
+            <div class="col-md-12" v-if="seleccionado == 'Productos' && headers.length != 0">
+                <div class="text-center">
+                    <b>Total vendido:</b> {{ cantidadProductos() }} - <b>Monto total:</b> ${{ formatMoney(montoTotalProducto()) }}
+                </div>
+            </div>
             <div class="col-md-12">
                 <div class="pull-right">
                     <button type="button" class="btn btn-success" @click="JSONToCSVConvertor(data,'Reporte de '+seleccionado, true)" v-if="data.length > 0"><i class="fas fa-file-excel"></i> Export</button>
@@ -282,6 +237,47 @@
                 }
                 return id;
             },
+            montoTotalProducto(){
+                var monto = 0;
+                for(var index in this.data){
+                    monto+=parseFloat(this.data[index].Monto.replace('$', ''));
+                }
+                return parseFloat(monto).toFixed(2);
+            },
+            cantidadProductos(){
+                var total = 0;
+                for(var index in this.data){
+                    total= total + parseInt(this.data[index].cantidad_producto);
+                }
+                return total;
+            },
+            formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
+                try {
+                    decimalCount = Math.abs(decimalCount);
+                    decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+
+                    const negativeSign = amount < 0 ? "-" : "";
+
+                    let i = parseInt(
+                        (amount = Math.abs(Number(amount) || 0).toFixed(decimalCount))
+                    ).toString();
+                    let j = i.length > 3 ? i.length % 3 : 0;
+
+                    return (
+                        negativeSign +
+                        (j ? i.substr(0, j) + thousands : "") +
+                        i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) +
+                        (decimalCount
+                            ? decimal +
+                            Math.abs(amount - i)
+                                .toFixed(decimalCount)
+                                .slice(2)
+                            : "")
+                    );
+                } catch (e) {
+                    console.log(e);
+                }
+            }
         },
         computed:{
             nfcleng()
@@ -311,7 +307,7 @@
                 else{
                     return false;
                 }
-            }
+            },
         }
     }
 </script>
