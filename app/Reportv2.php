@@ -36,7 +36,7 @@ class Reportv2 extends Model
 //            ->groupBy("products.id")->get();
         return DB::connection('client')->select("SELECT products.id,products.name as producto, concat('$', format(products.price, 2)) as precio, COUNT(details.product_id) as cantidad_producto, concat('$', format(SUM(details.price), 2)) as Monto
               FROM details, products
-              WHERE details.product_id = products.id AND details.date BETWEEN '".$first."' AND '".$second."'
+              WHERE details.product_id = products.id AND  DATE(details.date) BETWEEN '".$first."' AND '".$second."'
               GROUP BY products.id");
 
     }

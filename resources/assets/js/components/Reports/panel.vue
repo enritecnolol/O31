@@ -104,6 +104,7 @@
             },
             searchdata()
             {
+                console.log(this.seleccionado);
                 this.loading = true;
                 if (this.seleccionado == "Comprobantes"){
                     if (!this.type_ncf || !this.date){
@@ -130,11 +131,12 @@
                             this.ncf = response.data['ncf'];
                         })
                         .catch( (error) => {
+                            this.loading = false;
                             console.log(error);
                         });
                 }else{
                     if (!this.date){
-                        toastr.warning("Por favor seleccione los filtros");
+                        toastr.warning("por favor confimar la fecha al seleccionarla");
                         return;
                     }
                     axios.post('/reportv2/return/data' , {
@@ -147,6 +149,7 @@
                             this.header = response.data['header'];
                         })
                         .catch( (error) => {
+                            this.loading = false;
                             console.log(error);
                         });
                 }

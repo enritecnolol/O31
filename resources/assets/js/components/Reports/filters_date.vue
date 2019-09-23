@@ -4,7 +4,7 @@
             <div class="card-body text-primary">
                 <h5 class="card-title">Fecha</h5>
                 <hr style=" background:#007bff;">
-                <date-picker v-model="time3" range :shortcuts="shortcuts" :lang="lang" confirm @confirm="change"></date-picker>
+                <date-picker v-model="time3" range :shortcuts="shortcuts" :lang="lang" confirm @confirm="change" @input="change" @change="change"></date-picker>
             </div>
         </div>
     </div>
@@ -75,6 +75,13 @@
             }
         },
         computed:{
+
+        },
+        watch:{
+            time3()
+            {
+                this.$emit("date_select", {date:this.time3});
+            }
 
         }
 

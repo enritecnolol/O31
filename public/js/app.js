@@ -68572,6 +68572,7 @@ Vue.component('downloadExcel', __WEBPACK_IMPORTED_MODULE_4_vue_json_excel___defa
         searchdata: function searchdata() {
             var _this = this;
 
+            console.log(this.seleccionado);
             this.loading = true;
             if (this.seleccionado == "Comprobantes") {
                 if (!this.type_ncf || !this.date) {
@@ -68595,11 +68596,12 @@ Vue.component('downloadExcel', __WEBPACK_IMPORTED_MODULE_4_vue_json_excel___defa
                     _this.ncfs = response.data['ncfs'];
                     _this.ncf = response.data['ncf'];
                 }).catch(function (error) {
+                    _this.loading = false;
                     console.log(error);
                 });
             } else {
                 if (!this.date) {
-                    toastr.warning("Por favor seleccione los filtros");
+                    toastr.warning("por favor confimar la fecha al seleccionarla");
                     return;
                 }
                 axios.post('/reportv2/return/data', {
@@ -68610,6 +68612,7 @@ Vue.component('downloadExcel', __WEBPACK_IMPORTED_MODULE_4_vue_json_excel___defa
                     _this.table_data = response.data['data'];
                     _this.header = response.data['header'];
                 }).catch(function (error) {
+                    _this.loading = false;
                     console.log(error);
                 });
             }
@@ -69658,7 +69661,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$emit("date_select", { date: this.time3 });
         }
     },
-    computed: {}
+    computed: {},
+    watch: {
+        time3: function time3() {
+            this.$emit("date_select", { date: this.time3 });
+        }
+    }
 
 });
 
@@ -69699,7 +69707,11 @@ var render = function() {
                 lang: _vm.lang,
                 confirm: ""
               },
-              on: { confirm: _vm.change },
+              on: {
+                confirm: _vm.change,
+                input: _vm.change,
+                change: _vm.change
+              },
               model: {
                 value: _vm.time3,
                 callback: function($$v) {
