@@ -34,7 +34,7 @@ class Reportv2 extends Model
 //            ->where("details.product_id", "products.id")
 //            ->whereBetween("details.date", [$first, $second])
 //            ->groupBy("products.id")->get();
-        return DB::connection('client')->select("SELECT products.id,products.name as producto, concat('$', format(products.price, 2)) as precio, COUNT(details.product_id) as cantidad_producto, concat('$', format(SUM(details.price), 2)) as Monto
+        return DB::connection('client')->select("SELECT products.id,products.name as producto, concat('$', format(products.price, 2)) as precio, SUM(details.quanlity) as cantidad_producto, concat('$', format(SUM(details.price), 2)) as Monto
               FROM details, products
               WHERE details.product_id = products.id AND  DATE(details.date) BETWEEN '".$first."' AND '".$second."'
               GROUP BY products.id");
