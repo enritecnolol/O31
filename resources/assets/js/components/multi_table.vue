@@ -59,8 +59,8 @@
                 <template v-else>
                     <template v-for="item in data">
                         <tr>
-                            <template v-for="tdteam in item">
-                                <td>
+                            <template v-for="(tdteam, property, index) in item">
+                                <td v-if="property != 'monto_normal'">
                                     <div class="text-center">
                                         {{tdteam}}
                                     </div>
@@ -240,7 +240,7 @@
             montoTotalProducto(){
                 var monto = 0;
                 for(var index in this.data){
-                    monto+=parseFloat(this.data[index].Monto.replace('$', ''));
+                    monto+=parseFloat(this.data[index].monto_normal);
                 }
                 return parseFloat(monto).toFixed(2);
             },

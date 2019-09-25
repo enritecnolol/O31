@@ -68961,7 +68961,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         montoTotalProducto: function montoTotalProducto() {
             var monto = 0;
             for (var index in this.data) {
-                monto += parseFloat(this.data[index].Monto.replace('$', ''));
+                monto += parseFloat(this.data[index].monto_normal);
             }
             return parseFloat(monto).toFixed(2);
         },
@@ -69127,17 +69127,23 @@ var render = function() {
                         _c(
                           "tr",
                           [
-                            _vm._l(item, function(tdteam) {
+                            _vm._l(item, function(tdteam, property, index) {
                               return [
-                                _c("td", [
-                                  _c("div", { staticClass: "text-center" }, [
-                                    _vm._v(
-                                      "\n                                    " +
-                                        _vm._s(tdteam) +
-                                        "\n                                "
-                                    )
-                                  ])
-                                ])
+                                property != "monto_normal"
+                                  ? _c("td", [
+                                      _c(
+                                        "div",
+                                        { staticClass: "text-center" },
+                                        [
+                                          _vm._v(
+                                            "\n                                    " +
+                                              _vm._s(tdteam) +
+                                              "\n                                "
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  : _vm._e()
                               ]
                             })
                           ],
