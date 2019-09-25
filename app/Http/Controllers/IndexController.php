@@ -124,133 +124,141 @@ class IndexController extends Controller
      */
     public function store(Request $request)
     {
-        $idcaja = Caja::all();
-        $facture = new Facture;
+        DB::beginTransaction();
+        try{
 
-        $facture->date = date('Y-m-d');
-        $facture->box = 'Caja No.1';
-        $facture->cashier = 0;
-        if ($request->has('cliente')){
-            $facture->client = $request->cliente;
-            $facture->puntos = $request->puntos;
-        }
-        if ($request->has('ticket')){
-            $facture->ticket_id = $request->ticket;
-        }
-        $facture->brute = $request->bruto;
-        $facture->desc = $request->descuento;
-        $facture->itbis = $request->itbis;
-        $facture->total_facture = $request->preciop;
-        $facture->Monto_tarjeta = $request->montotarjeta;
-        $facture->Monto_efectivo = $request->dinero;
-        $facture->returns = $request->devuelta;
-        $facture->status = 'Pago';
-        $facture->type_sale = 'no usada';
-        $facture->type_tarject = $request->tipotarjeta;
-        $facture->Numbertar = $request->Numtarjeta;
-        $facture->banco = $request->banco;
-        $facture->auth = $request->auth;
-        $nfc = '';
-        $aviso = '';
+            $idcaja = Caja::all();
+            $facture = new Facture;
 
-        if ($request->setting['generacomprobante'] == 'si'){
-            $facture->tipo_nfc = $request->tiponfc;
+            $facture->date = date('Y-m-d');
+            $facture->box = 'Caja No.1';
+            $facture->cashier = 0;
+            if ($request->has('cliente')){
+                $facture->client = $request->cliente;
+                $facture->puntos = $request->puntos;
+            }
+            if ($request->has('ticket')){
+                $facture->ticket_id = $request->ticket;
+            }
+            $facture->brute = $request->bruto;
+            $facture->desc = $request->descuento;
+            $facture->itbis = $request->itbis;
+            $facture->total_facture = $request->preciop;
+            $facture->Monto_tarjeta = $request->montotarjeta;
+            $facture->Monto_efectivo = $request->dinero;
+            $facture->returns = $request->devuelta;
+            $facture->status = 'Pago';
+            $facture->type_sale = 'no usada';
+            $facture->type_tarject = $request->tipotarjeta;
+            $facture->Numbertar = $request->Numtarjeta;
+            $facture->banco = $request->banco;
+            $facture->auth = $request->auth;
+            $nfc = '';
+            $aviso = '';
 
-            $headers = DB::connection('client')->select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento");
+            if ($request->setting['generacomprobante'] == 'si'){
+                $facture->tipo_nfc = $request->tiponfc;
 
-            foreach ($headers as $header)
-            {
-                $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc',$request->tiponfc);
-                foreach ($details as $detail)
+                $headers = DB::connection('client')->select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento");
+
+                foreach ($headers as $header)
                 {
-                    if (($detail->actual + $detail->aviso) >= $detail->secuencia_final){
-                        $aviso = "En la Solicitud #". $header->id. " Serie: ". $detail->serie. ", Tipo de NCF: ".$request->tiponfc . " Se estan agotando";
-                    }
-                    if ($detail->actual < $detail->secuencia_final)
+                    $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc',$request->tiponfc);
+                    foreach ($details as $detail)
                     {
-                        $nfc = $detail->serie."".$detail->tipo_nfc."".str_pad($detail->actual,8,"0",STR_PAD_LEFT);
-                        $d = Detallesecuencia::find($detail->id);
-                        $d->actual = $detail->actual+1;
-                        $d->update();
-                        break;
+                        if (($detail->actual + $detail->aviso) >= $detail->secuencia_final){
+                            $aviso = "En la Solicitud #". $header->id. " Serie: ". $detail->serie. ", Tipo de NCF: ".$request->tiponfc . " Se estan agotando";
+                        }
+                        if ($detail->actual < $detail->secuencia_final)
+                        {
+                            $nfc = $detail->serie."".$detail->tipo_nfc."".str_pad($detail->actual,8,"0",STR_PAD_LEFT);
+                            $d = Detallesecuencia::find($detail->id);
+                            $d->actual = $detail->actual+1;
+                            $d->update();
+                            break;
+                        }
+                    }
+                }
+                if ($nfc == '')
+                {
+                    return 'No es posible hacer la factura por falta de Comprobantes';
+                }
+                $facture->nfc = $nfc;
+                if ($request->tiponfc != '02')
+                {
+                    $facture->telefono_nfc = $request->datancf['telefono'];
+                    $facture->rnc_nfc = $request->datancf['rnc'];
+                    $facture->razon_nfc = $request->datancf['razon'];
+                }
+            }
+            $facture->caja_id = $idcaja->last()->id;
+            $facture->user_id = Auth::id();
+            $facture->save();
+
+
+
+            if ($request->has('cliente')){
+                $puntos = Client::all()->where('id',$request->cliente);
+                if  ($puntos == '[]'){
+                    $puntos  = 0;
+                }else{
+                    foreach ($puntos as $punto){
+                        $puntos = $punto->puntos;
+                    }
+                }
+                $total = $puntos +  $request->puntos;
+                $cliente = Client::find($request->cliente);
+                $cliente->puntos = $total;
+                $cliente->update();
+            }
+            if ($request->has('ticket')){
+                $tic = Puntosmovimiento::find($request->ticket);
+                $tic->balancepuntos = 0;
+                $tic->update();
+            }
+
+            $idfacture = DB::connection('client')->select("SELECT id FROM `factures` ORDER BY id DESC LIMIT 1");
+
+
+            foreach($request->get('detalle') as $d) {
+
+                $detalle = new Detail();
+
+                $detalle->date = now();
+                $detalle->name_product = $d["name"];
+                $detalle->descuento = $d['desc'];
+                $detalle->quanlity = $d["count"];
+                $detalle->price = $d["price"];
+                $itbisp = $d['price'] / floatval('1.'.$d['itbis']);
+                if ($itbisp == $d['price']){
+                    $itbisp = 0;
+                }else{
+                    $itbisp = $itbisp;
+                }
+                $bruto = floatval($itbisp) * floatval('0.'.$d['itbis']);
+                $detalle->depot = $bruto;
+                $detalle->impost = $itbisp;
+                $detalle->product_id = $d["id"];
+                $detalle->facture_id = $idfacture[0]->id;
+                $detalle->save();
+
+                if ($request->existencias == 'si')
+                {
+                    $producto = Product::find($d["id"]);
+                    if ($producto->compuesto == 'no')
+                    {
+                        $producto->existence = $producto->existence - $d["count"];
+                        $producto->update();
                     }
                 }
             }
-            if ($nfc == '')
-            {
-                return 'No es posible hacer la factura por falta de Comprobantes';
-            }
-            $facture->nfc = $nfc;
-            if ($request->tiponfc != '02')
-            {
-                $facture->telefono_nfc = $request->datancf['telefono'];
-                $facture->rnc_nfc = $request->datancf['rnc'];
-                $facture->razon_nfc = $request->datancf['razon'];
-            }
+            DB::commit();
+            return ['bien', $nfc, $idfacture[0]->id, $aviso];
+
+        }catch (\Exception $e){
+            DB::rollBack();
+            return $e;
         }
-        $facture->caja_id = $idcaja->last()->id;
-        $facture->user_id = Auth::id();
-        $facture->save();
-
-
-
-        if ($request->has('cliente')){
-            $puntos = Client::all()->where('id',$request->cliente);
-            if  ($puntos == '[]'){
-                $puntos  = 0;
-            }else{
-                foreach ($puntos as $punto){
-                    $puntos = $punto->puntos;
-                }
-            }
-            $total = $puntos +  $request->puntos;
-            $cliente = Client::find($request->cliente);
-            $cliente->puntos = $total;
-            $cliente->update();
-        }
-        if ($request->has('ticket')){
-            $tic = Puntosmovimiento::find($request->ticket);
-            $tic->balancepuntos = 0;
-            $tic->update();
-        }
-
-        $idfacture = DB::connection('client')->select("SELECT id FROM `factures` ORDER BY id DESC LIMIT 1");
-
-
-        foreach($request->get('detalle') as $d) {
-
-            $detalle = new Detail();
-
-            $detalle->date = now();
-            $detalle->name_product = $d["name"];
-            $detalle->descuento = $d['desc'];
-            $detalle->quanlity = $d["count"];
-            $detalle->price = $d["price"];
-            $itbisp = $d['price'] / floatval('1.'.$d['itbis']);
-            if ($itbisp == $d['price']){
-                $itbisp = 0;
-            }else{
-                $itbisp = $itbisp;
-            }
-            $bruto = floatval($itbisp) * floatval('0.'.$d['itbis']);
-            $detalle->depot = $bruto;
-            $detalle->impost = $itbisp;
-            $detalle->product_id = $d["id"];
-            $detalle->facture_id = $idfacture[0]->id;
-            $detalle->save();
-
-            if ($request->existencias == 'si')
-            {
-                $producto = Product::find($d["id"]);
-                if ($producto->compuesto == 'no')
-                {
-                    $producto->existence = $producto->existence - $d["count"];
-                    $producto->update();
-                }
-            }
-        }
-
-        return ['bien', $nfc, $idfacture[0]->id, $aviso];
     }
     public function prueba()
     {
