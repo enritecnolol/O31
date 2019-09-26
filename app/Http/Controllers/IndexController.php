@@ -282,4 +282,8 @@ class IndexController extends Controller
         }
     }
 
+    public function printPage (){
+        return view('Print.print');
+    }
+
 }

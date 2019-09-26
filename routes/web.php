@@ -70,7 +70,7 @@ Route::group(['middleware' => 'auth'], function () {
     /*=================================\Productos/======================================================*/
     Route::resource('/productos', 'ProductsController'); // controller de manejo de los productos
     Route::post('/all/productos', 'ApisController@allproduct'); // controller de manejo de los productos
-
+    Route::get('/products/select', 'ApisController@productosSelect');
     /*=================================\Categorias/======================================================*/
     Route::get('categorias', 'CategoriasController@index'); // controller de manejo de los productos
     Route::post('categorias/nueva', 'CategoriasController@nuevacategoria'); // controller de manejo de los productos
@@ -256,8 +256,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/reportv2/comprobantes/fiscales', 'Reporteriav2Controller@typenfcdata');
     Route::post('/reportv2/return/data', 'Reporteriav2Controller@returndata');
 
+    /*=================================\- PRINT -/======================================================*/
+    Route::get('/print', 'IndexController@printPage');
     /*=================================\- Password -/======================================================*/
     Route::post('/change/pass', 'ConfiguracionesController@changepass');
+
 });
 
 Auth::routes();

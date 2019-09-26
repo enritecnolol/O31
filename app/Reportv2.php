@@ -28,15 +28,28 @@ class Reportv2 extends Model
         return DB::connection('client')->table('factures')->select('factures.id as num_factura','factures.date as fecha',DB::connection('client')->raw("IFNULL(factures.client, 'General') AS client"), "factures.total_facture", "factures.itbis", "factures.brute", DB::connection('client')->raw("IFNULL(factures.tipo_nfc, '') AS tipo_nfc"),DB::connection('client')->raw("IFNULL(factures.nfc, '') AS nfc"), DB::connection('client')->raw("IFNULL(factures.razon_nfc, '') AS razon_nfc"), DB::connection('client')->raw("IFNULL(factures.rnc_nfc, '') AS rnc_nfc"), DB::connection('client')->raw("IFNULL(factures.telefono_nfc, '') AS telefono_nfc"))
             ->where("factures.tipo_nfc",$nfc)->WhereNotNull("factures.tipo_nfc")->whereBetween("factures.date", [$first, $second])->orderBy("factures.id","desc")->get();
     }
-    public function  scopeProductquantityamount($query, $first, $second){
-//        return DB::table('details', 'products')
-//            ->select('products.id','products.name', 'products.price', DB::raw("COUNT(details.product_id) as cantidad_producto"), DB::raw("SUM(details.price) as Monto"))
-//            ->where("details.product_id", "products.id")
-//            ->whereBetween("details.date", [$first, $second])
-//            ->groupBy("products.id")->get();
+    public function  scopeProductquantityamount($query, $first, $second, $categories, $products){
+        $categoriesWhere = '';
+        $productswhere = '';
+        if($categories){
+            $categoriesWhere =  " AND products.categoria_id = $categories ";
+        }
+        if($products)
+        {
+            $array = [];
+            $ids = "";
+            foreach ($products as $product){
+                //array_push($array, $product.id);
+                $ids .= $product['id'] . ",";
+            }
+            if ($ids != "") {
+                $ids = substr_replace($ids,"", -1); ;
+            }
+            $productswhere = "AND details.product_id in ($ids)";
+        }
         return DB::connection('client')->select("SELECT products.id,products.name as producto, concat('$', format(products.price, 2)) as precio, SUM(details.quanlity) as cantidad_producto, concat('$', format(SUM(details.price), 2)) as Monto, SUM(details.price) as monto_normal
               FROM details, products
-              WHERE details.product_id = products.id AND  DATE(details.date) BETWEEN '".$first."' AND '".$second."'
+              WHERE details.product_id = products.id AND  DATE(details.date) BETWEEN '".$first."' AND '".$second."' $categoriesWhere $productswhere
               GROUP BY products.id");
 
     }

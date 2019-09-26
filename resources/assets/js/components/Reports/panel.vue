@@ -12,6 +12,8 @@
             <div class="row">
                 <filters_ncf @nfc_select="nfc_select" v-if="seleccionado == 'Comprobantes'"></filters_ncf>
                 <filters_date @date_select="date_select"></filters_date>
+                <filters_categories @categories_select="categories_select" v-if="seleccionado == 'Productos'"></filters_categories>
+                <filters_products @products_select="products_select" v-if="seleccionado == 'Productos'"></filters_products>
             </div>
             <filter_report @typereport="typereport" v-if="type_ncf == 'all'"></filter_report>
             <div class="row">
@@ -35,7 +37,7 @@
                     <template v-else>
                         <div class="row">
                             <div class="col-md-12">
-                                <multi_table :data="table_data" :headers="header" :ncf="ncf" :seleccionado="seleccionado"></multi_table>
+                                <multi_table :date="date" :products="products" :categories="category" :data="table_data" :headers="header" :ncf="ncf" :seleccionado="seleccionado"></multi_table>
                             </div>
                         </div>
                     </template>
@@ -57,13 +59,15 @@
     import multi_table from '../multi_table';
     import filters_ncf from './filters_type_ncf';
     import filters_date from './filters_date';
+    import filters_categories from './filters_categories';
+    import filters_products from './filters_products';
     import filter_report from './filter_type_report';
     import JsonExcel from 'vue-json-excel';
     import XLSX from 'xlsx';
     Vue.component('downloadExcel', JsonExcel)
     export default {
         name:'panel',
-        components:{filters_ncf,filters_date, multi_table, filter_report, JsonExcel, XLSX},
+        components:{filters_ncf,filters_date, multi_table, filter_report, JsonExcel, XLSX, filters_categories, filters_products},
         props:['seleccionado'],
         data() {
             return {
@@ -75,6 +79,8 @@
                 treport:'',
                 ncfs:[],
                 ncf:'',
+                category:[],
+                products:[]
             }
         },
         methods:{
@@ -102,10 +108,14 @@
             {
                 this.type_ncf = i.ncf;
             },
+            products_select(i){
+              this.products = i.products
+            },
+            categories_select(i){
+              this.category = i.categories;
+            },
             searchdata()
             {
-                console.log(this.seleccionado);
-                this.loading = true;
                 if (this.seleccionado == "Comprobantes"){
                     if (!this.type_ncf || !this.date){
                         toastr.warning("Por favor seleccione los filtros");
@@ -118,6 +128,7 @@
                             return;
                         }
                     }
+                    this.loading = true;
                     axios.post('/reportv2/comprobantes/fiscales' , {
                         type_report:this.treport,
                         date: this.date,
@@ -135,13 +146,16 @@
                             console.log(error);
                         });
                 }else{
-                    if (!this.date){
-                        toastr.warning("por favor confimar la fecha al seleccionarla");
+                    if (!this.date || this.date.length == 0){
+                        toastr.warning("Seleccione un a fecha");
                         return;
                     }
+                    this.loading = true;
                     axios.post('/reportv2/return/data' , {
                         date: this.date,
-                        seleccionado:this.seleccionado
+                        seleccionado:this.seleccionado,
+                        categories:this.category,
+                        products:this.products
                     })
                         .then( (response) => {
                             this.loading = false;

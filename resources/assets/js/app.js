@@ -50,6 +50,7 @@ Vue.component('panelcomprobante', require('./components/secuanciacomprobante/pan
 Vue.component('reportspanel', require('./components/Reports/panelreports.vue'));
 Vue.component('loginv2', require('./components/loginv2/login.vue'));
 Vue.component('adminpanel', require('./components/adminpanel/adminpane'));
+Vue.component('reportpanel', require('./components/Print/ReportPanel'));
 Vue.prototype.moment = moment;
 Vue.prototype.$toastr = toastr;
 Vue.prototype.$eventbus = new Vue();

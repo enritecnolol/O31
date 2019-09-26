@@ -63,8 +63,8 @@ class Reporteriav2Controller extends Controller
         }
         if ($request->seleccionado == "Productos")
         {
-            $productos = Reportv2::Productquantityamount($fechainicio->format('Y-m-d'), $fechafin->format('Y-m-d'));
-            $header = ['id', 'Producto', 'Precio', 'cantidad vendido', 'Monto'];
+            $productos = Reportv2::Productquantityamount($fechainicio->format('Y-m-d'), $fechafin->format('Y-m-d'), $request->categories, $request->products);
+            $header = ['ID', 'Producto', 'Precio', 'cantidad vendido', 'Importe'];
             return ['data' => $productos, 'header' => $header];
         }
         if ($request->seleccionado == "Caja")

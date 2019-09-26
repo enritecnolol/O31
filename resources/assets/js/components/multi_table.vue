@@ -82,6 +82,7 @@
             </div>
             <div class="col-md-12">
                 <div class="pull-right">
+                    <button type="button" class="btn btn-success" v-if="data.length > 0" @click="openTab"><i class="fas fa-print"></i> Imprimir</button>
                     <button type="button" class="btn btn-success" @click="JSONToCSVConvertor(data,'Reporte de '+seleccionado, true)" v-if="data.length > 0"><i class="fas fa-file-excel"></i> Export</button>
                 </div>
             </div>
@@ -93,7 +94,7 @@
     export default {
         name:'multi_table',
         components:{},
-        props:['data', 'headers', 'ncfs', 'index', 'ncf', 'seleccionado'],
+        props:['data', 'headers', 'ncfs', 'index', 'ncf', 'seleccionado', 'date', 'categories', 'products'],
         data()
         {
             return{
@@ -277,6 +278,9 @@
                 } catch (e) {
                     console.log(e);
                 }
+            },
+            openTab(){
+                window.open('http://adgpos.test/print?date='+JSON.stringify(this.date)+'&products='+JSON.stringify(this.products)+'&seleccionado=Productos'+'&categories='+JSON.stringify(this.categories)+'&totales='+JSON.stringify(['', '', '', this.cantidadProductos(), '$'+this.formatMoney(this.montoTotalProducto())]));
             }
         },
         computed:{
