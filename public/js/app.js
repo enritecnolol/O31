@@ -35339,7 +35339,7 @@ if (typeof module !== 'undefined' && module.exports && typeof DO_NOT_EXPORT_CODE
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(146);
-module.exports = __webpack_require__(338);
+module.exports = __webpack_require__(343);
 
 
 /***/ }),
@@ -35353,9 +35353,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_toastr__ = __webpack_require__(150);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_toastr___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__node_modules_toastr__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuedraggable__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuedraggable__ = __webpack_require__(340);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vuedraggable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_mouse_menu__ = __webpack_require__(337);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_mouse_menu__ = __webpack_require__(342);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_mouse_menu___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vue_mouse_menu__);
 
 /**
@@ -35406,7 +35406,7 @@ Vue.component('panelcomprobante', __webpack_require__(232));
 Vue.component('reportspanel', __webpack_require__(252));
 Vue.component('loginv2', __webpack_require__(314));
 Vue.component('adminpanel', __webpack_require__(320));
-Vue.component('reportpanel', __webpack_require__(347));
+Vue.component('reportpanel', __webpack_require__(335));
 Vue.prototype.moment = __WEBPACK_IMPORTED_MODULE_1_moment___default.a;
 Vue.prototype.$toastr = __WEBPACK_IMPORTED_MODULE_2__node_modules_toastr___default.a;
 Vue.prototype.$eventbus = new Vue();
@@ -104177,6 +104177,586 @@ if (false) {
 /* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(336)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(338)
+/* template */
+var __vue_template__ = __webpack_require__(339)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Print/ReportPanel.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-8e8c2ef2", Component.options)
+  } else {
+    hotAPI.reload("data-v-8e8c2ef2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 336 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(337);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("93fda392", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8e8c2ef2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ReportPanel.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8e8c2ef2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ReportPanel.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 337 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.petite {\n    font-size: 10px;\n}\n.petitefooter {\n    font-size: 8px;\n}\n.button {\n    background-color: #4caf50; /* Green */\n    border: none;\n    color: white;\n    padding: 3px 32px;\n    text-align: center;\n    text-decoration: none;\n    display: inline-block;\n    font-size: 16px;\n    margin: 4px 2px;\n    -webkit-transition-duration: 0.4s; /* Safari */\n    transition-duration: 0.4s;\n    cursor: pointer;\n}\n.button2 {\n    background-color: white;\n    color: black;\n    border: 2px solid #008cba;\n}\n.button2:hover {\n    background-color: #008cba;\n    color: white;\n}\n@page {\n@bottom-right {\n        content: counter(page) \" of \" counter(pages);\n}\n}\n#pageFooter:after {\n    counter-increment: page;\n    content: \"Page \" counter(page);\n    left: 0;\n    top: 100%;\n    white-space: nowrap;\n    z-index: 20px;\n    -moz-border-radius: 5px;\n    -moz-box-shadow: 0px 0px 4px #222;\n    background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);\n}\n#content {\n    display: table;\n}\n#pageFooter {\n    display: table-footer-group;\n}\n#pageFooter:after {\n    counter-increment: page;\n    content: counter(page);\n}\n@page {\n    margin: 10px;\n    size: landscape;\n}\n@media print and (width: 8.5in) and (height: 11in) {\n@page {\n        margin: 10px;\n        size: landscape;\n}\n}\n#reportTable {\n    margin: 5px;\n}\nh5 {\n    font-weight: bold;\n}\n#theaderdata {\n    border-bottom: 1px solid black;\n    border-top: 1px solid black;\n    font-weight: bold;\n    text-align: left;\n}\ntfoot {\n    border-top: 1px solid black;\n    color: black;\n    font-weight: bold;\n    text-align: left;\n}\n#tbodydata {\n    text-align: left;\n}\n.signature {\n    border: 0;\n    border-bottom: 1px solid #000;\n}\ntable {\n    text-align: left;\n}\n.outTable {\n    text-align: left;\n}\nfooter {\n    position: absolute;\n    bottom: 60px;\n    width: 100%;\n    height: 100px;\n}\nbody {\n    background: white !important;\n    min-width: 600px;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 338 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'ReportPanel',
+    data: function data() {
+        return {
+            seleccionado: '',
+            title: 'Ventas por Productos',
+            filterHeaders: ['monto_normal'],
+            table_data: [],
+            headers: [],
+            filtros: {},
+            totales: []
+        };
+    },
+
+    methods: {
+        constains: function constains(str) {
+            console.log(str);
+            // if (
+            //     this.title == "Ventas por Productos"
+            // ) {
+            // if (str.includes(".")) {
+            //     return true;
+            // } else if (
+            //     str == "Total" ||
+            //     str == "Total Neto" ||
+            //     str == "Total Bruto" ||
+            //     str == "ITBIS"
+            // ) {
+            //     return true;
+            // }
+            // }
+            // return false;
+        },
+        DateFormat: function DateFormat(date) {
+            return moment(date).format('D MMMM  YYYY');
+        },
+        hidecolumn: function hidecolumn(key) {
+            var found = this.filterHeaders.find(function (e) {
+                return e.toLowerCase() == key.toLowerCase();
+            });
+
+            if (found) {
+                return true;
+            }
+            return false;
+        },
+        hideColumnsFunc: function hideColumnsFunc(val) {
+            var _this = this;
+
+            if (val === undefined) {
+                $("td,th").show();
+                setTimeout(function () {
+                    _this.filterHeaders.forEach(function (item) {
+                        var ind = _this.headers.indexOf(item) + 1;
+                        $("td:nth-child(" + ind + "),th:nth-child(" + ind + ")").hide();
+                    });
+                }, 10);
+            }
+
+            var ind = this.headers.indexOf(val) + 1;
+            $("td:nth-child(" + ind + "),th:nth-child(" + ind + ")").hide();
+        }
+    },
+    mounted: function mounted() {
+        var _this2 = this;
+
+        var url = new URL(window.location.href);
+        var date = url.searchParams.get("date");
+        var products = url.searchParams.get("products");
+        var categories = url.searchParams.get("categories");
+        var seleccionado = url.searchParams.get("seleccionado");
+        this.totales = JSON.parse(url.searchParams.get("totales"));
+        this.seleccionado = seleccionado;
+        this.filtros = {
+            date: JSON.parse(date),
+            products: JSON.parse(products),
+            categories: JSON.parse(categories)
+        };
+
+        axios.post('/reportv2/return/data', {
+            date: JSON.parse(date),
+            seleccionado: seleccionado,
+            categories: JSON.parse(categories),
+            products: JSON.parse(products)
+        }).then(function (response) {
+            _this2.table_data = response.data['data'];
+            _this2.headers = response.data['header'];
+        }).catch(function (error) {
+            console.log(error);
+        }).finally(function () {
+            setTimeout(window.print(), 4000);
+        });
+    }
+});
+
+/***/ }),
+/* 339 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticStyle: { background: "white" } }, [
+    _c(
+      "div",
+      { staticStyle: { background: "white" }, attrs: { id: "reportTable" } },
+      [
+        _c(
+          "table",
+          { staticStyle: { "margin-top": "10px" }, attrs: { width: "100%" } },
+          [
+            _c("thead", [
+              _c("tr", [
+                _c("td", [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "container-fluid",
+                      staticStyle: { "margin-top": "10px" }
+                    },
+                    [
+                      _c("div", { staticClass: "row" }, [
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("div", { staticClass: "text-center" }, [
+                            _c("h6", [_vm._v(_vm._s(_vm.title))])
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", { staticStyle: { "border-top": "1px solid black" } }, [
+                _c("td", [
+                  _c(
+                    "div",
+                    { staticClass: "container-fluid" },
+                    [
+                      _vm.title == "Ventas por Productos"
+                        ? [
+                            _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-md-6" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-md-12" }, [
+                                    _c(
+                                      "h6",
+                                      { staticStyle: { float: "left" } },
+                                      [
+                                        _vm._v(
+                                          "\n                                                Rango de fecha:\n                                                "
+                                        ),
+                                        _c("b", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.DateFormat(
+                                                _vm.filtros.date[0]
+                                              )
+                                            )
+                                          )
+                                        ]),
+                                        _vm._v(" - "),
+                                        _c("b", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.DateFormat(
+                                                _vm.filtros.date[1]
+                                              )
+                                            )
+                                          )
+                                        ])
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._m(1),
+                                  _vm._v(" "),
+                                  _vm._m(2)
+                                ])
+                              ])
+                            ])
+                          ]
+                        : _vm._e()
+                    ],
+                    2
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("tbody", [
+              _c("tr", [
+                _c("td", [
+                  _c("div", { attrs: { id: "" } }, [
+                    _c(
+                      "table",
+                      {
+                        staticStyle: { "margin-top": "5px" },
+                        attrs: { id: "tabledata", width: "100%" }
+                      },
+                      [
+                        _c("thead", { attrs: { id: "theaderdata" } }, [
+                          _c(
+                            "tr",
+                            _vm._l(_vm.headers, function(val, index) {
+                              return _c(
+                                "th",
+                                {
+                                  key: index,
+                                  style: _vm.hidecolumn(val)
+                                    ? "display:none;"
+                                    : ""
+                                },
+                                [_c("b", [_vm._v(_vm._s(val))])]
+                              )
+                            })
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          { attrs: { id: "tbodydata" } },
+                          [
+                            _vm._l(_vm.table_data, function(item, index) {
+                              return _c(
+                                "tr",
+                                { key: index },
+                                _vm._l(item, function(value, key) {
+                                  return _c(
+                                    "td",
+                                    {
+                                      key: key,
+                                      staticClass: "hide",
+                                      style: _vm.hidecolumn(key)
+                                        ? "display:none;"
+                                        : ""
+                                    },
+                                    [_c("span", [_vm._v(_vm._s(value))])]
+                                  )
+                                })
+                              )
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "tr",
+                              {
+                                staticStyle: {
+                                  "border-top": "1px solid black",
+                                  color: "black",
+                                  "font-weight": "bold",
+                                  "text-align": "left"
+                                }
+                              },
+                              _vm._l(_vm.totales, function(val, index) {
+                                return _c(
+                                  "td",
+                                  {
+                                    key: index,
+                                    staticClass: "hide",
+                                    style: _vm.constains(index)
+                                      ? "float:right;"
+                                      : ""
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    " +
+                                        _vm._s(val) +
+                                        "\n                                "
+                                    )
+                                  ]
+                                )
+                              })
+                            )
+                          ],
+                          2
+                        )
+                      ]
+                    )
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(3)
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("div", { staticClass: "text-center" }, [
+        _c("h5", {}, [_vm._v("Business Intelligence")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("h6", { staticStyle: { float: "left" } }, [
+        _vm._v(
+          "\n                                                Categoria:\n                                                "
+        ),
+        _c("b", [_vm._v(" Todas las categoria ")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("h6", { staticStyle: { float: "left" } }, [
+        _vm._v(
+          "\n                                                Productos :\n                                                "
+        ),
+        _c("b", [_vm._v("Todos")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tfoot", [
+      _c("tr", [
+        _c("td", [
+          _c(
+            "div",
+            {
+              staticClass: "container-fluid",
+              staticStyle: { "margin-top": "10px" }
+            },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("h6", { staticStyle: { float: "right" } }, [
+                    _vm._v("Fecha: 2019-01-25")
+                  ])
+                ])
+              ])
+            ]
+          )
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-8e8c2ef2", module.exports)
+  }
+}
+
+/***/ }),
+/* 340 */
+/***/ (function(module, exports, __webpack_require__) {
+
 module.exports =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -106053,7 +106633,7 @@ module.exports = Object.create || function create(O, Properties) {
 /***/ "a352":
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(336);
+module.exports = __webpack_require__(341);
 
 /***/ }),
 
@@ -107440,7 +108020,7 @@ if (typeof window !== "undefined" && "Vue" in window) {
 //# sourceMappingURL=vuedraggable.common.js.map
 
 /***/ }),
-/* 336 */
+/* 341 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -111138,7 +111718,7 @@ Sortable.mount(Remove, Revert);
 
 
 /***/ }),
-/* 337 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -111755,601 +112335,10 @@ module.exports = function listToStyles (parentId, list) {
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 338 */
+/* 343 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 339 */,
-/* 340 */,
-/* 341 */,
-/* 342 */,
-/* 343 */,
-/* 344 */,
-/* 345 */,
-/* 346 */,
-/* 347 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(352)
-}
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(350)
-/* template */
-var __vue_template__ = __webpack_require__(354)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Print/ReportPanel.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-8e8c2ef2", Component.options)
-  } else {
-    hotAPI.reload("data-v-8e8c2ef2", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 348 */,
-/* 349 */,
-/* 350 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    name: 'ReportPanel',
-    data: function data() {
-        return {
-            seleccionado: '',
-            title: 'Ventas por Productos',
-            filterHeaders: ['monto_normal'],
-            table_data: [],
-            headers: [],
-            filtros: {},
-            totales: []
-        };
-    },
-
-    methods: {
-        constains: function constains(str) {
-            console.log(str);
-            // if (
-            //     this.title == "Ventas por Productos"
-            // ) {
-            // if (str.includes(".")) {
-            //     return true;
-            // } else if (
-            //     str == "Total" ||
-            //     str == "Total Neto" ||
-            //     str == "Total Bruto" ||
-            //     str == "ITBIS"
-            // ) {
-            //     return true;
-            // }
-            // }
-            // return false;
-        },
-        DateFormat: function DateFormat(date) {
-            return moment(date).format('D MMMM  YYYY');
-        },
-        hidecolumn: function hidecolumn(key) {
-            var found = this.filterHeaders.find(function (e) {
-                return e.toLowerCase() == key.toLowerCase();
-            });
-
-            if (found) {
-                return true;
-            }
-            return false;
-        },
-        hideColumnsFunc: function hideColumnsFunc(val) {
-            var _this = this;
-
-            if (val === undefined) {
-                $("td,th").show();
-                setTimeout(function () {
-                    _this.filterHeaders.forEach(function (item) {
-                        var ind = _this.headers.indexOf(item) + 1;
-                        $("td:nth-child(" + ind + "),th:nth-child(" + ind + ")").hide();
-                    });
-                }, 10);
-            }
-
-            var ind = this.headers.indexOf(val) + 1;
-            $("td:nth-child(" + ind + "),th:nth-child(" + ind + ")").hide();
-        }
-    },
-    mounted: function mounted() {
-        var _this2 = this;
-
-        var url = new URL(window.location.href);
-        var date = url.searchParams.get("date");
-        var products = url.searchParams.get("products");
-        var categories = url.searchParams.get("categories");
-        var seleccionado = url.searchParams.get("seleccionado");
-        this.totales = JSON.parse(url.searchParams.get("totales"));
-        this.seleccionado = seleccionado;
-        this.filtros = {
-            date: JSON.parse(date),
-            products: JSON.parse(products),
-            categories: JSON.parse(categories)
-        };
-
-        axios.post('/reportv2/return/data', {
-            date: JSON.parse(date),
-            seleccionado: seleccionado,
-            categories: JSON.parse(categories),
-            products: JSON.parse(products)
-        }).then(function (response) {
-            _this2.table_data = response.data['data'];
-            _this2.headers = response.data['header'];
-        }).catch(function (error) {
-            console.log(error);
-        }).finally(function () {
-            setTimeout(window.print(), 4000);
-        });
-    }
-});
-
-/***/ }),
-/* 351 */,
-/* 352 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(353);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("93fda392", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8e8c2ef2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ReportPanel.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8e8c2ef2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ReportPanel.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 353 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.petite {\n    font-size: 10px;\n}\n.petitefooter {\n    font-size: 8px;\n}\n.button {\n    background-color: #4caf50; /* Green */\n    border: none;\n    color: white;\n    padding: 3px 32px;\n    text-align: center;\n    text-decoration: none;\n    display: inline-block;\n    font-size: 16px;\n    margin: 4px 2px;\n    -webkit-transition-duration: 0.4s; /* Safari */\n    transition-duration: 0.4s;\n    cursor: pointer;\n}\n.button2 {\n    background-color: white;\n    color: black;\n    border: 2px solid #008cba;\n}\n.button2:hover {\n    background-color: #008cba;\n    color: white;\n}\n@page {\n@bottom-right {\n        content: counter(page) \" of \" counter(pages);\n}\n}\n#pageFooter:after {\n    counter-increment: page;\n    content: \"Page \" counter(page);\n    left: 0;\n    top: 100%;\n    white-space: nowrap;\n    z-index: 20px;\n    -moz-border-radius: 5px;\n    -moz-box-shadow: 0px 0px 4px #222;\n    background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);\n}\n#content {\n    display: table;\n}\n#pageFooter {\n    display: table-footer-group;\n}\n#pageFooter:after {\n    counter-increment: page;\n    content: counter(page);\n}\n@page {\n    margin: 10px;\n    size: landscape;\n}\n@media print and (width: 8.5in) and (height: 11in) {\n@page {\n        margin: 10px;\n        size: landscape;\n}\n}\n#reportTable {\n    margin: 5px;\n}\nh5 {\n    font-weight: bold;\n}\n#theaderdata {\n    border-bottom: 1px solid black;\n    border-top: 1px solid black;\n    font-weight: bold;\n    text-align: left;\n}\ntfoot {\n    border-top: 1px solid black;\n    color: black;\n    font-weight: bold;\n    text-align: left;\n}\n#tbodydata {\n    text-align: left;\n}\n.signature {\n    border: 0;\n    border-bottom: 1px solid #000;\n}\ntable {\n    text-align: left;\n}\n.outTable {\n    text-align: left;\n}\nfooter {\n    position: absolute;\n    bottom: 60px;\n    width: 100%;\n    height: 100px;\n}\nbody {\n    background: white !important;\n    min-width: 600px;\n}\n\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 354 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticStyle: { background: "white" } }, [
-    _c(
-      "div",
-      { staticStyle: { background: "white" }, attrs: { id: "reportTable" } },
-      [
-        _c(
-          "table",
-          { staticStyle: { "margin-top": "10px" }, attrs: { width: "100%" } },
-          [
-            _c("thead", [
-              _c("tr", [
-                _c("td", [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "container-fluid",
-                      staticStyle: { "margin-top": "10px" }
-                    },
-                    [
-                      _c("div", { staticClass: "row" }, [
-                        _vm._m(0),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-12" }, [
-                          _c("div", { staticClass: "text-center" }, [
-                            _c("h6", [_vm._v(_vm._s(_vm.title))])
-                          ])
-                        ])
-                      ])
-                    ]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("tr", { staticStyle: { "border-top": "1px solid black" } }, [
-                _c("td", [
-                  _c(
-                    "div",
-                    { staticClass: "container-fluid" },
-                    [
-                      _vm.title == "Ventas por Productos"
-                        ? [
-                            _c("div", { staticClass: "row" }, [
-                              _c("div", { staticClass: "col-md-6" }, [
-                                _c("div", { staticClass: "row" }, [
-                                  _c("div", { staticClass: "col-md-12" }, [
-                                    _c(
-                                      "h6",
-                                      { staticStyle: { float: "left" } },
-                                      [
-                                        _vm._v(
-                                          "\n                                                Rango de fecha:\n                                                "
-                                        ),
-                                        _c("b", [
-                                          _vm._v(
-                                            _vm._s(
-                                              _vm.DateFormat(
-                                                _vm.filtros.date[0]
-                                              )
-                                            )
-                                          )
-                                        ]),
-                                        _vm._v(" - "),
-                                        _c("b", [
-                                          _vm._v(
-                                            _vm._s(
-                                              _vm.DateFormat(
-                                                _vm.filtros.date[1]
-                                              )
-                                            )
-                                          )
-                                        ])
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _vm._m(1),
-                                  _vm._v(" "),
-                                  _vm._m(2)
-                                ])
-                              ])
-                            ])
-                          ]
-                        : _vm._e()
-                    ],
-                    2
-                  )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tbody", [
-              _c("tr", [
-                _c("td", [
-                  _c("div", { attrs: { id: "" } }, [
-                    _c(
-                      "table",
-                      {
-                        staticStyle: { "margin-top": "5px" },
-                        attrs: { id: "tabledata", width: "100%" }
-                      },
-                      [
-                        _c("thead", { attrs: { id: "theaderdata" } }, [
-                          _c(
-                            "tr",
-                            _vm._l(_vm.headers, function(val, index) {
-                              return _c(
-                                "th",
-                                {
-                                  key: index,
-                                  style: _vm.hidecolumn(val)
-                                    ? "display:none;"
-                                    : ""
-                                },
-                                [_c("b", [_vm._v(_vm._s(val))])]
-                              )
-                            })
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "tbody",
-                          { attrs: { id: "tbodydata" } },
-                          [
-                            _vm._l(_vm.table_data, function(item, index) {
-                              return _c(
-                                "tr",
-                                { key: index },
-                                _vm._l(item, function(value, key) {
-                                  return _c(
-                                    "td",
-                                    {
-                                      key: key,
-                                      staticClass: "hide",
-                                      style: _vm.hidecolumn(key)
-                                        ? "display:none;"
-                                        : ""
-                                    },
-                                    [_c("span", [_vm._v(_vm._s(value))])]
-                                  )
-                                })
-                              )
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "tr",
-                              {
-                                staticStyle: {
-                                  "border-top": "1px solid black",
-                                  color: "black",
-                                  "font-weight": "bold",
-                                  "text-align": "left"
-                                }
-                              },
-                              _vm._l(_vm.totales, function(val, index) {
-                                return _c(
-                                  "td",
-                                  {
-                                    key: index,
-                                    staticClass: "hide",
-                                    style: _vm.constains(index)
-                                      ? "float:right;"
-                                      : ""
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                    " +
-                                        _vm._s(val) +
-                                        "\n                                "
-                                    )
-                                  ]
-                                )
-                              })
-                            )
-                          ],
-                          2
-                        )
-                      ]
-                    )
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(3)
-          ]
-        )
-      ]
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
-      _c("div", { staticClass: "text-center" }, [
-        _c("h5", {}, [_vm._v("Business Intelligence")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
-      _c("h6", { staticStyle: { float: "left" } }, [
-        _vm._v(
-          "\n                                                Categoria:\n                                                "
-        ),
-        _c("b", [_vm._v(" Todas las categoria ")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
-      _c("h6", { staticStyle: { float: "left" } }, [
-        _vm._v(
-          "\n                                                Productos :\n                                                "
-        ),
-        _c("b", [_vm._v("Todos")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tfoot", [
-      _c("tr", [
-        _c("td", [
-          _c(
-            "div",
-            {
-              staticClass: "container-fluid",
-              staticStyle: { "margin-top": "10px" }
-            },
-            [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("h6", { staticStyle: { float: "right" } }, [
-                    _vm._v("Fecha: 2019-01-25")
-                  ])
-                ])
-              ])
-            ]
-          )
-        ])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-8e8c2ef2", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);
