@@ -69037,7 +69037,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
         },
         openTab: function openTab() {
-            window.open('http://adgpos.test/print?date=' + JSON.stringify(this.date) + '&products=' + JSON.stringify(this.products) + '&seleccionado=Productos' + '&categories=' + JSON.stringify(this.categories) + '&totales=' + JSON.stringify(['', '', '', this.cantidadProductos(), '$' + this.formatMoney(this.montoTotalProducto())]));
+            window.open('http://adgpos.adgsystems.do/print?date=' + JSON.stringify(this.date) + '&products=' + JSON.stringify(this.products) + '&seleccionado=Productos' + '&categories=' + JSON.stringify(this.categories) + '&totales=' + JSON.stringify(['', '', '', this.cantidadProductos(), '$' + this.formatMoney(this.montoTotalProducto())]));
         },
         openDetalle: function openDetalle(facture) {
             var _this2 = this;
