@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facture;
 use App\Reportv2;
 use DateTime;
 use Illuminate\Http\Request;
@@ -57,14 +58,14 @@ class Reporteriav2Controller extends Controller
         $fechafin = new DateTime($request->date[1]);
         if ($request->seleccionado == "Ventas")
         {
-            $facturas = DB::connection('client')->select("SELECT id, date, IFNULL(factures.client, 'General') AS cliente, concat('$', format(brute, 2)) as bruto, concat('$', format(itbis, 2)) as itbis, concat('$', format(total_facture, 2)) as total_factura, IFNULL(factures.tipo_nfc, '') AS tipo_nfc, IFNULL(factures.nfc, '') AS nfc, IFNULL(factures.telefono_nfc, '') AS telefono_nfc , IFNULL(factures.rnc_nfc, '') AS rnc_nfc, IFNULL(factures.razon_nfc, '') AS razon_nfc FROM `factures` WHERE  date BETWEEN '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format('Y-m-d')."' ORDER BY `id` DESC");
-            $header = ["#Factura", "Fecha", "Cliente", "Bruto", "Itbis", "Total Factura", "Tipo NFC", "NFC", "RNC", "Razon"];
+            $facturas = DB::connection('client')->select("SELECT id, date, IFNULL(factures.client, 'General') AS cliente, concat('$', format(brute, 2)) as bruto, concat('$', format(itbis, 2)) as itbis, concat('$', format(total_facture, 2)) as total_factura FROM `factures` WHERE  date BETWEEN '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format('Y-m-d')."' ORDER BY `id` DESC");
+            $header = ["#Factura", "Fecha", "Cliente", "Bruto", "Itbis", "Total Factura", ""];
             return ['data' => $facturas, 'header' => $header];
         }
         if ($request->seleccionado == "Productos")
         {
             $productos = Reportv2::Productquantityamount($fechainicio->format('Y-m-d'), $fechafin->format('Y-m-d'), $request->categories, $request->products);
-            $header = ['ID', 'Producto', 'Precio', 'cantidad vendido', 'Importe'];
+            $header = ['ID', 'Producto', 'Precio', 'Cantidad vendido', 'Importe'];
             return ['data' => $productos, 'header' => $header];
         }
         if ($request->seleccionado == "Caja")
@@ -83,5 +84,12 @@ class Reporteriav2Controller extends Controller
             $header = ['Tipo NCF', 'NCF', 'Razon', 'Suplidor', '# Factura', 'Fecha', 'Tipo de Gastos', 'Subtotal', 'Descuento', 'ITBIS', 'Total Neto', 'Balance', 'Mono Apagar'];
             return ['data' => $cajas, 'header' => $header];
         }
+    }
+
+    public function facture_detalle(Request $request){
+        $facture = $request->facture;
+        $detalles = Reportv2::Detallefacture($facture);
+        $fat = Facture::find($facture);
+        return [ 'detalle' => $detalles, 'facture' => $fat];
     }
 }

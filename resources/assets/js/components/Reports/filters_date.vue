@@ -13,6 +13,7 @@
     // import Datepicker from 'vuejs-datepicker';
     import DatePicker from 'vue2-datepicker';
     export default {
+        props:['reset'],
         name:'filters_date',
         components:{DatePicker},
         data(){
@@ -81,8 +82,12 @@
             time3()
             {
                 this.$emit("date_select", {date:this.time3});
+            },
+            reset(){
+                if(this.reset){
+                    this.time3 = '';
+                }
             }
-
         }
 
     }

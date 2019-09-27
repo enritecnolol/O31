@@ -37,13 +37,21 @@
                                             <div class="col-md-12">
                                                 <h6 style="float:left;">
                                                     Categoria:
-                                                    <b> Todas las categoria </b>
+                                                    <b
+                                                            v-if="filtros.categories.length > 0"
+                                                    >{{ filtros.categories }}</b>
+                                                    <b v-else> Todas las categoria </b>
                                                 </h6>
                                             </div>
                                             <div class="col-md-12">
                                                 <h6 style="float:left;">
                                                     Productos :
-                                                    <b>Todos</b>
+                                                    <b
+                                                            v-if="filtros.products.length > 0"
+                                                            v-for="(product, key) in filtros.products"
+                                                            :key="key"
+                                                    >{{ product.name }} - </b>
+                                                    <b v-if="filtros.products.length == 0">Todos</b>
                                                 </h6>
                                             </div>
                                         </div>
@@ -62,7 +70,7 @@
                                 <thead id="theaderdata">
                                 <tr>
                                     <th v-for="(val, index) in headers" :key="index" :style="hidecolumn(val) ? 'display:none;' : ''">
-                                        <b>{{val}}</b>
+                                        <b :style="constains(val) ? 'float:right;' : ''">{{val}}</b>
                                     </th>
                                 </tr>
                                 </thead>
@@ -74,8 +82,7 @@
                                             :key="key"
                                             :style="hidecolumn(key) ? 'display:none;' : ''"
                                     >
-                        <span
-                        >{{value}}</span>
+                                    <span :style="constains(key) ? 'float:right;' : ''" >{{value}}</span>
                                     </td>
                                 </tr>
                                 <tr
@@ -84,9 +91,8 @@
                                             class="hide"
                                             v-for="(val, index) in totales"
                                             :key="index"
-                                            :style="constains(index) ? 'float:right;' : ''"
                                     >
-                                        {{val}}
+                                        <b :style="constains(val) ? 'float:right;' : ''">{{val}}</b>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -101,7 +107,7 @@
                         <div class="container-fluid" style="margin-top:10px;">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h6 style="float:right;">Fecha: 2019-01-25</h6>
+                                    <h6 style="float:right;">Fecha: {{dateCurrent()}}</h6>
                                 </div>
                             </div>
                         </div>
@@ -129,23 +135,19 @@
             }
         },
         methods:{
+            dateCurrent(){
+              return moment().format('D MMMM YYYY, h:mm:ss a');
+            },
             constains(str) {
-                console.log(str);
-                // if (
-                //     this.title == "Ventas por Productos"
-                // ) {
-                    // if (str.includes(".")) {
-                    //     return true;
-                    // } else if (
-                    //     str == "Total" ||
-                    //     str == "Total Neto" ||
-                    //     str == "Total Bruto" ||
-                    //     str == "ITBIS"
-                    // ) {
-                    //     return true;
-                    // }
-                // }
-                // return false;
+                if (typeof str == "string" && str.indexOf('.') > -1) {
+                    return true;
+                }else if(str == 'Monto' || str == 'Importe'|| str == 'Precio'|| str == 'precio' || str == 'Cantidad vendido' || str == 'cantidad_producto'){
+                    return true;
+                }else if (Number.isInteger(str)){
+                    return true;
+                }
+
+                return false;
             },
             DateFormat(date){
                 return moment(date).format('D MMMM  YYYY');
@@ -188,7 +190,6 @@
                 products:JSON.parse(products),
                 categories:JSON.parse(categories)
             };
-
             axios.post('/reportv2/return/data' , {
                 date: JSON.parse(date),
                 seleccionado:seleccionado,

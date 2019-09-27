@@ -59,4 +59,8 @@ class Reportv2 extends Model
 //            ->where("cajas.user_id",Auth::id())
             ->whereBetween("cajas.fecha_apertura", [$first, $second])->get();
     }
+    public function scopeDetallefacture($query, $facture){
+        return DB::connection('client')->table('details')
+            ->where('facture_id', $facture)->get();
+    }
 }

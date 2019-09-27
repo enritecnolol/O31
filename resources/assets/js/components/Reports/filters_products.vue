@@ -28,6 +28,7 @@
 
     export default {
         components:{Multiselect},
+        props:['reset'],
         name:'filters_products',
         data(){
             return{
@@ -50,6 +51,11 @@
                 this.$emit('products_select', {
                     products:this.value
                 })
+            },
+            reset(){
+                if(this.reset){
+                    this.value = [];
+                }
             }
         }
 

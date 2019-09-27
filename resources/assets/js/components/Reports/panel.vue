@@ -11,15 +11,16 @@
             </div>
             <div class="row">
                 <filters_ncf @nfc_select="nfc_select" v-if="seleccionado == 'Comprobantes'"></filters_ncf>
-                <filters_date @date_select="date_select"></filters_date>
-                <filters_categories @categories_select="categories_select" v-if="seleccionado == 'Productos'"></filters_categories>
-                <filters_products @products_select="products_select" v-if="seleccionado == 'Productos'"></filters_products>
+                <filters_date @date_select="date_select" :reset="reset"></filters_date>
+                <filters_categories @categories_select="categories_select" v-if="seleccionado == 'Productos'" :reset="reset"></filters_categories>
+                <filters_products @products_select="products_select" v-if="seleccionado == 'Productos'" :reset="reset"></filters_products>
             </div>
             <filter_report @typereport="typereport" v-if="type_ncf == 'all'"></filter_report>
             <div class="row">
                 <div class="col-md-12">
                     <div class="text-center">
                         <button type="button" class="btn btn-primary" @click="searchdata"><i class="fas fa-search"></i> Buscar</button>
+                        <button type="button" class="btn btn-warning" @click="resetFilter" v-if="seleccionado == 'Productos'"><i class="far fa-circle"></i> Limpiar</button>
                     </div>
                 </div>
             </div>
@@ -71,6 +72,7 @@
         props:['seleccionado'],
         data() {
             return {
+                reset:false,
                 type_ncf:'',
                 date:'',
                 loading:false,
@@ -84,6 +86,13 @@
             }
         },
         methods:{
+            resetFilter(){
+                this.date = '';
+                this.products = [];
+                this.category = [];
+                this.reset = true;
+                setTimeout(() => { this.reset = false }, 4000);
+            },
             regresar()
             {
                 this.$emit("regresar")

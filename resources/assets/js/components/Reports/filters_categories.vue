@@ -16,6 +16,7 @@
 </template>
 <script>
     export default {
+        props:['reset'],
         name:'filters_categories',
         data(){
             return{
@@ -40,6 +41,13 @@
                     toastr.warning("Error al llamar categorias");
                     console.log(error);
                 });
+        },
+        watch:{
+          reset(){
+              if(this.reset){
+                  this.categoria = '';
+              }
+          }
         },
         computed:{
 

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div class="loader" v-if="loading"></div>
         <div class="table-responsive" style="height: 500px;overflow-y: auto">
             <table class="table table-sm">
                 <thead>
@@ -66,6 +67,9 @@
                                     </div>
                                 </td>
                             </template>
+                            <td v-if="seleccionado == 'Ventas'">
+                                <u style="color:blue;cursor:pointer;" @click="openDetalle(item)">Ver detalle</u>
+                            </td>
                         </tr>
                     </template>
                 </template>
@@ -82,24 +86,29 @@
             </div>
             <div class="col-md-12">
                 <div class="pull-right">
-                    <button type="button" class="btn btn-success" v-if="data.length > 0" @click="openTab"><i class="fas fa-print"></i> Imprimir</button>
+                    <button type="button" class="btn btn-success" v-if="data.length > 0 && seleccionado == 'Productos'" @click="openTab"><i class="fas fa-print"></i> Imprimir</button>
                     <button type="button" class="btn btn-success" @click="JSONToCSVConvertor(data,'Reporte de '+seleccionado, true)" v-if="data.length > 0"><i class="fas fa-file-excel"></i> Export</button>
                 </div>
             </div>
         </div>
         <br>
+        <detallefature :factureselect="factureselect" :details="details"></detallefature>
     </div>
 </template>
 <script>
+    import detallefature from './modal/DetalleFactura'
     export default {
         name:'multi_table',
-        components:{},
+        components:{detallefature},
         props:['data', 'headers', 'ncfs', 'index', 'ncf', 'seleccionado', 'date', 'categories', 'products'],
         data()
         {
             return{
+                loading:false,
                 name:'',
-                print:''
+                print:'',
+                details:[],
+                factureselect:{}
             }
         },
         methods:{
@@ -281,6 +290,27 @@
             },
             openTab(){
                 window.open('http://adgpos.test/print?date='+JSON.stringify(this.date)+'&products='+JSON.stringify(this.products)+'&seleccionado=Productos'+'&categories='+JSON.stringify(this.categories)+'&totales='+JSON.stringify(['', '', '', this.cantidadProductos(), '$'+this.formatMoney(this.montoTotalProducto())]));
+            },
+            openDetalle(facture){
+                this.factureselect = facture;
+                this.loading = true
+                axios.get('/return/facture/detalle', {
+                    params: {
+                        facture: facture.id,
+                    },
+                })
+                    .then( (response) => {
+                        this.factureselect = response.data.facture;
+                        this.details = response.data.detalle;
+                    })
+                    .catch( (error) => {
+                        console.log(error);
+                    })
+                    .finally(()=> {
+                        console.log(facture)
+                        this.loading = false
+                        $('#detallefactura').modal('show');
+                    });
             }
         },
         computed:{
@@ -316,5 +346,14 @@
     }
 </script>
 <style>
-
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url("../../../../public/loading2.gif") 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
 </style>

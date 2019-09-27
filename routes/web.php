@@ -255,6 +255,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/reportv2', 'Reporteriav2Controller@index');
     Route::post('/reportv2/comprobantes/fiscales', 'Reporteriav2Controller@typenfcdata');
     Route::post('/reportv2/return/data', 'Reporteriav2Controller@returndata');
+    Route::get('/return/facture/detalle', 'Reporteriav2Controller@facture_detalle');
 
     /*=================================\- PRINT -/======================================================*/
     Route::get('/print', 'IndexController@printPage');
