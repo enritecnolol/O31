@@ -173,9 +173,8 @@ class   CajasController extends Controller
             $totaldevolucion = number_format($totaldevolucion[0]->total);
         }
 
-        $productosvendidos = DB::connection('client')->select("SELECT products.name AS nombre, sum(details.price) AS cantidad FROM products, details WHERE products.id = details.product_id AND DATE(details.date) = ".$caja->fecha_apertura." GROUP BY nombre ORDER BY cantidad DESC LIMIT 5");
 
-        $ventasmes = DB::connection('client')->select("SELECT SUM(total_facture) as total FROM factures where month(date) = MONTH(CURDATE())");
+        $ventasmes = DB::connection('client')->select("SELECT SUM(total_facture) as total FROM factures where month(date) = MONTH(CURDATE()) and year(date) = year(CURDATE())");
         if ($ventasmes == '[{"total":null}]'){
             $ventasmes = number_format(0);
         }else{
