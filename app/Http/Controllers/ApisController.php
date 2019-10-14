@@ -275,7 +275,7 @@ class ApisController extends Controller
         }else{
             $totaldias = number_format($totaldias[0]->total);
         }
-        $ventasmes = DB::connection('client')->select("SELECT SUM(total_facture) as total FROM factures where month(date) = MONTH(CURDATE())");
+        $ventasmes = DB::connection('client')->select("SELECT SUM(total_facture) as total FROM factures where month(date) = MONTH(CURDATE()) and year(date) = year(CURDATE())");
         if ($ventasmes == '[{"total":null}]'){
             $ventasmes = 0;
         }else{
