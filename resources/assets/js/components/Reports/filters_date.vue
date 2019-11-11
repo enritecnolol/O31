@@ -35,33 +35,37 @@
                     {
                         text: 'Hoy',
                         onClick: () => {
-                            this.time3 = [ new Date(), new Date() ]
+                            this.time3 = [ moment(), moment() ]
                         }
                     },
                     {
                         text: 'Ayer',
                         onClick: () => {
-                            this.time3 = [ new Date(Date.now() - 864e5), new Date(Date.now() - 864e5)]
+                            this.time3 = [ moment().subtract(1,'day'), moment().subtract(1,'day')]
                         }
                     },
                     {
                         text: 'Semana Pasada',
                         onClick: () => {
-                            this.time3 = [ new Date().setDate(new Date().getDate() - 7), new Date(Date.now() - 864e5)]
+                            this.time3 = [ moment().subtract(1,'week').startOf('week'), moment().subtract(1,'week').endOf('week')]
                         }
                     },
                     {
                         text: 'Mes',
                         onClick: () => {
-                            var date = new Date();
-                            this.time3 = [ new Date(date.getFullYear(), date.getMonth(), 1), new Date(date.getFullYear(), date.getMonth() + 1, 0)]
+                            this.time3 = [ moment().startOf('month'), moment().endOf('month')]
                         }
                     },
                     {
                         text: 'Mes Pasado',
                         onClick: () => {
-                            var date = new Date();
-                            this.time3 = [ new Date(date.getFullYear(), date.getMonth() - 1, 1), new Date(date.getFullYear(), date.getMonth() - 1  + 1, 0)]
+                            this.time3 = [ moment().subtract(1,'month').startOf('month'), moment().subtract(1,'month').endOf('month')]
+                        }
+                    },
+                    {
+                        text: 'Este año',
+                        onClick: () => {
+                            this.time3 = [ moment().startOf('year'), moment().endOf('year')]
                         }
                     }
                 ],

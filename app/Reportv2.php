@@ -50,7 +50,7 @@ class Reportv2 extends Model
         return DB::connection('client')->select("SELECT products.id,products.name as producto, concat('$', format(products.price, 2)) as precio, SUM(details.quanlity) as cantidad_producto, concat('$', format(SUM(details.price), 2)) as Monto, SUM(details.price) as monto_normal
               FROM details, products
               WHERE details.product_id = products.id AND  DATE(details.date) BETWEEN '".$first."' AND '".$second."' $categoriesWhere $productswhere
-              GROUP BY products.id");
+              GROUP BY products.id ORDER BY cantidad_producto desc");
 
     }
     public function scopeCajasdate($query, $first, $second){

@@ -70358,29 +70358,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             shortcuts: [{
                 text: 'Hoy',
                 onClick: function onClick() {
-                    _this.time3 = [new Date(), new Date()];
+                    _this.time3 = [moment(), moment()];
                 }
             }, {
                 text: 'Ayer',
                 onClick: function onClick() {
-                    _this.time3 = [new Date(Date.now() - 864e5), new Date(Date.now() - 864e5)];
+                    _this.time3 = [moment().subtract(1, 'day'), moment().subtract(1, 'day')];
                 }
             }, {
                 text: 'Semana Pasada',
                 onClick: function onClick() {
-                    _this.time3 = [new Date().setDate(new Date().getDate() - 7), new Date(Date.now() - 864e5)];
+                    _this.time3 = [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')];
                 }
             }, {
                 text: 'Mes',
                 onClick: function onClick() {
-                    var date = new Date();
-                    _this.time3 = [new Date(date.getFullYear(), date.getMonth(), 1), new Date(date.getFullYear(), date.getMonth() + 1, 0)];
+                    _this.time3 = [moment().startOf('month'), moment().endOf('month')];
                 }
             }, {
                 text: 'Mes Pasado',
                 onClick: function onClick() {
-                    var date = new Date();
-                    _this.time3 = [new Date(date.getFullYear(), date.getMonth() - 1, 1), new Date(date.getFullYear(), date.getMonth() - 1 + 1, 0)];
+                    _this.time3 = [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')];
+                }
+            }, {
+                text: 'Este año',
+                onClick: function onClick() {
+                    _this.time3 = [moment().startOf('year'), moment().endOf('year')];
                 }
             }]
         };
