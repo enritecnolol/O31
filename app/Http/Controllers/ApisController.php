@@ -261,7 +261,9 @@ class ApisController extends Controller
         }else{
             $ventassemana = number_format($ventassemana[0]->total);
         }
-        $totalventas = DB::connection('client')->select("SELECT SUM(total_facture) as total FROM factures WHERE date BETWEEN '2019-01-01' AND '2019-12-31'");
+        $StartThisYear = date("Y")."-01-01";
+        $EndThisYear = date("Y")."-12-31";
+        $totalventas = DB::connection('client')->select("SELECT SUM(total_facture) as total FROM factures WHERE date BETWEEN '$StartThisYear' AND '$EndThisYear'");
 
         if ($totalventas == '[{"total":null}]'){
             $totalventas = 0;
