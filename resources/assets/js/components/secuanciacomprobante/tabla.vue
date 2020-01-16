@@ -53,11 +53,10 @@
                 this.$emit('buttonedit');
             },
             customFormatter(date) {
-                return moment(date).format('d MMMM  YYYY');
+                return moment(date).format('YYYY-MM-DD');
             },
             columnatable(accion)
             {
-                console.log(accion.accion);
                 if (accion.accion === 'plus') {
                     this.detalle_secuencia.push({
                         serie:'',
@@ -67,8 +66,6 @@
                         aviso:'',
                         actual:''
                     });
-                }else{
-
                 }
             },
             changeitem(i){
@@ -79,19 +76,24 @@
                 var valid =0;
                 for (var key in this.detalle_secuencia)
                 {
-                    if  (this.detalle_secuencia[key].serie == "")
+                    if  (this.detalle_secuencia[key].serie === "" ||
+                        this.detalle_secuencia[key].tipo_ncf === "" ||
+                        this.detalle_secuencia[key].desde === "" ||
+                        this.detalle_secuencia[key].hasta === "" ||
+                        this.detalle_secuencia[key].aviso === "" ||
+                        this.detalle_secuencia[key].actual === "")
                     {
                         valid++;
                         return;
                     }
                 }
-                if (valid == 0)
+                if (valid === 0)
                 {
                     axios.post('/comprobantes/store', {
                         id:this.id,
-                        fecha_emision:this.fecha_emision,
-                        fecha_vecimiento:this.fecha_vecimiento,
-                        details:this.detalle_secuencia
+                        fecha_emision: this.customFormatter(this.fechaemision),
+                        fecha_vecimiento: this.customFormatter(this.fechavencimiento),
+                        details: this.detalle_secuencia
                     })
                         .then( (response) => {
                             toastr.success("datos Guardados");

@@ -54,9 +54,7 @@ class IndexController extends Controller
         $productos = DB::connection('client')->table('products')
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
             ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
-//            ->where('products.user_id', $id)
             ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
-//        $productos = DB::connection('client')->select("SELECT products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, \"\") AS descripcion FROM products LEFT JOIN impuestosrefs ON products.impuestoref_id = impuestosrefs.id LEFT JOIN rangoimpuestos ON rangoimpuestos.referenciaitbis_id = impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta");
 
         if ($caja == '[]' || $caja == null){
             $cerrada = 'C';
@@ -79,8 +77,6 @@ class IndexController extends Controller
         }elseif ($config == '[{"impuesto":"sumado"}]'){
             $config = 'sumado';
         }
-
-//        dd($productos);
 
         return view('welcome',['caja' => json_encode($caja)] ,['productos' => json_encode($productos)])
             ->with(compact('cerrada', $cerrada))
@@ -232,8 +228,6 @@ class IndexController extends Controller
                 $itbisp = $d['price'] / floatval('1.'.$d['itbis']);
                 if ($itbisp == $d['price']){
                     $itbisp = 0;
-                }else{
-                    $itbisp = $itbisp;
                 }
                 $bruto = floatval($itbisp) * floatval('0.'.$d['itbis']);
                 $detalle->depot = $bruto;

@@ -110,7 +110,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick=" location.href='/' ">Close</button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" @click="reset() ">Close</button>
                 <button type="button" class="btn btn-primary btn-sm" id="imprimir">Imprimir</button>
             </div>
         </div>

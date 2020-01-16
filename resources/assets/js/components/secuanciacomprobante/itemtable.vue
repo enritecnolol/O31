@@ -19,8 +19,8 @@
             <input type="text" v-model="desde" :disabled="!fechavencimiento || !fechaemision" class="form-control form-control-sm" :class="{ 'incorrecto' : validacion_desde_hasta}" placeholder="">
         </td>
         <td><input type="text" v-model="hasta" :disabled="!fechavencimiento || !fechaemision" class="form-control form-control-sm" :class="{ 'incorrecto' : validacion_desde_hasta}" placeholder=""></td>
-        <td><input type="text" v-model="aviso" :disabled="!fechavencimiento || !fechaemision" class="form-control form-control-sm"  :class="{ 'incorrecto' : validacion_aviso_hasta}" placeholder=""></td>
-        <td><input type="text" v-model="actual" :disabled="!fechavencimiento || !fechaemision" class="form-control form-control-sm" :class="{ 'incorrecto' : validacion_actual_hasta}" placeholder=""></td>
+        <td><input type="text" v-model="actual" :disabled="!fechavencimiento || !fechaemision" class="form-control form-control-sm"  :class="{ 'incorrecto' : validacion_aviso_hasta}" placeholder=""></td>
+        <td><input type="text" v-model="aviso" :disabled="!fechavencimiento || !fechaemision" class="form-control form-control-sm" :class="{ 'incorrecto' : validacion_actual_hasta}" placeholder=""></td>
     </tr>
 </template>
 <script>

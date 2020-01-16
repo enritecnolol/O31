@@ -66536,8 +66536,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_js_modal___default.a);
             }).catch(function (error) {
                 console.log(error);
             });
-            this.fechaemision = this.codigos[index].fechaemision;
-            this.fechavencimiento = this.codigos[index].fechavencimiento;
+            console.log();
+            this.fechaemision = moment(this.codigos[index].fechaemision, "YYYY-MM-DD").add("YYYY-MM-DD", 1);
+            this.fechavencimiento = moment(this.codigos[index].fechavencimiento, "YYYY-MM-DD").add("YYYY-MM-DD", 1);
             this.id = i;
         },
         allcodigos: function allcodigos() {
@@ -66557,7 +66558,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_js_modal___default.a);
             this.$modal.hide('codigos');
         },
         customFormatter: function customFormatter(date) {
-            return moment(date).format('D MMMM  YYYY');
+            return moment(date).format('YYYY-MM-DD');
         },
         columnatabla: function columnatabla(accion) {
             this.$eventbus.$emit('columnatabla', { accion: accion });
@@ -66730,10 +66731,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$emit('buttonedit');
         },
         customFormatter: function customFormatter(date) {
-            return moment(date).format('d MMMM  YYYY');
+            return moment(date).format('YYYY-MM-DD');
         },
         columnatable: function columnatable(accion) {
-            console.log(accion.accion);
             if (accion.accion === 'plus') {
                 this.detalle_secuencia.push({
                     serie: '',
@@ -66743,7 +66743,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     aviso: '',
                     actual: ''
                 });
-            } else {}
+            }
         },
         changeitem: function changeitem(i) {
             this.detalle_secuencia.splice(i.index, 1, i.datos);
@@ -66753,16 +66753,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var valid = 0;
             for (var key in this.detalle_secuencia) {
-                if (this.detalle_secuencia[key].serie == "") {
+                if (this.detalle_secuencia[key].serie === "" || this.detalle_secuencia[key].tipo_ncf === "" || this.detalle_secuencia[key].desde === "" || this.detalle_secuencia[key].hasta === "" || this.detalle_secuencia[key].aviso === "" || this.detalle_secuencia[key].actual === "") {
                     valid++;
                     return;
                 }
             }
-            if (valid == 0) {
+            if (valid === 0) {
                 axios.post('/comprobantes/store', {
                     id: this.id,
-                    fecha_emision: this.fecha_emision,
-                    fecha_vecimiento: this.fecha_vecimiento,
+                    fecha_emision: this.customFormatter(this.fechaemision),
+                    fecha_vecimiento: this.customFormatter(this.fechavencimiento),
                     details: this.detalle_secuencia
                 }).then(function (response) {
                     toastr.success("datos Guardados");
@@ -67174,41 +67174,12 @@ var render = function() {
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.aviso,
-            expression: "aviso"
-          }
-        ],
-        staticClass: "form-control form-control-sm",
-        class: { incorrecto: _vm.validacion_aviso_hasta },
-        attrs: {
-          type: "text",
-          disabled: !_vm.fechavencimiento || !_vm.fechaemision,
-          placeholder: ""
-        },
-        domProps: { value: _vm.aviso },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.aviso = $event.target.value
-          }
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _c("td", [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
             value: _vm.actual,
             expression: "actual"
           }
         ],
         staticClass: "form-control form-control-sm",
-        class: { incorrecto: _vm.validacion_actual_hasta },
+        class: { incorrecto: _vm.validacion_aviso_hasta },
         attrs: {
           type: "text",
           disabled: !_vm.fechavencimiento || !_vm.fechaemision,
@@ -67221,6 +67192,35 @@ var render = function() {
               return
             }
             _vm.actual = $event.target.value
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("td", [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.aviso,
+            expression: "aviso"
+          }
+        ],
+        staticClass: "form-control form-control-sm",
+        class: { incorrecto: _vm.validacion_actual_hasta },
+        attrs: {
+          type: "text",
+          disabled: !_vm.fechavencimiento || !_vm.fechaemision,
+          placeholder: ""
+        },
+        domProps: { value: _vm.aviso },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.aviso = $event.target.value
           }
         }
       })

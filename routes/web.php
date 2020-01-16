@@ -251,6 +251,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post("/comprobantes/find/header/details", "ComprobantesController@findheader");
     Route::post("/comprobantes/edit/detail/sequence", "ComprobantesController@editdetail");
     Route::post("/data/rnc", "ComprobantesController@datarnc");
+    Route::post("/rnc/test", "ComprobantesController@rnctest");
     /*=================================\- ReporteriaV2 -/======================================================*/
     Route::get('/reportv2', 'Reporteriav2Controller@index');
     Route::post('/reportv2/comprobantes/fiscales', 'Reporteriav2Controller@typenfcdata');

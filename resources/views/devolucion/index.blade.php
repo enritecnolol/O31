@@ -32,6 +32,7 @@
                                                 <label for="factura"><h4>No.Factura</h4></label>
                                                 <input type="text" v-model="no_factura" @keypress.enter="datosfactura" class="form-control form-control-sm" id="factura" placeholder="">
                                             </div>
+                                            <button class="btn btn-primary" @click="datosfactura">Buscar</button>
                                         </div>
                                     </div>
                                     <div class="col-md-12" v-if="datofactura != 'vacio'">
@@ -283,7 +284,7 @@
                         id:_this.no_factura
                     })
                         .then(function (response) {
-                            if  (response['data'][0] == 'vacio' && response['data'][1] == 'vacio'){
+                            if  (response['data']['factura'] == 'vacio' && response['data']['detalle'] == 'vacio'){
                                 toastr.warning('No existe factura con este numero');
                             }
                             _this.datofactura = response['data']['factura'];
@@ -293,7 +294,6 @@
                             }else {
                                 _this.datosdetallefactura= response['data']['detalle'];
                             }
-                            console.log(response['data']['detalle_devolucion'])
                         })
                         .catch(function (error) {
                             toastr.warning('Se ha producido un Error');
@@ -342,15 +342,15 @@
                 },
                 confimar: function (){
                     _this = this;
-                    if (_this.clientenombre == ""){
-                        toastr.warning("no podemos realizar la devolucion a una factura sin cliente");
-                    }else{
+                    // if (_this.clientenombre == ""){
+                    //     toastr.warning("no podemos realizar la devolucion a una factura sin cliente");
+                    // }else{
                         var txt;
                         var r = confirm("Esta seguro que quiere hacer esta devolucion ?");
                         if (r == true){
                             txt = this.botondevolver();
                         }
-                    }
+                    // }
                 },
                 botondevolver:function () {
                     _this = this;

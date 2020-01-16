@@ -126,8 +126,9 @@
                     .catch( (error) => {
                         console.log(error);
                     });
-                this.fechaemision = this.codigos[index].fechaemision;
-                this.fechavencimiento = this.codigos[index].fechavencimiento;
+                console.log();
+                this.fechaemision = moment(this.codigos[index].fechaemision, "YYYY-MM-DD").add("YYYY-MM-DD", 1);
+                this.fechavencimiento = moment(this.codigos[index].fechavencimiento, "YYYY-MM-DD").add("YYYY-MM-DD", 1);
                 this.id = i;
             },
             allcodigos()
@@ -148,7 +149,7 @@
                 this.$modal.hide('codigos');
             },
             customFormatter(date) {
-                return moment(date).format('D MMMM  YYYY');
+                return moment(date).format('YYYY-MM-DD');
             },
             columnatabla(accion)
             {
@@ -169,7 +170,6 @@
 
         },
         created() {
-
         }
     }
 </script>
