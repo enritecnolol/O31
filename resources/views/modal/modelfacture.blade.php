@@ -1,108 +1,134 @@
-<div class="modal fade" id="pagofactura" tabindex="-1"  data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal fade" id="pagofactura" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Factura</h5>
-                <button type="button" onclick=" location.href='/' " class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" @click="reset()" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="container" id="myPrintArea">
+            <div class="modal-body" style="max-height: calc(100vh - 200px);overflow-y: auto;">
+                <div id="myPrintArea" style="color: #000;margin: 0 auto;display: inline;">
                     <div class="row">
-                        <div class="col-md-12">
-                           <div class="text-center">
-                               <img src="imagenes/logo.png" width="100" alt="">
-                               <br>
-                               <h5>COFFEBREAKPOS</h5>
-                           </div>
+                        <div class="col-12">
+                            <div style="width: 400px;text-align: center;">
+                                <img :src="'imagenes/'+setting.img" width="100" alt="">
+                            </div>
+                            <h3 style="color: #000;width: 400px;text-align: center;">@{{ setting.nombreempresa }}</h3>
+                            <p style="width: 400px;text-align: center;">@{{ setting.pais }}, @{{ setting.ciudad }}, @{{ setting.direccion }} <br> @{{ setting.telefono }} </p>
                         </div>
-                        <br>
-                        <hr>
-                        <br>
-                        <div class="col-md-12">
-                            <div class="form-group text-left" style="margin: 0">
-                                <label for="cc-exp" class="control-label mb-1"><strong>No.factura: </strong> </label>
-                                <label for="cc-exp" class="control-label mb-1"># @{{ lastid }}</label>
+                        <div class="col-12">
+                            <div class="form-group text-left" style="margin: 0" v-if="setting.generacomprobante=='si'">
+                                <label style="margin-left: 120px;"><strong> @{{tiponfc === '02' ? 'Factura contado' : 'Factura de credito'}}</strong></label>
                             </div>
                             <div class="form-group text-left" style="margin: 0">
-                                <label for="cc-exp" class="control-label mb-1"><strong>Fecha: </strong> </label>
-                                <label for="cc-exp" class="control-label mb-1"><?php echo date('d-m-Y h:i:s A')?></label>
+                                <label><strong>No.factura: </strong> </label>
+                                <label># @{{ lastid }}</label>
+                            </div>
+                            <div class="form-group text-left" style="margin: 0">
+                                <label><strong>Fecha: </strong> </label>
+                                <label><?php echo date('d-m-Y h:i:s A')?></label>
                             </div>
                             <div class="form-group text-left" v-if="setting.generacomprobante=='si'" style="margin: 0">
-                                <label for="cc-exp" class="control-label mb-1"><strong>NCF: </strong> </label>
-                                <label for="cc-exp" class="control-label mb-1">@{{rncdevf}}</label>
+                                <label><strong>NCF: </strong> </label>
+                                <label>@{{rncdevf}}</label>
                             </div>
                             <template v-if="setting.generacomprobante=='si' && datancf.rnc">
                                 <div class="form-group text-left" style="margin: 0">
-                                    <label for="cc-exp" class="control-label mb-1"><strong>Razon Social: </strong> </label>
-                                    <label for="cc-exp" class="control-label mb-1">@{{datancf.razon}}</label>
+                                    <label><strong>Fecha vencimiento NCF: </strong> </label>
+                                    <label>@{{rncDueDate}}</label>
+                                </div>
+                                <div class="form-group text-left" style="margin: 0">
+                                    <label><strong>Razon Social: </strong> </label>
+                                    <label>@{{datancf.razon}}</label>
                                 </div>
                                 <div class="form-group text-left" v-if="fiscal" style="margin: 0">
-                                    <label for="cc-exp" class="control-label mb-1"><strong>RNC: </strong> </label>
-                                    <label for="cc-exp" class="control-label mb-1">@{{datancf.rnc}}</label>
+                                    <label><strong>RNC: </strong> </label>
+                                    <label>@{{datancf.rnc}}</label>
                                 </div>
                                 <div class="form-group text-left" v-if="fiscal" style="margin: 0">
-                                    <label for="cc-exp" class="control-label mb-1"><strong>Telefono: </strong> </label>
-                                    <label for="cc-exp" class="control-label mb-1">@{{datancf.telefono}}</label>
+                                    <label><strong>Telefono: </strong> </label>
+                                    <label>@{{datancf.telefono}}</label>
                                 </div>
                             </template>
                         </div>
                         <hr>
-                        <div class="col-md-12">
-                            <div class="table-responsive" style="margin-bottom: 5px">
-                                <table class="table table-sm factura-table" >
-                                    <thead>
+                        <div class="col-12">
+                            <div style="margin-bottom: 5px;clear:both;">
+                                <table style="width: 400px;">
+                                    <thead style="border-bottom: 1px solid black;border-top: 1px solid black;font-weight: bold;text-align: left;">
                                     <tr>
-                                        <th>Producto</th>
-                                        <th>Cant.</th>
-                                        <th>Desc.</th>
-                                        <th>Total</th>
-                                        <th>Itbis</th>
+                                        <td style="font-weight: bold;color: #000;">Prod.</td>
+                                        <td style="font-weight: bold;color: #000;text-align: center;">Cant.</td>
+                                        <td style="font-weight: bold;color: #000;" align="right">Total</td>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr v-for="item in list">
-                                        <td style="line-height: 1">@{{item.name}}</td>
-                                        <td class="text-center">@{{item.count}}</td>
-                                        <td class="text-center">@{{item.desc}}%</td>
-                                        <td class="text-center">@{{item.price}}</td>
-                                        <td class="text-center">@{{item.itbis}}%</td>
+                                        <td style="font-size: 14px;color: #000;" width="50%"><label>@{{item.name.toUpperCase()}}</label></td>
+                                        <td style="font-size: 14px;text-align: center;color: #000;" width="20%">@{{item.count}}</td>
+                                        <td style="font-size: 14px;color: #000;" width="30%" align="right">
+                                            @{{ format2(parseFloat(item.price), '') }}
+                                        </td>
                                     </tr>
                                     </tbody>
-                                    <thead>
-                                    <tr>
-                                        <th>Total:</th>
-                                        <th class="text-center"></th>
-                                        <th></th>
-                                        <th class="text-center">@{{ neto }}</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-12" style="margin-top: 10px">
-                            <div class="container">
-                                <div class="row text-center">
-                                    <div class="col-sm-12">
-                                        <h5 style="float: left">Efectivo: </h5> <p style="float: right"> @{{ campodinero }}</p>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <h5 style="float: left">Bruto: </h5> <p style="float: right">@{{bruto}}</p>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <h5 style="float: left">Descuento: </h5> <p style="float: right">@{{ totaldescuento }}</p>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <h5 style="float: left">Itbis: </h5> <p style="float: right">@{{ algoitbis }}</p>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <h5 style="float: left">Neto: </h5> <p style="float: right">@{{ neto }}</p>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <h5 style="float: left">Devuelta: </h5> <p style="float: right"> @{{ devuelta }}</p>
-                                    </div>
+                        <div class="col-12">
+                            <div style="border-top:1px solid #000; padding-top:10px;"></div>
+                        </div>
+                        <div class="col-12" style="margin-top: 10px">
+                            <div style="margin-bottom: 5px;clear:both;">
+                                <table style="width: 40%">
+                                    <tbody>
+                                    <tr>
+                                        <td style="font-size: 14px;width: 70px;font-weight: bold;color: #000;text-align: right;">Bruto:</td>
+                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(bruto), 'RD$') }}</td>
+                                    </tr>
+                                    <tr v-if="parseFloat(totaldescuento) !== 0">
+                                        <td style="font-size: 14px;width: 70px;font-weight: bold;color: #000;text-align: right;">Descuento: </td>
+                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(totaldescuento), 'RD$') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 14px;width: 70px;font-weight: bold;color: #000;text-align: right;">Itbis: </td>
+                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(algoitbis), 'RD$') }}</td>
+                                    </tr>
+                                    <tr v-if="setting.leycamarero == 'si'">
+                                        <td style="font-size: 14px;width: 70px;font-weight: bold;color: #000;text-align: right;">10% ley: </td>
+                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(leycamarero), 'RD$') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 14px;width: 70px;font-weight: bold;color: #000;text-align: right;">Neto: </td>
+                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(neto), 'RD$') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 14px;width: 70px;font-weight: bold;color: #000;text-align: right;">-----</td>
+                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">-----</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 14px;width: 70px;font-weight: bold;color: #000;text-align: right;">Efectivo: </td>
+                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(campodinero), 'RD$') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 14px;width: 70px;font-weight: bold;color: #000;text-align: right;">Devuelta: </td>
+                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;"><b>@{{ devuelta }}</b></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div style="border-top:1px solid #000; padding-top:10px;">
+                                <div class="" style="background-color:#000;padding:5px;width:85%;color:#fff;margin:0 auto;border-radius:3px;margin-top:20px;font-weight: bold;color: #000;">
+                                    GRACIAS POR PREFERIRNOS
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div style="border-top:1px solid #000; padding-top:10px;">
+                                <div class="" style="background-color:#000;padding:5px;width:85%;color:#fff;margin:0 auto;border-radius:3px;margin-top:20px;font-weight: bold;color: #000;">
+                                    Software POS: {{ url()->current() }}
                                 </div>
                             </div>
                         </div>
@@ -110,8 +136,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" @click="reset() ">Close</button>
-                <button type="button" class="btn btn-primary btn-sm" id="imprimir">Imprimir</button>
+                <button type="button" class="btn btn-secondary btn" data-dismiss="modal" @click="reset() ">Close</button>
+                <button type="button" class="btn btn-primary btn" id="imprimir">Imprimir</button>
             </div>
         </div>
     </div>

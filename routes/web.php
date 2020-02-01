@@ -27,6 +27,10 @@ Route::group(['middleware'=>'basicAuth'],function () {
     Route::post('/user/connection/edit', 'AdminController@edit');
 
 });
+
+Route::get('/confirmationEstimate', 'EstimatesController@confirmationEstimate');
+Route::post('/confirmationEstimate', 'EstimatesController@confirmationEstimateDB');
+
 /*=================================\- Admin -/======================================================*/
 Route::group(['middleware' => 'auth'], function () {
 
@@ -36,7 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['domain' => '{subdomain}.'.config('app.domain')], function () {});
 
     /*=================================\- API- /======================================================*/
-    Route::get('/facturacioncar', 'IndexController@store'); // api para mandar datos de factura
+    Route::post('/facturacioncar', 'IndexController@store'); // api para mandar datos de factura
 //    Route::post('actualizar/producto', 'ApisController@actualizarp'); // api para actualizar los productos
     Route::get('/cierrecaja', 'CajasController@cerrarcaja');// api para cerrar la caja en BD
     Route::get('/historico/venta', 'ApisController@historico');// api para cerrar la caja en BD
@@ -258,6 +262,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/reportv2/return/data', 'Reporteriav2Controller@returndata');
     Route::get('/return/facture/detalle', 'Reporteriav2Controller@facture_detalle');
 
+    /*=================================\- Cotizacion-/======================================================*/
+    Route::get('/estimate', 'EstimatesController@index');
+    Route::get('/estimate/list', 'EstimatesController@estimateList');
+    Route::get('/estimatetest', 'EstimatesController@indextest');
+    Route::post('/estimate', 'EstimatesController@store');
+    Route::get('/estimate/resend', 'EstimatesController@resendEstimate');
+    Route::post('/estimate/edit', 'EstimatesController@edit');
+    Route::get('/estimate/find', 'EstimatesController@getEstimateData');
+
+    /*=================================\- Reporteria607-/======================================================*/
+    Route::get('/reporte607', 'Reporteria607Controller@index');
+    Route::get('/report/607', 'Reporteria607Controller@getData');
     /*=================================\- PRINT -/======================================================*/
     Route::get('/print', 'IndexController@printPage');
     /*=================================\- Password -/======================================================*/

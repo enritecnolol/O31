@@ -113,6 +113,7 @@
         },
         methods:{
             JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
+                console.log(JSONData)
                 var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
 
                 var CSV = '';

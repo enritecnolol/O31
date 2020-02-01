@@ -352,7 +352,7 @@ class ApisController extends Controller
         return $productos;
     }
     public function productosSelect(){
-        return DB::connection('client')->table('products')->select('id','name')->get();
+        return DB::connection('client')->table('products')->select('id','name', 'price')->get();
     }
 
 }

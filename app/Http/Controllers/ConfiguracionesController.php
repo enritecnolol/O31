@@ -41,6 +41,7 @@ class ConfiguracionesController extends Controller
             $configuracion->controlinv = $request->inventario;
             $configuracion->emailinfo = $request->emailinfo;
             $configuracion->generacomprobante = $request->generacomprobante;
+            $configuracion->leycamarero = $request->leycamarero;
             $configuracion->user_id = Auth::id();
             $configuracion->save();
 
@@ -58,6 +59,7 @@ class ConfiguracionesController extends Controller
             $configuracion->controlinv = $request->inventario;
             $configuracion->emailinfo = $request->emailinfo;
             $configuracion->generacomprobante = $request->generacomprobante;
+            $configuracion->leycamarero = $request->leycamarero;
             $configuracion->user_id = Auth::id();
             $configuracion->save();
         }
@@ -82,6 +84,7 @@ class ConfiguracionesController extends Controller
             $configuracion->controlinv = $request->inventario;
             $configuracion->emailinfo = $request->emailinfo;
             $configuracion->generacomprobante = $request->generacomprobante;
+            $configuracion->leycamarero = $request->leycamarero;
             $configuracion->update();
 
         }else{
@@ -95,6 +98,7 @@ class ConfiguracionesController extends Controller
             $configuracion->controlinv = $request->inventario;
             $configuracion->emailinfo = $request->emailinfo;
             $configuracion->generacomprobante = $request->generacomprobante;
+            $configuracion->leycamarero = $request->leycamarero;
             $configuracion->update();
         }
 

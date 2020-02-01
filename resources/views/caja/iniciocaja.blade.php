@@ -58,7 +58,7 @@
                             </div>
 
                             <div class="text-center" style="margin-top: 40px">
-                                <button type="button" @click="abrircaja()" class="btn btn-success">
+                                <button type="button" @click="abrircaja()" :disabled="loading" class="btn btn-success">
                                     <i class="fas fa-lock-open"></i>&nbsp; Guardar
                                 </button>
                             </div>
@@ -229,7 +229,7 @@
                             </div>
 
                             <div class="text-center" style="margin-top: 40px">
-                                <button type="button" @click="abrircaja()" class="btn btn-success">
+                                <button type="button" @click="abrircaja()" :disabled="loading" class="btn btn-success">
                                     <i class="fas fa-lock-open"></i>&nbsp; Guardar
                                 </button>
                             </div>
@@ -258,7 +258,8 @@
                 fecha: fecha,
                 valortotal: 0,
                 total: 0,
-                onetime:1
+                onetime:1,
+                loading:false
             },
             watch:{
                 valortotal: function (valor) {
@@ -268,11 +269,13 @@
             methods:{
 
                 abrircaja:function () {
+                    _this = this;
                     if (this.valortotal < 0 ){
                         alert('No puede en pesar debiendo')
                     }else {
                         if (this.onetime == 1){
                             this.onetime = 2;
+                            this.loading = true;
                             $.ajax({
                                 url: '/caja/apertura',
                                 method: 'GET',
@@ -284,10 +287,11 @@
                                 success:function (dato) {
                                     toastr.success('Hemos hecho la Apertura de la Caja');
                                     location.reload();
-
+                                    _this.loading = false;
                                 },
                                 error:function (dato) {
-                                    toastr.error('Ha ocurrido un error')
+                                    toastr.error('Ha ocurrido un error');
+                                    _this.loading = false;
                                 }
 
                             });

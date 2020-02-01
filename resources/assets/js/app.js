@@ -21,6 +21,7 @@
 import Echo from 'laravel-echo'
 import moment from 'moment'
 import toastr from '../../../node_modules/toastr'
+import './components/MoneyFormat'
 window.Pusher = require('pusher-js');
 
 window.Echo = new Echo({
@@ -51,6 +52,8 @@ Vue.component('reportspanel', require('./components/Reports/panelreports.vue'));
 Vue.component('loginv2', require('./components/loginv2/login.vue'));
 Vue.component('adminpanel', require('./components/adminpanel/adminpane'));
 Vue.component('reportpanel', require('./components/Print/ReportPanel'));
+Vue.component('estimate-card', require('./components/estimate/EstimateCard'));
+Vue.component('reporte-dgii-panel', require('./components/Reporte607/reporteDGIIPanel'));
 Vue.prototype.moment = moment;
 Vue.prototype.$toastr = toastr;
 Vue.prototype.$eventbus = new Vue();

@@ -4,16 +4,27 @@
             <div class="card-body text-primary">
                 <h5 class="card-title">Fecha</h5>
                 <hr style=" background:#007bff;">
-                <date-picker v-model="time3" range :shortcuts="shortcuts" :lang="lang" confirm @confirm="change" @input="change" @change="change"></date-picker>
+                <date-picker
+                    v-model="time3"
+                    :range="selected!=='607'"
+                    :type="type"
+                    :shortcuts="shortcuts"
+                    :lang="lang"
+                    confirm
+                    @confirm="change"
+                    @input="change"
+                    @change="change"
+                    placeholder="Select"
+                    format="YYYY-MM"
+                />
             </div>
         </div>
     </div>
 </template>
 <script>
-    // import Datepicker from 'vuejs-datepicker';
     import DatePicker from 'vue2-datepicker';
     export default {
-        props:['reset'],
+        props:['reset', 'selected'],
         name:'filters_date',
         components:{DatePicker},
         data(){
@@ -69,6 +80,7 @@
                         }
                     }
                 ],
+                type:'date'
             }
         },
         methods:{
@@ -92,8 +104,13 @@
                     this.time3 = '';
                 }
             }
+        },
+        created() {
+            if(this.selected === '607')
+            {
+                this.type = 'month'
+            }
         }
-
     }
 </script>
 <style>

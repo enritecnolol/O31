@@ -31,6 +31,7 @@ class ClientesController extends Controller
         $cliente->tarjeta_id= $request->idtarjeta;
         $cliente->user_id= Auth::id();
         $cliente->save();
+
         return 'guardado';
 
     }

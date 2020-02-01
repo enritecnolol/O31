@@ -139,6 +139,7 @@ class IndexController extends Controller
             $facture->brute = $request->bruto;
             $facture->desc = $request->descuento;
             $facture->itbis = $request->itbis;
+            $facture->leycamarero = $request->leycamarero;
             $facture->total_facture = $request->preciop;
             $facture->Monto_tarjeta = $request->montotarjeta;
             $facture->Monto_efectivo = $request->dinero;
@@ -151,7 +152,7 @@ class IndexController extends Controller
             $facture->auth = $request->auth;
             $nfc = '';
             $aviso = '';
-
+            $NFCDueDate = '';
             if ($request->setting['generacomprobante'] == 'si'){
                 $facture->tipo_nfc = $request->tiponfc;
 
@@ -167,6 +168,7 @@ class IndexController extends Controller
                         }
                         if ($detail->actual < $detail->secuencia_final)
                         {
+                            $NFCDueDate = $header->fechavencimiento;
                             $nfc = $detail->serie."".$detail->tipo_nfc."".str_pad($detail->actual,8,"0",STR_PAD_LEFT);
                             $d = Detallesecuencia::find($detail->id);
                             $d->actual = $detail->actual+1;
@@ -247,7 +249,7 @@ class IndexController extends Controller
                 }
             }
             DB::commit();
-            return ['bien', $nfc, $idfacture[0]->id, $aviso];
+            return ['bien', $nfc, $idfacture[0]->id, $aviso, $NFCDueDate];
 
         }catch (\Exception $e){
             DB::rollBack();

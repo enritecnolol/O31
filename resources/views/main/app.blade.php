@@ -120,6 +120,16 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="active has-sub">
+                        <a class="js-arrow" href="#">
+                            <i class="far fa-file"></i><strong>FACTURACION</strong>
+                        </a>
+                        <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">
+                            <li>
+                                <a href="/estimate">COTIZACION</a>
+                            </li>
+                        </ul>
+                    </li>
                     <li>
                         <a href="/categorias">
                             <i class="fas fa-clipboard-check"></i><strong>CATEGORIAS</strong></a>
@@ -204,8 +214,23 @@
                                                     </a>
                                                 </div>
                                                 <div class="account-dropdown__item">
+                                                    <a href="/estimate">
+                                                        <i class="far fa-file"></i>COTIZACION
+                                                    </a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="/reporte607">
+                                                        <i class="fas fa-file-alt"></i>REPORTE 607
+                                                    </a>
+                                                </div>
+                                                <div class="account-dropdown__item">
                                                     <a href="/productos">
                                                         <i class="fas fa-utensils"></i>Productos
+                                                    </a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="/devolucion">
+                                                        <i class="fas fa-undo"></i>Devolucion
                                                     </a>
                                                 </div>
                                                 <div class="account-dropdown__item">

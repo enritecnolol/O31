@@ -6,6 +6,7 @@ use App\Client;
 use App\Configuracion;
 use App\Detail;
 use App\Detalle_devolucion;
+use App\Detallesecuencia;
 use App\Devolucion;
 use App\Facture;
 use App\Caja;
@@ -84,83 +85,120 @@ WHERE factures.id = 217 GROUP BY details.id
     }
     public function store(Request $request)
     {
+        DB::beginTransaction();
+        try{
+            $idcaja = Caja::all();
+            $userid = Auth::id();
+            $devolucion = new Devolucion();
+            $bruto = 0;
+            $itbis = 0;
+            $TotalDevolucion = 0;
+            $factura = $request->factura;
 
-        $idcaja = Caja::all();
-        $userid = Auth::id();
-        $devolucion = new Devolucion();
-        $bruto = 0;
-        $itbis = 0;
-        $precio = 0;
-        $factura = $request->factura;
+            $config = DB::connection('client')->table('configuracions')->first();
 
-        foreach ($request->get('detalle_devolucion') as $d)
-        {
-            $precio = $precio + $d['price'];
-            $bruto = $bruto + $d['bruto'];
-            $itbis = $itbis + $d['itbis'];
-        }
+            foreach ($request->get('detalle_devolucion') as $d)
+            {
+                $TotalDevolucion = $TotalDevolucion + ($d['price'] * $d['cantidad']);
+                $bruto = $bruto + $d['bruto'];
+                $itbis = $itbis + $d['itbis'];
+            }
 
-        $devolucion->date = date('Y-m-d');
-        $devolucion->client = $factura['client'];
+            $devolucion->date = date('Y-m-d');
+            $devolucion->client = $factura['client'];
 
-        if ($factura['client'] != null)
-        {
-            $puntos = Client::all()->where('id',$factura['client']);
-            if  ($puntos == '[]'){
-                $puntos  = 0;
-            }else{
-                foreach ($puntos as $punto){
-                    $puntos = $punto->puntos;
+            if ($factura['client'] != null)
+            {
+                $puntos = Client::all()->where('id',$factura['client']);
+                if  ($puntos == '[]'){
+                    $puntos  = 0;
+                }else{
+                    foreach ($puntos as $punto){
+                        $puntos = $punto->puntos;
+                    }
+                }
+                $resta = $puntos - $factura['puntos'];
+
+                $cliente = Client::find($factura['client']);
+                $cliente->puntos = $resta;
+                $cliente->update();
+            }
+            $nfc = '';
+            $aviso = '';
+            if($config->generacomprobante == 'si')
+            {
+                $headers = DB::connection('client')->select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento");
+
+                foreach ($headers as $header)
+                {
+                    $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc','04');
+                    foreach ($details as $detail)
+                    {
+                        if (($detail->actual + $detail->aviso) >= $detail->secuencia_final){
+                            $aviso = "En la Solicitud #". $header->id. " Serie: ". $detail->serie. ", Tipo de NCF: ".$detail->tipo_nfc . " Se estan agotando";
+                        }
+                        if ($detail->actual < $detail->secuencia_final)
+                        {
+                            $nfc = $detail->serie."".$detail->tipo_nfc."".str_pad($detail->actual,8,"0",STR_PAD_LEFT);
+                            $d = Detallesecuencia::find($detail->id);
+                            $d->actual = $detail->actual+1;
+                            $d->update();
+                            break;
+                        }
+                    }
                 }
             }
-            $resta = $puntos - $factura['puntos'];
+            if ($nfc == '')
+            {
+                return 'No es posible hacer la factura por falta de Comprobantes';
+            }
+            $devolucion->ncf = $nfc;
+            $devolucion->brute = $bruto;
+            $devolucion->itbis = $itbis;
+            $devolucion->total_devolucion = $TotalDevolucion;
+            $devolucion->factura_id = $factura['id'];
+            $devolucion->caja_id = $idcaja->last()->id;
+            $devolucion->user_id = $userid;
+            $devolucion->save();
 
-            $cliente = Client::find($factura['client']);
-            $cliente->puntos = $resta;
-            $cliente->update();
-        }
+            $iddevolucion = Devolucion::all();
 
-        $devolucion->brute = $bruto;
-        $devolucion->itbis = $itbis;
-        $devolucion->total_devolucion = $bruto + $itbis;
-        $devolucion->factura_id = $factura['id'];
-        $devolucion->caja_id = $idcaja->last()->id;
-        $devolucion->user_id = $userid;
-        $devolucion->save();
+            foreach ($request->get('detalle_devolucion') as $d)
+            {
+                $detalle_d = new Detalle_devolucion();
+                $detalle_d->date = date('Y-m-d');
+                $detalle_d->name_product = $d['name_product'];
+                $detalle_d->quanlity = $d['cantidad'];
+                $detalle_d->price = $d['price'];
+                $detalle_d->itbis = $d['itbis'];
+                $detalle_d->bruto = $d['bruto'];
+                $detalle_d->product_id = $d['product_id'];
+                $detalle_d->devolucion_id = $iddevolucion->last()->id;
+                $detalle_d->user_id = $userid;
+                $detalle_d->save();
 
-        $iddevolucion = Devolucion::all();
+                $existencias = Configuracion::all();
+                foreach($existencias as $existencia)
+                {
+                    $existencia = $existencia->controlinv;
+                }
+                if ($existencia == 'si')
+                {
+                    $product = Product::find($d['product_id']);
+                    $product->existence = $product->existence + $d['cantidad'];
+                    $product->update();
+                }
 
-        foreach ($request->get('detalle_devolucion') as $d)
+            }
+            $compania = Configuracion::all();
+            DB::commit();
+            return [$compania, $TotalDevolucion, date('d-m-Y'), $iddevolucion->last()->id, $nfc, $aviso];
+
+        }catch (\Exception $exception)
         {
-            $detalle_d = new Detalle_devolucion();
-            $detalle_d->date = date('Y-m-d');
-            $detalle_d->name_product = $d['name_product'];
-            $detalle_d->quanlity = $d['cantidad'];
-            $detalle_d->price = $d['price'];
-            $detalle_d->itbis = $d['itbis'];
-            $detalle_d->bruto = $d['bruto'];
-            $detalle_d->product_id = $d['product_id'];
-            $detalle_d->devolucion_id = $iddevolucion->last()->id;
-            $detalle_d->user_id = $userid;
-            $detalle_d->save();
-
-            $existencias = Configuracion::all();
-            foreach($existencias as $existencia)
-            {
-                $existencia = $existencia->controlinv;
-            }
-            if ($existencia == 'si')
-            {
-                $product = Product::find($d['product_id']);
-                $product->existence = $product->existence + $d['cantidad'];
-                $product->update();
-            }
-
+            DB::rollBack();
+            return $exception;
         }
-
-        $compania = Configuracion::all();
-
-        return [$compania, $precio, date('d-m-Y'), $iddevolucion->last()->id];
 
     }
 }

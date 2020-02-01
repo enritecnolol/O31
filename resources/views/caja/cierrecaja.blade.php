@@ -1,6 +1,19 @@
 @extends('main.app')
 @section('tittle','Cafeteria | Cierre de Caja')
-
+@section('style')
+    <style>
+        .loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url("{{URL::asset('loading2.gif')}}") 50% 50% no-repeat rgb(249,249,249);
+            opacity: .8;
+        }
+    </style>
+@endsection
 
 @section('aside')
     @include('caja.siderbar')
@@ -9,6 +22,7 @@
 
 @section('content')
     <div class="container">
+        <div class="loader" v-if="loading"></div>
         <div class="text-center" style="margin-bottom: 25px">
             <h1>Cierre de Caja</h1>
         </div>
@@ -30,7 +44,7 @@
         <div v-else class="card" style="width: 100%;">
             <div class="card-header">
                 <strong>Cierre</strong>
-                <button v-if="caja[0].status == 'A'" class="btn btn-success btn-sm pull-right" @click="confimar()" type="button"><i class="fas fa-lock">&nbsp; Cerrar Caja</i></button>
+                <button v-if="caja[0].status == 'A'" class="btn btn-success btn-sm pull-right" @click="confimar()" :disabled="loading" type="button"><i class="fas fa-lock">&nbsp; Cerrar Caja</i></button>
                 <button v-else disabled class="btn btn-success btn-sm pull-right"  type="button"><i class="fas fa-lock">&nbsp; Cerrar Caja</i></button>
             </div>
             <div class="card-body">
@@ -92,7 +106,8 @@
                 caja: Object.values(caja),
                 ventas: ventas,
                 datos:[],
-                onetime:1
+                onetime:1,
+                loading:false,
             },
             methods:{
 
@@ -104,12 +119,14 @@
                     }
                 },
                 cerrarcaja: function () {
+                    _this = this;
                     if (ordenes != 0){
                         toastr.warning("Por favor cerrar las ordenes que posee abiertas");
                         return;
                     }
                     if (this.onetime == 1){
                         this.onetime = 2;
+                        this.loading = true;
                         $.ajax({
                             url: '/cierrecaja',
                             method: 'GET',
@@ -121,6 +138,7 @@
                             },
                             success:function (dato) {
                                 toastr.success('La caja se a Cerrado');
+                                _this.loading = false;
                                 setTimeout('document.location.reload()',1000);
                             }
                         });

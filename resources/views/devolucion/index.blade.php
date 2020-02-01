@@ -51,19 +51,19 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <h5 style="float: left">Bruto</h5>
-                                                <h5 style="float: right">@{{ datofactura.brute }}.00</h5>
+                                                <h5 style="float: right">@{{ format2(datofactura.brute, 'RD$') }}</h5>
                                             </div>
                                             <div class="col-md-4">
                                                 <h5 style="float: left">Descuento</h5>
-                                                <h5 style="float: right">@{{ datofactura.desc }}.00</h5>
+                                                <h5 style="float: right">@{{ format2(datofactura.desc, 'RD$') }}</h5>
                                             </div>
                                             <div class="col-md-4">
                                                 <h5 style="float: left">Itbis</h5>
-                                                <h5 style="float: right">@{{ datofactura.itbis }}</h5>
+                                                <h5 style="float: right">@{{ format2(datofactura.itbis, 'RD$') }}</h5>
                                             </div>
                                             <div class="col-md-4">
                                                 <h5 style="float: left">devuelta</h5>
-                                                <h5 style="float: right">@{{ datofactura.returns }}.00</h5>
+                                                <h5 style="float: right">@{{ format2(datofactura.returns, 'RD$') }}</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -112,69 +112,91 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <div class="container" id="myPrintArea" style="width: 600px;box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="text-center">
-                                                        <img :src="'imagenes/'+compania.img" width="100" alt="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <h4>Telefono: </h4> @{{ compania.telefono }}
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            @{{ compania.ciudad }}, @{{ compania.direccion }}
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            Fecha : @{{ fecha }}
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <h4>No.Factura : # @{{ _this.datofactura.id }}</h4>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <h4>No.devolucion : <label for=""># @{{ numerodevolucion }}</label></h4>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <hr style="background-color: #0062cc">
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <table class="table table-bordered">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th scope="col">Nombre</th>
-                                                                    <th scope="col">Cantidad</th>
-                                                                    <th scope="col">Precio</th>
-                                                                    <th scope="col">Bruto</th>
-                                                                    <th scope="col">Itbis</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                <template v-for="item in datosnuevodetalle">
+                                        <div class="container-fluid"  style="width: 600px;box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);">
+                                            <div id="myPrintArea">
+                                                <div class="row">
+                                                    <div class="col-md-12" style="color: #000;">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div style="width: 400px;text-align: center;">
+                                                                    <img src="imagenes/logo.png" width="100" alt="">
+                                                                </div>
+                                                                <h3 style="color: #000;width: 400px;text-align: center;">@{{ compania.nombreempresa }}</h3>
+                                                                <p style="color: #000;width: 400px;text-align: center;">@{{ compania.pais }}, @{{ compania.ciudad }}, @{{ compania.direccion }} <br> @{{ compania.telefono }} </p>
+                                                                <label style="color: #000;width: 400px;text-align: center;"><strong> Devolucion sobre venta </strong></label>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <b>Fecha :  </b>@{{ fecha }}
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <b style="color: #000;">No. Factura :</b> # @{{ _this.datofactura.id }}
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <b style="color: #000;">No. Devolucion : </b> # @{{ numerodevolucion }}
+                                                            </div>
+                                                            <div class="col-md-12" v-if="nfc">
+                                                                <b style="color: #000;">NCF :</b> @{{ nfc }}
+                                                            </div>
+                                                            <div class="col-md-12" v-if="nfc">
+                                                                <b style="color: #000;">NCF modificado:</b> @{{ _this.datofactura.nfc }}
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <hr style="background-color: #0062cc">
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <table style="width: 400px;">
+                                                                    <thead style="border-bottom: 1px solid black;border-top: 1px solid black;font-weight: bold;text-align: left;">
                                                                     <tr>
-                                                                        <th scope="row">@{{ item.name_product }}</th>
-                                                                        <td>
-                                                                            <div class="text-center">
-                                                                                @{{ item.cantidad }}
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>@{{ item.price }}</td>
-                                                                        <td>@{{ decimal(item.bruto) }}</td>
-                                                                        <td>@{{ decimal(item.itbis) }}</td>
+                                                                        {{--<th style="font-weight: bold;color: #000;">Prod.</th>--}}
+                                                                        <th style="font-weight: bold;color: #000;text-align: center">Cant.</th>
+                                                                        <th style="font-weight: bold;color: #000;text-align: right">precio</th>
+                                                                        <th style="font-weight: bold;color: #000;text-align: right">itbis</th>
+                                                                        <th style="font-weight: bold;color: #000;text-align: right">Total</th>
                                                                     </tr>
-                                                                </template>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <div class="col-md-12" style="margin-top: 20px;margin-bottom: 20px">
-                                                            <div class="text-center" style="border-radius: 50px 50px 50px 50px;box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);">
-                                                                <h1>Total: @{{ totaldevolver }}</h1>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <template v-for="item in datosnuevodetalle">
+                                                                        <tr>
+                                                                            <td colspan="4" style="font-size: 14px;color: #000;text-align: left">@{{ item.name_product }}</td>
+                                                                        </tr>
+                                                                        <tr style="">
+                                                                            {{--<td style="font-size: 14px;width: 20%;color: #000;">@{{ item.name_product }}</td>--}}
+                                                                            <td style="font-size: 14px;width: 4%;color: #000;text-align: center">
+                                                                                @{{ item.cantidad }}
+                                                                            </td>
+                                                                            <td style="font-size: 14px;width: 4%;color: #000;text-align: right">@{{ format2(item.bruto, '') }}</td>
+                                                                            <td style="font-size: 14px;width: 4%;color: #000;text-align: right">@{{ format2(item.itbis, '') }}</td>
+                                                                            <td style="font-size: 14px;width: 10%;color: #000;text-align: right">@{{ format2(item.price * item.cantidad, '') }}</td>
+                                                                        </tr>
+                                                                    </template>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <hr style="color: #000;">
+                                                            </div>
+                                                            <div class="col-md-12" style="margin-top: 20px;margin-bottom: 20px">
+                                                                <div style="border-radius: 50px 50px 50px 50px;box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);">
+                                                                    <h3 style="color: #000;width: 400px;text-align: right;">Total: @{{ format2(totaldevolver, '') }}</h3>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <div style="border-top:1px solid #000; padding-top:10px;">
+                                                                    <div class="" style="background-color:#000;padding:5px;width:85%;color:#fff;margin:0 auto;border-radius:3px;margin-top:20px;font-weight: bold;color: #000;">
+                                                                        GRACIAS POR PREFERIRNOS <br>
+                                                                        {{ url()->current() }}
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="float-right">
+                                            <button type="button" id="printD" @click="testPrintButton" class="btn btn-primary"><i class="fas fa-print" id="imprimir"></i> Imprimir</button>
                                         </div>
                                     </div>
                                 </div>
@@ -189,6 +211,15 @@
 
 @section('scriptp')
     <script>
+
+        // $(document).ready(function() {
+            $("#printD").click(function () {
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = { mode : mode, popClose : close};
+                $("div#myPrintArea").printArea(options);
+            });
+        // });
     </script>
     <script >
 
@@ -268,12 +299,27 @@
                     numerodevolucion:0,
                     fecha:'',
                     devolucionesanteriores:'',
+                    nfc:''
                 }
             },watch: {
             },
             mounted(){
             },
             methods:{
+                format2(n, currency) {
+                    return currency + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+                },
+                testPrintButton()
+                {
+
+                    $("#printD").click( () => {
+                        var mode = 'iframe'; //popup
+                        var close = mode == "popup";
+                        var options = { mode : mode, popClose : close};
+                        $("div#myPrintArea").printArea(options);
+                    });
+
+                },
                 decimal:function (i) {
                     return parseFloat(i).toFixed(2)
                 },
@@ -329,12 +375,22 @@
 
                     })
                         .then(function (response) {
-                            console.log(response);
+                            if(response['data'] === "No es posible hacer la factura por falta de Comprobantes")
+                            {
+                                toastr.warning('No es posible hacer la devolucion por falta de Comprobantes');
+                                return;
+                            }
+                            _this.confirmacion = true;
                             toastr.success('La Devolucion se ha realizado Correctamente');
                             _this.compania = response['data'][0][0];
                             _this.totaldevolver = response['data'][1];
                             _this.fecha = response['data'][2];
                             _this.numerodevolucion = response['data'][3];
+                            _this.nfc = response['data'][4];
+                            if(response['data'][5] != "")
+                            {
+                                toastr.warning(response['data'][5]);
+                            }
                         })
                         .catch(function (error) {
                             console.log(error);
@@ -345,16 +401,15 @@
                     // if (_this.clientenombre == ""){
                     //     toastr.warning("no podemos realizar la devolucion a una factura sin cliente");
                     // }else{
-                        var txt;
-                        var r = confirm("Esta seguro que quiere hacer esta devolucion ?");
-                        if (r == true){
-                            txt = this.botondevolver();
-                        }
+                    var txt;
+                    var r = confirm("Esta seguro que quiere hacer esta devolucion ?");
+                    if (r == true){
+                        txt = this.botondevolver();
+                    }
                     // }
                 },
                 botondevolver:function () {
                     _this = this;
-                    _this.confirmacion = true;
                     this.bus.$emit('ejecutar');
                     _this.realizardevolucion();
 

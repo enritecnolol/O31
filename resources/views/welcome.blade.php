@@ -105,7 +105,11 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
-
+        @media print {
+            #myPrintArea {
+                display: inline;
+            }
+        }
     </style>
 @endsection
 @section('tittle',' Cafeteria| Punto Venta')
@@ -115,21 +119,6 @@
     <div class="" style="width: 90%">
         <h4 style="color: white;float: left">
             <i class="fas fa-arrow-right"></i> PUNTO DE VENTA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            {{--<a href="/comanda" style="color: #FF9800">--}}
-            {{--<i class="fas fa-hand-pointer"></i>--}}
-            {{--RESTAURANTE--}}
-            {{--<i class="fas fa-utensils"></i>--}}
-            {{--</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--}}
-            {{--<a href="/ordenes/preparar" style="color: #FF9800">--}}
-            {{--<i class="fas fa-hand-pointer"></i>--}}
-            {{--Lista de Ordenes--}}
-            {{--<i class="fas fa-clipboard-list"></i>--}}
-            {{--</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--}}
-            {{--<a href="/camareros" style="color: #FF9800">--}}
-            {{--<i class="fas fa-hand-pointer"></i>--}}
-            {{--Camareros--}}
-            {{--<i class="fas fa-user-tie"></i>--}}
-            {{--</a>--}}
         </h4>
         <h4 style="color: white; float: right;cursor: help; margin-right: 15px" title="
               acceso rapido:
@@ -216,14 +205,6 @@
                         </tbody>
                     </table>
                 </div>
-                {{--<template v-if="list.length != 0">--}}
-                {{--<div class="pull-left">--}}
-                {{--<h5>items: @{{ cantidaditems }}</h5>--}}
-                {{--</div>--}}
-                {{--<div class="text-center">--}}
-                {{--<h5>@{{ cantidaditemsall }}</h5>--}}
-                {{--</div>--}}
-                {{--</template>--}}
             </div>
         </form>
         <div v-if="cerrada === 'A' && neto > 0 && idticket === ''" style="width: 320px;position: fixed;bottom: 10px;">
@@ -235,27 +216,29 @@
                         </div>
                         <div class="col-sm-12"><hr></div>
                         <div class="col-sm-12">
-                            <h5 style="float: left">Sub Total: </h5> <p style="float: right">@{{bruto}}</p>
+                            <h5 style="float: left">Sub Total: </h5> <p style="float: right">@{{  format2(parseFloat(bruto), '') }}</p>
                         </div>
                         <div class="col-sm-12">
-                            <h5 style="float: left">Descuento: </h5> <p style="float: right">@{{ totaldescuento }}</p>
+                            <h5 style="float: left">Descuento: </h5> <p style="float: right">@{{ format2(parseFloat(totaldescuento ), '') }}</p>
                         </div>
                         <div class="col-sm-12">
-                            <h5 style="float: left">Itbis: </h5> <p style="float: right">@{{ algoitbis }}</p>
+                            <h5 style="float: left">Itbis: </h5> <p style="float: right">@{{ format2(parseFloat(algoitbis ), '') }}</p>
+                        </div>
+                        <div class="col-md-12" v-if="setting.leycamarero == 'si'">
+                            <h5 style="float: left">10% ley: </h5> <p style="float: right">@{{ format2(parseFloat(leycamarero), '') }}</p>
                         </div>
                         <div class="col-md-12">
-                            <h5 style="float: left">Neto: </h5> <p style="float: right">@{{ neto }}</p>
+                            <h5 style="float: left">Neto: </h5> <p style="float: right">@{{ format2(parseFloat(neto ), '') }}</p>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12" v-if="clientedatos !== ''">
                             <h5 style="float: left">Puntos: </h5> <p style="float: right">@{{ puntosagenerar }}</p>
                         </div>
-
                     </div>
                 </div>
             </div>
             <button type="button" id="cancelarcompara" title="presionar PAGINA ABAJO" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar Compra</button>
             <button data-toggle="modal" data-target="#pago" title="presione tecla FIN" type="button" style="height: 130px;background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
-                <span id="payment-button-amount" style="font-size: 20px;color: whitesmoke"> Pagar <br><span style="color: whitesmoke;font-size: 30px">$ @{{ neto }}</span></span>
+                <span id="payment-button-amount" style="font-size: 20px;color: whitesmoke"> Pagar <br><span style="color: whitesmoke;font-size: 30px">$ @{{ format2(parseFloat(neto ), '') }}</span></span>
                 <span id="payment-button-sending" style="display:none;">Sending…</span>
             </button>
         </div>
@@ -264,34 +247,36 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h5 style="float: left">Bruto: </h5> <p style="float: right">@{{bruto}}</p>
+                            <h5 style="float: left">Bruto: </h5> <p style="float: right">@{{  format2(parseFloat(bruto), '') }}</p>
                         </div>
                         <div class="col-sm-12">
-                            <h5 style="float: left">Descuento: </h5> <p style="float: right">@{{ totaldescuento }}</p>
+                            <h5 style="float: left">Descuento: </h5> <p style="float: right">@{{ format2(parseFloat(totaldescuento), '') }}</p>
                         </div>
                         <div class="col-sm-12">
-                            <h5 style="float: left">Itbis: </h5> <p style="float: right">@{{ algoitbis }}</p>
+                            <h5 style="float: left">Itbis: </h5> <p style="float: right">@{{ format2(parseFloat(algoitbis), '') }}</p>
+                        </div>
+                        <div class="col-md-12" v-if="setting.leycamarero == 'si'">
+                            <h5 style="float: left">10% ley: </h5> <p style="float: right">@{{ format2(parseFloat(leycamarero ), '')}}</p>
                         </div>
                         <div class="col-md-12">
-                            <h5 style="float: left">Neto: </h5> <p style="float: right">@{{ neto }}</p>
+                            <h5 style="float: left">Neto: </h5> <p style="float: right">@{{ format2(parseFloat(neto ), '')}}</p>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12" v-if="clientedatos !== ''">
                             <h5 style="float: left">Puntos: </h5> <p style="float: right">@{{ puntosagenerar }}</p>
                         </div>
-
                     </div>
                 </div>
             </div>
             <button type="button" id="cancelarcompara" title="presionar PAGINA ABAJO" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar Compra</button>
             <button data-toggle="modal" data-target="#pago" title="presione tecla FIN" type="button" style="height: 130px;background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
-                <span id="payment-button-amount" style="font-size: 20px;color: whitesmoke"> Pagar <br><span style="color: whitesmoke;font-size: 30px">$ @{{ neto }}</span></span>
+                <span id="payment-button-amount" style="font-size: 20px;color: whitesmoke"> Pagar <br><span style="color: whitesmoke;font-size: 30px">$ @{{ format2(parseFloat(neto ), '') }}</span></span>
                 <span id="payment-button-sending" style="display:none;">Sending…</span>
             </button>
         </div>
 
         <div v-else-if="cerrada === 'A' && neto <= 0 && datosticket  === ''" style="width: 320px;position: fixed;bottom: 10px;">
             <button data-toggle="modal" disabled data-target="#pago" type="button" style="height: 130px; background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
-                <span style="font-size: 24px"><span style="color: whitesmoke">Pagar <br></span><span style="color: whitesmoke;font-size: 30px">$&nbsp;@{{ neto }}</span></span>
+                <span style="font-size: 24px"><span style="color: whitesmoke">Pagar <br></span><span style="color: whitesmoke;font-size: 30px">$&nbsp;@{{ format2(parseFloat(neto ), '')}}</span></span>
                 <span style="display:none;">Sending…</span>
             </button>
         </div>
@@ -477,7 +462,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="text-center" style="margin-bottom: 20px">
-                        <h3 style="font-size: 50px">A PAGAR $: <span style="font-size: 50px; color: red">@{{ neto }}</span></h3>
+                        <h3 style="font-size: 50px">A PAGAR $: <span style="font-size: 50px; color: red">@{{ format2(parseFloat(neto ), '') }}</span></h3>
                     </div>
                     <div class="row">
                         <div class="col-12">
@@ -628,7 +613,7 @@
                     </div>
                     <div class="modal-footer">
                         <div class="" style="position: absolute; left: 50px">
-                            <h4>Devuelta:<span style="font-size: 25px"> @{{ devuelta }}</span></h4>
+                            <h4>Devuelta:<span style="font-size: 25px"> @{{ format2(parseFloat(devuelta), '') }}</span></h4>
                         </div>
                         <button type="button" class="btn btn-warning btn-lg" @click="limpiar()" data-dismiss="modal">Limpiar</button>
                         <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancelar</button>
@@ -719,10 +704,12 @@
     </script>
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <script>
-
         $( document ).ready(function() {
             $("#imprimir").click(function () {
-                $("div#myPrintArea").printArea();
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = { mode : mode, popClose : close};
+                $("div#myPrintArea").printArea(options);
             });
         });
     </script>
@@ -812,7 +799,8 @@
                 rncdevf:'',
                 lastid:'',
                 rncData:{},
-                loading:false
+                loading:false,
+                rncDueDate:''
             },
             mounted() {
                 _this = this;
@@ -891,16 +879,20 @@
                         rncdevf:'',
                         lastid:'',
                         rncData:{},
-                        loading:false
+                        loading:false,
+                        rncDueDate:''
                     });
+                },
+                format2(n, currency) {
+                    return currency + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
                 },
                 buscar_rnc()
                 {
-                    if(this.datancf.rnc.length != 9 || this.datancf.rnc.length != 11)
-                    {
-                        toastr.warning("Revisar RNC")
-                        return;
-                    }
+                    // if(this.datancf.rnc.length !== 9 || 11)
+                    // {
+                    //     toastr.warning("Revisar RNC")
+                    //     return;
+                    // }
                     _this = this
                     this.loading = true;
                     this.datancf.razon = "cargando...";
@@ -1201,11 +1193,6 @@
                     e.preventDefault();
                     _this.desc = false;
                 },
-                normalll:function(e){
-                    _this = this;
-                    e.preventDefault();
-                    _this.cuadrogeneral = false;
-                },
                 facturar:function () {
                     if (this.montotarjeta > 0){
                         if (this.tipotarjeta === '' ||  this.auth === '' || this.Numtarjeta === ''){
@@ -1251,6 +1238,7 @@
                                     bruto:this.bruto,
                                     itbis:this.algoitbis,
                                     neto:this.neto,
+                                    leycamarero:this.leycamarero,
                                     descuento:this.totaldescuento,
                                     tipotarjeta: this.tipotarjeta,
                                     Numtarjeta: this.Numtarjeta,
@@ -1270,6 +1258,7 @@
                                         toastr.options.newestOnTop = false;
                                         toastr.success('Gracias por la compra');
                                         this.rncdevf = dato[1];
+                                        this.rncDueDate= dato[4];
                                         this.lastid = dato[2];
                                         if  (this.facturaimp === false){
                                             this.reset();
@@ -1320,6 +1309,7 @@
                                 bruto:this.bruto,
                                 itbis:this.algoitbis,
                                 neto:this.neto,
+                                leycamarero:this.leycamarero,
                                 descuento:this.totaldescuento,
                                 tipotarjeta: this.tipotarjeta,
                                 Numtarjeta: this.Numtarjeta,
@@ -1340,6 +1330,7 @@
                                     toastr.options.newestOnTop = false;
                                     toastr.success('Gracias por la compra');
                                     this.rncdevf = dato[1];
+                                    this.rncDueDate= dato[4];
                                     this.lastid = dato[2];
                                     if  (this.facturaimp === false){
                                         this.reset();
@@ -1401,6 +1392,7 @@
                                         bruto:this.bruto,
                                         itbis:this.algoitbis,
                                         neto:this.neto,
+                                        leycamarero:this.leycamarero,
                                         descuento:this.totaldescuento,
                                         tipotarjeta: this.tipotarjeta,
                                         Numtarjeta: this.Numtarjeta,
@@ -1421,6 +1413,7 @@
                                             toastr.options.newestOnTop = false;
                                             toastr.success('Gracias por la compra');
                                             this.rncdevf = dato[1];
+                                            this.rncDueDate= dato[4];
                                             this.lastid = dato[2];
                                             if  (this.facturaimp === false){
                                                 this.reset();
@@ -1452,34 +1445,31 @@
                                 }
                             }
                         }
-                        _this = this;
-                        $.ajax({
-                            url: '/facturacioncar',
-                            method: 'GET',
-                            data: {
-                                setting:this.setting,
-                                tiponfc:this.tiponfc,
-                                datancf:this.datancf,
-                                existencias: this.existenciarep,
-                                puntos:this.puntosagenerar,
-                                cliente:this.clientedatos.id,
-                                devuelta:this.devuelta,
-                                preciop:this.neto,
-                                tipop:this.campotipop,
-                                banco:this.banco,
-                                auth: this.auth,
-                                bruto:this.bruto,
-                                itbis:this.algoitbis,
-                                neto:this.neto,
-                                descuento:this.totaldescuento,
-                                tipotarjeta: this.tipotarjeta,
-                                Numtarjeta: this.Numtarjeta,
-                                montotarjeta:this.montotarjeta,
-                                dinero:this.campodinero,
-                                detalle: this.list
-                            },
-                            success: (dato) => {
-                                var _this = this;
+                        axios.post('/facturacioncar', {
+                            setting:this.setting,
+                            tiponfc:this.tiponfc,
+                            datancf:this.datancf,
+                            existencias: this.existenciarep,
+                            puntos:this.puntosagenerar,
+                            cliente:this.clientedatos.id,
+                            devuelta:this.devuelta,
+                            preciop:this.neto,
+                            tipop:this.campotipop,
+                            banco:this.banco,
+                            auth: this.auth,
+                            bruto:this.bruto,
+                            itbis:this.algoitbis,
+                            neto:this.neto,
+                            leycamarero:this.leycamarero,
+                            descuento:this.totaldescuento,
+                            tipotarjeta: this.tipotarjeta,
+                            Numtarjeta: this.Numtarjeta,
+                            montotarjeta:this.montotarjeta,
+                            dinero:this.campodinero,
+                            detalle: this.list
+                        })
+                            .then( (response) => {
+                                let dato = response['data'];
                                 if  (dato == "No es posible hacer la factura por falta de Comprobantes")
                                 {
                                     toastr.warning(dato, "validador");
@@ -1490,8 +1480,8 @@
                                     toastr.options.newestOnTop = false;
                                     toastr.success('Gracias por la compra');
                                     this.rncdevf = dato[1];
+                                    this.rncDueDate= dato[4];
                                     this.lastid = dato[2];
-                                    console.log(this.rncdevf + " || " + this.lastid )
                                     if  (this.facturaimp === false){
                                         this.reset();
                                         // setTimeout('document.location.reload()',1000);
@@ -1503,12 +1493,9 @@
                                     }
                                     $('#pagofactura').modal('show');
                                 }
-
-                            },
-                            error:function () {
-                                toastr.error('A ocurrido un error al realizar la venta');
-                            }
-                        });
+                            })
+                            .catch(function (error) {
+                            });
 
                     }
                 },
@@ -1968,25 +1955,25 @@
                                 var pitbis = parseFloat('1.' + porciento);
 
                                 var bruto = parseFloat(dinero)/ parseFloat(pitbis);
-                                var paso2 = bruto * parseFloat(paso1).toFixed(4);
-                                var brutodescuento = bruto - parseFloat(paso2).toFixed(4);
+                                var paso2 = bruto * parseFloat(paso1);
+                                var brutodescuento = bruto - parseFloat(paso2);
                                 if  (_this.configtj != ''){
                                     if  (_this.configtj['Datos']['tipo'] === 'GDescuento'){
                                         var descuentodos = parseInt(_this.configtj['Datos']['Gdescuento']['descuentog']) / 100;
                                         var desc = parseFloat(brutodescuento) * parseFloat(descuentodos)
                                         var otro = parseFloat(brutodescuento) - parseFloat(desc)
-                                        var itbismultiplicado =  parseFloat(otro).toFixed(4) * parseFloat('0.'+porciento);
+                                        var itbismultiplicado =  parseFloat(otro) * parseFloat('0.'+porciento);
                                         itbistotal = parseFloat(itbismultiplicado);
                                         total = parseFloat(itbistotal) + parseFloat(total);
                                     }else {
-                                        var itbismultiplicado =  parseFloat(brutodescuento).toFixed(4) * parseFloat('0.'+porciento);
+                                        var itbismultiplicado =  parseFloat(brutodescuento) * parseFloat('0.'+porciento);
 
                                         itbistotal = parseFloat(itbismultiplicado);
 
                                         total = parseFloat(itbistotal) + parseFloat(total);
                                     }
                                 }else {
-                                    var itbismultiplicado =  parseFloat(brutodescuento).toFixed(4) * parseFloat('0.'+porciento);
+                                    var itbismultiplicado =  parseFloat(brutodescuento) * parseFloat('0.'+porciento);
 
                                     itbistotal = parseFloat(itbismultiplicado);
 
@@ -2062,7 +2049,6 @@
                         var otrototal = 0;
 
                         for(var i = 0; i< this.list.length; i++ ){
-
                             id = _this.list[i].id;
 
                             var producto = this.productos[id];
@@ -2085,9 +2071,9 @@
                                 var pitbis = parseFloat('1.' + porciento);
 
                                 var bruto = parseFloat(dinero)/ parseFloat(pitbis);
-                                var paso2 = bruto * parseFloat(paso1).toFixed(4);
-                                var brutodescuento = bruto - parseFloat(paso2).toFixed(4);
-                                var itbismultiplicado =  parseFloat(brutodescuento).toFixed(4) * parseFloat('0.'+porciento);
+                                var paso2 = bruto * parseFloat(paso1);
+                                var brutodescuento = bruto - parseFloat(paso2);
+                                var itbismultiplicado =  parseFloat(brutodescuento)* parseFloat('0.'+porciento);
                                 itbistotal = parseFloat(itbismultiplicado + itbistotal);
 
                                 descuentototal = parseFloat(paso2 + descuentototal);
@@ -2096,27 +2082,27 @@
                                     if  (_this.configtj['Datos']['tipo'] === 'GDescuento'){
                                         var descuentodos = parseInt(_this.configtj['Datos']['Gdescuento']['descuentog']) / 100;
                                         var desc = parseFloat(bruto) * parseFloat(descuentodos)
-                                        total = parseFloat(desc).toFixed(4) + parseFloat(paso2).toFixed(4) + parseFloat(total)
+                                        total = parseFloat(desc) + parseFloat(paso2) + parseFloat(total)
                                     }else {
-                                        total = parseFloat( paso2).toFixed(4) + parseFloat(total)
+                                        total = parseFloat( paso2) + parseFloat(total)
                                     }
                                 }else {
-                                    total = parseFloat(paso2).toFixed(4) + parseFloat(total)
+                                    total = parseFloat(paso2) + parseFloat(total)
                                 }
 
                             }else{
 
-                                var paso2 = dinero * parseFloat(paso1).toFixed(4);
+                                var paso2 = dinero * parseFloat(paso1);
                                 if  (_this.configtj != ''){
                                     if  (_this.configtj['Datos']['tipo'] === 'GDescuento'){
                                         var descuentodos = parseInt(_this.configtj['Datos']['Gdescuento']['descuentog']) / 100;
-                                        var desc = parseFloat(dinero) * parseFloat(descuentodos).toFixed(4)
+                                        var desc = parseFloat(dinero) * parseFloat(descuentodos)
                                         total = desc + parseFloat(total)
                                     }else {
-                                        total = parseFloat(paso2).toFixed(4) + parseFloat(total)
+                                        total = parseFloat(paso2) + parseFloat(total)
                                     }
                                 }else {
-                                    total = parseFloat(paso2).toFixed(4) + parseFloat(total)
+                                    total = parseFloat(paso2) + parseFloat(total)
                                 }
                             }
                         }
@@ -2179,15 +2165,21 @@
 
                     for(var i = 0; i< this.list.length; i++ ){
                         if  (_this.datosticket !== ''){
-                            var suma = (parseFloat(_this.algoitbis) + parseFloat(_this.bruto)  - _this.totaldescuento) - _this.datosticket.balancepuntos;
+                            var suma = (parseFloat(_this.algoitbis) + (parseFloat(_this.bruto) + parseFloat(_this.leycamarero)) - _this.totaldescuento) - _this.datosticket.balancepuntos;
                             total = suma;
                         }else {
-                            var suma = parseFloat(_this.algoitbis) + parseFloat(_this.bruto)  - _this.totaldescuento;
+                            var suma = parseFloat(_this.algoitbis) + (parseFloat(_this.bruto) + parseFloat(_this.leycamarero))  - _this.totaldescuento;
                             total = suma;
                         }
 
                     }
-                    return parseFloat(Math.round(total)).toFixed(2);
+                    return parseFloat(total).toFixed(2);
+                },
+                leycamarero:function(){
+                    _this = this;
+                    let porciento = 0;
+                    porciento = (_this.bruto - _this.totaldescuento) * 0.10;
+                    return _this.setting.leycamarero == "si" ? parseFloat(porciento).toFixed(2) : 0 ;
                 },
                 puntosagenerar:function () {
                     _this = this;

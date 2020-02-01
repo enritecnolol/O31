@@ -20,7 +20,7 @@
                         <i class="fas fa-angle-down"></i>
                     </span>
                 </a>
-                <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">
+                <ul class="list-unstyled navdbar__sub-list js-sub-list" style="display: none">
                     <li>
                         <a style="padding-left: 90px" href="/caja">APERTURA DE CAJA</a>
                     </li>
@@ -32,6 +32,19 @@
                     </li>
                     <li>
                         <a style="padding-left: 90px" href="/caja/cuadre">CUADRE DE CAJA</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="has-sub">
+                <a class="js-arrow" href="#">
+                    <i class="far fa-file"></i><strong>FACTURACION</strong>
+                    <span class="arrow">
+                        <i class="fas fa-angle-down"></i>
+                    </span>
+                </a>
+                <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">
+                    <li>
+                        <a style="padding-left: 90px" href="/estimate">COTIZACION</a>
                     </li>
                 </ul>
             </li>
@@ -75,6 +88,10 @@
             <li>
                 <a href="/reportv2">
                     <i class="fas fa-newspaper"></i><strong>REPORTERIA V2</strong></a>
+            </li>
+            <li>
+                <a href="/reporte607">
+                    <i class="fas fa-file-alt"></i><strong>REPORTE 607</strong></a>
             </li>
             <li>
                 <a href="/clientes">

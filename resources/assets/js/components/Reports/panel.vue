@@ -10,17 +10,17 @@
                 </div>
             </div>
             <div class="row">
-                <filters_ncf @nfc_select="nfc_select" v-if="seleccionado == 'Comprobantes'"></filters_ncf>
-                <filters_date @date_select="date_select" :reset="reset"></filters_date>
-                <filters_categories @categories_select="categories_select" v-if="seleccionado == 'Productos'" :reset="reset"></filters_categories>
-                <filters_products @products_select="products_select" v-if="seleccionado == 'Productos'" :reset="reset"></filters_products>
+                <filters_ncf @nfc_select="nfc_select" v-if="seleccionado === 'Comprobantes'" />
+                <filters_date @date_select="date_select" :reset="reset"  :selected="seleccionado" />
+                <filters_categories @categories_select="categories_select" v-if="seleccionado === 'Productos'" :reset="reset" />
+                <filters_products @products_select="products_select" v-if="seleccionado === 'Productos'" :reset="reset" />
             </div>
-            <filter_report @typereport="typereport" v-if="type_ncf == 'all'"></filter_report>
+            <filter_report @typereport="typereport" v-if="type_ncf === 'all'" />
             <div class="row">
                 <div class="col-md-12">
                     <div class="text-center">
                         <button type="button" class="btn btn-primary" @click="searchdata"><i class="fas fa-search"></i> Buscar</button>
-                        <button type="button" class="btn btn-warning" @click="resetFilter" v-if="seleccionado == 'Productos'"><i class="far fa-circle"></i> Limpiar</button>
+                        <button type="button" class="btn btn-warning" @click="resetFilter" v-if="seleccionado === 'Productos'"><i class="far fa-circle"></i> Limpiar</button>
                     </div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                         <template v-for="(ncf, index) in ncfs">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <multi_table :data="table_data[index]" :headers="header" :seleccionado="seleccionado" :ncfs="ncfs" :index="index"></multi_table>
+                                    <multi_table :data="table_data[index]" :headers="header" :seleccionado="seleccionado" :ncfs="ncfs" :index="index" />
                                 </div>
                             </div>
                         </template>
@@ -38,18 +38,10 @@
                     <template v-else>
                         <div class="row">
                             <div class="col-md-12">
-                                <multi_table :date="date" :products="products" :categories="category" :data="table_data" :headers="header" :ncf="ncf" :seleccionado="seleccionado"></multi_table>
+                                <multi_table :date="date" :products="products" :categories="category" :data="table_data" :headers="header" :ncf="ncf" :seleccionado="seleccionado" />
                             </div>
                         </div>
                     </template>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <!--<download-excel :data="table_data" class="btn btn-default">-->
-                    <!--Download Data-->
-                    <!--<img src="download_icon.png">-->
-                    <!--</download-excel>-->
                 </div>
             </div>
         </div>
