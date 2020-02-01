@@ -47,6 +47,13 @@ adjust-sourcemap-loader@^1.1.0:
     object-path "^0.9.2"
     regex-parser "^2.2.9"
 
+adler-32@~1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/adler-32/-/adler-32-1.2.0.tgz#6a3e6bf0a63900ba15652808cb15c6813d1a5f25"
+  dependencies:
+    exit-on-epipe "~1.0.1"
+    printj "~1.1.0"
+
 ajv-keywords@^3.1.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-3.2.0.tgz#e86b819c602cf8821ad637413698f1dec021847a"
@@ -1246,6 +1253,15 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
+cfb@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/cfb/-/cfb-1.1.3.tgz#05de6816259c8e8bc32713aba905608ee385df66"
+  dependencies:
+    adler-32 "~1.2.0"
+    commander "^2.16.0"
+    crc-32 "~1.2.0"
+    printj "~1.1.2"
+
 chalk@^1.0.0, chalk@^1.1.1, chalk@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-1.1.3.tgz#a8115c55e4a702fe4d150abd3872822a7e09fc98"
@@ -1399,6 +1415,13 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
+codepage@~1.14.0:
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/codepage/-/codepage-1.14.0.tgz#8cbe25481323559d7d307571b0fff91e7a1d2f99"
+  dependencies:
+    commander "~2.14.1"
+    exit-on-epipe "~1.0.1"
+
 collection-visit@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/collection-visit/-/collection-visit-1.0.0.tgz#4bc0373c164bc3291b4d368c829cf1a80a59dca0"
@@ -1460,9 +1483,17 @@ commander@2.17.x, commander@~2.17.1:
   version "2.17.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"
 
+commander@^2.16.0:
+  version "2.20.3"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
+
 commander@~2.13.0:
   version "2.13.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.13.0.tgz#6964bca67685df7c1f1430c584f07d7597885b9c"
+
+commander@~2.14.1:
+  version "2.14.1"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.14.1.tgz#2235123e37af8ca3c65df45b026dbd357b01b9aa"
 
 commander@~2.8.1:
   version "2.8.1"
@@ -1619,6 +1650,13 @@ cosmiconfig@^4.0.0:
     js-yaml "^3.9.0"
     parse-json "^4.0.0"
     require-from-string "^2.0.1"
+
+crc-32@~1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/crc-32/-/crc-32-1.2.0.tgz#cb2db6e29b88508e32d9dd0ec1693e7b41a18208"
+  dependencies:
+    exit-on-epipe "~1.0.1"
+    printj "~1.1.0"
 
 create-ecdh@^4.0.0:
   version "4.0.3"
@@ -2193,6 +2231,10 @@ download@^6.2.2:
     p-event "^1.0.0"
     pify "^3.0.0"
 
+downloadjs@^1.4.7:
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/downloadjs/-/downloadjs-1.4.7.tgz#f69f96f940e0d0553dac291139865a3cd0101e3c"
+
 duplexer2@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/duplexer2/-/duplexer2-0.0.2.tgz#c614dcf67e2fb14995a91711e5a617e8a60a31db"
@@ -2512,6 +2554,10 @@ executable@^1.0.0:
   resolved "https://registry.yarnpkg.com/executable/-/executable-1.1.0.tgz#877980e9112f3391066da37265de7ad8434ab4d9"
   dependencies:
     meow "^3.1.0"
+
+exit-on-epipe@~1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/exit-on-epipe/-/exit-on-epipe-1.0.1.tgz#0bdd92e87d5285d267daa8171d0eb06159689692"
 
 expand-brackets@^0.1.4:
   version "0.1.5"
@@ -2868,6 +2914,10 @@ form-data@~2.3.2:
 forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
+
+frac@~1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/frac/-/frac-1.1.2.tgz#3d74f7f6478c88a1b5020306d747dc6313c74d0b"
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -4113,6 +4163,10 @@ laravel-mix@^1.0:
     webpack-notifier "^1.5.0"
     yargs "^8.0.1"
 
+laravel-vue-pagination@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/laravel-vue-pagination/-/laravel-vue-pagination-2.3.1.tgz#15d04db3f67a6a203077dbbe6f9aeb3cf6bffa3c"
+
 lazy-cache@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/lazy-cache/-/lazy-cache-1.0.4.tgz#a1d78fc3a50474cb80845d3b3b6e1da49a446e8e"
@@ -4296,8 +4350,8 @@ lodash.merge@^4.6.0:
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.1.tgz#adc25d9cb99b9391c59624f379fbba60d7111d54"
 
 lodash.mergewith@^4.6.0:
-  version "4.6.1"
-  resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.1.tgz#639057e726c3afbdb3e7d42741caa8d6e4335927"
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.2.tgz#617121f89ac55f59047c7aec1ccd6654c6590f55"
 
 lodash.restparam@^3.0.0:
   version "3.6.1"
@@ -5590,6 +5644,10 @@ prettier@^1.7.0:
   version "1.15.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.15.2.tgz#d31abe22afa4351efa14c7f8b94b58bb7452205e"
 
+printj@~1.1.0, printj@~1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/printj/-/printj-1.1.2.tgz#d90deb2975a8b9f600fb3a1c94e3f4c53c78a222"
+
 private@^0.1.6, private@^0.1.8, private@~0.1.5:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
@@ -6453,6 +6511,12 @@ squeak@^1.0.0:
     console-stream "^0.1.1"
     lpad-align "^1.0.1"
 
+ssf@~0.10.2:
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/ssf/-/ssf-0.10.2.tgz#65b2b4fcdfd967bc8e8383a41349009893115976"
+  dependencies:
+    frac "~1.1.2"
+
 sshpk@^1.7.0:
   version "1.15.2"
   resolved "https://registry.yarnpkg.com/sshpk/-/sshpk-1.15.2.tgz#c946d6bd9b1a39d0e8635763f5242d6ed6dcb629"
@@ -7118,6 +7182,10 @@ uuid@^3.0.1, uuid@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
 
+v-money@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/v-money/-/v-money-0.8.1.tgz#dc28cf3be915c5a6c52bfe1085075e1fe7ae9db5"
+
 vali-date@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/vali-date/-/vali-date-1.0.0.tgz#1b904a59609fb328ef078138420934f6b86709a6"
@@ -7225,9 +7293,19 @@ vue-hot-reload-api@^2.2.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.1.tgz#b2d3d95402a811602380783ea4f566eb875569a2"
 
+vue-html-to-paper@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/vue-html-to-paper/-/vue-html-to-paper-1.1.1.tgz#dd6865500e6b25471e0558bee9f413c262d06230"
+
 vue-js-modal@^1.3.27:
   version "1.3.31"
   resolved "https://registry.yarnpkg.com/vue-js-modal/-/vue-js-modal-1.3.31.tgz#fdece823d4f2816c8b1075c1fd8f667df11f5a42"
+
+vue-json-excel@^0.2.98:
+  version "0.2.98"
+  resolved "https://registry.yarnpkg.com/vue-json-excel/-/vue-json-excel-0.2.98.tgz#1d882fd97f8bd7caa1864014e3680b2ddd0e94bc"
+  dependencies:
+    downloadjs "^1.4.7"
 
 vue-loader@^13.0.5:
   version "13.7.3"
@@ -7251,6 +7329,10 @@ vue-mouse-menu@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/vue-mouse-menu/-/vue-mouse-menu-1.1.0.tgz#e88f94ce8c7015ef40bccb58dfc7d561b332af55"
 
+vue-multiselect@^2.1.6:
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/vue-multiselect/-/vue-multiselect-2.1.6.tgz#5be5d811a224804a15c43a4edbb7485028a89c7f"
+
 vue-nav-tabs@^0.5.7:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/vue-nav-tabs/-/vue-nav-tabs-0.5.7.tgz#f9b8c410b43d9af1d92be6454f295af10c884e4a"
@@ -7258,6 +7340,10 @@ vue-nav-tabs@^0.5.7:
 vue-search-select@^2.6.2:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/vue-search-select/-/vue-search-select-2.7.0.tgz#f9f62756d7e7cdcd31d1279fc99172d3a5985925"
+
+vue-select@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/vue-select/-/vue-select-3.4.0.tgz#e56b0612845d13d10162cd8df81bfb46af2083ac"
 
 vue-style-loader@^3.0.0:
   version "3.1.2"
@@ -7495,6 +7581,18 @@ wrap-fn@^0.1.0:
 wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
+
+xlsx@^0.15.1:
+  version "0.15.5"
+  resolved "https://registry.yarnpkg.com/xlsx/-/xlsx-0.15.5.tgz#37d5bb8076de7337e5bb0769b3ad55d18d68eaec"
+  dependencies:
+    adler-32 "~1.2.0"
+    cfb "^1.1.3"
+    codepage "~1.14.0"
+    commander "~2.17.1"
+    crc-32 "~1.2.0"
+    exit-on-epipe "~1.0.1"
+    ssf "~0.10.2"
 
 xmlhttprequest@^1.8.0:
   version "1.8.0"
