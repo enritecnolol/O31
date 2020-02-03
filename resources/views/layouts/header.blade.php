@@ -11,7 +11,7 @@
 
     <!-- Title Page-->
     <title>@yield('tittle')</title>
-
+    <link rel="icon" href="{{ URL::asset('favicon.png') }}" type="image/png">
     <!-- Fontfaces CSS-->
     <link href=" {{ URL::asset('css/font-face.css') }}" rel="stylesheet" media="all">
     <link href="{{ URL::asset('font-awesome-4.7/css/font-awesome.min.css') }}" rel="stylesheet" media="all">

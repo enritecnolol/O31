@@ -8,7 +8,7 @@
                 <div class="login-content">
                     <div class="login-logo">
                         <a href="#">
-                            <img src="{{ URL::asset('ADG.png')}}" style="width: 160px" alt="CoolAdmin">
+                            <img src="{{ URL::asset('SOFIA.png')}}" style="width: 200px" alt="CoolAdmin">
                         </a>
                     </div>
                     <div class="login-form">

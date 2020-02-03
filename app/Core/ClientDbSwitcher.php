@@ -23,11 +23,11 @@ class ClientDbSwitcher
         Config::set("database.connections.client", [
             "database" => $connection_data['name'],
             "driver"=> 'mysql',
-            "host"=> '127.0.0.1',
+//            "host"=> '127.0.0.1',
             'username'=> 'adgsoft',
 //            'username'=> 'homestead',
             'password'=>'*1010537-130778442*',
-//            'password'=>'secret',
+            'password'=>'secret',
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci'
         ]);

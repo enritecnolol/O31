@@ -26,14 +26,7 @@
                         <thead>
                         <tr>
                             <th>
-                                {{--<select v-model="paginate" @change="productosp()" class="form-control form-control-sm">--}}
-                                    {{--<option value="5">5</option>--}}
-                                    {{--<option value="10">10</option>--}}
-                                    {{--<option value="15">15</option>--}}
-                                    {{--<option value="20">20</option>--}}
-                                {{--</select>--}}
-
-                                <input type="range" @mouseleave="productosp()" v-model="paginate" class="custom-range" min="5" max="15" id="customRange2">
+                                <input type="range" v-model="paginate" class="custom-range" min="5" max="15" id="customRange2">
                             </th>
                             <th>Nombre</th>
                             <th>Codigo</th>
@@ -199,6 +192,12 @@
                 _this.cargarsubcategoria();
                 _this.existencia();
                 _this.productosp();
+            },
+            watch:{
+              paginate()
+              {
+                  this.productosp()
+              }
             },
             methods:{
                 existencia()
