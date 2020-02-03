@@ -80,7 +80,7 @@
             <div class="container-fluid">
                 <div class="header-mobile-inner">
                     <a href="/dashboard">
-                        <span style="color: #0062cc; font-size: x-large"> <span style="font-weight: 600">ADG</span>POS</span>
+                        <span style="color: #0062cc; font-size: x-large"> <span style="font-weight: 600">Sofia</span>RD</span>
                     </a>
                     <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -173,7 +173,7 @@
             {{--<aside class="menu-sidebar2 d-none d-lg-block" style="box-shadow: 1px 1px 6px #888888;">--}}
             <div class="logo">
                 <a href="/dashboard">
-                    <span style="color: white; font-size: x-large"> <span style="font-weight: 600">ADG</span>POS</span>
+                    <span style="color: white; font-size: x-large"> <span style="font-weight: 600">Sofia</span>RD</span>
                 </a>
             </div>
             @yield('aside')
@@ -288,7 +288,7 @@
                     {{--<aside class="menu-sidebar2 d-none d-lg-block" style="box-shadow: 1px 1px 6px #888888;">--}}
                     <div class="logo">
                         <a href="/dashboard">
-                            <span style="color: white; font-size: x-large"> <span style="font-weight: 600">ADG</span>POS</span>
+                            <span style="color: white; font-size: x-large"> <span style="font-weight: 600">Sofia</span>RD</span>
                         </a>
                     </div>
                     @yield('aside')
