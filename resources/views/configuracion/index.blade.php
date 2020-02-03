@@ -34,9 +34,19 @@
                                     <label for="company" class=" form-control-label"><strong>Nombre Compañia</strong></label>
                                     <input type="text" required autofocus  name="nombreempresa" placeholder="Ingrese nombre de la compañia" class="form-control">
                                 </div>
-                                <div class="form-group">
-                                    <label for="vat" class=" form-control-label"><strong>Teléfono</strong></label>
-                                    <input type="text" maxlength="11"  required name="telefono"  placeholder="0000000000" class="form-control">
+                                <div class="row form-group">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="vat" class=" form-control-label"><strong>Teléfono</strong></label>
+                                            <input type="text" maxlength="11"  required name="telefono"  placeholder="0000000000" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="vat" class=" form-control-label"><strong>RNC</strong></label>
+                                            <input type="text" maxlength="11"  required name="rnc"  placeholder="" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-6">
@@ -87,10 +97,10 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="" class=" form-control-label"><strong>Control inventario?</strong></label>
-                                            <select required name="inventario" class="form-control">
+                                            <select required disabled name="inventario" class="form-control">
                                                 <option value="">Selecciona</option>
                                                 <option value=true>Si</option>
-                                                <option value=false>No</option>
+                                                <option value=false selected>No</option>
                                             </select>
                                         </div>
                                     </div>
@@ -148,9 +158,19 @@
                                     <label for="company" class=" form-control-label"><strong>Nombre Compañia</strong></label>
                                     <input type="text"   :disabled="editar == false" required v-model="infoconfig.nombreempresa" name="nombreempresa" placeholder="Ingrese nombre de la compañia" class="form-control">
                                 </div>
-                                <div class="form-group">
-                                    <label for="vat" class=" form-control-label"><strong>Teléfono</strong></label>
-                                    <input type="text" maxlength="11" :disabled="editar == false" required v-model="infoconfig.telefono"  name="telefono"  placeholder="0000000000" class="form-control">
+                                <div class="row form-group">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="vat" class=" form-control-label"><strong>Teléfono</strong></label>
+                                            <input type="text" maxlength="11" :disabled="editar == false" required v-model="infoconfig.telefono"  name="telefono"  placeholder="0000000000" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="vat" class=" form-control-label"><strong>RNC</strong></label>
+                                            <input type="text" maxlength="11"  :disabled="editar == false" required name="rnc" v-model="infoconfig.rnc" placeholder="" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-6">
@@ -203,10 +223,10 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="" class=" form-control-label"><strong>Control inventario?</strong></label>
-                                            <select required :disabled="editar == false" v-model="infoconfig.controlinv" name="inventario" class="form-control">
+                                            <select required :disabled="true" v-model="infoconfig.controlinv" name="inventario" class="form-control">
                                                 <option value="">Selecciona</option>
                                                 <option value="si">Si</option>
-                                                <option value="no">No</option>
+                                                <option value="no" selected>No</option>
                                             </select>
                                         </div>
                                     </div>

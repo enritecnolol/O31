@@ -109834,7 +109834,35 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
+window.Vue = __webpack_require__(7);
+Vue.component('pagination', __webpack_require__(364));
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -109847,13 +109875,30 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       date: '',
       reset: false,
       MaxAmount: 0,
-      data: [],
+      data: {},
       text: '',
-      RNC: ''
+      RNC: '',
+      tiponfc: '',
+      tableSize: '10'
     };
   },
 
   methods: {
+    config: function config() {
+      var _this = this;
+
+      axios.post('/configuracion/sale').then(function (response) {
+        if (response.data[0]) {
+          _this.RNC = response.data[0].rnc;
+        }
+      }).catch(function (error) {});
+    },
+    changeTableSize: function changeTableSize() {
+      this.getData(1);
+    },
+    changePage: function changePage(page) {
+      this.getData(page);
+    },
     JSONToCSVConvertor: function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
       console.log(JSONData);
       var arrData = (typeof JSONData === 'undefined' ? 'undefined' : _typeof(JSONData)) != 'object' ? JSON.parse(JSONData) : JSONData;
@@ -109930,8 +109975,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     date_select: function date_select(i) {
       this.date = i.date;
     },
-    getData: function getData() {
-      var _this = this;
+    getData: function getData(page) {
+      var _this2 = this;
 
       if (!this.RNC) {
         toastr.warning("Coloque RNC");
@@ -109940,43 +109985,50 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       this.loading = true;
       axios.get('/report/607', {
         params: {
+          page: page,
+          size: this.tableSize === 'all' ? this.data.total : this.tableSize,
           date: this.date,
-          MaxAmount: this.MaxAmount
-
+          MaxAmount: this.MaxAmount,
+          tiponfc: this.tiponfc
         }
       }).then(function (response) {
-        _this.data = response.data;
+        _this2.data = response.data;
       }).catch(function (error) {
         console.log(error);
       }).finally(function () {
-        _this.loading = false;
+        _this2.loading = false;
       });
+    }
+  },
+  watch: {
+    tableSize: function tableSize() {
+      this.changeTableSize();
     }
   },
   computed: {
     dataFormat: function dataFormat() {
       var array = [];
-      for (var index in this.data) {
+      for (var index in this.data.data) {
         array.push({
-          'RNC/Cédula o Pasaporte': this.data[index].rnc_nfc,
+          'RNC/Cédula o Pasaporte': this.data.data[index].rnc_nfc ? this.data.data[index].rnc_nfc : '',
           'Tipo Identificación': 1,
-          'Número Comprobante Fiscal': this.data[index].ncfdevolucion ? this.data[index].ncfdevolucion : this.data[index].nfc,
-          'Número Comprobante Fiscal Modificado': this.data[index].ncfdevolucion ? this.data[index].nfc : this.data[index].ncfdevolucion,
+          'Número Comprobante Fiscal': this.data.data[index].ncfdevolucion ? this.data.data[index].ncfdevolucion : this.data.data[index].nfc,
+          'Número Comprobante Fiscal Modificado': this.data.data[index].ncfdevolucion ? this.data.data[index].nfc : this.data.data[index].ncfdevolucion ? this.data.data[index].ncfdevolucion : '',
           'Tipo de Ingreso': '01',
-          'Fecha Comprobante': moment(this.data[index].date).format('YYYYMMDD'),
+          'Fecha Comprobante': moment(this.data.data[index].date).format('YYYYMMDD'),
           'Fecha de Retención': '',
-          'Monto Facturado': this.data[index].brute,
-          'ITBIS Facturado': this.data[index].itbis,
+          'Monto Facturado': this.data.data[index].brute,
+          'ITBIS Facturado': this.data.data[index].itbis,
           'ITBIS Retenido por Terceros': '',
           'ITBIS Percibido': '',
           'Retención Renta por Terceros': '',
           'ISR Percibido': '',
           'Impuesto Selectivo al Consumo': '',
           'Otros Impuestos/Tasas': '',
-          'Monto Propina Legal': this.data[index].leycamarero,
-          'Efectivo': this.data[index].Monto_efectivo,
+          'Monto Propina Legal': this.data.data[index].leycamarero,
+          'Efectivo': this.data.data[index].Monto_efectivo,
           'Cheque/ Transferencia/ Depósito': 0,
-          'Tarjeta Débito/Crédito': this.data[index].Monto_tarjeta,
+          'Tarjeta Débito/Crédito': this.data.data[index].Monto_tarjeta,
           'Venta a Crédito': '',
           'Bonos o Certificados de Regalo': '',
           'Permuta': '',
@@ -109985,6 +110037,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       }
       return array;
     }
+  },
+  created: function created() {
+    this.config();
   }
 });
 
@@ -110259,40 +110314,6 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "col-md-4" }, [
               _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "exampleFormControlInput1" } }, [
-                  _vm._v("RNC")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.RNC,
-                      expression: "RNC"
-                    }
-                  ],
-                  staticClass: "form-control form-control-sm",
-                  attrs: {
-                    type: "text",
-                    id: "exampleFormControlInput1",
-                    placeholder: ""
-                  },
-                  domProps: { value: _vm.RNC },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.RNC = $event.target.value
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-5" }, [
-              _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "MontoMaximoConsumo" } }, [
                   _vm._v("Monto maximo de consumo")
                 ]),
@@ -110327,6 +110348,82 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-5" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "tiponcf" } }, [
+                  _vm._v("Tipo ncf")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.tiponfc,
+                        expression: "tiponfc"
+                      }
+                    ],
+                    staticClass: "form-control form-control-sm",
+                    attrs: { id: "tiponcf" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.tiponfc = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "01" } }, [
+                      _vm._v("01 | Credito Fiscal")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "02" } }, [
+                      _vm._v("02 | Facturas de Consumo")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "03" } }, [
+                      _vm._v("03 | Notas de Debito")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "04" } }, [
+                      _vm._v("04 | Notas de Credito")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "11" } }, [
+                      _vm._v("11 | Provedores Informales")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "12" } }, [
+                      _vm._v("12 | Registro Unico de Ingresos")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "13" } }, [
+                      _vm._v("13 | Registro de Gastos Menores")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "14" } }, [
+                      _vm._v("14 | Regímenes Especiales de Tributación")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "15" } }, [
+                      _vm._v("15 | Comprobantes Gubernamentales")
+                    ])
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-5" }, [
               _c(
                 "button",
                 {
@@ -110343,80 +110440,143 @@ var render = function() {
             _vm._v(" "),
             _vm._m(1),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "table-responsive" }, [
-                _c("table", { staticClass: "table" }, [
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.data, function(item, index) {
-                      return _c("tr", [
-                        _c("td", [_vm._v(_vm._s(index + 1))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(item.rnc_nfc))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("1")]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            _vm._s(
-                              item.ncfdevolucion ? item.ncfdevolucion : item.nfc
-                            )
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            _vm._s(
-                              item.ncfdevolucion ? item.nfc : item.ncfdevolucion
-                            )
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("01")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(item.date))]),
-                        _vm._v(" "),
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(item.total_facture))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(item.itbis))]),
-                        _vm._v(" "),
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(item.leycamarero))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(item.Monto_efectivo))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("0")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(item.Monto_tarjeta))]),
-                        _vm._v(" "),
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td")
-                      ])
-                    })
-                  )
-                ])
+            _c("div", { staticClass: "col-md-2" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.tableSize,
+                        expression: "tableSize"
+                      }
+                    ],
+                    staticClass: "form-control form-control-sm",
+                    attrs: { id: "size" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.tableSize = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "20" } }, [_vm._v("20")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "30" } }, [_vm._v("30")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "all" } }, [_vm._v("Todos")])
+                  ]
+                )
               ])
             ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-md-12" },
+              [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c("table", { staticClass: "table" }, [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.data.data, function(item, index) {
+                        return _c("tr", [
+                          _c("td", [_vm._v(_vm._s(index + 1))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.rnc_nfc))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v("1")]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(
+                                item.ncfdevolucion
+                                  ? item.ncfdevolucion
+                                  : item.nfc
+                              )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(
+                                item.ncfdevolucion
+                                  ? item.nfc
+                                  : item.ncfdevolucion
+                              )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v("01")]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.date))]),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.total_facture))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.itbis))]),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.leycamarero))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.Monto_efectivo))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v("0")]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.Monto_tarjeta))]),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td")
+                        ])
+                      })
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("pagination", {
+                  attrs: {
+                    align: "right",
+                    data: _vm.data,
+                    limit: 1,
+                    "show-disabled": true
+                  },
+                  on: { "pagination-change-page": _vm.changePage }
+                })
+              ],
+              1
+            ),
             _vm._v(" "),
             _c(
               "div",

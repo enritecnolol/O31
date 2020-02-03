@@ -9,9 +9,21 @@
                 <a href="/">
                     <i class="fas fa-shopping-cart"></i><strong>PUNTO DE VENTA</strong></a>
             </li>
-            <li>
-                <a href="/productos">
-                    <i class="fas fa-utensils"></i><strong>PRODUCTOS</strong></a>
+            <li class="has-sub">
+                <a class="js-arrow" href="#">
+                    <i class="fas fa-book"></i></i><strong>CATALOGO</strong>
+                    <span class="arrow">
+                        <i class="fas fa-angle-down"></i>
+                    </span>
+                </a>
+                <ul class="list-unstyled navdbar__sub-list js-sub-list" style="display: none">
+                    <li>
+                        <a style="padding-left: 90px" href="/productos">PRODUCTOS</a>
+                    </li>
+                    <li>
+                        <a style="padding-left: 90px" href="/categorias">CATEGORIAS</a>
+                    </li>
+                </ul>
             </li>
             <li class="has-sub">
                 <a class="js-arrow" href="#">
@@ -48,16 +60,11 @@
                     </li>
                 </ul>
             </li>
-            <li>
-                <a href="/categorias">
-                    <i class="fas fa-clipboard-check"></i><strong>CATEGORIAS</strong>
-                </a>
-            </li>
-            <li>
-                <a href="/control/inventario">
-                    <i class="fas fa-boxes"></i><strong>CONTROL DE INVENTARIO</strong>
-                </a>
-            </li>
+            {{--<li>--}}
+                {{--<a href="/control/inventario">--}}
+                    {{--<i class="fas fa-boxes"></i><strong>CONTROL DE INVENTARIO</strong>--}}
+                {{--</a>--}}
+            {{--</li>--}}
             <li>
                 <a href="/devolucion">
                     <i class="fas fa-undo"></i><strong>DEVOLUCION</strong></a>
@@ -81,10 +88,6 @@
                     </li>
                 </ul>
             </li>
-            {{--<li>--}}
-                {{--<a href="/reportes">--}}
-                    {{--<i class="fas fa-newspaper"></i><strong>REPORTE DE VENTAS</strong></a>--}}
-            {{--</li>--}}
             <li>
                 <a href="/reportv2">
                     <i class="fas fa-newspaper"></i><strong>REPORTERIA V2</strong></a>

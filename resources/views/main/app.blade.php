@@ -214,33 +214,23 @@
                                                     </a>
                                                 </div>
                                                 <div class="account-dropdown__item">
-                                                    <a href="/estimate">
-                                                        <i class="far fa-file"></i>COTIZACION
-                                                    </a>
-                                                </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="/reporte607">
-                                                        <i class="fas fa-file-alt"></i>REPORTE 607
-                                                    </a>
-                                                </div>
-                                                <div class="account-dropdown__item">
                                                     <a href="/productos">
                                                         <i class="fas fa-utensils"></i>Productos
                                                     </a>
                                                 </div>
                                                 <div class="account-dropdown__item">
-                                                    <a href="/devolucion">
-                                                        <i class="fas fa-undo"></i>Devolucion
-                                                    </a>
-                                                </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="/">
-                                                        <i class="fas fa-shopping-cart"></i>Vender
-                                                    </a>
-                                                </div>
-                                                <div class="account-dropdown__item">
                                                     <a href="/categorias">
                                                         <i class="fas fa-clipboard-check"></i></i>Categorias
+                                                    </a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="/estimate">
+                                                        <i class="far fa-file"></i>Cotización
+                                                    </a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="/devolucion">
+                                                        <i class="fas fa-undo"></i>Devolución
                                                     </a>
                                                 </div>
                                                 <div class="account-dropdown__item">
@@ -254,13 +244,18 @@
                                                     </a>
                                                 </div>
                                                 <div class="account-dropdown__item">
+                                                    <a href="/reporte607">
+                                                        <i class="fas fa-file-alt"></i>Reporte 607
+                                                    </a>
+                                                </div>
+                                                <div class="account-dropdown__item">
                                                     <a href="/clientes">
                                                         <i class="fas fa-users"></i>Clientes
                                                     </a>
                                                 </div>
                                                 <div class="account-dropdown__item">
                                                     <a id="" href="/configuracion">
-                                                        <i class="zmdi zmdi-settings"></i>Configuracion
+                                                        <i class="zmdi zmdi-settings"></i>Configuración
                                                     </a>
                                                 </div>
                                             </div>

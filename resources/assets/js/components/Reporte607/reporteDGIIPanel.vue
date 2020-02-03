@@ -17,14 +17,24 @@
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="exampleFormControlInput1">RNC</label>
-                <input type="text" v-model="RNC" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="">
+                <label for="MontoMaximoConsumo">Monto maximo de consumo</label>
+                <input type="number" min="0" class="form-control form-control-sm" id="MontoMaximoConsumo" placeholder="" v-model="MaxAmount">
               </div>
             </div>
             <div class="col-md-5">
               <div class="form-group">
-                <label for="MontoMaximoConsumo">Monto maximo de consumo</label>
-                <input type="number" min="0" class="form-control form-control-sm" id="MontoMaximoConsumo" placeholder="" v-model="MaxAmount">
+                <label for="tiponcf">Tipo ncf</label>
+                <select id="tiponcf" class="form-control form-control-sm" v-model="tiponfc">
+                  <option value="01">01 | Credito Fiscal</option>
+                  <option value="02">02 | Facturas de Consumo</option>
+                  <option value="03">03 | Notas de Debito</option>
+                  <option value="04">04 | Notas de Credito</option>
+                  <option value="11">11 | Provedores Informales</option>
+                  <option value="12">12 | Registro Unico de Ingresos</option>
+                  <option value="13">13 | Registro de Gastos Menores</option>
+                  <option value="14">14 | Regímenes Especiales de Tributación</option>
+                  <option value="15">15 | Comprobantes Gubernamentales</option>
+                </select>
               </div>
             </div>
             <div class="col-md-5">
@@ -32,6 +42,16 @@
             </div>
             <div class="col-md-12">
               <br>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <select id="size" class="form-control form-control-sm" v-model="tableSize">
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                  <option value="all">Todos</option>
+                </select>
+              </div>
             </div>
             <div class="col-md-12">
               <div class="table-responsive">
@@ -65,7 +85,7 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr v-for="(item, index) in data">
+                  <tr v-for="(item, index) in data.data">
                     <td>{{index+1}}</td>
                     <td>{{item.rnc_nfc}}</td>
                     <td>1</td>
@@ -94,6 +114,12 @@
                   </tbody>
                 </table>
               </div>
+              <pagination
+                  align="right"
+                  :data="data"
+                  :limit="1"
+                  :show-disabled="true"
+                  @pagination-change-page="changePage"/>
             </div>
             <div class="col-md-12" style="margin-top: 15px">
               <button class="btn btn-sm btn-success"
@@ -108,6 +134,8 @@
   </div>
 </template>
 <script>
+  window.Vue = require('vue');
+  Vue.component('pagination', require('laravel-vue-pagination'));
   import datePicker from "./datePicker";
   export default {
     components:{
@@ -120,12 +148,34 @@
         date:'',
         reset:false,
         MaxAmount:0,
-        data:[],
+        data:{},
         text:'',
-        RNC:''
+        RNC:'',
+        tiponfc:'',
+        tableSize:'10'
       }
     },
     methods:{
+      config()
+      {
+        axios.post('/configuracion/sale')
+            .then( (response) => {
+              if(response.data[0])
+              {
+                this.RNC = response.data[0].rnc
+              }
+            })
+            .catch(function (error) {
+            });
+      },
+      changeTableSize()
+      {
+        this.getData(1);
+      },
+      changePage(page)
+      {
+        this.getData(page)
+      },
       JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel)
       {
         console.log(JSONData)
@@ -204,7 +254,7 @@
       {
         this.date = i.date;
       },
-      getData()
+      getData(page)
       {
         if(!this.RNC)
         {
@@ -214,9 +264,11 @@
         this.loading = true;
         axios.get('/report/607',{
           params:{
+            page:page,
+            size:this.tableSize === 'all' ? this.data.total : this.tableSize,
             date:this.date,
             MaxAmount:this.MaxAmount,
-
+            tiponfc:this.tiponfc
           }
         })
             .then((response) => {
@@ -230,32 +282,38 @@
             });
       }
     },
+    watch:{
+      tableSize()
+      {
+        this.changeTableSize();
+      }
+    },
     computed:{
       dataFormat()
       {
         let array = [];
-        for(var index in this.data)
+        for(var index in this.data.data)
         {
           array.push({
-            'RNC/Cédula o Pasaporte' : this.data[index].rnc_nfc,
+            'RNC/Cédula o Pasaporte' : this.data.data[index].rnc_nfc ? this.data.data[index].rnc_nfc : '',
             'Tipo Identificación' : 1,
-            'Número Comprobante Fiscal': this.data[index].ncfdevolucion ? this.data[index].ncfdevolucion: this.data[index].nfc ,
-            'Número Comprobante Fiscal Modificado': this.data[index].ncfdevolucion ?  this.data[index].nfc : this.data[index].ncfdevolucion,
+            'Número Comprobante Fiscal': this.data.data[index].ncfdevolucion ? this.data.data[index].ncfdevolucion: this.data.data[index].nfc ,
+            'Número Comprobante Fiscal Modificado': this.data.data[index].ncfdevolucion ?  this.data.data[index].nfc : this.data.data[index].ncfdevolucion ? this.data.data[index].ncfdevolucion : '',
             'Tipo de Ingreso': '01',
-            'Fecha Comprobante': moment(this.data[index].date).format('YYYYMMDD'),
+            'Fecha Comprobante': moment(this.data.data[index].date).format('YYYYMMDD'),
             'Fecha de Retención': '',
-            'Monto Facturado': this.data[index].brute,
-            'ITBIS Facturado': this.data[index].itbis,
+            'Monto Facturado': this.data.data[index].brute,
+            'ITBIS Facturado': this.data.data[index].itbis,
             'ITBIS Retenido por Terceros': '',
             'ITBIS Percibido': '',
             'Retención Renta por Terceros': '',
             'ISR Percibido': '',
             'Impuesto Selectivo al Consumo': '',
             'Otros Impuestos/Tasas': '',
-            'Monto Propina Legal': this.data[index].leycamarero,
-            'Efectivo': this.data[index].Monto_efectivo,
+            'Monto Propina Legal': this.data.data[index].leycamarero,
+            'Efectivo': this.data.data[index].Monto_efectivo,
             'Cheque/ Transferencia/ Depósito': 0,
-            'Tarjeta Débito/Crédito': this.data[index].Monto_tarjeta,
+            'Tarjeta Débito/Crédito': this.data.data[index].Monto_tarjeta,
             'Venta a Crédito': '',
             'Bonos o Certificados de Regalo': '',
             'Permuta': '',
@@ -264,6 +322,9 @@
         }
         return array;
       }
+    },
+    created() {
+      this.config()
     }
   }
 </script>

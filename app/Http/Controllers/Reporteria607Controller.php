@@ -19,10 +19,13 @@ class Reporteria607Controller extends Controller
         $data = DB::connection('client')
             ->table(DB::raw('factures as f'))
             ->whereNotNull('f.tipo_nfc')
-            ->where('f.tipo_nfc', '01')
             ->whereBetween('f.date', [$from_date, $end_date])
             ->leftJoin('devolucions', 'f.id', '=', 'devolucions.factura_id');
 
+        if($request->tiponfc)
+        {
+            $data->where('tipo_nfc', $request->tiponfc);
+        }
 //        if($request->MaxAmount)
 //        {
 //            $data->where('tipo_nfc', '02')->where('total_facture', '>=', $request->MaxAmount);
@@ -32,7 +35,8 @@ class Reporteria607Controller extends Controller
             DB::raw('f.*'),
             DB::raw('devolucions.ncf as ncfdevolucion')
         );
+        $size = $request->size;
 
-        return $data->get();
+        return $data->paginate($size);
     }
 }

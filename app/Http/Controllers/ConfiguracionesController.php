@@ -32,6 +32,7 @@ class ConfiguracionesController extends Controller
             $file->storeAs('/', $file->getClientOriginalName());
             $configuracion->nombreempresa = $request->nombreempresa;
             $configuracion->telefono = $request->telefono;
+            $configuracion->rnc = $request->rnc;
             $configuracion->ciudad = $request->ciudad;
             $configuracion->pais = $request->pais;
             $configuracion->direccion = $request->direccion;
@@ -50,6 +51,7 @@ class ConfiguracionesController extends Controller
 
             $configuracion->nombreempresa = $request->nombreempresa;
             $configuracion->telefono = $request->telefono;
+            $configuracion->rnc = $request->rnc;
             $configuracion->ciudad = $request->ciudad;
             $configuracion->pais = $request->pais;
             $configuracion->direccion = $request->direccion;
@@ -75,13 +77,14 @@ class ConfiguracionesController extends Controller
             $file->storeAs('/', $file->getClientOriginalName());
             $configuracion->nombreempresa = $request->nombreempresa;
             $configuracion->telefono = $request->telefono;
+            $configuracion->rnc = $request->rnc;
             $configuracion->ciudad = $request->ciudad;
             $configuracion->pais = $request->pais;
             $configuracion->direccion = $request->direccion;
             $configuracion->img = $file->getClientOriginalName();
             $configuracion->impuesto = $request->impuesto;
             $configuracion->descuento = $request->descuento;
-            $configuracion->controlinv = $request->inventario;
+            $configuracion->controlinv = 'no';
             $configuracion->emailinfo = $request->emailinfo;
             $configuracion->generacomprobante = $request->generacomprobante;
             $configuracion->leycamarero = $request->leycamarero;
@@ -90,12 +93,13 @@ class ConfiguracionesController extends Controller
         }else{
             $configuracion->nombreempresa = $request->nombreempresa;
             $configuracion->telefono = $request->telefono;
+            $configuracion->rnc = $request->rnc;
             $configuracion->ciudad = $request->ciudad;
             $configuracion->pais = $request->pais;
             $configuracion->direccion = $request->direccion;
             $configuracion->impuesto = $request->impuesto;
             $configuracion->descuento = $request->descuento;
-            $configuracion->controlinv = $request->inventario;
+            $configuracion->controlinv = 'no';
             $configuracion->emailinfo = $request->emailinfo;
             $configuracion->generacomprobante = $request->generacomprobante;
             $configuracion->leycamarero = $request->leycamarero;
