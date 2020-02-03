@@ -1,5 +1,5 @@
 @extends('main.app')
-@section('tittle','Cafeteria | Tabla itbis(%)')
+@section('tittle','SofiaRD | Tabla itbis(%)')
 
 @section('titulo')
     <h3 style="color: white"><i class="fas fa-arrow-circle-right"></i> Impuesto</h3>

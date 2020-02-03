@@ -1,5 +1,5 @@
 @extends('main.app')
-@section('tittle','Cafeteria | Secuencia de Comprobante')
+@section('tittle','SofiaRD | Secuencia de Comprobante')
 
 @section('titulo')
     <h3 style="color: white"><i class="fas fa-arrow-circle-right"></i>Secuencia de Comprobante</h3>

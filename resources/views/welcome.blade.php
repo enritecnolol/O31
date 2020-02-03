@@ -112,7 +112,7 @@
         }
     </style>
 @endsection
-@section('tittle',' Cafeteria| Punto Venta')
+@section('tittle',' SofiaRD | Punto Venta')
 
 @section('titulo')
     {{--<MARQUEE width="100%" SCROLLDELAY=200><h5 style="color: white">acceso rapido: tecla inicio - Enfoca el codigo, tecla F8 - buscar cliente, tecla F7 - Crear Cliente, tecla FIN - Cobrar, tecla pagina abajo - Cancelar Compra</h5></MARQUEE>--}}

@@ -1,5 +1,5 @@
 @extends('main.app')
-@section('tittle','Cafeteria | Historico de Venta')
+@section('tittle','SofiaRD | Historico de Venta')
 
 
 @section('aside')

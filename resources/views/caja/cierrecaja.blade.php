@@ -1,5 +1,5 @@
 @extends('main.app')
-@section('tittle','Cafeteria | Cierre de Caja')
+@section('tittle','SofiaRD | Cierre de Caja')
 @section('style')
     <style>
         .loader {

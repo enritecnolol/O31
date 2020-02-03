@@ -1,5 +1,5 @@
 @extends('main.app')
-@section('tittle','Cafeteria | Tipo de Tarjetas')
+@section('tittle','SofiaRD | Tipo de Tarjetas')
 
 @section('titulo')
     <h3 style="color: white"><i class="fas fa-arrow-circle-right"></i> Tipo de Tarjetas</h3>

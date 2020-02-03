@@ -1,5 +1,5 @@
 @extends('main.app')
-@section('tittle','Cafeteria | Apertura de Caja')
+@section('tittle','SofiaRD | Apertura de Caja')
 
 
 @section('aside')

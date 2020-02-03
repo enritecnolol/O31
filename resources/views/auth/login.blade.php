@@ -1,5 +1,5 @@
 @include('layouts.header')
-@section('tittle', 'Cafeteria | Login')
+@section('tittle', 'SofiaRD | Login')
 <body class="animsition">
 <div class="page-wrapper">
     <div class="page-content--bge5" style="overflow: scroll">
@@ -8,7 +8,7 @@
                 <div class="login-content">
                     <div class="login-logo">
                         <a href="#">
-                            <img src="{{ URL::asset('restaurant.png')}}" style="width: 160px" alt="CoolAdmin">
+                            <img src="{{ URL::asset('ADG.png')}}" style="width: 160px" alt="CoolAdmin">
                         </a>
                     </div>
                     <div class="login-form">
@@ -40,7 +40,7 @@
 
                                 </label>
                             </div>
-                            <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">Iniciar Sesion</button>
+                            <button class="au-btn au-btn--block au-btn--blue m-b-20" type="submit">Iniciar Sesion</button>
                         </form>
                     </div>
                 </div>
