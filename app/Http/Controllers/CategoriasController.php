@@ -19,11 +19,11 @@ class CategoriasController extends Controller
 
 
     public function nuevacategoria(Request $request){
-        $categoria = new Categoria;
+        $categoria = new Categoria();
 
-        $request->validate([
-            'codigo' => 'required|unique:categorias|max:255',
-        ]);
+//        $request->validate([
+//            'codigo' => 'required|unique:categorias|max:255',
+//        ]);
 
         if ($request->hasFile('img')){
             $file = $request->file('img');

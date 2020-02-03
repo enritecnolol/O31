@@ -17,16 +17,10 @@ class ProductsController extends Controller
     public function index()
     {
         $id = Auth::id();
-//        $productos = Product::all()->where('user_id', '==', $id);
-
-//        SELECT products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento , IFNULL(impuestosrefs.descripcion, '') AS descripcion FROM products
-//        LEFT JOIN impuestosrefs ON products.impuestoref_id = impuestosrefs.id
-//        LEFT JOIN rangoimpuestos ON rangoimpuestos.referenciaitbis_id = impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta
 
         $productos = DB::connection('client')->table('products')
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
             ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
-//            ->where('products.user_id', $id)
             ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->paginate(8);
 
         return view('productos.index', compact('productos'));

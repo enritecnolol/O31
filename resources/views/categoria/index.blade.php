@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-    <div class="container" v-on:mousemove="cargarcategoria()">
+    <div class="container">
         <div class="card">
             <div class="card-header">
                 <strong style="color: #0062cc">Categorias</strong>
