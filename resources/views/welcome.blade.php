@@ -31,6 +31,7 @@
             right: 0;
             height: 100%;
             width: 100%;
+            border-radius: 20px 20px 20px 20px;
             opacity: 0;
             transition: .5s ease;
             background-color: #2dba50;
@@ -356,11 +357,11 @@
                             </div>
                             <div class="row dragscroll" style="overflow-y: auto;height: 84vh;cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;">
                                 <template v-for="p in productosbuscados !== '' ? productosbuscados : productos" v-if="cerrada === 'A'">
-                                    <div class="card" style="height: auto;background: #c8f1ff;width: 130px;margin-left: 10px;margin-right: 10px;max-height: 184px;" @click="pfactura(p.id)" :title="p.name">
-                                        <div class="card-body" style="background: white">
+                                    <div class="card" style="box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);border-radius: 20px 20px 20px 20px;height: auto;width: 130px;margin-left: 10px;margin-right: 10px;max-height: 184px;" @click="pfactura(p.id)" :title="p.name">
+                                        <div class="card-body" style="background: white;border-radius: 20px 20px 20px 20px;padding:0px">
                                             <span class="badge badge-primary" style="position: absolute; top: -6px; left: -8px">@{{ p.barcode }}</span>
                                             <div class="mx-auto d-block">
-                                                <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" :src="'imagenes/'+p.img" alt="Card image cap">
+                                                <img class="mx-auto d-block" style=" border-radius: 20px 20px 0px 0px;height: 91px; width: 128px" :src="'imagenes/'+p.img" alt="Card image cap">
                                                 <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ p.name }}</h6>
                                                 <div class="location text-sm-center" style="color: #0062cc">
                                                     <i class="fa fa-money-bill-alt"></i> @{{p.price}}
