@@ -361,7 +361,7 @@
                                         <div class="card-body" style="background: white;border-radius: 20px 20px 20px 20px;padding:0px">
                                             <span class="badge badge-primary" style="position: absolute; top: -6px; left: -8px">@{{ p.barcode }}</span>
                                             <div class="mx-auto d-block">
-                                                <img class="mx-auto d-block" style=" border-radius: 20px 20px 0px 0px;height: 91px; width: 128px" :src="'imagenes/'+p.img" alt="Card image cap">
+                                                <img class="mx-auto d-block" style="border-radius: 20px 20px 0px 0px;height:91px;width:128px" :src="'imagenes/'+p.img" alt="Card image cap">
                                                 <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ p.name }}</h6>
                                                 <div class="location text-sm-center" style="color: #0062cc">
                                                     <i class="fa fa-money-bill-alt"></i> @{{p.price}}

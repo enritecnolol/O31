@@ -288,7 +288,8 @@
                     {{--<aside class="menu-sidebar2 d-none d-lg-block" style="box-shadow: 1px 1px 6px #888888;">--}}
                     <div class="logo">
                         <a href="/dashboard">
-                            <span style="color: white; font-size: x-large"> <span style="font-weight: 600">Sofia</span>RD</span>
+                            {{--<span style="color: white; font-size: x-large"> <span style="font-weight: 600">Sofia</span>RD</span>--}}
+                            <img src="{{ URL::asset('sofia247x46.png')}}" style="width: 247px;height: 46px;" alt="Cool Admin">
                         </a>
                     </div>
                     @yield('aside')
