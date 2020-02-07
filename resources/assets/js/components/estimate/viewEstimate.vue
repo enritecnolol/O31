@@ -63,7 +63,7 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#" @click="dataEdit(item.id)">Editar</a>
-<!--                    <a class="dropdown-item" href="#" @click="ResendEstimate(item.id)">Reenviar</a>-->
+                    <a class="dropdown-item" href="#" @click="ChangeToInvoice(item.id)">Convertir en Factura</a>
                     <a class="dropdown-item" href="#">Eliminar</a>
                   </div>
                 </div>
@@ -94,6 +94,10 @@
       }
     },
     methods:{
+      ChangeToInvoice(id)
+      {
+        window.location.href = 'billing?convertToInvoice='+id;
+      },
       dataEdit(id)
       {
         this.$emit('dataEdit', id);

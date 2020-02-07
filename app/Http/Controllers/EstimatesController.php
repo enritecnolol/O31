@@ -195,6 +195,26 @@ class EstimatesController extends Controller
 
             foreach ($request->details as $detail)
             {
+                if(!array_key_exists('id',$detail))
+                {
+                    $estimateDetail = new EstimateDetail();
+                    if($detail['product']['label'])
+                    {
+                        $estimateDetail->product = $detail['product']['label'];
+
+                        if(isset($detail['product']['code']))
+                        {
+                            $estimateDetail->product_id = $detail['product']['code'];
+                        }
+                    }
+                    $estimateDetail->description = $detail['description'];
+                    $estimateDetail->quantity = $detail['quantity'];
+                    $estimateDetail->price = $detail['price'];
+                    $estimateDetail->discount = $detail['discount'];
+                    $estimateDetail->amount = $detail['amount'];
+                    $estimateDetail->estimate_id = $estimate->id;
+                    $estimateDetail->save();
+                }
                 $estimateDetail = EstimateDetail::find($detail['id']);
                 if(in_array($detail['id'], $estimateDetailDBId)){
 

@@ -49,7 +49,7 @@
             </li>
             <li class="has-sub">
                 <a class="js-arrow" href="#">
-                    <i class="far fa-file"></i><strong>FACTURACION</strong>
+                    <i class="far fa-file"></i><strong>FACTURACIÓN</strong>
                     <span class="arrow">
                         <i class="fas fa-angle-down"></i>
                     </span>
@@ -58,16 +58,17 @@
                     <li>
                         <a style="padding-left: 90px" href="/estimate">COTIZACION</a>
                     </li>
+                    <li>
+                        <a style="padding-left: 90px" href="/billing">FACTURACIÓN</a>
+                    </li>
+                    <li>
+                        <a style="padding-left: 90px" href="/invoice/payment">RECIBO DE INGRESO</a>
+                    </li>
                 </ul>
             </li>
-            {{--<li>--}}
-                {{--<a href="/control/inventario">--}}
-                    {{--<i class="fas fa-boxes"></i><strong>CONTROL DE INVENTARIO</strong>--}}
-                {{--</a>--}}
-            {{--</li>--}}
             <li>
                 <a href="/devolucion">
-                    <i class="fas fa-undo"></i><strong>DEVOLUCION</strong></a>
+                    <i class="fas fa-undo"></i><strong>DEVOLUCIÓN</strong></a>
             </li>
             <li class="has-sub">
                 <a class="js-arrow" href="#">
@@ -78,13 +79,13 @@
                 </a>
                 <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">
                     <li>
-                        <a style="padding-left: 90px" href="/provedores">Provedores</a>
+                        <a style="padding-left: 90px" href="/provedores">PROVEDORES</a>
                     </li>
                     <li>
-                        <a style="padding-left: 90px" href="/entrada/comprobante">Entrada de Comprobante</a>
+                        <a style="padding-left: 90px" href="/entrada/comprobante">ENTRADA DE COMBROBANTE</a>
                     </li>
                     <li>
-                        <a style="padding-left: 90px" href="/pago/entrada/comprobante">Pago de Comprobante</a>
+                        <a style="padding-left: 90px" href="/pago/entrada/comprobante">PAGO DE COMPROBANTE</a>
                     </li>
                 </ul>
             </li>
@@ -102,14 +103,17 @@
             </li>
             <li class="has-sub">
                 <a class="js-arrow" href="#">
-                    <i class="zmdi zmdi-settings"></i><strong>CONFIGURACION</strong>
+                    <i class="zmdi zmdi-settings"></i><strong>CONFIGURACIÓN</strong>
                     <span class="arrow">
                         <i class="fas fa-angle-down"></i>
                     </span>
                 </a>
                 <ul class="list-unstyled navbar__sub-list js-sub-list">
                     <li>
-                        <a style="padding-left: 90px" href="/configuracion">COMPANIA</a>
+                        <a style="padding-left: 90px" href="/configuracion">COMPAÑIA</a>
+                    </li>
+                    <li>
+                        <a style="padding-left: 90px" href="/payment/methods">METODO DE PAGO</a>
                     </li>
                     <li>
                         <a style="padding-left: 90px" href="/configuracion/itbis">ITBIS</a>

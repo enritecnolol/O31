@@ -194,6 +194,10 @@
       {
         return label.label ? label.label : label;
       },
+      loading(val)
+      {
+        this.$emit('loading', val);
+      },
       save(send)
       {
         if (this.selectedCustomer === '' ||
@@ -210,6 +214,7 @@
           toastr.warning("La factura no posee articulos vinculados");
           return;
         }
+        this.loading(true);
         let url =  this.dataEdit ? '/estimate/edit' : '/estimate';
         axios.post(url, {
           id:this.dataEdit ? this.dataEdit.id : this.dataEdit,
@@ -232,7 +237,10 @@
             .catch( (error) => {
               toastr.warning(error.response.data.message);
               console.log(error.response.data.message);
-            });
+            })
+        .finally(()=> {
+          this.loading(false);
+        });
       },
       reset()
       {

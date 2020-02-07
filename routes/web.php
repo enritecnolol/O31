@@ -212,21 +212,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/corotos/all', 'CorotosController@allcorotos');
     Route::post('/save/edit/corotos', 'CorotosController@saveeditcorotos');
     Route::post('/change/name/coroto', 'CorotosController@changename');
-
     /*=================================\- Areas -/======================================================*/
     Route::post('/save/area', 'AreasController@store');
     Route::post('/all/area', 'AreasController@allareas');
-
     /*=================================\- Comanda -/======================================================*/
     Route::get('/comanda', 'OrdensController@Comanda');
-
     /*=================================\- Mesa -/======================================================*/
     Route::post('/mesa/temp/store', 'MesatempsController@store');
     Route::post('/mesa/temp/all', 'MesatempsController@all');
     Route::post('/buscar/orden/x/mesa', 'MesatempsController@ordenxmesa');
     Route::post('/producto/orden', 'MesatempsController@productoselect');
-
-
     /*=================================\- Ordenar Mesa -/======================================================*/
     Route::post('/ordenar/mesa/store', 'OrdensController@store');
     Route::post('/producto/orden/cambiar/cantidad', 'OrdensController@cambiarcantidad');
@@ -261,16 +256,30 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/reportv2/comprobantes/fiscales', 'Reporteriav2Controller@typenfcdata');
     Route::post('/reportv2/return/data', 'Reporteriav2Controller@returndata');
     Route::get('/return/facture/detalle', 'Reporteriav2Controller@facture_detalle');
-
     /*=================================\- Cotizacion-/======================================================*/
     Route::get('/estimate', 'EstimatesController@index');
     Route::get('/estimate/list', 'EstimatesController@estimateList');
-    Route::get('/estimatetest', 'EstimatesController@indextest');
     Route::post('/estimate', 'EstimatesController@store');
-    Route::get('/estimate/resend', 'EstimatesController@resendEstimate');
+//    Route::get('/estimate/resend', 'EstimatesController@resendEstimate');
     Route::post('/estimate/edit', 'EstimatesController@edit');
     Route::get('/estimate/find', 'EstimatesController@getEstimateData');
-
+    /*=================================\- Facturacion -/======================================================*/
+    Route::get('/billing', 'BillingsController@index');
+    Route::post('/invoice', 'BillingsController@store');
+    Route::get('/invoices/list', 'BillingsController@invoicesList');
+    Route::post('/invoice/edit', 'BillingsController@edit');
+    Route::get('/invoice/find', 'BillingsController@getInvoiceData');
+    Route::get('/invoice/client', 'BillingsController@getInvoiceClient');
+    /*=================================\- Pago de factura -/======================================================*/
+    Route::get('/invoice/payment', 'BillingsController@PaymentIndex');
+    /*=================================\- Recibo de factura -/======================================================*/
+    Route::post('/pay/payment', 'PaymentsController@store');
+    /*=================================\- metodos de pago -/======================================================*/
+    Route::get('/payment/methods', 'PaymentMethodsController@index');
+    Route::post('/payment/methods', 'PaymentMethodsController@store');
+    Route::post('/payment/methods/edit', 'PaymentMethodsController@edit');
+    Route::get('/payment/methods/list', 'PaymentMethodsController@getPaginate');
+    Route::get('/payment/methods/without/paginate', 'PaymentMethodsController@getWithoutPaginate');
     /*=================================\- Reporteria607-/======================================================*/
     Route::get('/reporte607', 'Reporteria607Controller@index');
     Route::get('/report/607', 'Reporteria607Controller@getData');

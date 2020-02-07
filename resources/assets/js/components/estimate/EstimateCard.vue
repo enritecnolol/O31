@@ -2,7 +2,7 @@
   <div class="container">
     <div class="card">
       <div class="loader" v-if="loading"></div>
-      <create-estimate v-if="createForm" @createFormStatus="createFormStatus" :data-edit="dataEdit"/>
+      <create-estimate v-if="createForm" @loading="loadingStatus" @createFormStatus="createFormStatus" :data-edit="dataEdit"/>
       <view-estimate v-else @loading="loadingStatus" @createFormStatus="createFormStatus" @dataEdit="searchDataEdit"/>
     </div>
   </div>
