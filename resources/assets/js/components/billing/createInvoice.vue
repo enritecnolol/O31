@@ -13,7 +13,7 @@
         <hr>
       </div>
       <div class="col-md-5" v-show="!clientForm">
-        <label>Cliente <span style="color:red">*</span></label>
+        <label>Cliente: <span style="color:red">*</span></label>
         <v-select v-model="selectedCustomer" :options="clientsListForSelect" @input="setSelected"/>
         <div class="text-center createCustomer" style="color: #007bff">
           <span style="cursor: pointer" @click="clientForm = !clientForm"><i class="fas fa-user-plus" /> Crear cliente</span>
@@ -39,7 +39,7 @@
       </div>
       <div class="col-md-2" v-show="!clientForm">
         <div class="form-group">
-          <label for="TexInput1">No. Factura <span style="color:red">*</span></label>
+          <label for="TexInput1">No. Factura: <span style="color:red">*</span></label>
           <input type="text" class="form-control form-control-sm" placeholder="#0000" v-model="codeEstimate" id="TexInput1" />
         </div>
       </div>
@@ -164,13 +164,13 @@
           array.push({
             id:items[index].id,
             product:{
-              label:items[index].product,
+              label:items[index].name_product,
               code:items[index].product_id
             },
             description:items[index].description,
-            quantity:items[index].quantity,
+            quantity:items[index].quanlity,
             price:items[index].price,
-            discount:items[index].discount,
+            discount:items[index].descuento,
             amount:items[index].amount,
             product_id:items[index].product_id
           })
@@ -279,11 +279,11 @@
       },
       completeForm()
       {
-        this.estimateDate = this.dataEdit.invoice_date;
+        this.estimateDate = this.dataEdit.date;
         this.dueDate = this.dataEdit.due_date;
-        this.selectedCustomer = this.clientsListForSelect.find(e => e.code === this.dataEdit.client_id);
+        this.selectedCustomer = this.clientsListForSelect.find(e => e.code === parseInt(this.dataEdit.client));
         this.address = this.dataEdit.address;
-        this.codeEstimate = this.dataEdit.invoice_number;
+        this.codeEstimate = this.dataEdit.id;
         this.email = this.dataEdit.email;
         this.items = this.itemsEditFormat(this.dataEdit.invoice_details);
         this.note = this.dataEdit.note;

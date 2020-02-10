@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Detail;
 use App\Estimate;
+use App\Facture;
 use App\Invoice;
 use App\Invoice_item;
 use Illuminate\Http\Request;
@@ -21,77 +23,55 @@ class BillingsController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();
-
-        if (count(DB::connection('client')->table('invoices')->where('invoice_number', $request->invoice_number)->get()) != 0)
-        {
-            return response()->json(['message' => 'El codigo de factura en uso'], 400);
-        }
-
         try{
-            $invoice = new Invoice();
-            $invoice->invoice_number= $request->invoice_number;
-            $invoice->invoice_date = date("Y-m-d", strtotime($request->invoice_date));
-            $invoice->due_date = date("Y-m-d", strtotime($request->due_date));
-            $invoice->client_id = $request->client_id['code'];
-            $invoice->address = $request->address;
-            $invoice->note = $request->note;
-            $invoice->email = $request->email;
-            $invoice->subtotal = $request->subtotal;
-            $invoice->total = $request->total;
-            $invoice->open_balance = $request->total;
-            $invoice->status = 'DEUDA';
-            $invoice->paid_status = 'NO PAGADO';
-            $invoice->save();
+            $facture = new Facture();
+            $facture->date = date("Y-m-d", strtotime($request->invoice_date));
+            $facture->client = $request->client_id['code'];
+            $facture->address = $request->address;
+            $facture->due_date = date("Y-m-d", strtotime($request->due_date));
+            $facture->note = $request->note;
+            $facture->email = $request->email;
+            $facture->brute = $request->subtotal;
+            $facture->desc = 0;
+            $facture->total_facture = $request->total;
+            $facture->open_balance = $request->total;
+            $facture->type_sale = 'personalizado';
+            $facture->status = 'DEUDA';
+            $facture->paid_status = 'NO PAGADO';
+            $facture->save();
 
             foreach ($request->details as $detail)
             {
-                $invoice_item = new Invoice_item();
+                $detalle = new Detail();
+                $detalle->date = now();
                 if($detail['product']['label'])
                 {
-                    $invoice_item->product = $detail['product']['label'];
+                    $detalle->name_product = $detail['product']['label'];
 
                     if(isset($detail['product']['code']))
                     {
-                        $invoice_item->product_id = $detail['product']['code'];
+                        $detalle->product_id = $detail['product']['code'];
                     }
                 }
-                $invoice_item->description = $detail['description'];
-                $invoice_item->quantity = $detail['quantity'];
-                $invoice_item->price = $detail['price'];
-                $invoice_item->discount = $detail['discount'];
-                $invoice_item->amount = $detail['amount'];
-                $invoice_item->invoice_id = $invoice->id;
-                $invoice_item->save();
-            }
-
-            if($request->send)
-            {
-                $company = DB::connection('client')->table('configuracions')->first();
-                $dataPDF = [
-                    'data' => $request,
-                    'company' => $company
-                ];
-                $pdf = PDF::loadView('emails.invoice', compact($dataPDF, 'dataPDF'), [], [
-                    'format' => 'A4-L'
-                ]);
-                $email = $request->email;
-                $fecha = date("Y-m-d", strtotime($request->invoice_date));
-                $dataMail = ['customer' => $request->client_id['label'], 'facture' => $request->invoice_number, 'auth_id' => Auth::id(), 'invoice_id' => $invoice];
-                Mail::send('emails.invoicemail', compact($dataMail, 'dataMail'), function ($message) use ($email, $pdf, $fecha) {
-                    $message->to($email);
-                    $message->subject('Factura '. $fecha );
-                    $message->attachData($pdf->output(), 'fecha.pdf');
-                });
+                $detalle->descuento = $detail['discount'];
+                $detalle->quanlity = $detail['quantity'];
+                $detalle->price = $detail['price'];
+                $detalle->depot = 0;
+                $detalle->impost = 0;
+                $detalle->description = $detail['description'];
+                $detalle->amount = $detail['amount'];
+                $detalle->invoice_id = $facture->id;
+                $detalle->save();
             }
 
             DB::commit();
-
             return 'success';
         }catch (\Exception $e)
         {
             DB::rollBack();
-            return $e;
+            return response()->json($e, 400);
         }
+
     }
     public function edit(Request $request)
     {
@@ -198,37 +178,38 @@ class BillingsController extends Controller
 
     public function getInvoiceData(Request $request)
     {
-        $invoice = Invoice::find($request->invoice_id);
-        $invoice->invoice_details = DB::connection('client')->table('invoice_items')->where('invoice_id', $request->invoice_id)->get();
+        $facture = Facture::find($request->invoice_id);
+        $facture->invoice_details = DB::connection('client')->table('details')->where('invoice_id', $request->invoice_id)->get();
 
-        return $invoice;
+        return $facture;
     }
 
     public function invoicesList(Request $request)
     {
 
-        $data = DB::connection('client')->table('invoices');
+        $data = DB::connection('client')->table('factures');
 
         $filters = json_decode($request['filters'],true);
 
         if($filters["customer"] != "")
         {
-            $data->where('client_id', $filters["customer"]['code']);
+            $data->where('client', $filters["customer"]['code']);
         }
 
         if($filters['codeInvoice'])
         {
-            $data->where('invoice_number', $filters['codeInvoice']);
+            $data->where('id', $filters['codeInvoice']);
         }
 
         if($filters['from'] && $filters['to'])
         {
-            $data->whereBetween('invoice_date', [
+            $data->whereBetween('date', [
                 date("Y-m-d", strtotime($filters['from'])),
                 date("Y-m-d", strtotime($filters['to']))
             ]);
         }
 
+        $data->where('type_sale','personalizado');
 
         return $data->paginate(10);
     }
@@ -241,8 +222,8 @@ class BillingsController extends Controller
     public function getInvoiceClient(Request $request)
     {
         $invoices = DB::connection('client')
-            ->table('invoices')
-            ->where('client_id' , (int) $request->client_id)
+            ->table('factures')
+            ->where('client' , (int) $request->client_id)
             ->where('open_balance', '>', 0)
         ;
 

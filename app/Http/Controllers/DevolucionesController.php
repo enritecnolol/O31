@@ -35,11 +35,12 @@ class DevolucionesController extends Controller
                             details.price - IFNULL(SUM(detalle_devolucions.price),0) AS price, 
                             details.depot - IFNULL(SUM(detalle_devolucions.itbis),0) AS depot, 
                             details.impost - IFNULL(SUM(detalle_devolucions.bruto),0) AS impost, 
-                            details.product_id 
+                            details.product_id,
+                             details.description
                             FROM factures 
-                            INNER JOIN details on details.facture_id = factures.id 
+                            INNER JOIN details on details.facture_id = factures.id OR details.invoice_id = factures.id 
                             LEFT JOIN devolucions ON devolucions.factura_id = factures.id
-                            LEFT JOIN detalle_devolucions ON detalle_devolucions.devolucion_id = devolucions.id  AND details.product_id = detalle_devolucions.product_id 
+                            LEFT JOIN detalle_devolucions ON detalle_devolucions.devolucion_id = devolucions.id 
                             WHERE factures.id = ".$request->id." GROUP BY details.id");
         }
         if ($factura == ''){
@@ -48,12 +49,15 @@ class DevolucionesController extends Controller
         }else{
             $detalle = Detail::all()->where('facture_id', $request->id);
             if ($detalle == '[]'){
-                $detalle = 'vacio';
+                $detalle = Detail::all()->where('invoice_id', $request->id);
+                if ($detalle == '[]') {
+                    $detalle = 'vacio';
+                }
             }
         }
         return [ 'factura' => $factura,
             'detalle' => $detalle,
-            'detalle_devolucion' =>$detall_devolucion
+            'detalle_devolucion' => $detall_devolucion
 
         ];
     }
@@ -168,6 +172,7 @@ WHERE factures.id = 217 GROUP BY details.id
                 $detalle_d = new Detalle_devolucion();
                 $detalle_d->date = date('Y-m-d');
                 $detalle_d->name_product = $d['name_product'];
+                $detalle_d->description = $d['description'];
                 $detalle_d->quanlity = $d['cantidad'];
                 $detalle_d->price = $d['price'];
                 $detalle_d->itbis = $d['itbis'];
@@ -197,7 +202,7 @@ WHERE factures.id = 217 GROUP BY details.id
         }catch (\Exception $exception)
         {
             DB::rollBack();
-            return $exception;
+            return response()->json($exception, 400);
         }
 
     }

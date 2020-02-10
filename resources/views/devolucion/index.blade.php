@@ -75,7 +75,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                 <tr>
-                                                    <th >Nombre</th>
+                                                    <th >Producto / Servicio</th>
                                                     <th >Cantidad</th>
                                                     <th >Precio</th>
                                                     <th >Bruto</th>
@@ -85,7 +85,7 @@
                                                 </thead>
                                                 <tbody>
                                                 <template v-for="(item, index) in datosdetallefactura">
-                                                    <example  @nuevodetalle="nuevodetalle" :bus="bus" v-bind:key="index" v-bind:id="item.product_id" v-bind:index="index" v-bind:nombre="item.name_product"  v-bind:cantidad="item.quanlity"  v-bind:precio="item.price"  v-bind:bruto="item.impost"  v-bind:itbis="item.depot"></example>
+                                                    <example  @nuevodetalle="nuevodetalle" :bus="bus" v-bind:key="index" v-bind:id="item.product_id" v-bind:index="index" v-bind:nombre="item.name_product" v-bind:servicio="item.description"  v-bind:cantidad="item.quanlity"  v-bind:precio="item.price"  v-bind:bruto="item.impost"  v-bind:itbis="item.depot"></example>
                                                 </template>
                                                 </tbody>
                                             </table>
@@ -157,14 +157,14 @@
                                                                     <tbody>
                                                                     <template v-for="item in datosnuevodetalle">
                                                                         <tr>
-                                                                            <td colspan="4" style="font-size: 14px;color: #000;text-align: left">@{{ item.name_product }}</td>
+                                                                            <td colspan="4" style="font-size: 14px;color: #000;text-align: left">@{{ item.name_product ? item.name_product : item.description }}</td>
                                                                         </tr>
                                                                         <tr style="">
                                                                             {{--<td style="font-size: 14px;width: 20%;color: #000;">@{{ item.name_product }}</td>--}}
                                                                             <td style="font-size: 14px;width: 4%;color: #000;text-align: center">
                                                                                 @{{ item.cantidad }}
                                                                             </td>
-                                                                            <td style="font-size: 14px;width: 4%;color: #000;text-align: right">@{{ format2(item.bruto, '') }}</td>
+                                                                            <td style="font-size: 14px;width: 4%;color: #000;text-align: right">@{{ format2(item.bruto == 0 ? item.price : item.bruto, '') }}</td>
                                                                             <td style="font-size: 14px;width: 4%;color: #000;text-align: right">@{{ format2(item.itbis, '') }}</td>
                                                                             <td style="font-size: 14px;width: 10%;color: #000;text-align: right">@{{ format2(item.price * item.cantidad, '') }}</td>
                                                                         </tr>
@@ -226,7 +226,7 @@
         Vue.component('example', {
             template:
                 '<tr  :style="{\'background-color\': color[0]}"  @click="seleccion = true">\n' +
-                '        <td :style="{\'color\': color[1]}">@{{ nombre }}</td>\n' +
+                '        <td :style="{\'color\': color[1]}">@{{ nombre ? nombre : servicio }}</td>\n' +
                 '        <td :style="{\'color\': color[1]}" v-if="cantidaddevolver == 0"><div class="text-center">\n' + '@{{  cantidad }}' + '</div></td>\n' +
                 '        <td :style="{\'color\': color[1]}" v-else><div class="text-center">\n' + '@{{ operacion }}' + '</div></td>\n' +
                 '        <td :style="{\'color\': color[1]}">@{{ precio  }}</td>\n' +
@@ -237,7 +237,7 @@
                 // '            <button type="button" style="float: right;" class="btn btn-primary btn-sm" @click="nuevodetalle"><i class="fas fa-undo"></i></button>' +
                 '        </td>' +
                 '</tr>',
-            props: ['index','id','nombre', 'cantidad', 'precio', 'bruto', 'itbis', 'bus'],
+            props: ['index','id','nombre', 'cantidad', 'precio', 'bruto', 'itbis', 'bus', 'servicio'],
             computed: {
                 color () {
                     if (this.operacion === 0) {
@@ -351,10 +351,11 @@
 
                     for(var key in _this.datosdetallefactura)
                     {
-                        if (_this.datosdetallefactura[key].product_id == i.datos.id)
+                        if (key === i.index)
                         {
                             var detalle = {
                                 name_product: _this.datosdetallefactura[key].name_product,
+                                description: _this.datosdetallefactura[key].description,
                                 cantidad: parseFloat(i.datos.cantidaddevolcer),
                                 price: _this.datosdetallefactura[key].quanlity ==  parseFloat(i.datos.cantidaddevolcer) ? parseFloat(_this.datosdetallefactura[key].price) : parseFloat(_this.datosdetallefactura[key].price) / parseFloat(_this.datosdetallefactura[key].quanlity) * parseFloat(i.datos.cantidaddevolcer) ,
                                 itbis: _this.datosdetallefactura[key].quanlity ==  parseFloat(i.datos.cantidaddevolcer) ? parseFloat(_this.datosdetallefactura[key].depot) : parseFloat(_this.datosdetallefactura[key].depot) / parseFloat(_this.datosdetallefactura[key].quanlity) * parseFloat(i.datos.cantidaddevolcer),

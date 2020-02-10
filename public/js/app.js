@@ -110233,13 +110233,13 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
         array.push({
           id: items[index].id,
           product: {
-            label: items[index].product,
+            label: items[index].name_product,
             code: items[index].product_id
           },
           description: items[index].description,
-          quantity: items[index].quantity,
+          quantity: items[index].quanlity,
           price: items[index].price,
-          discount: items[index].discount,
+          discount: items[index].descuento,
           amount: items[index].amount,
           product_id: items[index].product_id
         });
@@ -110335,13 +110335,13 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
     completeForm: function completeForm() {
       var _this3 = this;
 
-      this.estimateDate = this.dataEdit.invoice_date;
+      this.estimateDate = this.dataEdit.date;
       this.dueDate = this.dataEdit.due_date;
       this.selectedCustomer = this.clientsListForSelect.find(function (e) {
-        return e.code === _this3.dataEdit.client_id;
+        return e.code === parseInt(_this3.dataEdit.client);
       });
       this.address = this.dataEdit.address;
-      this.codeEstimate = this.dataEdit.invoice_number;
+      this.codeEstimate = this.dataEdit.id;
       this.email = this.dataEdit.email;
       this.items = this.itemsEditFormat(this.dataEdit.invoice_details);
       this.note = this.dataEdit.note;
@@ -110951,7 +110951,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("label", [
-      _vm._v("Cliente "),
+      _vm._v("Cliente: "),
       _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
     ])
   },
@@ -110987,7 +110987,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "TexInput1" } }, [
-      _vm._v("No. Factura "),
+      _vm._v("No. Factura: "),
       _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
     ])
   },
@@ -111266,7 +111266,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     toShowClient: function toShowClient(id) {
       if (this.clientsData) {
         var found = this.clientsData.find(function (e) {
-          return e.id === id;
+          return e.id === parseInt(id);
         });
         if (found) {
           return found.nombre;
@@ -111713,22 +111713,20 @@ var render = function() {
                   _vm._v(" "),
                   _vm._l(_vm.tableData.data, function(item, index) {
                     return _c("tr", [
-                      _c("th", [_vm._v(_vm._s(item.invoice_number))]),
+                      _c("th", [_vm._v("#" + _vm._s(item.id))]),
                       _vm._v(" "),
                       _c("td", [
                         _vm._v(
-                          _vm._s(
-                            _vm.moment(item.invoice_date).format("DD-MM-YYYY")
-                          )
+                          _vm._s(_vm.moment(item.date).format("DD-MM-YYYY"))
                         )
                       ]),
                       _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm.toShowClient(item.client_id)))
-                      ]),
+                      _c("td", [_vm._v(_vm._s(_vm.toShowClient(item.client)))]),
                       _vm._v(" "),
                       _c("td", { staticStyle: { "text-align": "right" } }, [
-                        _vm._v(_vm._s(parseFloat(item.total).formatMoney(2)))
+                        _vm._v(
+                          _vm._s(parseFloat(item.total_facture).formatMoney(2))
+                        )
                       ]),
                       _vm._v(" "),
                       _c("td", [
@@ -114507,18 +114505,14 @@ var render = function() {
     _vm._v(" "),
     _c("td", { staticStyle: { width: "30%" } }, [
       _vm._v(
-        "Factura #" +
-          _vm._s(_vm.data.id) +
-          " (" +
-          _vm._s(_vm.data.invoice_date) +
-          ")"
+        "Factura #" + _vm._s(_vm.data.id) + " (" + _vm._s(_vm.data.date) + ")"
       )
     ]),
     _vm._v(" "),
     _c("td", [_vm._v(_vm._s(_vm.data.due_date))]),
     _vm._v(" "),
     _c("td", { staticStyle: { "text-align": "right" } }, [
-      _vm._v("RD$" + _vm._s(parseFloat(_vm.data.total).formatMoney(2)))
+      _vm._v("RD$" + _vm._s(parseFloat(_vm.data.total_facture).formatMoney(2)))
     ]),
     _vm._v(" "),
     _c("td", { staticStyle: { "text-align": "right" } }, [

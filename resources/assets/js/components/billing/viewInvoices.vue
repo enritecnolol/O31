@@ -51,10 +51,10 @@
               </th>
             </tr>
             <tr v-for="(item, index) in tableData.data">
-              <th>{{item.invoice_number}}</th>
-              <td>{{moment(item.invoice_date).format('DD-MM-YYYY')}}</td>
-              <td>{{toShowClient(item.client_id)}}</td>
-              <td style="text-align: right">{{parseFloat(item.total).formatMoney(2)}}</td>
+              <th>#{{item.id}}</th>
+              <td>{{moment(item.date).format('DD-MM-YYYY')}}</td>
+              <td>{{toShowClient(item.client)}}</td>
+              <td style="text-align: right">{{parseFloat(item.total_facture).formatMoney(2)}}</td>
               <td><span :style="{
                 color:spanColor(item.status).color,
                 background:spanColor(item.status).background
@@ -165,7 +165,7 @@
       {
         if(this.clientsData)
         {
-          let found = this.clientsData.find(e => e.id === id);
+          let found = this.clientsData.find(e => e.id === parseInt(id));
           if(found){
             return found.nombre;
           }

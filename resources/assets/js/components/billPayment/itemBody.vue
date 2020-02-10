@@ -3,9 +3,9 @@
     <td>
       <input type="checkbox" id="checkbox" v-model="checked">
     </td>
-    <td style="width: 30%">Factura #{{data.id}} ({{data.invoice_date}})</td>
+    <td style="width: 30%">Factura #{{data.id}} ({{data.date}})</td>
     <td>{{data.due_date}}</td>
-    <td style="text-align: right">RD${{parseFloat(data.total).formatMoney(2)}}</td>
+    <td style="text-align: right">RD${{parseFloat(data.total_facture).formatMoney(2)}}</td>
     <td style="text-align: right">RD${{parseFloat(data.open_balance).formatMoney(2)}}</td>
     <td><money
         v-model="amountReceived"
