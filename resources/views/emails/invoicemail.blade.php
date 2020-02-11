@@ -96,7 +96,7 @@
             <h2 style="color: #000000; font-size: 28px; font-weight: 600; line-height: 32px; margin: 48px 0 24px 0; text-align: center;">
             </h2>
             <p>
-                Esta factura ha sido realizada bajo el nombr de {{$dataMail['customer']}}
+                Esta factura ha sido realizada bajo el nombre de {{$dataMail['customer']}}
             </p>
         </article>
 

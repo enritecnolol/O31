@@ -2,7 +2,7 @@
   <div class="container">
     <div class="card">
       <div class="loader" v-if="loading"></div>
-      <create-invoice v-if="createForm" @createFormStatus="createFormStatus" :data-edit="dataEdit"/>
+      <create-invoice v-if="createForm" @createFormStatus="createFormStatus" :data-edit="dataEdit" :loading="loading" @loading="loadingStatus"/>
       <view-invoices v-else @loading="loadingStatus" @createFormStatus="createFormStatus" @dataEdit="searchDataEdit"/>
     </div>
   </div>

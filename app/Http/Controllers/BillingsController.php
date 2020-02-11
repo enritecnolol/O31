@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Detail;
+use App\Detallesecuencia;
 use App\Estimate;
 use App\Facture;
 use App\Invoice;
@@ -38,6 +39,47 @@ class BillingsController extends Controller
             $facture->type_sale = 'personalizado';
             $facture->status = 'DEUDA';
             $facture->paid_status = 'NO PAGADO';
+            $nfc = '';
+            $aviso = '';
+            $NFCDueDate = '';
+            $config = DB::connection('client')->table('configuracions')->first();
+            if ($config->generacomprobante == 'si'){
+                $facture->tipo_nfc = $request->tiponfc;
+
+                $headers = DB::connection('client')->select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento");
+
+                foreach ($headers as $header)
+                {
+                    $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc',$request->tiponfc);
+                    foreach ($details as $detail)
+                    {
+                        if (($detail->actual + $detail->aviso) >= $detail->secuencia_final){
+                            $aviso = "En la Solicitud #". $header->id. " Serie: ". $detail->serie. ", Tipo de NCF: ".$request->tiponfc . " Se estan agotando";
+                        }
+                        if ($detail->actual < $detail->secuencia_final)
+                        {
+                            $NFCDueDate = $header->fechavencimiento;
+                            $nfc = $detail->serie."".$detail->tipo_nfc."".str_pad($detail->actual,8,"0",STR_PAD_LEFT);
+                            $d = Detallesecuencia::find($detail->id);
+                            $d->actual = $detail->actual+1;
+                            $d->update();
+                            break;
+                        }
+                    }
+                }
+                if ($nfc == '')
+                {
+                    return 'No es posible hacer la factura por falta de Comprobantes';
+                }
+                $facture->nfc = $nfc;
+                if ($request->tiponfc != '02')
+                {
+                    $facture->telefono_nfc = $request->datancf['telefono'];
+                    $facture->rnc_nfc = $request->datancf['rnc'];
+                    $facture->razon_nfc = $request->datancf['razon'];
+                }
+            }
+
             $facture->save();
 
             foreach ($request->details as $detail)
@@ -64,8 +106,29 @@ class BillingsController extends Controller
                 $detalle->save();
             }
 
+
+            if($request->send)
+            {
+                $dataPDF = [
+                    'data' => $request,
+                    'company' => $config,
+                    'fiscal' => ['ncf' => $nfc, 'NFCDueDate' => $NFCDueDate]
+                ];
+                $pdf = PDF::loadView('emails.invoice', compact($dataPDF, 'dataPDF'), [], [
+                    'format' => 'A4-L'
+                ]);
+                $email = $request->email;
+                $fecha = date("Y-m-d", strtotime($request->invoice_date));
+                $dataMail = ['customer' => $request->client_id['label'], 'facture' => $request->invoice_number, 'auth_id' => Auth::id(), 'invoice_id' => $facture->id];
+                Mail::send('emails.invoicemail', compact($dataMail, 'dataMail'), function ($message) use ($email, $pdf, $fecha) {
+                    $message->to($email);
+                    $message->subject('Factura '. $fecha );
+                    $message->attachData($pdf->output(), 'fecha.pdf');
+                });
+            }
+
             DB::commit();
-            return 'success';
+            return ['message' => 'success', 'notification' => $aviso, 'ncfDueDate' => $NFCDueDate, 'send' => $request->send];
         }catch (\Exception $e)
         {
             DB::rollBack();
@@ -146,25 +209,25 @@ class BillingsController extends Controller
 
             }
 
-            if($request->send)
-            {
-                $company = DB::connection('client')->table('configuracions')->first();
-                $dataPDF = [
-                    'data' => $request,
-                    'company' => $company
-                ];
-                $pdf = PDF::loadView('emails.invoice', compact($dataPDF, 'dataPDF'), [], [
-                    'format' => 'A4-L'
-                ]);
-                $email = $request->email;
-                $fecha = date("Y-m-d", strtotime($request->invoice_date));
-                $dataMail = ['customer' => $request->client_id['label'], 'facture' => $request->invoice_number, 'auth_id' => Auth::id(), 'invoice_id' => $invoice];
-                Mail::send('emails.invoicemail', compact($dataMail, 'dataMail'), function ($message) use ($email, $pdf, $fecha) {
-                    $message->to($email);
-                    $message->subject('Factura '. $fecha );
-                    $message->attachData($pdf->output(), 'fecha.pdf');
-                });
-            }
+//            if($request->send)
+//            {
+//                $company = DB::connection('client')->table('configuracions')->first();
+//                $dataPDF = [
+//                    'data' => $request,
+//                    'company' => $company
+//                ];
+//                $pdf = PDF::loadView('emails.invoice', compact($dataPDF, 'dataPDF'), [], [
+//                    'format' => 'A4-L'
+//                ]);
+//                $email = $request->email;
+//                $fecha = date("Y-m-d", strtotime($request->invoice_date));
+//                $dataMail = ['customer' => $request->client_id['label'], 'facture' => $request->invoice_number, 'auth_id' => Auth::id(), 'invoice_id' => $invoice];
+//                Mail::send('emails.invoicemail', compact($dataMail, 'dataMail'), function ($message) use ($email, $pdf, $fecha) {
+//                    $message->to($email);
+//                    $message->subject('Factura '. $fecha );
+//                    $message->attachData($pdf->output(), 'fecha.pdf');
+//                });
+//            }
 
             DB::commit();
 

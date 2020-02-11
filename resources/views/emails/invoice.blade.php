@@ -85,6 +85,11 @@
                             <td><b>Dirección: </b> {{$dataPDF['data']['address']}}</td>
                             <td><b>Email :</b> {{$dataPDF['data']['email']}}</td>
                         </tr>
+                        <tr>
+                            <td><b>NCF: </b> {{$dataPDF['fiscal']['ncf']}}</td>
+                            <td><b>Fecha vencimiento NCF: </b> {{$dataPDF['fiscal']['NFCDueDate']}}</td>
+                            <td></td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -113,7 +118,7 @@
                                 <td style="width: 40%;text-align:left;font-size: 11px;border-left: 1px solid black">{{$detail['description']}}</td>
                                 <td style="width: 10%;text-align:right;font-size: 11px;border-left: 1px solid black">{{$detail['quantity']}}</td>
                                 <td style="width: 15%;text-align:right;font-size: 11px;border-left: 1px solid black">{{number_format($detail['price'], 2, '.', ',')}}</td>
-                                <td style="width: 10%;text-align:right;font-size: 11px;border-left: 1px solid black">{{$detail['discount']}}</td>
+                                <td style="width: 10%;text-align:right;font-size: 11px;border-left: 1px solid black">{{number_format($detail['discount'], 2, '.', ',')}}</td>
                                 <td style="width: 10%;text-align:right;font-size: 11px;border-left: 1px solid black">{{number_format($detail['amount'], 2, '.', ',')}}</td>
                             </tr>
                         @endforeach
