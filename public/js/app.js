@@ -110415,7 +110415,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('v-select', __WEBPACK_IMPO
     save: function save(send) {
       var _this3 = this;
 
-      if (this.selectedCustomer === '' || this.codeEstimate === '' || this.email === '' || this.address === '' || this.selectedCustomer === '') {
+      if (this.selectedCustomer === '' || this.email === '' || this.address === '' || this.selectedCustomer === '') {
         toastr.warning("por favor llenar los datos necesarios");
         return;
       }
@@ -110799,7 +110799,9 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "form-group" }, [
-              _vm._m(5),
+              _c("label", { attrs: { for: "TexInput1" } }, [
+                _vm._v("No. Factura: ")
+              ]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -110841,7 +110843,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "form-group" }, [
-              _vm._m(6),
+              _vm._m(5),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -110950,7 +110952,7 @@ var render = function() {
           ? [
               _c("div", { staticClass: "col-4" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _vm._m(7),
+                  _vm._m(6),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -110983,7 +110985,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-4" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _vm._m(8),
+                  _vm._m(7),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -111032,7 +111034,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-4" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _vm._m(9),
+                  _vm._m(8),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -111361,15 +111363,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "Textarea1" } }, [
       _vm._v("Dirección: "),
-      _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "TexInput1" } }, [
-      _vm._v("No. Factura: "),
       _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
     ])
   },
@@ -114790,7 +114783,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -114850,6 +114843,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return;
       }
       this.amountReceived = parseFloat(this.data.open_balance) - parseFloat(this.discount);
+
+      this.data.discount = this.discount;
+      this.data.BalanceAfterPay = this.BalanceAfterPay;
+      this.data.amountReceived = this.amountReceived;
+
+      this.$emit('updateData', {
+        index: this.index,
+        data: this.data
+      });
     },
     checked: function checked() {
       if (this.checked) {
@@ -114979,6 +114981,9 @@ var render = function() {
             {
               staticClass: "form-control form-control-sm  float-right",
               staticStyle: { "text-align": "right", width: "150px" },
+              attrs: {
+                disabled: _vm.amountReceivedState && _vm.amountReceived === 0
+              },
               model: {
                 value: _vm.discount,
                 callback: function($$v) {
@@ -115044,7 +115049,12 @@ var render = function() {
                     "div",
                     { staticClass: "col-md-3" },
                     [
-                      _c("label", [_vm._v("Cliente:")]),
+                      _c("label", [
+                        _vm._v("Cliente: "),
+                        _c("span", { staticStyle: { color: "red" } }, [
+                          _vm._v("*")
+                        ])
+                      ]),
                       _vm._v(" "),
                       _c("v-select", {
                         attrs: { options: _vm.clientsListForSelect },
@@ -115063,7 +115073,10 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-3" }, [
                     _c("label", { attrs: { for: "email" } }, [
-                      _vm._v("Email:")
+                      _vm._v("Email: "),
+                      _c("span", { staticStyle: { color: "red" } }, [
+                        _vm._v("*")
+                      ])
                     ]),
                     _vm._v(" "),
                     _c("input", {
@@ -115121,7 +115134,12 @@ var render = function() {
                     "div",
                     { staticClass: "col-md-3" },
                     [
-                      _c("label", [_vm._v("Fecha factura:")]),
+                      _c("label", [
+                        _vm._v("Fecha factura: "),
+                        _c("span", { staticStyle: { color: "red" } }, [
+                          _vm._v("*")
+                        ])
+                      ]),
                       _vm._v(" "),
                       _c("datepicker", {
                         staticClass: "form-control form-control-sm",
@@ -115153,7 +115171,12 @@ var render = function() {
                     "div",
                     { staticClass: "col-md-3" },
                     [
-                      _c("label", [_vm._v("Metodos de pago:")]),
+                      _c("label", [
+                        _vm._v("Metodos de pago: "),
+                        _c("span", { staticStyle: { color: "red" } }, [
+                          _vm._v("*")
+                        ])
+                      ]),
                       _vm._v(" "),
                       _c("v-select", {
                         attrs: { options: _vm.PaymentMethodsListForSelect },

@@ -12,7 +12,7 @@
         :disabled="amountReceivedState"
         v-bind="money" class="form-control form-control-sm  float-right"
         style="text-align: right;width: 150px" /></td>
-    <td><money v-model="discount" v-bind="money" class="form-control form-control-sm  float-right" style="text-align: right;width: 150px" /></td>
+    <td><money :disabled="amountReceivedState && amountReceived === 0" v-model="discount" v-bind="money" class="form-control form-control-sm  float-right" style="text-align: right;width: 150px" /></td>
     <td style="text-align: right">RD${{parseFloat(BalanceAfterPay).formatMoney(2)}}</td>
   </tr>
 </template>
@@ -38,7 +38,7 @@
     computed:{
       BalanceAfterPay()
       {
-        return ( parseFloat(this.data.open_balance) - parseFloat(this.discount) ) - parseFloat(this.amountReceived) ;
+        return (parseFloat(this.data.open_balance) - parseFloat(this.discount) ) - parseFloat(this.amountReceived) ;
       }
     },
     watch:{
@@ -50,6 +50,15 @@
           return;
         }
         this.amountReceived = parseFloat(this.data.open_balance) - parseFloat(this.discount);
+        
+        this.data.discount = this.discount;
+        this.data.BalanceAfterPay = this.BalanceAfterPay;
+        this.data.amountReceived = this.amountReceived;
+
+        this.$emit('updateData', {
+          index:this.index,
+          data:this.data
+        })
       },
       checked()
       {

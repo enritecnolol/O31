@@ -39,7 +39,7 @@
       </div>
       <div class="col-md-2" v-show="!clientForm">
         <div class="form-group">
-          <label for="TexInput1">No. Factura: <span style="color:red">*</span></label>
+          <label for="TexInput1">No. Factura: </label>
           <input type="text" class="form-control form-control-sm" placeholder="#0000" v-model="codeEstimate" id="TexInput1" />
         </div>
       </div>
@@ -348,7 +348,6 @@
       save(send)
       {
         if (this.selectedCustomer === '' ||
-            this.codeEstimate === '' ||
             this.email  === '' ||
             this.address  === '' ||
             this.selectedCustomer === '')

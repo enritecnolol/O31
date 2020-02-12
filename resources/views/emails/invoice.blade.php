@@ -81,15 +81,17 @@
                             <td><b>Fecha vencimiento: </b> {{ date("d-m-Y", strtotime($dataPDF['data']['due_date'])) }}</td>
                         </tr>
                         <tr>
-                            <td><b>No. Factura: </b> #{{$dataPDF['data']['invoice_number']}}</td>
+                            <td><b>No. Factura: </b> #{{$dataPDF['invoice_id']}}</td>
                             <td><b>Dirección: </b> {{$dataPDF['data']['address']}}</td>
                             <td><b>Email :</b> {{$dataPDF['data']['email']}}</td>
                         </tr>
-                        <tr>
-                            <td><b>NCF: </b> {{$dataPDF['fiscal']['ncf']}}</td>
-                            <td><b>Fecha vencimiento NCF: </b> {{$dataPDF['fiscal']['NFCDueDate']}}</td>
-                            <td></td>
-                        </tr>
+                        @if($dataPDF['fiscal']['config'] == 'si')
+                            <tr>
+                                <td><b>NCF: </b> {{$dataPDF['fiscal']['ncf']}}</td>
+                                <td><b>Fecha vencimiento NCF: </b> {{$dataPDF['fiscal']['NFCDueDate']}}</td>
+                                <td></td>
+                            </tr>
+                        @endif
                         </tbody>
                     </table>
                 </div>

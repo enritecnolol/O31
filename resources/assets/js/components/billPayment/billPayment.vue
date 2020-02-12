@@ -12,11 +12,11 @@
           <div class="col-md-12" style="margin-top: 20px">
             <div class="row">
               <div class="col-md-3">
-                <label>Cliente:</label>
+                <label>Cliente: <span style="color:red">*</span></label>
                 <v-select v-model="selectedCustomer" :options="clientsListForSelect" @input="setSelected"/>
               </div>
               <div class="col-md-3">
-                <label for="email">Email:</label>
+                <label for="email">Email: <span style="color:red">*</span></label>
                 <input type="text" class="form-control form-control-sm" id="email" v-model="email">
               </div>
               <div class="col-md-6">
@@ -30,7 +30,7 @@
           <div class="col-md-12" style="margin-top: 50px">
             <div class="row">
               <div class="col-md-3">
-                <label>Fecha factura:</label>
+                <label>Fecha factura: <span style="color:red">*</span></label>
                 <datepicker v-model="PaymentDate" class="form-control form-control-sm" :format="'yyyy-MM-dd'" name="PaymentDate" />
               </div>
             </div>
@@ -38,7 +38,7 @@
           <div class="col-md-12" style="margin-top: 30px">
             <div class="row">
               <div class="col-md-3">
-                <label>Metodos de pago:</label>
+                <label>Metodos de pago: <span style="color:red">*</span></label>
                 <v-select v-model="paymentMethods" :options="PaymentMethodsListForSelect"/>
               </div>
               <div class="col-md-2">

@@ -112,7 +112,8 @@ class BillingsController extends Controller
                 $dataPDF = [
                     'data' => $request,
                     'company' => $config,
-                    'fiscal' => ['ncf' => $nfc, 'NFCDueDate' => $NFCDueDate]
+                    'fiscal' => ['ncf' => $nfc, 'NFCDueDate' => $NFCDueDate, 'config' => $config->generacomprobante],
+                    'invoice_id' => $facture->id
                 ];
                 $pdf = PDF::loadView('emails.invoice', compact($dataPDF, 'dataPDF'), [], [
                     'format' => 'A4-L'
