@@ -54,14 +54,14 @@ class AdminController extends Controller
             'collation' => 'utf8mb4_unicode_ci'
         ]);
 
-        Artisan::call('migrate', [
-            '--force' => true,
-            '--database' => 'client',
-            '--path' => 'database/migrations',
-            '--seed' => true
-        ]);
-
-        DB::purge('auth');
+//        Artisan::call('migrate', [
+//            '--force' => true,
+//            '--database' => 'client',
+//            '--path' => 'database/migrations',
+//            '--seed' => true
+//        ]);
+//
+//        DB::purge('auth');
 
         return 'save';
     }

@@ -109265,6 +109265,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -109404,23 +109407,17 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
       _c(
         "div",
-        {
-          staticClass: "col-md-12",
-          staticStyle: {
-            "box-shadow": "0px 0px 5px 0px rgba(0,0,0,0.75)",
-            "border-radius": "10px 10px 10px 10px",
-            "margin-top": "15px",
-            "margin-bottom": "15px"
-          }
-        },
+        { staticClass: "col-md-12", staticStyle: { "margin-bottom": "15px" } },
         [
           _c(
             "div",
             {
               staticClass: "row",
-              staticStyle: { "margin-bottom": "15px", "margin-top": "15px" }
+              staticStyle: { "margin-bottom": "15px", "margin-top": "5px" }
             },
             [
               _c(
@@ -109698,6 +109695,12 @@ var staticRenderFns = [
     return _c("div", { staticClass: "float-left" }, [
       _c("h3", [_vm._v("Lista de cotización")])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [_c("hr")])
   }
 ]
 render._withStripped = true
@@ -111608,6 +111611,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -111957,23 +111963,17 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
       _c(
         "div",
-        {
-          staticClass: "col-md-12",
-          staticStyle: {
-            "box-shadow": "0px 0px 5px 0px rgba(0,0,0,0.75)",
-            "border-radius": "10px 10px 10px 10px",
-            "margin-top": "15px",
-            "margin-bottom": "15px"
-          }
-        },
+        { staticClass: "col-md-12", staticStyle: { "margin-bottom": "15px" } },
         [
           _c(
             "div",
             {
               staticClass: "row",
-              staticStyle: { "margin-bottom": "15px", "margin-top": "15px" }
+              staticStyle: { "margin-bottom": "15px", "margin-top": "5px" }
             },
             [
               _c(
@@ -112250,6 +112250,12 @@ var staticRenderFns = [
     return _c("div", { staticClass: "float-left" }, [
       _c("h3", [_vm._v("Lista de Factura")])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [_c("hr")])
   }
 ]
 render._withStripped = true

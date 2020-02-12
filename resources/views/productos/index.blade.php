@@ -9,24 +9,27 @@
 @endsection
 @section('content')
     <div class="container" style="margin-top: -20px">
-        <nav class="navbar navbar-light" style="background-color: #0069d9;border-radius: 5px 10px 15px 20px;box-shadow: 1px 2px 18px -1px rgba(0,0,0,0.75);">
+        <nav class="navbar navbar-light" style="background-color: rgb(66, 114, 215);border-radius: 5px 5px 5px 5px;">
             <a class="navbar-brand" href="#" style="color: whitesmoke"><i class="fas fa-list-ul"></i> Lista de Productos</a>
             <input type="search" class="form-control col-md-3 " v-model="buscador"  :input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
-
-            <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#crear" @click="cargarcategoria()"><i class="fas fa-plus"></i> Nuevo Producto</button>
+            <button type="button" style="color:white;" class="btn btn-link pull-right" data-toggle="modal" data-target="#crear" @click="cargarcategoria()"><i class="fas fa-plus"></i> Nuevo Producto</button>
         </nav>
     </div>
     @include('productos.newproduct')
     <div class="container" v-if="buscador == ''" >
-        <div class="row m-t-30">
+        <div class="row">
             <div class="col-md-12">
                 <!-- DATA TABLE-->
-                <div class="table-responsive" style="border-radius: 5px 10px 15px 20px;box-shadow: 1px 2px 18px -1px rgba(0,0,0,0.75);">
-                    <table class="table table-borderless table-data3 table-hover" style="">
+                <div class="table-responsive table-responsive-data2" style="">
+                    <table class="table table-borderless table-data2 table-hover" style="">
                         <thead>
                         <tr>
                             <th>
-                                <input type="range" v-model="paginate" class="custom-range" min="5" max="15" id="customRange2">
+                                <select name="select" id="select" class="form-control form-control-sm " v-model="paginate" style="width: 80px">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                </select>
                             </th>
                             <th>Nombre</th>
                             <th>Codigo</th>
@@ -37,27 +40,32 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="p in productospag">
-                            <td><img class="rounded-circle mx-auto d-block" :src="'imagenes/'+p.img" alt="" style="width: 60px"></td>
-                            <td>@{{p.name }}</td>
-                            <td>@{{p.barcode}}</td>
-                            <td>@{{p.existence}}</td>
-                            <td><strong>@{{p.price}}.00</strong></td>
-                            <td>@{{p.porciento}}%</td>
-                            <td>
-                                <button type="button" @click="producto(p.id)" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button type="button" class="btn btn-outline-danger btn-sm" @click="confimar(p.id)" title="Eliminar Producto">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </td>
-                        </tr>
+                        <template v-for="p in productospag">
+                            <tr  class="tr-shadow">
+                                <td><img class="rounded-circle mx-auto d-block" :src="'imagenes/'+p.img" alt="" style="width: 60px"></td>
+                                <td>@{{p.name }}</td>
+                                <td>@{{p.barcode}}</td>
+                                <td>@{{p.existence}}</td>
+                                <td><strong>@{{p.price}}.00</strong></td>
+                                <td>@{{p.porciento}}%</td>
+                                <td>
+                                    <button type="button" @click="producto(p.id)" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm" @click="confimar(p.id)" title="Eliminar Producto">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="spacer"></tr>
+                        </template>
                         <template v-if="loading == true">
                             <tr>
-                                <div class="" style="position: relative;left: 450px">
-                                    <img src="loading.gif" width="100" alt="">
-                                </div>
+                                <td colspan="7">
+                                    <div class="text-center">
+                                        <img src="loading.gif" width="100" alt="">
+                                    </div>
+                                </td>
                             </tr>
                         </template>
                         </tbody>

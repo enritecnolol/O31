@@ -49,9 +49,9 @@
         }
 
 
-        .fondo {
-            background: url({{ URL::asset('fondo2.png')}});
-        }
+        {{--.fondo {--}}
+            {{--background: url({{ URL::asset('fondo2.png')}});--}}
+        {{--}--}}
 
         /* Track */
         ::-webkit-scrollbar-track {
@@ -224,8 +224,8 @@
                                                     </a>
                                                 </div>
                                                 <div class="account-dropdown__item">
-                                                    <a href="/estimate">
-                                                        <i class="far fa-file"></i>Cotización
+                                                    <a href="/billing">
+                                                        <i class="far fa-file"></i>Facturación
                                                     </a>
                                                 </div>
                                                 <div class="account-dropdown__item">
@@ -272,6 +272,38 @@
                                         </div>
                                     </div>
                                 @endif
+                                @if(!request()->is('/'))
+                                    <div class="account-item clearfix js-item-menu">
+                                        <div class="content">
+                                            <a class="js-acc-btn" href="#" style="color: white"> <h4 style="position:absolute;left: 0px;top: 14px;color: white">MENU</h4> <i class="fas fa-1x fa-bars"></i></a>
+                                        </div>
+                                        <div class="account-dropdown js-dropdown">
+                                            <div class="info clearfix">
+                                                <div class="image">
+                                                    <a href="#">
+                                                        <img src="{{ URL::asset('imagenes/User.png')}}" alt="usuario" />
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <h5 class="name">
+                                                        <a href="#">{{ Auth::user()->name }}</a>
+                                                    </h5>
+                                                    <span class="email">{{ Auth::user()->email }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="account-dropdown__footer">
+                                                <a href="{{ route('logout') }}"onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                                    <i class="zmdi zmdi-power"></i>Logout
+                                                </a>
+                                                {{--{{ Auth::user()->name }}--}}
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                    {{ csrf_field() }}
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -299,7 +331,8 @@
             <!-- END MENU SIDEBAR-->
 
             <!-- MAIN CONTENT-->
-            <div class="main-content" style="background: url({{ URL::asset('fondo2.png')}});">
+            {{--<div class="main-content" style="background: url({{ URL::asset('fondo2.png')}});">--}}
+            <div class="main-content">
                 <!--datos-->
                 @yield('content')
 

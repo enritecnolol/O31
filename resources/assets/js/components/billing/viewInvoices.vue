@@ -9,8 +9,11 @@
           <button class="btn btn-sm btn-primary" @click="createFormStatus">Crear Factura</button>
         </div>
       </div>
-      <div class="col-md-12" style="box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);border-radius: 10px 10px 10px 10px;margin-top: 15px;margin-bottom: 15px">
-        <div class="row" style="margin-bottom: 15px;margin-top: 15px">
+      <div class="col-md-12">
+        <hr>
+      </div>
+      <div class="col-md-12" style="margin-bottom: 15px">
+        <div class="row" style="margin-bottom: 15px;margin-top: 5px">
           <div class="col-md-3">
             <label>Cliente:</label>
             <v-select v-model="filter.customer" :options="clientsListForSelect"/>
