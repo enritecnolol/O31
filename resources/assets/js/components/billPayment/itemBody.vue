@@ -50,7 +50,7 @@
           return;
         }
         this.amountReceived = parseFloat(this.data.open_balance) - parseFloat(this.discount);
-        
+
         this.data.discount = this.discount;
         this.data.BalanceAfterPay = this.BalanceAfterPay;
         this.data.amountReceived = this.amountReceived;

@@ -270,7 +270,6 @@
           {
             if(amount === 0)
             {
-              console.log(this.clientInvoices[index])
               this.clientInvoices[index].amountReceived = 0;
               continue;
             }
