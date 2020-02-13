@@ -30,6 +30,14 @@
             <label>Codigo de factura:</label>
             <input type="text" class="form-control form-control-sm" v-model="filter.codeEstimate" placeholder="#00000">
           </div>
+          <div class="col-md-3" style="margin-top: 10px">
+            <label for="status">Estado:</label>
+            <select id="status" class="form-control form-control-sm" v-model="filter.status">
+              <option value="ALL"> Todas </option>
+              <option value="COMPLETADO"> Completado </option>
+              <option value="DEUDA"> Deuda </option>
+            </select>
+          </div>
         </div>
       </div>
       <div class="col-md-12" style="margin-top: 15px">
@@ -99,14 +107,15 @@
           customer:'',
           from:'',
           to:'',
-          codeInvoice:''
+          codeInvoice:'',
+          status:'ALL'
         }
       }
     },
     methods:{
       dataEdit(id, status)
       {
-        if(status === 'PAGADO')
+        if(status === 'PAGADO' || status === 'PAGADO PARCIALMENTE')
         {
           toastr.warning("Las Facturas pagadas no pueden ser modificadas");
           return;

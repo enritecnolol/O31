@@ -58,7 +58,7 @@ class Reporteriav2Controller extends Controller
         $fechafin = new DateTime($request->date[1]);
         if ($request->seleccionado == "Ventas")
         {
-            $facturas = DB::connection('client')->select("SELECT id, date, IFNULL(factures.client, 'General') AS cliente, concat('$', format(brute, 2)) as bruto, concat('$', format(itbis, 2)) as itbis, concat('$', format(total_facture, 2)) as total_factura FROM `factures` WHERE  date BETWEEN '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format('Y-m-d')."' ORDER BY `id` DESC");
+            $facturas = DB::connection('client')->select("SELECT id, date, IFNULL(factures.client, 'General') AS cliente, concat('$', format(brute, 2)) as bruto, concat('$', format(itbis, 2)) as itbis, concat('$', format(total_facture, 2)) as total_factura FROM `factures` WHERE  date BETWEEN '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format('Y-m-d')."' AND type_sale = 'express' ORDER BY `id` DESC");
             $header = ["#Factura", "Fecha", "Cliente", "Bruto", "Itbis", "Total Factura", ""];
             return ['data' => $facturas, 'header' => $header];
         }

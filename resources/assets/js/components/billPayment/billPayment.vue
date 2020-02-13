@@ -225,6 +225,15 @@
         axios.post('/clientes/datos/tabla2')
             .then((response) => {
               this.clientsData = response['data'];
+              if(this.getUrlVars(window.location.href)['client'])
+              {
+                this.setSelected({code: parseInt(this.getUrlVars(window.location.href)['client'])})
+                let found = this.clientsData.find(e => e.id === parseInt(this.getUrlVars(window.location.href)['client']));
+                this.selectedCustomer = {
+                  label: found.nombre,
+                  code:found.id
+                }
+              }
             })
             .catch( (error) => {
               console.log(error);
@@ -285,7 +294,19 @@
           }
           return;
         }
-      }
+      },
+      getUrlVars()
+      {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+          hash = hashes[i].split('=');
+          vars.push(hash[0]);
+          vars[hash[0]] = hash[1];
+        }
+        return vars;
+      },
     },
     computed:{
       /**
@@ -346,6 +367,7 @@
       this.getPaymentsMethods();
       var today = new Date();
       this.PaymentDate = today;
+
     }
   }
 </script>

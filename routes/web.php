@@ -272,6 +272,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/invoice/client', 'BillingsController@getInvoiceClient');
     /*=================================\- Pago de factura -/======================================================*/
     Route::get('/invoice/payment', 'BillingsController@PaymentIndex');
+    /*=================================\- Clientes de facturacion -/======================================================*/
+    Route::get('/billing/clients', 'BillingCustomersController@index');
+    Route::get('/clients/balance', 'BillingCustomersController@clientsBalance');
+    Route::get('/clients/summary', 'BillingCustomersController@SummaryClients');
     /*=================================\- Recibo de factura -/======================================================*/
     Route::post('/pay/payment', 'PaymentsController@store');
     /*=================================\- metodos de pago -/======================================================*/

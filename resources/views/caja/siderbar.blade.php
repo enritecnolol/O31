@@ -64,6 +64,9 @@
                     <li>
                         <a style="padding-left: 90px" href="/invoice/payment">RECIBO DE INGRESO</a>
                     </li>
+                    <li>
+                        <a style="padding-left: 90px" href="/billing/clients">CLIENTES</a>
+                    </li>
                 </ul>
             </li>
             <li>

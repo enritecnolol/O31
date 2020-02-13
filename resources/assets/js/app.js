@@ -57,6 +57,7 @@ Vue.component('billing-card', require('./components/billing/BillingCard'));
 Vue.component('reporte-dgii-panel', require('./components/Reporte607/reporteDGIIPanel'));
 Vue.component('payment-methods', require('./components/paymentMethods/paymentsMethodsPanel'));
 Vue.component('bill-payment', require('./components/billPayment/billPayment'));
+Vue.component('billing-customers', require('./components/billingCustomers/billingCustomer'));
 Vue.prototype.moment = moment;
 Vue.prototype.$toastr = toastr;
 Vue.prototype.$eventbus = new Vue();

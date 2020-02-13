@@ -437,6 +437,7 @@
               this.clientsData = response['data'];
               if(this.dataEdit)
                 this.completeForm()
+              this.clientToInvoice()
             })
             .catch( (error) => {
               console.log(error);
@@ -481,7 +482,27 @@
       replaceElement({index, item})
       {
         this.items.splice(index, 1, item);
-      }
+      },
+      clientToInvoice()
+      {
+        if(this.getUrlVars(window.location.href)['client'])
+        {
+          this.selectedCustomer = this.clientsListForSelect.find(e => e.code === parseInt(this.getUrlVars(window.location.href)['client']));
+          this.setSelected(this.selectedCustomer)
+        }
+      },
+      getUrlVars()
+      {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+          hash = hashes[i].split('=');
+          vars.push(hash[0]);
+          vars[hash[0]] = hash[1];
+        }
+        return vars;
+      },
     },
     computed:{
       createdOrEdit()

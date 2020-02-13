@@ -265,6 +265,11 @@ class BillingsController extends Controller
             $data->where('id', $filters['codeInvoice']);
         }
 
+        if($filters['status'] != "ALL")
+        {
+            $data->where('status', $filters['status']);
+        }
+
         if($filters['from'] && $filters['to'])
         {
             $data->whereBetween('date', [

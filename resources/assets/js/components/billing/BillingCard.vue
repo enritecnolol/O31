@@ -95,6 +95,10 @@
         }
         return vars;
       },
+      clientToInvoice()
+      {
+        this.createForm = true;
+      }
     },
     computed:{
     },
@@ -102,6 +106,11 @@
       if(this.getUrlVars(window.location.href)['convertToInvoice'])
       {
        this.searchDataEstimate(this.getUrlVars(window.location.href)['convertToInvoice'])
+      }
+
+      if(this.getUrlVars(window.location.href)['client'])
+      {
+       this.clientToInvoice(this.getUrlVars(window.location.href)['client'])
       }
     }
   }
