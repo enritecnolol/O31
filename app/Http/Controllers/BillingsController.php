@@ -336,7 +336,7 @@ class BillingsController extends Controller
             'format' => 'A4-L'
         ]);
 
-        $fecha = date("Y-m-d", strtotime($request->date));
+        $fecha = date("Y-m-d", strtotime($facture->date));
         $dataMail = ['customer' => $facture->client_name , 'facture' => $request->invoice_id, 'auth_id' => Auth::id(), 'invoice_id' => $request->invoice_id];
         Mail::send('emails.invoicemail', compact($dataMail, 'dataMail'), function ($message) use ($email, $pdf, $fecha) {
             $message->to($email);
