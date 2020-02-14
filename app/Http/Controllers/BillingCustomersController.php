@@ -99,6 +99,7 @@ class BillingCustomersController extends Controller
 
         $transactionsInvoices = $db->table('factures')
             ->where('client', $request->client)
+            ->where('type_sale', 'personalizado')
             ->select('id', 'date', 'client', 'type_sale', 'due_date', 'open_balance', 'total_facture', 'status');
 
         $transactionsPayments = $db->table('payments')
