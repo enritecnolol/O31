@@ -98,6 +98,10 @@
                                                                         <textarea name="editor1" class="form-control" placeholder="Observacion" v-model="observacion" id="editor1" rows="5" cols="80">
                                                                         </textarea>
                                                                     </div>
+                                                                    <div class="col-md-12" style="margin-top: 10px">
+                                                                        <textarea name="editor2" class="form-control" placeholder="Direccion" v-model="direccion" id="editor1" rows="5" cols="80">
+                                                                        </textarea>
+                                                                    </div>
                                                                     <div class="col-md-12">
                                                                         <hr style="background: #4272d7;">
                                                                     </div>
@@ -438,6 +442,7 @@
                 email:'',
                 matricula:'',
                 observacion:'',
+                direccion:'',
                 descuento:0,
                 datostj:'',
                 idtarjeta:'',
@@ -475,7 +480,7 @@
                 nuevocliente:function () {
                     _this = this
 
-                    if (_this.nombre === '' || _this.telefono === '' || _this.email === '' || _this.matricula === ''|| _this.idtarjeta === '')
+                    if (_this.nombre === '' || _this.telefono === '' || _this.email === '' || _this.matricula === ''|| _this.idtarjeta === '' || _this.direccion === '')
                     {
                         toastr.warning('Por favor llenar los campos importantes');
                     }
@@ -487,7 +492,8 @@
                             matricula: _this.matricula,
                             descuento: _this.descuento,
                             idtarjeta: _this.idtarjeta,
-                            observacion: _this.observacion
+                            observacion: _this.observacion,
+                            direccion : _this.direccion
                         })
                             .then(function (response) {
                                 console.log(response);
@@ -591,6 +597,12 @@
                 },
                 editarcliente:function () {
                     _this = this
+
+                    if (_this.nombre === '' || _this.telefono === '' || _this.email === '' || _this.matricula === ''|| _this.idtarjeta === '' || _this.direccion === '')
+                    {
+                        toastr.warning('Por favor llenar los campos importantes');
+                    }
+
                     axios.post('/clientes/edit', {
                         id:_this.cliente,
                         nombre: _this.nombre,
@@ -599,7 +611,8 @@
                         matricula: _this.matricula,
                         descuento: _this.descuento,
                         idtarjeta: _this.idtarjeta,
-                        observacion: _this.observacion
+                        observacion: _this.observacion,
+                        direccion:_this.direccion
                     })
                         .then(function (response) {
                             if (response['data'] === 'guardado'){

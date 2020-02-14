@@ -182,7 +182,7 @@
         let found = this.clientsData.find(e => e.id === val.code);
         if(found)
         {
-          this.address = found.observacion;
+          this.address = found.direccion;
           this.email = found.email;
         }
       },

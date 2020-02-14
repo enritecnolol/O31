@@ -1,7 +1,6 @@
 <template>
   <card-panel style="margin-top: -30px">
     <template slot="body">
-<!--      <div class="loader" v-if="loading"></div>-->
       <div class="card-body">
         <div class="row">
           <div class="col-md-12">
@@ -24,7 +23,7 @@
             </div>
           </div>
           <div class="col-md-12" style="margin-top: 50px">
-            <general-table :paginate="customerData" style="height: 400px">
+            <general-table :paginate="customerData" style="height: 400px" :hover="true">
               <template slot="table-header">
                 <tr>
                   <th>Cliente</th>
@@ -42,7 +41,7 @@
                   </td>
                 </tr>
                 <tr v-for="(item, index) in customerData.data">
-                  <td style="width: 40%">{{item.nombre}}</td>
+                  <td style="width: 40%;cursor: pointer" @click="DetailClient(item.id)">{{item.nombre}}</td>
                   <td style="width: 40%">{{item.telefono}}</td>
                   <td align="right">RD${{parseFloat(item.balance).formatMoney(2)}}</td>
                   <td>
@@ -83,6 +82,10 @@ export default {
     }
   },
   methods:{
+    DetailClient(id)
+    {
+      window.location.href = '/client/details?client='+id;
+    },
     ToEstimate(id)
     {
       window.location.href = '/estimate?client='+id;

@@ -306,7 +306,7 @@
             description:items[index].description,
             quantity:items[index].quanlity? items[index].quanlity : items[index].quantity,
             price:items[index].price,
-            discount:items[index].descuento ? items[index].descuento : items[index].discount,
+            discount:items[index].descuento ? items[index].descuento : items[index].discount ? items[index].discount : 0,
             amount:items[index].amount ? items[index].amount : items[index].amount,
             product_id:items[index].product_id
           })
@@ -322,7 +322,7 @@
         let found = this.clientsData.find(e => e.id === val.code);
         if(found)
         {
-          this.address = found.observacion;
+          this.address = found.direccion;
           this.email = found.email;
         }
       },
@@ -447,7 +447,7 @@
       {
         this.estimateDate = this.dataEdit.date ? this.dataEdit.date : this.dataEdit.invoice_date;
         this.dueDate = this.dataEdit.due_date;
-        this.selectedCustomer = this.clientsListForSelect.find(e => e.code === this.dataEdit.client ? parseInt(this.dataEdit.client) : this.dataEdit.client_id);
+        this.selectedCustomer = this.clientsListForSelect.find(e => e.code === this.dataEdit.client_id ? parseInt(this.dataEdit.client_id) : parseInt(this.dataEdit.client));
         this.address = this.dataEdit.address;
         this.codeEstimate = this.dataEdit.id;
         this.email = this.dataEdit.email;

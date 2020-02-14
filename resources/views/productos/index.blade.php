@@ -108,9 +108,11 @@
     <div class="container" v-else>
         <div class="row m-t-30">
             <div class="col-md-12">
+            </div>
+            <div class="col-md-12">
                 <!-- DATA TABLE-->
-                <div class="table-responsive m-b-40">
-                    <table class="table table-borderless table-data3 table-hover">
+                <div class="table-responsive table-responsive-data2">
+                    <table class="table table-borderless table-data2 table-hover">
                         <thead>
                         <tr>
                             <th></th>
@@ -123,22 +125,25 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="p in productos">
-                            <td><img class="rounded-circle mx-auto d-block" :src="'imagenes/'+p.img" alt="" style="width: 60px"></td>
-                            <td>@{{ p.name }}</td>
-                            <td>@{{p.barcode}}</td>
-                            <td>@{{p.existence}}</td>
-                            <td><strong>@{{p.price}}.00</strong></td>
-                            <td>@{{p.impost}}</td>
-                            <td>
-                                <button type="button" @click="producto(p.id)" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button type="button" class="btn btn-outline-danger btn-sm" @click="confimar(p.id)" title="Eliminar Producto">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </td>
-                        </tr>
+                        <template v-for="p in productos" >
+                            <tr class="tr-shadow">
+                                <td><img class="rounded-circle mx-auto d-block" :src="'imagenes/'+p.img" alt="" style="width: 60px"></td>
+                                <td>@{{ p.name }}</td>
+                                <td>@{{p.barcode}}</td>
+                                <td>@{{p.existence}}</td>
+                                <td><strong>@{{p.price}}.00</strong></td>
+                                <td>@{{p.impost}}</td>
+                                <td>
+                                    <button type="button" @click="producto(p.id)" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm" @click="confimar(p.id)" title="Eliminar Producto">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="spacer"></tr>
+                        </template>
                         </tbody>
                     </table>
                 </div>
@@ -202,10 +207,10 @@
                 _this.productosp();
             },
             watch:{
-              paginate()
-              {
-                  this.productosp()
-              }
+                paginate()
+                {
+                    this.productosp()
+                }
             },
             methods:{
                 existencia()
@@ -328,17 +333,17 @@
 
                 buscadorp:function () {
                     var _this = this
-                    // $.ajax({
-                    //     url: '/buscar',
-                    //     method: 'GET',
-                    //     data: {
-                    //         producto: this.buscador
-                    //     },
-                    //     success:function (data) {
-                    //         _this.productos = data;
-                    //     }
-                    //
-                    // });
+                    $.ajax({
+                        url: '/buscar',
+                        method: 'GET',
+                        data: {
+                            producto: this.buscador
+                        },
+                        success:function (data) {
+                            _this.productos = data;
+                        }
+
+                    });
                 },
 
                 crearcategoria: function (id) {
@@ -383,7 +388,7 @@
                     url = url || '/productos/paginate';
 
                     axios.post(url, {
-                            paginate:_this.paginate
+                        paginate:_this.paginate
                     })
                         .then(function (response) {
                             console.log(response);

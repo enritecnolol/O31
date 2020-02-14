@@ -82,6 +82,7 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#" @click="dataEdit(item.id, item.paid_status)">Editar</a>
+                    <a class="dropdown-item" href="#" @click="toPayment(item.id, item.paid_status)">Recibo de pago</a>
 <!--                    <a class="dropdown-item" href="#">Eliminar</a>-->
                   </div>
                 </div>
@@ -113,6 +114,10 @@
       }
     },
     methods:{
+      toPayment(id, status)
+      {
+        window.location.href = '/client/details?client='+id;
+      },
       dataEdit(id, status)
       {
         if(status === 'PAGADO' || status === 'PAGADO PARCIALMENTE')

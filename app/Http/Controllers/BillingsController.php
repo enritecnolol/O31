@@ -278,7 +278,7 @@ class BillingsController extends Controller
             ]);
         }
 
-        $data->where('type_sale','personalizado');
+        $data->where('type_sale','personalizado')->orderBy('id', 'desc');
 
         return $data->paginate(10);
     }

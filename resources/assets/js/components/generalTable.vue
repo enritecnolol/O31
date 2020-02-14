@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <table class="table table-sm">
+    <table class="table table-sm" :class="[hover ? 'table-hover' : '', bordered ? 'table-bordered':'']">
       <thead>
         <slot name="table-header" />
       </thead>
@@ -28,6 +28,14 @@
       },
       paginate: {
         type:Object
+      },
+      hover:{
+        type:Boolean,
+        default: false
+      },
+      bordered:{
+        type:Boolean,
+        default: false
       }
     },
     components:{

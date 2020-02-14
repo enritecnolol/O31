@@ -27,6 +27,7 @@ class ClientesController extends Controller
         $cliente->email= $request->email;
         $cliente->matricula= $request->matricula;
         $cliente->observacion= $request->observacion;
+        $cliente->direccion= $request->direccion;
         $cliente->descuento= $request->descuento;
         $cliente->tarjeta_id= $request->idtarjeta;
         $cliente->user_id= Auth::id();
@@ -80,6 +81,7 @@ class ClientesController extends Controller
         $cliente->email = $request->email;
         $cliente->matricula = $request->matricula;
         $cliente->observacion = $request->observacion;
+        $cliente->direccion = $request->direccion;
         $cliente->descuento = $request->descuento;
         $cliente->tarjeta_id = $request->idtarjeta;
         $cliente->update();
