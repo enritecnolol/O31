@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
 use App\Detail;
 use App\Detallesecuencia;
 use App\Estimate;
@@ -297,5 +298,51 @@ class BillingsController extends Controller
         ;
 
         return $invoices->get();
+    }
+
+    public function printInvoice(Request $request)
+    {
+        $config = DB::connection('client')->table('configuracions')->first();
+        $facture = Facture::find($request->invoice_id);
+        $facture->details = json_decode(DB::connection('client')->table('details')->where('invoice_id', $request->invoice_id)->get(), true);
+        $client = Client::find($facture->client);
+        $facture->client_name = $client->nombre;
+
+        $dataPDF = [
+            'data' => $facture ,
+            'company' => $config,
+            'fiscal' => ['ncf' => $facture->nfc, 'NFCDueDate' => $facture->due_date, 'config' => $config->generacomprobante],
+            'invoice_id' => $request->invoice_id
+        ];
+        return view('Print.invoice')->with(compact('dataPDF', $dataPDF));
+    }
+    public function ResentInvoice(Request $request)
+    {
+        $config = DB::connection('client')->table('configuracions')->first();
+        $facture = Facture::find($request->invoice_id);
+        $facture->details = json_decode(DB::connection('client')->table('details')->where('invoice_id', $request->invoice_id)->get(), true);
+        $client = Client::find($facture->client);
+        $facture->client_name = $client->nombre;
+        $email = $client->email;
+
+        $dataPDF = [
+            'data' => $facture ,
+            'company' => $config,
+            'fiscal' => ['ncf' => $facture->nfc, 'NFCDueDate' => $facture->due_date, 'config' => $config->generacomprobante],
+            'invoice_id' => $request->invoice_id
+        ];
+
+        $pdf = PDF::loadView('Print.invoice', compact($dataPDF, 'dataPDF'), [], [
+            'format' => 'A4-L'
+        ]);
+
+        $fecha = date("Y-m-d", strtotime($request->date));
+        $dataMail = ['customer' => $facture->client_name , 'facture' => $request->invoice_id, 'auth_id' => Auth::id(), 'invoice_id' => $request->invoice_id];
+        Mail::send('emails.invoicemail', compact($dataMail, 'dataMail'), function ($message) use ($email, $pdf, $fecha) {
+            $message->to($email);
+            $message->subject('Factura '. $fecha );
+            $message->attachData($pdf->output(), 'fecha.pdf');
+        });
+
     }
 }

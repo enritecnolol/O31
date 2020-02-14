@@ -270,6 +270,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/invoice/edit', 'BillingsController@edit');
     Route::get('/invoice/find', 'BillingsController@getInvoiceData');
     Route::get('/invoice/client', 'BillingsController@getInvoiceClient');
+    Route::get('/invoice/print', 'BillingsController@printInvoice');
+    Route::get('/invoice/resent', 'BillingsController@ResentInvoice');
     /*=================================\- Pago de factura -/======================================================*/
     Route::get('/invoice/payment', 'BillingsController@PaymentIndex');
     /*=================================\- Clientes de facturacion -/======================================================*/

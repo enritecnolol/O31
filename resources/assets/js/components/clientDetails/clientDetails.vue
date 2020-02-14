@@ -76,13 +76,13 @@
                           <td  style="font-size: 14px" :class="item.status === 'COMPLETADO' || item.status === 'PAGADO' ? 'paid' : 'overdue'">{{item.status}}</td>
                           <td style="font-size: 14px;text-align: right;width: 80px" >
                             <div class="btn-group" v-if="item.status === 'COMPLETADO'">
-                              <button type="button" class="btn btn-sm btn-link">Imprimir</button>
+                              <button type="button" class="btn btn-sm btn-link" @click="toPrint(item.id)">Imprimir</button>
                               <button type="button" class="btn btn-sm btn-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="sr-only">Toggle Dropdown</span>
                               </button>
                               <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Enviar</a>
-                                <a class="dropdown-item" href="#">Ver</a>
+                                <a class="dropdown-item" href="#" onclick="return false;" @click="resentInvoice(item.id)" >Enviar</a>
+                                <a class="dropdown-item" href="#" onclick="return false;" @click="toView(item.id)">Ver</a>
                               </div>
                             </div>
                             <div class="btn-group" v-if="item.status === 'DEUDA'">
@@ -92,8 +92,8 @@
                               </button>
                               <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Imprimir</a>
-                                <a class="dropdown-item" href="#">Enviar</a>
-                                <a class="dropdown-item" href="#">Ver</a>
+                                <a class="dropdown-item" href="#" onclick="return false;" @click="resentInvoice(item.id)" >Enviar</a>
+                                <a class="dropdown-item" href="#" onclick="return false;" @click="toView(item.id)">Ver</a>
                               </div>
                             </div>
                           </td>
@@ -131,6 +131,29 @@
       }
     },
     methods:{
+      resentInvoice(id)
+      {
+        axios.get('/invoice/resent', {
+          params:{
+            invoice_id:id
+          }
+        })
+        .then((resp) => {
+          toastr.success("Correo Enviado con Exito");
+          console.log(resp)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      },
+      toPrint(id)
+      {
+        window.open('/invoice/print?invoice_id='+id, '_blank')
+      },
+      toView(id)
+      {
+        window.open('/invoice/print?invoice_id='+id+'&print=no', '_blank')
+      },
       ToEstimate(id)
       {
         window.location.href = '/estimate?client='+id;

@@ -116667,6 +116667,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   methods: {
+    resentInvoice: function resentInvoice(id) {
+      axios.get('/invoice/resent', {
+        params: {
+          invoice_id: id
+        }
+      }).then(function (resp) {
+        toastr.success("Correo Enviado con Exito");
+        console.log(resp);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    toPrint: function toPrint(id) {
+      window.open('/invoice/print?invoice_id=' + id, '_blank');
+    },
+    toView: function toView(id) {
+      window.open('/invoice/print?invoice_id=' + id + '&print=no', '_blank');
+    },
     ToEstimate: function ToEstimate(id) {
       window.location.href = '/estimate?client=' + id;
     },
@@ -117107,6 +117125,13 @@ var render = function() {
                                                           "btn btn-sm btn-link",
                                                         attrs: {
                                                           type: "button"
+                                                        },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            _vm.toPrint(item.id)
+                                                          }
                                                         }
                                                       },
                                                       [_vm._v("Imprimir")]
@@ -117155,7 +117180,20 @@ var render = function() {
                                                           {
                                                             staticClass:
                                                               "dropdown-item",
-                                                            attrs: { href: "#" }
+                                                            attrs: {
+                                                              href: "#",
+                                                              onclick:
+                                                                "return false;"
+                                                            },
+                                                            on: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                _vm.resentInvoice(
+                                                                  item.id
+                                                                )
+                                                              }
+                                                            }
                                                           },
                                                           [_vm._v("Enviar")]
                                                         ),
@@ -117165,7 +117203,20 @@ var render = function() {
                                                           {
                                                             staticClass:
                                                               "dropdown-item",
-                                                            attrs: { href: "#" }
+                                                            attrs: {
+                                                              href: "#",
+                                                              onclick:
+                                                                "return false;"
+                                                            },
+                                                            on: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                _vm.toView(
+                                                                  item.id
+                                                                )
+                                                              }
+                                                            }
                                                           },
                                                           [_vm._v("Ver")]
                                                         )
@@ -117248,7 +117299,20 @@ var render = function() {
                                                           {
                                                             staticClass:
                                                               "dropdown-item",
-                                                            attrs: { href: "#" }
+                                                            attrs: {
+                                                              href: "#",
+                                                              onclick:
+                                                                "return false;"
+                                                            },
+                                                            on: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                _vm.resentInvoice(
+                                                                  item.id
+                                                                )
+                                                              }
+                                                            }
                                                           },
                                                           [_vm._v("Enviar")]
                                                         ),
@@ -117258,7 +117322,20 @@ var render = function() {
                                                           {
                                                             staticClass:
                                                               "dropdown-item",
-                                                            attrs: { href: "#" }
+                                                            attrs: {
+                                                              href: "#",
+                                                              onclick:
+                                                                "return false;"
+                                                            },
+                                                            on: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                _vm.toView(
+                                                                  item.id
+                                                                )
+                                                              }
+                                                            }
                                                           },
                                                           [_vm._v("Ver")]
                                                         )
