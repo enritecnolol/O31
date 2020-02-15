@@ -34,7 +34,7 @@
                             </div>
                             <div class="login-checkbox">
                                 <label>
-                                    <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>Recordar
+                                    {{--<input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>Recordar--}}
                                 </label>
                                 <label>
 
