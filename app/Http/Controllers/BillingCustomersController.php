@@ -100,7 +100,7 @@ class BillingCustomersController extends Controller
         $transactionsInvoices = $db->table('factures')
             ->where('client', $request->client)
             ->where('type_sale', 'personalizado')
-            ->select('id', 'date', 'client', 'type_sale', 'due_date', 'open_balance', 'total_facture', 'status');
+            ->select('id', 'date', 'client', DB::raw("'Factura' type_sale"), 'due_date', 'open_balance', 'total_facture', 'status', 'created_at');
 
         $transactionsPayments = $db->table('payments')
             ->where('client_id', $request->client)
@@ -111,7 +111,7 @@ class BillingCustomersController extends Controller
                 DB::raw('date due_date'),
                 DB::raw('0 open_balance'),
                 DB::raw('amount total_facture'),
-                DB::raw("'PAGADO' status"))
+                DB::raw("'PAGADO' status"), 'created_at')
             ->union($transactionsInvoices)
             ->orderBy('date');
 

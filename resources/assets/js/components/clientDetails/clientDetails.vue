@@ -6,10 +6,10 @@
           <div class="row">
             <div class="col-md-12">
               <div class="" style="float: left">
-                <h2>Cliente </h2>
+
               </div>
               <div class="" style="float: right">
-                <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>
+<!--                <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>-->
                 <div class="btn-group">
                   <button type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 17px;">
                     Nueva transaccion
@@ -67,8 +67,8 @@
                     <template slot="table-body">
                       <template v-for="(item, index) in transactions">
                         <tr :key="index">
-                          <td style="font-size: 14px">{{item.date}}</td>
-                          <td style="font-size: 14px;width: 30%" >{{item.type_sale}}</td>
+                          <td style="font-size: 14px">{{moment(item.created_at).format('MMMM D YYYY, h:mm:ss a')}}</td>
+                          <td style="font-size: 14px" >{{item.type_sale}}</td>
                           <th style="font-size: 14px" >#{{item.id}}</th>
                           <td style="font-size: 14px" >{{item.due_date}}</td>
                           <td style="font-size: 14px;text-align: right" >RD${{parseFloat(item.open_balance).formatMoney(2)}}</td>
@@ -91,7 +91,7 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                               </button>
                               <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Imprimir</a>
+                                <a class="dropdown-item" onclick="return false;" href="#" @click="toPrint(item.id)">Imprimir</a>
                                 <a class="dropdown-item" href="#" onclick="return false;" @click="resentInvoice(item.id)" >Enviar</a>
                                 <a class="dropdown-item" href="#" onclick="return false;" @click="toView(item.id)">Ver</a>
                               </div>
@@ -115,6 +115,9 @@
 <script>
   import cardPanel from "../cardPanel";
   import generalTable from "../generalTable";
+  import moment from 'moment'
+  import 'moment/locale/es'  // without this line it didn't work
+  moment.locale('es')
   export default {
     components:{
       cardPanel,
@@ -210,6 +213,7 @@
       },
     },
     created() {
+      moment.locale('es');
       if(this.getUrlVars(window.location.href)['client'])
       {
         this.client = this.getUrlVars(window.location.href)['client'];

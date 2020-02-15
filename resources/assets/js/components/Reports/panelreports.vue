@@ -32,7 +32,7 @@
                         tittle:'Caja'
                     },
                     {
-                        tittle:'Gastos'
+                        tittle:'Reporte 607'
                     },
                 ],
                 seleccionado:''
@@ -45,6 +45,11 @@
             },
             cardseleccionado(i)
             {
+                if (this.typereports[i.index].tittle === "Reporte 607")
+                {
+                    window.location.href = '/reporte607';
+                    return;
+                }
                 this.seleccionado = this.typereports[i.index].tittle;
             }
         },

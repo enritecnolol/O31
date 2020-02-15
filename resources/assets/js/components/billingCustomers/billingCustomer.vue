@@ -10,14 +10,14 @@
             <hr>
           </div>
           <div class="col-md-12">
-            <div class="row justify-content-md-center">
-              <div class="col-md">
+            <div class="row">
+              <div class="col">
                 <summary-invoices :subtitle="' Facturas atrasado'" :summary="'overdue'"/>
               </div>
-              <div class="col-md">
+              <div class="col">
                 <summary-invoices :subtitle="' Facturas abierta'" :summary="'open_invoices'"/>
               </div>
-              <div class="col-md">
+              <div class="col">
                 <summary-invoices :subtitle="' Pagado los ultimas 30 dias'" :summary="'paid_last_30_days'"/>
               </div>
             </div>

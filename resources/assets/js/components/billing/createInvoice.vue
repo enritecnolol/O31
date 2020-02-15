@@ -19,16 +19,10 @@
           <span style="cursor: pointer" @click="clientForm = !clientForm"><i class="fas fa-user-plus" /> Crear cliente</span>
         </div>
       </div>
-      <div class="col" v-show="!clientForm">
-        <div class="row">
-          <div class="col-md-6">
-            <label>Fecha factura: <span style="color:red">*</span></label>
-            <datepicker v-model="estimateDate" class="form-control form-control-sm" :format="'yyyy-MM-dd'" name="estimateDate" />
-          </div>
-          <div class="col-md-6">
-            <label>Fecha vencimiento: <span style="color:red">*</span></label>
-            <datepicker v-model="dueDate" class="form-control form-control-sm" :format="'yyyy-MM-dd'" name="dueDate" />
-          </div>
+      <div class="col-md-4" v-show="!clientForm">
+        <div class="form-group">
+          <label for="TexInputEmail">Email:<span style="color:red">*</span></label>
+          <input type="text" class="form-control form-control-sm" v-model="email" id="TexInputEmail" />
         </div>
       </div>
       <div class="col-md-5" v-show="!clientForm">
@@ -37,16 +31,28 @@
           <textarea class="form-control" id="Textarea1" rows="3"  v-model="address"/>
         </div>
       </div>
-      <div class="col-md-2" v-show="!clientForm">
-        <div class="form-group">
-          <label for="TexInput1">No. Factura: </label>
-          <input type="text" class="form-control form-control-sm" placeholder="#0000" v-model="codeEstimate" id="TexInput1" />
-        </div>
-      </div>
-      <div class="col-md-4" v-show="!clientForm">
-        <div class="form-group">
-          <label for="TexInputEmail">Email:<span style="color:red">*</span></label>
-          <input type="text" class="form-control form-control-sm" v-model="email" id="TexInputEmail" />
+      <div class="col" v-show="!clientForm">
+        <div class="row justify-content-md-center" >
+          <div class="col-md-6">
+            <label>Fecha factura: <span style="color:red">*</span></label>
+            <datepicker v-model="estimateDate" class="form-control form-control-sm" :format="'yyyy-MM-dd'" name="estimateDate" />
+          </div>
+          <div class="col-md-6">
+            <label>Fecha vencimiento: <span style="color:red">*</span></label>
+            <datepicker v-model="dueDate" class="form-control form-control-sm" :format="'yyyy-MM-dd'" name="dueDate" />
+          </div>
+<!--          <div class="col-md-4">-->
+<!--            <div class="form-group">-->
+<!--              <label for="exampleFormControlSelect1">Terms <span style="color:red">*</span></label>-->
+<!--              <select class="form-control form-control-sm" id="exampleFormControlSelect1">-->
+<!--                <option>1</option>-->
+<!--                <option>2</option>-->
+<!--                <option>3</option>-->
+<!--                <option>4</option>-->
+<!--                <option>5</option>-->
+<!--              </select>-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
       </div>
       <div class="col-md-4" v-if="settings.generacomprobante === 'si'">

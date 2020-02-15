@@ -69105,7 +69105,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -69149,7 +69149,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }, {
                 tittle: 'Caja'
             }, {
-                tittle: 'Gastos'
+                tittle: 'Reporte 607'
             }],
             seleccionado: ''
         };
@@ -69160,6 +69160,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.seleccionado = "";
         },
         cardseleccionado: function cardseleccionado(i) {
+            if (this.typereports[i.index].tittle === "Reporte 607") {
+                window.location.href = '/reporte607';
+                return;
+            }
             this.seleccionado = this.typereports[i.index].tittle;
         }
     },
@@ -110271,6 +110275,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -110764,51 +110774,33 @@ var render = function() {
                 expression: "!clientForm"
               }
             ],
-            staticClass: "col"
+            staticClass: "col-md-4"
           },
           [
-            _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                { staticClass: "col-md-6" },
-                [
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _c("datepicker", {
-                    staticClass: "form-control form-control-sm",
-                    attrs: { format: "yyyy-MM-dd", name: "estimateDate" },
-                    model: {
-                      value: _vm.estimateDate,
-                      callback: function($$v) {
-                        _vm.estimateDate = $$v
-                      },
-                      expression: "estimateDate"
-                    }
-                  })
-                ],
-                1
-              ),
+            _c("div", { staticClass: "form-group" }, [
+              _vm._m(2),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-md-6" },
-                [
-                  _vm._m(3),
-                  _vm._v(" "),
-                  _c("datepicker", {
-                    staticClass: "form-control form-control-sm",
-                    attrs: { format: "yyyy-MM-dd", name: "dueDate" },
-                    model: {
-                      value: _vm.dueDate,
-                      callback: function($$v) {
-                        _vm.dueDate = $$v
-                      },
-                      expression: "dueDate"
-                    }
-                  })
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.email,
+                    expression: "email"
+                  }
                 ],
-                1
-              )
+                staticClass: "form-control form-control-sm",
+                attrs: { type: "text", id: "TexInputEmail" },
+                domProps: { value: _vm.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.email = $event.target.value
+                  }
+                }
+              })
             ])
           ]
         ),
@@ -110828,7 +110820,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "form-group" }, [
-              _vm._m(4),
+              _vm._m(3),
               _vm._v(" "),
               _c("textarea", {
                 directives: [
@@ -110866,77 +110858,51 @@ var render = function() {
                 expression: "!clientForm"
               }
             ],
-            staticClass: "col-md-2"
+            staticClass: "col"
           },
           [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "TexInput1" } }, [
-                _vm._v("No. Factura: ")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.codeEstimate,
-                    expression: "codeEstimate"
-                  }
-                ],
-                staticClass: "form-control form-control-sm",
-                attrs: { type: "text", placeholder: "#0000", id: "TexInput1" },
-                domProps: { value: _vm.codeEstimate },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+            _c("div", { staticClass: "row justify-content-md-center" }, [
+              _c(
+                "div",
+                { staticClass: "col-md-6" },
+                [
+                  _vm._m(4),
+                  _vm._v(" "),
+                  _c("datepicker", {
+                    staticClass: "form-control form-control-sm",
+                    attrs: { format: "yyyy-MM-dd", name: "estimateDate" },
+                    model: {
+                      value: _vm.estimateDate,
+                      callback: function($$v) {
+                        _vm.estimateDate = $$v
+                      },
+                      expression: "estimateDate"
                     }
-                    _vm.codeEstimate = $event.target.value
-                  }
-                }
-              })
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: !_vm.clientForm,
-                expression: "!clientForm"
-              }
-            ],
-            staticClass: "col-md-4"
-          },
-          [
-            _c("div", { staticClass: "form-group" }, [
-              _vm._m(5),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.email,
-                    expression: "email"
-                  }
+                  })
                 ],
-                staticClass: "form-control form-control-sm",
-                attrs: { type: "text", id: "TexInputEmail" },
-                domProps: { value: _vm.email },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-6" },
+                [
+                  _vm._m(5),
+                  _vm._v(" "),
+                  _c("datepicker", {
+                    staticClass: "form-control form-control-sm",
+                    attrs: { format: "yyyy-MM-dd", name: "dueDate" },
+                    model: {
+                      value: _vm.dueDate,
+                      callback: function($$v) {
+                        _vm.dueDate = $$v
+                      },
+                      expression: "dueDate"
                     }
-                    _vm.email = $event.target.value
-                  }
-                }
-              })
+                  })
+                ],
+                1
+              )
             ])
           ]
         ),
@@ -111363,7 +111329,7 @@ var render = function() {
               _vm._v(
                 " " +
                   _vm._s(_vm.createdOrEdit ? "Editar" : "Guardar") +
-                  "\n      "
+                  "\n        "
               )
             ]
           ),
@@ -111385,7 +111351,7 @@ var render = function() {
               _vm._v(
                 " " +
                   _vm._s(_vm.createdOrEdit ? "Editar" : "Guardar") +
-                  " y enviar\n      "
+                  " y enviar\n        "
               )
             ]
           )
@@ -111414,17 +111380,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", [
-      _vm._v("Fecha factura: "),
-      _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", [
-      _vm._v("Fecha vencimiento: "),
+    return _c("label", { attrs: { for: "TexInputEmail" } }, [
+      _vm._v("Email:"),
       _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
     ])
   },
@@ -111441,8 +111398,17 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "TexInputEmail" } }, [
-      _vm._v("Email:"),
+    return _c("label", [
+      _vm._v("Fecha factura: "),
+      _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [
+      _vm._v("Fecha vencimiento: "),
       _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
     ])
   },
@@ -114151,7 +114117,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.table-responsive{\n  height:550px;\n  overflow:auto;\n}\nthead tr:nth-child(1) th{\n  background: white;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 0;\n  z-index: 10;\n}\n", ""]);
 
 // exports
 
@@ -114224,7 +114190,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {},
+    { staticClass: "table-responsive" },
     [
       _c(
         "table",
@@ -116057,7 +116023,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.card-summary{\n  background:-webkit-gradient(linear, left top, right top, from(#1488cc), to(#2b32b2));\n  background:linear-gradient(to right, #1488cc, #2b32b2);\n  height: 60px;\n  width: 300px;\n  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);\n          box-shadow: 0 1px 2px rgba(0,0,0,.05);\n  border-radius: 10px 10px 10px 10px;\n}\n.lds-dual-ring {\n  display: inline-block;\n  width: 10px;\n  height: 10px;\n}\n.lds-dual-ring:after {\n  content: \" \";\n  display: block;\n  width: 30px;\n  height: 30px;\n  margin: 4px;\n  border-radius: 50%;\n  border: 6px solid #fff;\n  border-color: #fff transparent #fff transparent;\n  -webkit-animation: lds-dual-ring 1.2s linear infinite;\n          animation: lds-dual-ring 1.2s linear infinite;\n}\n@-webkit-keyframes lds-dual-ring {\n0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes lds-dual-ring {\n0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n", ""]);
+exports.push([module.i, "\n.card-summary{\n  background:-webkit-gradient(linear, left top, right top, from(#1488cc), to(#2b32b2));\n  background:linear-gradient(to right, #1488cc, #2b32b2);\n  height: 80px;\n  width: 300px;\n  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);\n          box-shadow: 0 1px 2px rgba(0,0,0,.05);\n  border-radius: 10px 10px 10px 10px;\n}\n.lds-dual-ring {\n  display: inline-block;\n  width: 10px;\n  height: 10px;\n}\n.lds-dual-ring:after {\n  content: \" \";\n  display: block;\n  width: 30px;\n  height: 30px;\n  margin: 4px;\n  border-radius: 50%;\n  border: 6px solid #fff;\n  border-color: #fff transparent #fff transparent;\n  -webkit-animation: lds-dual-ring 1.2s linear infinite;\n          animation: lds-dual-ring 1.2s linear infinite;\n}\n@-webkit-keyframes lds-dual-ring {\n0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes lds-dual-ring {\n0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n", ""]);
 
 // exports
 
@@ -116202,10 +116168,10 @@ var render = function() {
             _c("div", { staticClass: "col-md-12" }, [_c("hr")]),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "row justify-content-md-center" }, [
+              _c("div", { staticClass: "row" }, [
                 _c(
                   "div",
-                  { staticClass: "col-md" },
+                  { staticClass: "col" },
                   [
                     _c("summary-invoices", {
                       attrs: {
@@ -116219,7 +116185,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "col-md" },
+                  { staticClass: "col" },
                   [
                     _c("summary-invoices", {
                       attrs: {
@@ -116233,7 +116199,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "col-md" },
+                  { staticClass: "col" },
                   [
                     _c("summary-invoices", {
                       attrs: {
@@ -116534,6 +116500,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__cardPanel___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__cardPanel__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__generalTable__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__generalTable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__generalTable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment_locale_es__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment_locale_es___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_moment_locale_es__);
 //
 //
 //
@@ -116651,6 +116621,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+ // without this line it didn't work
+__WEBPACK_IMPORTED_MODULE_2_moment___default.a.locale('es');
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     cardPanel: __WEBPACK_IMPORTED_MODULE_0__cardPanel___default.a,
@@ -116735,6 +116708,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   created: function created() {
+    __WEBPACK_IMPORTED_MODULE_2_moment___default.a.locale('es');
     if (this.getUrlVars(window.location.href)['client']) {
       this.client = this.getUrlVars(window.location.href)['client'];
       this.fetchData(this.client);
@@ -116760,20 +116734,9 @@ var render = function() {
           _c("div", { staticClass: "container-fluid" }, [
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-md-12" }, [
-                _c("div", { staticStyle: { float: "left" } }, [
-                  _c("h2", [_vm._v("Cliente ")])
-                ]),
+                _c("div", { staticStyle: { float: "left" } }),
                 _vm._v(" "),
                 _c("div", { staticStyle: { float: "right" } }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-sm btn-outline-secondary",
-                      attrs: { type: "button" }
-                    },
-                    [_vm._v("Editar")]
-                  ),
-                  _vm._v(" "),
                   _c("div", { staticClass: "btn-group" }, [
                     _c(
                       "button",
@@ -116789,7 +116752,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                  Nueva transaccion\n                "
+                          "\n                    Nueva transaccion\n                  "
                         )
                       ]
                     ),
@@ -117020,16 +116983,23 @@ var render = function() {
                                           {
                                             staticStyle: { "font-size": "14px" }
                                           },
-                                          [_vm._v(_vm._s(item.date))]
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm
+                                                  .moment(item.created_at)
+                                                  .format(
+                                                    "MMMM D YYYY, h:mm:ss a"
+                                                  )
+                                              )
+                                            )
+                                          ]
                                         ),
                                         _vm._v(" "),
                                         _c(
                                           "td",
                                           {
-                                            staticStyle: {
-                                              "font-size": "14px",
-                                              width: "30%"
-                                            }
+                                            staticStyle: { "font-size": "14px" }
                                           },
                                           [_vm._v(_vm._s(item.type_sale))]
                                         ),
@@ -117289,7 +117259,20 @@ var render = function() {
                                                           {
                                                             staticClass:
                                                               "dropdown-item",
-                                                            attrs: { href: "#" }
+                                                            attrs: {
+                                                              onclick:
+                                                                "return false;",
+                                                              href: "#"
+                                                            },
+                                                            on: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                _vm.toPrint(
+                                                                  item.id
+                                                                )
+                                                              }
+                                                            }
                                                           },
                                                           [_vm._v("Imprimir")]
                                                         ),

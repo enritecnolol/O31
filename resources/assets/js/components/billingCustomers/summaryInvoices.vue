@@ -58,7 +58,7 @@
 <style>
   .card-summary{
     background:linear-gradient(to right, #1488cc, #2b32b2);
-    height: 60px;
+    height: 80px;
     width: 300px;
     box-shadow: 0 1px 2px rgba(0,0,0,.05);
     border-radius: 10px 10px 10px 10px;

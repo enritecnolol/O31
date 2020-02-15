@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="table-responsive">
     <table class="table table-sm" :class="[hover ? 'table-hover' : '', bordered ? 'table-bordered':'']">
       <thead>
         <slot name="table-header" />
@@ -54,5 +54,14 @@
   }
 </script>
 <style>
-
+  .table-responsive{
+    height:550px;
+    overflow:auto;
+  }
+  thead tr:nth-child(1) th{
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
 </style>

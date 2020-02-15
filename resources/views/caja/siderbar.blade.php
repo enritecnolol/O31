@@ -23,6 +23,12 @@
                     <li>
                         <a style="padding-left: 90px" href="/categorias">CATEGORIAS</a>
                     </li>
+                    <li>
+                        <a style="padding-left: 90px" href="/billing/clients">CLIENTES FACTURACION</a>
+                    </li>
+                    <li>
+                        <a style="padding-left: 90px" href="/clientes">CLIENTES</a>
+                    </li>
                 </ul>
             </li>
             <li class="has-sub">
@@ -38,6 +44,9 @@
                     </li>
                     <li>
                         <a style="padding-left: 90px" href="/cierre/caja">CIERRE DE CAJAS</a>
+                    </li>
+                    <li>
+                        <a style="padding-left: 90px" href="/invoice/payment">RECIBO DE INGRESO</a>
                     </li>
                     <li>
                         <a style="padding-left: 90px" href="/caja/ver/cuadre">CUADRES DE CAJAS</a>
@@ -62,47 +71,32 @@
                         <a style="padding-left: 90px" href="/billing">FACTURACIÓN</a>
                     </li>
                     <li>
-                        <a style="padding-left: 90px" href="/invoice/payment">RECIBO DE INGRESO</a>
-                    </li>
-                    <li>
-                        <a style="padding-left: 90px" href="/billing/clients">CLIENTES</a>
+                        <a style="padding-left: 90px" href="/devolucion">DEVOLUCION</a>
                     </li>
                 </ul>
             </li>
-            <li>
-                <a href="/devolucion">
-                    <i class="fas fa-undo"></i><strong>DEVOLUCIÓN</strong></a>
-            </li>
-            <li class="has-sub">
-                <a class="js-arrow" href="#">
-                    <i class="fas fa-minus"></i><strong>GASTOS Y COMPRAS</strong>
-                    <span class="arrow">
-                        <i class="fas fa-angle-down"></i>
-                    </span>
-                </a>
-                <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">
-                    <li>
-                        <a style="padding-left: 90px" href="/provedores">PROVEDORES</a>
-                    </li>
-                    <li>
-                        <a style="padding-left: 90px" href="/entrada/comprobante">ENTRADA DE COMBROBANTE</a>
-                    </li>
-                    <li>
-                        <a style="padding-left: 90px" href="/pago/entrada/comprobante">PAGO DE COMPROBANTE</a>
-                    </li>
-                </ul>
-            </li>
+            {{--<li class="has-sub">--}}
+                {{--<a class="js-arrow" href="#">--}}
+                    {{--<i class="fas fa-minus"></i><strong>GASTOS Y COMPRAS</strong>--}}
+                    {{--<span class="arrow">--}}
+                        {{--<i class="fas fa-angle-down"></i>--}}
+                    {{--</span>--}}
+                {{--</a>--}}
+                {{--<ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">--}}
+                    {{--<li>--}}
+                        {{--<a style="padding-left: 90px" href="/provedores">PROVEDORES</a>--}}
+                    {{--</li>--}}
+                    {{--<li>--}}
+                        {{--<a style="padding-left: 90px" href="/entrada/comprobante">ENTRADA DE COMBROBANTE</a>--}}
+                    {{--</li>--}}
+                    {{--<li>--}}
+                        {{--<a style="padding-left: 90px" href="/pago/entrada/comprobante">PAGO DE COMPROBANTE</a>--}}
+                    {{--</li>--}}
+                {{--</ul>--}}
+            {{--</li>--}}
             <li>
                 <a href="/reportv2">
-                    <i class="fas fa-newspaper"></i><strong>REPORTERIA V2</strong></a>
-            </li>
-            <li>
-                <a href="/reporte607">
-                    <i class="fas fa-file-alt"></i><strong>REPORTE 607</strong></a>
-            </li>
-            <li>
-                <a href="/clientes">
-                    <i class="fas fa-users"></i><strong>CLIENTES</strong></a>
+                    <i class="fas fa-newspaper"></i><strong>REPORTES</strong></a>
             </li>
             <li class="has-sub">
                 <a class="js-arrow" href="#">
