@@ -38,7 +38,6 @@
           {
             this.data = response.data[0];
           }
-          console.log(response.data)
         })
         .catch((err) => {
           console.log(err)

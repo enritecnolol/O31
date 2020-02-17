@@ -26,9 +26,9 @@
                     <li>
                         <a style="padding-left: 90px" href="/billing/clients">CLIENTES FACTURACION</a>
                     </li>
-                    <li>
-                        <a style="padding-left: 90px" href="/clientes">CLIENTES</a>
-                    </li>
+                    {{--<li>--}}
+                        {{--<a style="padding-left: 90px" href="/clientes">CLIENTES</a>--}}
+                    {{--</li>--}}
                 </ul>
             </li>
             <li class="has-sub">

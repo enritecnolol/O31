@@ -127,7 +127,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/itbis/datos','ImpuestosController@datos');
     Route::post('/itbis/editar/buscar','ImpuestosController@editarbuscardatos');
     Route::post('/itbis/editar','ImpuestosController@editaritbis');
-    /*=================================\- Impuesto ref- /======================================================*/
+    /*======================d===========\- Impuesto ref- /======================================================*/
     Route::post('/impuestoref/nuevo','ImpuestosrefsController@store');
     Route::post('/impuestoref/datos','ImpuestosrefsController@datos');
     Route::post('/impuestoref/ingresar/rango','ImpuestosrefsController@ingresarrango');
@@ -144,6 +144,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/clientes/cliente/tarjeta','ClientesController@clientetarjeta');
     Route::post('/cambio/puntos','ClientesController@cambiopuntos');
     Route::post('/cliente/buscar/nombre','ClientesController@nombrecliente');
+    Route::get('/client/data','ClientesController@findClient');
 
     /*=================================\- Tickets -/======================================================*/
     Route::post('/ticket/busqueda','PuntosmovimientosController@buscadorticket');

@@ -164,4 +164,9 @@ class ClientesController extends Controller
         }
         return $cliente;
     }
+    public function findClient(Request $request)
+    {
+        $client = Client::find($request->client_id);
+        return $client;
+    }
 }
