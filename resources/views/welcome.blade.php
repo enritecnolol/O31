@@ -349,47 +349,51 @@
                     </template>
                     <br>
                     <div class="col" style="box-shadow: 1px 1px 5px #888888;">
-                        <div class="container">
+                        <div class="container-fluid">
                             <div class="text-center" style="margin-bottom: 8px">
                                 <button type="button" class="btn btn-lg btn-sm btn-link" v-show="cambio === 'subcategoria' && categoria_subcategoria.length !== 0" @click="cambio = 'categoria'" style="float: left;margin-left: 10px"><i class="fas fa-arrow-left"></i></button>
                                 <h3>Productos</h3>
                                 <input type="search"  style="height: 35px;" class="form-control form-control-sm" v-model="buscador"  @input.self="buscadorp(buscador)" placeholder="Buscar..." name="" id="busca">
                             </div>
-                            <div class="row dragscroll" style="overflow-y: auto;height: 84vh;cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;">
-                                <template v-for="p in productosbuscados !== '' ? productosbuscados : productos" v-if="cerrada === 'A'">
-                                    <div class="card"  style="box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);border-radius: 20px 20px 20px 20px;height: auto;width: 130px;margin-left: 10px;margin-right: 10px;max-height: 184px;" @click="pfactura(p.id)" :title="p.name">
-                                        <div class="card-body" style="background: white;border-radius: 20px 20px 20px 20px;padding:0px">
-                                            <span class="badge badge-primary" style="position: absolute; top: -6px; left: -8px">@{{ p.barcode }}</span>
-                                            <div class="mx-auto d-block">
-                                                <img class="mx-auto d-block" style="border-radius: 20px 20px 0px 0px;height:91px;width:128px" :src="'imagenes/'+p.img" alt="Card image cap">
-                                                <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ p.name }}</h6>
-                                                <div class="location text-sm-center" style="color: #0062cc">
-                                                    <i class="fa fa-money-bill-alt"></i> @{{p.price}}
+                            <div class="dragscroll" style="height: 84vh;width: auto;overflow-y: auto;overflow-x: hidden;cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;">
+                                <div class="row " style="">
+                                    <template v-for="p in productosbuscados !== '' ? productosbuscados : productos" v-if="cerrada === 'A'">
+                                        <div class="col-sm-2 col-xs-4">
+                                            <div class="card"  style="box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);border-radius: 20px 20px 20px 20px;width: 130px;margin-left: 10px;margin-right: 10px;max-height: 184px;" @click="pfactura(p.id)" :title="p.name">
+                                                <div class="card-body" style="background: white;border-radius: 20px 20px 20px 20px;padding:0px">
+                                                    <span class="badge badge-primary" style="position: absolute; top: -6px; left: -8px">@{{ p.barcode }}</span>
+                                                    <div class="mx-auto d-block">
+                                                        <img class="mx-auto d-block" style="border-radius: 20px 20px 0px 0px;height:91px;width:128px" :src="'imagenes/'+p.img" alt="Card image cap">
+                                                        <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ p.name }}</h6>
+                                                        <div class="location text-sm-center" style="color: #0062cc">
+                                                            <i class="fa fa-money-bill-alt"></i> @{{p.price}}
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                <template v-if="existenciarep == 'no'">
+                                                    <div class="overlay1">
+                                                        <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
+                                                    </div>
+                                                </template>
+                                                <template v-if="existenciarep == 'si'">
+                                                    <div class="overlay1" v-if="p.existence > 0 && p.compuesto == 'no'">
+                                                        <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
+                                                    </div>
+                                                    <div class="overlay1" v-if="p.existence == 0 && p.compuesto == 'si'">
+                                                        <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
+                                                    </div>
+                                                    <div class="overlay2" v-else-if="p.existence == 0 && p.compuesto =='no'">
+                                                        <div class="text1"><i class="fas fa-times fa-3x" id="plus"></i></div>
+                                                    </div>
+                                                </template>
                                             </div>
                                         </div>
-                                        <template v-if="existenciarep == 'no'">
-                                            <div class="overlay1">
-                                                <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
-                                            </div>
-                                        </template>
-                                        <template v-if="existenciarep == 'si'">
-                                            <div class="overlay1" v-if="p.existence > 0 && p.compuesto == 'no'">
-                                                <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
-                                            </div>
-                                            <div class="overlay1" v-if="p.existence == 0 && p.compuesto == 'si'">
-                                                <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
-                                            </div>
-                                            <div class="overlay2" v-else-if="p.existence == 0 && p.compuesto =='no'">
-                                                <div class="text1"><i class="fas fa-times fa-3x" id="plus"></i></div>
-                                            </div>
-                                        </template>
-                                    </div>
-                                </template>
-                                <template v-if="cerrada === 'no es dia'">
-                                </template>
-                                <template v-for="p in productos" v-else-if="cerrada == 'C'">
-                                </template>
+                                    </template>
+                                    <template v-if="cerrada === 'no es dia'">
+                                    </template>
+                                    <template v-for="p in productos" v-else-if="cerrada == 'C'">
+                                    </template>
+                                </div>
                             </div>
                         </div>
                     </div>
