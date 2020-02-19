@@ -42,7 +42,7 @@
       </div>
       <div class="col-md-12" style="margin-top: 15px">
         <table-invoice
-            :pagination="true"
+            :pagination="pagination"
             :paginate="tableData"
             @pageChange="getInvoice">
           <template slot="table-header">
@@ -82,7 +82,7 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#" @click="dataEdit(item.id, item.paid_status)">Editar</a>
-                    <a class="dropdown-item" href="#" @click="toPayment(item.id, item.paid_status)">Recibo de pago</a>
+                    <a class="dropdown-item" href="#" @click="toPayment(item.client, item.paid_status)">Recibo de pago</a>
 <!--                    <a class="dropdown-item" href="#">Eliminar</a>-->
                   </div>
                 </div>
@@ -110,13 +110,14 @@
           to:'',
           codeInvoice:'',
           status:'ALL'
-        }
+        },
+        pagination: true
       }
     },
     methods:{
       toPayment(id, status)
       {
-        window.location.href = '/client/details?client='+id;
+        window.location.href = '/invoice/payment?client='+id;
       },
       dataEdit(id, status)
       {
@@ -129,6 +130,7 @@
       },
       createFormStatus()
       {
+        this.pagination = false;
         this.$emit('createFormStatus', true);
       },
       loading(val)

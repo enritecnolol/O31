@@ -97,7 +97,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="" class=" form-control-label"><strong>Control inventario?</strong></label>
-                                            <select required disabled name="inventario" class="form-control">
+                                            <select required name="inventario" class="form-control">
                                                 <option value="">Selecciona</option>
                                                 <option value=true>Si</option>
                                                 <option value=false selected>No</option>
@@ -223,7 +223,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="" class=" form-control-label"><strong>Control inventario?</strong></label>
-                                            <select required :disabled="true" v-model="infoconfig.controlinv" name="inventario" class="form-control">
+                                            <select required :disabled="editar == false" v-model="infoconfig.controlinv" name="inventario" class="form-control">
                                                 <option value="">Selecciona</option>
                                                 <option value="si">Si</option>
                                                 <option value="no" selected>No</option>

@@ -25,34 +25,26 @@
           <input type="text" class="form-control form-control-sm" v-model="email" id="TexInputEmail" />
         </div>
       </div>
+
+      <div class="col-md-12" v-show="!clientForm">
+        <div class="row justify-content-md-center" >
+          <div class="col-md-4">
+            <select-term @changeTerm="changeTerm" />
+          </div>
+          <div class="col-md-4">
+            <label>Fecha factura: <span style="color:red">*</span></label>
+            <datepicker v-model="estimateDate" class="form-control form-control-sm" :format="'yyyy-MM-dd'" name="estimateDate" />
+          </div>
+          <div class="col-md-4">
+            <label>Fecha vencimiento: <span style="color:red">*</span></label>
+            <datepicker v-model="dueDate" class="form-control form-control-sm" :format="'yyyy-MM-dd'" name="dueDate" />
+          </div>
+        </div>
+      </div>
       <div class="col-md-5" v-show="!clientForm">
         <div class="form-group">
           <label for="Textarea1">Dirección: <span style="color:red">*</span></label>
           <textarea class="form-control" id="Textarea1" rows="3"  v-model="address"/>
-        </div>
-      </div>
-      <div class="col" v-show="!clientForm">
-        <div class="row justify-content-md-center" >
-          <div class="col-md-6">
-            <label>Fecha factura: <span style="color:red">*</span></label>
-            <datepicker v-model="estimateDate" class="form-control form-control-sm" :format="'yyyy-MM-dd'" name="estimateDate" />
-          </div>
-          <div class="col-md-6">
-            <label>Fecha vencimiento: <span style="color:red">*</span></label>
-            <datepicker v-model="dueDate" class="form-control form-control-sm" :format="'yyyy-MM-dd'" name="dueDate" />
-          </div>
-<!--          <div class="col-md-4">-->
-<!--            <div class="form-group">-->
-<!--              <label for="exampleFormControlSelect1">Terms <span style="color:red">*</span></label>-->
-<!--              <select class="form-control form-control-sm" id="exampleFormControlSelect1">-->
-<!--                <option>1</option>-->
-<!--                <option>2</option>-->
-<!--                <option>3</option>-->
-<!--                <option>4</option>-->
-<!--                <option>5</option>-->
-<!--              </select>-->
-<!--            </div>-->
-<!--          </div>-->
         </div>
       </div>
       <div class="col-md-4" v-if="settings.generacomprobante === 'si'">
@@ -144,7 +136,6 @@
         </div>
       </div>
     </div>
-
     <div class="row" style="margin-top: 20px" v-show="!clientForm">
       <div class="col-md-12">
         <button class="btn btn-primary btn-sm" @click="save(false)">
@@ -167,12 +158,13 @@
   import clientForm from "../estimate/clientForm";
   import EstimateTotal from "../estimate/Estimatetotal";
   import tableEstimate from "../estimate/table-estimate"
+  import selectTerm from "../terms/selectTerm";
   Vue.use(money, {precision: 4});
   Vue.component('v-select', vSelect);
 
   export default {
     name:'create-estimate',
-    components:{Datepicker, itemBody, clientForm, EstimateTotal, tableEstimate},
+    components:{Datepicker, itemBody, clientForm, EstimateTotal, tableEstimate, selectTerm},
     props:['dataEdit', 'loading'],
     data(){
       return {
@@ -207,6 +199,17 @@
       }
     },
     methods:{
+      changeTerm(val)
+      {
+        if(val === ""){
+          return
+        }
+        var today = new Date();
+        var dueDate = new Date();
+        dueDate.setDate(today.getDate() + val);
+        console.log(dueDate)
+        this.dueDate = dueDate;
+      },
       buscar_rnc()
       {
         this.loadingStatus(true);
@@ -567,7 +570,7 @@
       this.ClientsDate();
       var today = new Date();
       var dueDate = new Date();
-      dueDate.setDate(today.getDate() + 15);
+      dueDate.setDate(today.getDate() + 5);
       this.estimateDate = today;
       this.dueDate = dueDate;
     }

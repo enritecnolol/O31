@@ -30,6 +30,9 @@ class ClientesController extends Controller
         $cliente->direccion= $request->direccion;
         $cliente->descuento= $request->descuento;
         $cliente->tarjeta_id= $request->idtarjeta;
+        $cliente->rnc= $request->rnc;
+        $cliente->limit_balance = $request->limitBalance;
+        $cliente->term = $request->term;
         $cliente->user_id= Auth::id();
         $cliente->save();
 
@@ -59,11 +62,11 @@ class ClientesController extends Controller
     public function clientepuntos()
     {
         /*
-        SELECT clients.*, tipotarjetas.codigo, configtjs.config, puntosmovimientos.* FROM clients
-        LEFT JOIN tipotarjetas ON tipotarjetas.id = clients.tarjeta_id
-        LEFT JOIN configtjs ON configtjs.tarjeta_id = tipotarjetas.id
-        LEFT JOIN puntosmovimientos ON puntosmovimientos.cliente_id = clients.id
-        WHERE clients.id = 2 AND clients.user_id = 1
+            SELECT clients.*, tipotarjetas.codigo, configtjs.config, puntosmovimientos.* FROM clients
+            LEFT JOIN tipotarjetas ON tipotarjetas.id = clients.tarjeta_id
+            LEFT JOIN configtjs ON configtjs.tarjeta_id = tipotarjetas.id
+            LEFT JOIN puntosmovimientos ON puntosmovimientos.cliente_id = clients.id
+            WHERE clients.id = 2 AND clients.user_id = 1
         */
         $clientes = Client::all();
         if ($clientes == '[]')
@@ -84,7 +87,11 @@ class ClientesController extends Controller
         $cliente->direccion = $request->direccion;
         $cliente->descuento = $request->descuento;
         $cliente->tarjeta_id = $request->idtarjeta;
+        $cliente->rnc = $request->rnc;
+        $cliente->limit_balance = $request->limitBalance;
+        $cliente->term = $request->term;
         $cliente->update();
+
         return 'guardado';
     }
     public function clientetarjeta(Request $request){
@@ -114,6 +121,7 @@ class ClientesController extends Controller
         }
         return $cliente;
     }
+
     public function cambiopuntos(Request $request)
     {
         $cambio = Client::find($request->id);
@@ -156,6 +164,7 @@ class ClientesController extends Controller
 
         return ['guardado', $compania, $movimientoid->last()->id];
     }
+
     public function nombrecliente(Request $request)
     {
         $cliente = Client::all()->where('id',$request->id);
@@ -164,6 +173,7 @@ class ClientesController extends Controller
         }
         return $cliente;
     }
+
     public function findClient(Request $request)
     {
         $client = Client::find($request->client_id);

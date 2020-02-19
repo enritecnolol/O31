@@ -24,11 +24,11 @@
                         <a style="padding-left: 90px" href="/categorias">CATEGORIAS</a>
                     </li>
                     <li>
-                        <a style="padding-left: 90px" href="/billing/clients">CLIENTES FACTURACION</a>
+                        <a style="padding-left: 90px" href="/billing/clients">CLIENTES</a>
                     </li>
-                    {{--<li>--}}
-                        {{--<a style="padding-left: 90px" href="/clientes">CLIENTES</a>--}}
-                    {{--</li>--}}
+                    <li>
+                        <a style="padding-left: 90px" href="/control/inventario">CONTROL DE INVENTARIO</a>
+                    </li>
                 </ul>
             </li>
             <li class="has-sub">
@@ -65,13 +65,13 @@
                 </a>
                 <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">
                     <li>
-                        <a style="padding-left: 90px" href="/estimate">COTIZACION</a>
+                        <a style="padding-left: 90px" href="/estimate">COTIZACIÓN</a>
                     </li>
                     <li>
                         <a style="padding-left: 90px" href="/billing">FACTURACIÓN</a>
                     </li>
                     <li>
-                        <a style="padding-left: 90px" href="/devolucion">DEVOLUCION</a>
+                        <a style="padding-left: 90px" href="/devolucion">DEVOLUCIÓN</a>
                     </li>
                 </ul>
             </li>
@@ -120,6 +120,9 @@
                     </li>
                     <li>
                         <a style="padding-left: 90px" href="/comprobantes">COMPROBANTES FISCALES</a>
+                    </li>
+                    <li>
+                        <a style="padding-left: 90px" href="/register/user">USUARIOS</a>
                     </li>
                 </ul>
             </li>

@@ -357,7 +357,7 @@
                             </div>
                             <div class="row dragscroll" style="overflow-y: auto;height: 84vh;cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;">
                                 <template v-for="p in productosbuscados !== '' ? productosbuscados : productos" v-if="cerrada === 'A'">
-                                    <div class="card" style="box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);border-radius: 20px 20px 20px 20px;height: auto;width: 130px;margin-left: 10px;margin-right: 10px;max-height: 184px;" @click="pfactura(p.id)" :title="p.name">
+                                    <div class="card"  style="box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);border-radius: 20px 20px 20px 20px;height: auto;width: 130px;margin-left: 10px;margin-right: 10px;max-height: 184px;" @click="pfactura(p.id)" :title="p.name">
                                         <div class="card-body" style="background: white;border-radius: 20px 20px 20px 20px;padding:0px">
                                             <span class="badge badge-primary" style="position: absolute; top: -6px; left: -8px">@{{ p.barcode }}</span>
                                             <div class="mx-auto d-block">
@@ -380,7 +380,7 @@
                                             <div class="overlay1" v-if="p.existence == 0 && p.compuesto == 'si'">
                                                 <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
                                             </div>
-                                            <div class="overlay2" v-else-if="p.existence ==0 && p.compuesto =='no'">
+                                            <div class="overlay2" v-else-if="p.existence == 0 && p.compuesto =='no'">
                                                 <div class="text1"><i class="fas fa-times fa-3x" id="plus"></i></div>
                                             </div>
                                         </template>

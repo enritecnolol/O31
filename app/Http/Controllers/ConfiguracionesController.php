@@ -84,7 +84,7 @@ class ConfiguracionesController extends Controller
             $configuracion->img = $file->getClientOriginalName();
             $configuracion->impuesto = $request->impuesto;
             $configuracion->descuento = $request->descuento;
-            $configuracion->controlinv = 'no';
+            $configuracion->controlinv = $request->inventario;
             $configuracion->emailinfo = $request->emailinfo;
             $configuracion->generacomprobante = $request->generacomprobante;
             $configuracion->leycamarero = $request->leycamarero;
@@ -99,7 +99,7 @@ class ConfiguracionesController extends Controller
             $configuracion->direccion = $request->direccion;
             $configuracion->impuesto = $request->impuesto;
             $configuracion->descuento = $request->descuento;
-            $configuracion->controlinv = 'no';
+            $configuracion->controlinv = $request->inventario;
             $configuracion->emailinfo = $request->emailinfo;
             $configuracion->generacomprobante = $request->generacomprobante;
             $configuracion->leycamarero = $request->leycamarero;

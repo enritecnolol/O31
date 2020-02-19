@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Configuracion;
 use App\Product;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 class ControlinventariosController extends Controller
 {
     public function index()
@@ -17,36 +19,47 @@ class ControlinventariosController extends Controller
 
     public  function todosproductos()
     {
-        $productos = Product::all();
+        $productos = Product::where('compuesto', 'no')->get();
         return $productos;
     }
     public function storecompra(Request $request)
     {
-        $compra = new Compra();
-        $compra->fecha = $request->fecha;
-        $compra->vendedor = $request->vendedor;
-        $compra->cantidad = $request->cantidad;
-        $compra->nota = $request->nota;
-        $compra->user_id = Auth::id();
-        $compra->save();
+        DB::begintransition();
+        try{
 
-        $idcompra = Compra::all();
+            $compra = new Compra();
+            $compra->fecha = $request->fecha;
+            $compra->vendedor = $request->vendedor;
+            $compra->cantidad = $request->cantidad;
+            $compra->nota = $request->nota;
+            $compra->user_id = Auth::id();
+            $compra->save();
 
-        foreach ($request->get('productoscomprados') as $pc)
+            $idcompra = Compra::all();
+
+            foreach ($request->get('productoscomprados') as $pc)
+            {
+                $detalle = new Detalle_compra();
+                $detalle->fecha = $request->fecha;
+                $detalle->product_id = $pc['id'];
+                $detalle->cantidad = $pc['status'];
+                $detalle->cantidad = $pc['status'];
+                $detalle->compra_id = $idcompra->last()->id;
+                $detalle->user_id = Auth::id();
+                $detalle->save();
+
+                $product = Product::find($pc['id']);
+                $product->existence = $product->existence + $pc['status'];
+                $product->update();
+            }
+            DB::commit();
+
+            return 'guardado';
+
+        }catch (\Exception $exception)
         {
-            $detalle = new Detalle_compra();
-            $detalle->fecha = $request->fecha;
-            $detalle->product_id = $pc['id'];
-            $detalle->cantidad = $pc['status'];
-            $detalle->cantidad = $pc['status'];
-            $detalle->compra_id = $idcompra->last()->id;
-            $detalle->user_id = Auth::id();
-            $detalle->save();
-
-            $product = Product::find($pc['id']);
-            $product->existence = $product->existence + $pc['status'];
-            $product->update();
+            DB::rollback();
+            return response()->json($exception, 400);
         }
-        return 'guardado';
     }
 }

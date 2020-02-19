@@ -12,20 +12,29 @@
       <div class="col-md-12">
         <hr>
       </div>
-      <div class="col-md-5" v-show="!clientForm">
+      <div class="col-md-6" v-show="!clientForm">
         <label>Cliente <span style="color:red">*</span></label>
         <v-select v-model="selectedCustomer" :options="clientsListForSelect" @input="setSelected"/>
         <div class="text-center createCustomer" style="color: #007bff">
           <span style="cursor: pointer" @click="clientForm = !clientForm"><i class="fas fa-user-plus" /> Crear cliente</span>
         </div>
       </div>
-      <div class="col" v-show="!clientForm">
+      <div class="col-md-6" v-show="!clientForm">
+        <div class="form-group">
+          <label for="TexInputEmail">Email:<span style="color:red">*</span></label>
+          <input type="text" class="form-control form-control-sm" v-model="email" id="TexInputEmail"  style="width: 300px;"/>
+        </div>
+      </div>
+      <div class="col-md-12" v-show="!clientForm">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-4">
+            <select-term @changeTerm="changeTerm" />
+          </div>
+          <div class="col-md-4">
             <label>Fecha estimada: <span style="color:red">*</span></label>
             <datepicker v-model="estimateDate" class="form-control form-control-sm" :format="'yyyy-MM-dd'" name="estimateDate" />
           </div>
-          <div class="col-md-6">
+          <div class="col-md-4">
             <label>Fecha vencimiento: <span style="color:red">*</span></label>
             <datepicker v-model="dueDate" class="form-control form-control-sm" :format="'yyyy-MM-dd'" name="dueDate" />
           </div>
@@ -41,12 +50,6 @@
         <div class="form-group">
           <label for="TexInput1">No. Cotización <span style="color:red">*</span></label>
           <input type="text" class="form-control form-control-sm" placeholder="#0000" v-model="codeEstimate" id="TexInput1" />
-        </div>
-      </div>
-      <div class="col-md-4" v-show="!clientForm">
-        <div class="form-group">
-          <label for="TexInputEmail">Email:<span style="color:red">*</span></label>
-          <input type="text" class="form-control form-control-sm" v-model="email" id="TexInputEmail" />
         </div>
       </div>
     </div>
@@ -123,10 +126,11 @@
   import itemBody from './ItemBody'
   import clientForm from "./clientForm";
   import EstimateTotal from "./Estimatetotal";
+  import selectTerm from "../terms/selectTerm";
 
   export default {
     name:'create-estimate',
-    components:{Datepicker, tableEstimate, itemBody, clientForm, EstimateTotal},
+    components:{Datepicker, tableEstimate, itemBody, clientForm, EstimateTotal, selectTerm},
     props:['dataEdit'],
     data(){
       return {
@@ -153,6 +157,17 @@
       }
     },
     methods:{
+      changeTerm(val)
+      {
+        if(val === ""){
+          return
+        }
+        var today = new Date();
+        var dueDate = new Date();
+        dueDate.setDate(today.getDate() + val);
+        console.log(dueDate)
+        this.dueDate = dueDate;
+      },
       itemsEditFormat(items)
       {
         let array = [];
@@ -394,7 +409,7 @@
       this.ClientsDate();
       var today = new Date();
       var dueDate = new Date();
-      dueDate.setDate(today.getDate() + 15);
+      dueDate.setDate(today.getDate() + 5);
       this.estimateDate = today;
       this.dueDate = dueDate;
     }

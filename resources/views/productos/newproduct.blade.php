@@ -22,22 +22,23 @@
                             </div>
                             <div class="form-group">
                                 <label for="precio" class="control-label mb-1" >Precio</label>
-                                <input type="number" id="precio" min="0" value="{{ old('precio') }}" name="precio" required placeholder="$" class="input-sm form-control-sm form-control">
+                                <input type="number"  style="width: 150px" id="precio" min="0" value="{{ old('precio') }}" name="precio" required placeholder="$" class="input-sm form-control-sm form-control">
                             </div>
                             <div class="form-group">
                                 <label for="" class="control-label mb-1">El producto es Compuesto?</label>
                                 <div class="container">
                                     <div class="row">
-                                        <select class="form-control form-control-sm" name="compuesto" id="exampleFormControlSelect1">
+                                        <select class="form-control form-control-sm" style="width: 100px" name="compuesto" id="exampleFormControlSelect1">
                                             <option value="no">No</option>
                                             <option value="si">Si</option>
                                         </select>
                                     </div>
                                 </div>
+                                <small><b>Nota: </b>Los producto con que son compuesto no se le lleva la existencia en cuenta.</small>
                             </div>
                             <div class="form-group">
                                 <label for="Cbarra" class="control-label mb-1" >codigo</label>
-                                <input type="text" id="Cbarra"  required name="barcode"  value="{{ old('barcode') }}" class="input-sm form-control-sm form-control">
+                                <input type="text" id="Cbarra"  style="width: 160px" required name="barcode"  value="{{ old('barcode') }}" class="input-sm form-control-sm form-control">
                                 @if ($errors->any())
                                     <div class="alert alert-danger">
                                         <p>El codigo ya es existente</p>
@@ -46,8 +47,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="" class="control-label mb-1">Grabado de itbis ? </label>
-                                <button type="button" class="btn btn-outline-secondary btn-sm" @click="check = false">No</button>
-                                <button type="button" class="btn btn-outline-secondary btn-sm" @click="check = true">Si</button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm" :class="check ? '' : 'active'" @click="check = false">No</button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm" :class="check ? 'active' : ''" @click="check = true">Si</button>
                             </div>
 
                             <div class="form-group" v-if="check == true">
@@ -64,19 +65,27 @@
                             </div>
 
                             <div v-else>
-                                <input type="text" hidden name="refimpuestoid"  value="0" style="margin-right: 5px" required readonly class="input-sm col-sm-1 text-center form-control-sm form-control">
+                                <input
+                                        type="text"
+                                        hidden
+                                        name="refimpuestoid"
+                                        value="0"
+                                        style="margin-right: 5px"
+                                        required
+                                        readonly
+                                        class="input-sm col-sm-1 text-center form-control-sm form-control">
                             </div>
 
 
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Categoria</label>
-                                <div class="input-group mb-2">
+                                <div class="input-group mb-2" style="width: 260px;">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                             <button type="button" data-toggle="modal" data-target="#nuevacategoria"><span style="color: green"><i class="fas fa-plus"></i></span></button>
                                         </div>
                                     </div>
-                                    <select class="form-control" v-model="idsubcategoria" @change="subcategoria()" required name="categoria" id="exampleFormControlSelect1">
+                                    <select class="form-control"  v-model="idsubcategoria" @change="subcategoria()" required name="categoria" id="exampleFormControlSelect1">
                                         <option value="">-selecciona-</option>
                                         <template v-for="c in listacategoria">
                                             <option :value="c.id">@{{ c.nombre }}</option>
@@ -88,7 +97,7 @@
                             <div v-if="listasubcategoria == ''"></div>
                             <div class="form-group" v-else>
                                 <label for="exampleFormControlSelect1">Subcategoria</label>
-                                <div class="input-group mb-2">
+                                <div class="input-group mb-2" style="width: 260px;">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                             <button type="button" data-toggle="modal" data-target="#createsubcategoria"><span style="color: #0062cc"><i class="fas fa-plus"></i></span></button>

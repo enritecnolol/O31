@@ -7,7 +7,7 @@
                 <div class="login-content">
                     <div class="login-logo">
                         <a href="#">
-                            <img src="{{ URL::asset('imagenes/logo.png')}}" style="width: 150px" alt="CoolAdmin">
+                            <img src="{{ URL::asset('SOFIA.png')}}" style="width: 150px" alt="CoolAdmin">
                         </a>
                     </div>
                     <div class="login-form">

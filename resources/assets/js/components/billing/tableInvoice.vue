@@ -11,7 +11,7 @@
       </tbody>
     </table>
     <pagination
-        v-if="paginate"
+        v-if="pagination"
         align="right"
         :data="paginate"
         :limit="1"

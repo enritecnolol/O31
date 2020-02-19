@@ -81,7 +81,7 @@
 
                     <div class="col-md-6" style="margin-top: 15px">
                         <div class="container">
-                            <input type="text" placeholder="Buscar producto" class="form-control form-control-sm">
+                            <input type="text" v-model="search1" @input.stop="searchFirstTable" placeholder="Buscar producto" class="form-control form-control-sm">
                         </div>
                     </div>
                     <div class="col-md-6" style="margin-top: 15px">
@@ -102,11 +102,19 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <template v-for="item in productos">
+                                        <template v-for="item in productosSearch">
                                             <tr>
                                                 <th scope="row">@{{ item.name }}</th>
                                                 <td>@{{ item.existence }}</td>
-                                                <td><button type="button" class="btn btn-primary btn-sm" @click="pasarnuevaexistencia(item.id)"><i class="fas fa-arrow-circle-right"></i></button></td>
+                                                <td>
+                                                    <button
+                                                            type="button"
+                                                            class="btn btn-primary btn-sm"
+                                                            @click="pasarnuevaexistencia(item.id)"
+                                                    >
+                                                        <i class="fas fa-cart-plus" style="font-size: 18px"></i>
+                                                    </button>
+                                                </td>
                                             </tr>
                                         </template>
                                         <template v-if=" loading == true">
@@ -165,13 +173,15 @@
             {
                 return{
                     productos:[],
+                    productosSearch:[],
                     productosnuevos:[],
                     loading:false,
                     fecha:'{{date('Y-m-d')}}',
                     vendedor:'',
                     nota:'',
                     cantidad:'',
-                    existenciarep:''
+                    existenciarep:'',
+                    search1:''
                 }
             },
             mounted()
@@ -181,6 +191,15 @@
                 _this.existencia();
             },
             methods: {
+                searchFirstTable()
+                {
+                    _this = this
+                    let data = this.productos.filter((item) => {
+                        return item.name.includes(_this.search1);
+                    });
+
+                    _this.productosSearch = data;
+                },
                 todosproductos()
                 {
                     _this = this;
@@ -189,6 +208,7 @@
                         .then(function (response) {
                             console.log(response);
                             _this.productos = response['data'];
+                            _this.productosSearch = response['data'];
                             _this.loading =false
                         })
                         .catch(function (error) {

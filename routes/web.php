@@ -202,7 +202,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/control/inventario', 'ControlinventariosController@index');
     Route::post('/todos/productos', 'ControlinventariosController@todosproductos');
     Route::post('/store/compra', 'ControlinventariosController@storecompra');
-//    Route::post('', '');
     /*=================================\- Facturacion -/======================================================*/
     Route::get('/facturacion', 'FacturacionesController@index');
 
@@ -298,6 +297,16 @@ Route::group(['middleware' => 'auth'], function () {
     /*=================================\- Password -/======================================================*/
     Route::post('/change/pass', 'ConfiguracionesController@changepass');
 
+    /*=================================\- Register User -/======================================================*/
+    Route::get('/register/user', 'RegisterUsersController@index');
+    Route::post('/register/user', 'RegisterUsersController@store');
+    Route::get('/user/list', 'RegisterUsersController@userList');
+    Route::get('/user/password/reset', 'RegisterUsersController@resetPassword');
+    Route::get('/user/disable/account', 'RegisterUsersController@disableAccount');
+
+    /*=================================\- Terminos -/======================================================*/
+    Route::post('/term', 'TermsController@store');
+    Route::get('/terms/list', 'TermsController@getList');
 });
 
 Auth::routes();
