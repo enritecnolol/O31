@@ -616,14 +616,23 @@
                             </div>
                         </template>
                     </div>
-                    <div class="modal-footer">
-                        <div class="" style="position: absolute; left: 50px">
-                            <h4>Devuelta:<span style="font-size: 25px"> @{{ format2(parseFloat(devuelta), '') }}</span></h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="text-center">
+                                <h3>Devuelta: <span style="font-size: 40px"> @{{ format2(parseFloat(devuelta), '') }}</span></h3>
+                            </div>
                         </div>
-                        <button type="button" class="btn btn-warning btn-lg" @click="limpiar()" data-dismiss="modal">Limpiar</button>
-                        <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancelar</button>
-                        <button v-if="suma >= neto" type="button" @click="facturar()" style="width: 112px;" class="btn btn-success btn-lg">&nbsp;Pagar</button>
-                        <button v-else disabled type="button" style="width: 112px;" class="btn btn-primary btn-lg">&nbsp;Pagar</button>
+                    </div>
+                    <div class="modal-footer" style="justify-content: normal !important;display:block !important;">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <button style="width: 100%;" type="button" class="btn btn-warning btn-lg" @click="limpiar()" data-dismiss="modal">Limpiar</button></div>
+                            <div class="col-sm-4">
+                                <button style="width: 100%;" type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancelar</button></div>
+                            <div class="col-sm-4">
+                                <button v-if="suma >= neto" type="button" @click="facturar()" style="width: 100%;" class="btn btn-success btn-lg">&nbsp;Pagar</button>
+                                <button v-else disabled type="button" style="width: 100%;" class="btn btn-primary btn-lg">&nbsp;Pagar</button></div>
+                        </div>
                     </div>
                 </div>
             </div>
