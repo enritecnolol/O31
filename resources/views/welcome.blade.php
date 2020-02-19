@@ -626,7 +626,7 @@
                     <div class="modal-footer" style="justify-content: normal !important;display:block !important;">
                         <div class="row">
                             <div class="col-sm-4">
-                                <button style="width: 100%;" type="button" class="btn btn-warning btn-lg" @click="limpiar()" data-dismiss="modal">Limpiar</button></div>
+                                <button style="width: 100%;" type="button" class="btn btn-warning btn-lg" @click="limpiar()">Limpiar</button></div>
                             <div class="col-sm-4">
                                 <button style="width: 100%;" type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancelar</button></div>
                             <div class="col-sm-4">
