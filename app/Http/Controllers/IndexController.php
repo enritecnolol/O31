@@ -145,7 +145,7 @@ class IndexController extends Controller
             $facture->Monto_efectivo = $request->dinero;
             $facture->returns = $request->devuelta;
             $facture->status = 'Pago';
-            $facture->type_sale = 'no usada';
+            $facture->type_sale = 'express';
             $facture->type_tarject = $request->tipotarjeta;
             $facture->Numbertar = $request->Numtarjeta;
             $facture->banco = $request->banco;
