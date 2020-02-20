@@ -127,7 +127,7 @@
                         </div>
                         <div class="col-12">
                             <div style="border-top:1px solid #000; padding-top:10px;">
-                                <div class="" style="padding:5px;width:85%;margin:0 auto;border-radius:3px;margin-top:20px;font-weight: bold;color: #000;">
+                                <div class="" style="padding: 5px;width: 90%;margin: 15px auto 0px;border-radius: 3px;font-weight: bold;color: rgb(0, 0, 0);">
                                     Software POS: {{ url()->current() }}
                                 </div>
                             </div>

@@ -119,7 +119,7 @@
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <div style="width: 400px;text-align: center;">
-                                                                    <img src="imagenes/logo.png" width="100" alt="">
+                                                                    <img :src="'imagenes/'+compania.img" width="100" alt="">
                                                                 </div>
                                                                 <h3 style="color: #000;width: 400px;text-align: center;">@{{ compania.nombreempresa }}</h3>
                                                                 <p style="color: #000;width: 400px;text-align: center;">@{{ compania.pais }}, @{{ compania.ciudad }}, @{{ compania.direccion }} <br> @{{ compania.telefono }} </p>
@@ -129,10 +129,10 @@
                                                                 <b>Fecha :  </b>@{{ fecha }}
                                                             </div>
                                                             <div class="col-md-12">
-                                                                <b style="color: #000;">No. Factura :</b> # @{{ _this.datofactura.id }}
+                                                                <b style="color: #000;">No. Factura :</b> @{{ _this.datofactura.id }}
                                                             </div>
                                                             <div class="col-md-12">
-                                                                <b style="color: #000;">No. Devolucion : </b> # @{{ numerodevolucion }}
+                                                                <b style="color: #000;">No. Devolucion : </b> @{{ numerodevolucion }}
                                                             </div>
                                                             <div class="col-md-12" v-if="nfc">
                                                                 <b style="color: #000;">NCF :</b> @{{ nfc }}
@@ -148,9 +148,9 @@
                                                                     <thead style="border-bottom: 1px solid black;border-top: 1px solid black;font-weight: bold;text-align: left;">
                                                                     <tr>
                                                                         {{--<th style="font-weight: bold;color: #000;">Prod.</th>--}}
-                                                                        <th style="font-weight: bold;color: #000;text-align: center">Cant.</th>
-                                                                        <th style="font-weight: bold;color: #000;text-align: right">precio</th>
-                                                                        <th style="font-weight: bold;color: #000;text-align: right">itbis</th>
+                                                                        <th style="font-weight: bold;color: #000;text-align: center">Cantidad</th>
+                                                                        <th style="font-weight: bold;color: #000;text-align: right">Precio</th>
+                                                                        <th style="font-weight: bold;color: #000;text-align: right">Itbis</th>
                                                                         <th style="font-weight: bold;color: #000;text-align: right">Total</th>
                                                                     </tr>
                                                                     </thead>
@@ -182,7 +182,7 @@
                                                             </div>
                                                             <div class="col-12">
                                                                 <div style="border-top:1px solid #000; padding-top:10px;">
-                                                                    <div class="" style="background-color:#000;padding:5px;width:85%;color:#fff;margin:0 auto;border-radius:3px;margin-top:20px;font-weight: bold;color: #000;">
+                                                                    <div class="" style="padding:5px;width:85%;margin:0 auto;border-radius:3px;margin-top:20px;font-weight: bold;color: #000;">
                                                                         GRACIAS POR PREFERIRNOS <br>
                                                                         {{ url()->current() }}
                                                                     </div>
@@ -280,6 +280,19 @@
             mounted() {
                 this.bus.$on('ejecutar', this.nuevodetalle)
             },
+            watch: {
+                cantidaddevolver(){
+
+                    console.log(this.cantidaddevolver + '---- > --- '+this.cantidad)
+                    if(this.cantidaddevolver > this.cantidad){
+                        this.cantidaddevolver = this.cantidad;
+                    }
+                    if(this.cantidaddevolver < 0)
+                    {
+                        this.cantidaddevolver = 0;
+                    }
+                }
+            }
         });
 
 

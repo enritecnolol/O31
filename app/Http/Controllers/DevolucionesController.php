@@ -151,10 +151,11 @@ WHERE factures.id = 217 GROUP BY details.id
                         }
                     }
                 }
-            }
-            if ($nfc == '')
-            {
-                return 'No es posible hacer la factura por falta de Comprobantes';
+
+                if ($nfc == '')
+                {
+                    return 'No es posible hacer la factura por falta de Comprobantes';
+                }
             }
             $devolucion->ncf = $nfc;
             $devolucion->brute = $bruto;

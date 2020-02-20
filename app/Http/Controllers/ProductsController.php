@@ -88,7 +88,7 @@ class ProductsController extends Controller
                 $product->status = 0;
                 $product->impuestoref_id = $request->input('refimpuestoid');
                 $product->itbis = $itbis;
-                $product->img = 'plate.png';
+                $product->img = 'default.png';
                 $product->user_id = Auth::id();
                 $product->categoria_id = $request->input('categoria');
                 $product->subcategoria_id = $request->input('subcategoria');
@@ -127,7 +127,7 @@ class ProductsController extends Controller
                 $product->status = 0;
                 $product->impuestoref_id = $request->input('refimpuestoid');
                 $product->itbis = $itbis;
-                $product->img = 'plate.png';
+                $product->img = 'default.png';
                 $product->user_id = Auth::id();
                 $product->categoria_id = $request->input('categoria');
                 $product->subcategoria_id = $request->input('subcategoria');

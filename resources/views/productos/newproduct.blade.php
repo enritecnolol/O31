@@ -46,7 +46,7 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <label for="" class="control-label mb-1">Grabado de itbis ? </label>
+                                <label for="" class="control-label mb-1">Gravado de itbis ? </label>
                                 <button type="button" class="btn btn-outline-secondary btn-sm" :class="check ? '' : 'active'" @click="check = false">No</button>
                                 <button type="button" class="btn btn-outline-secondary btn-sm" :class="check ? 'active' : ''" @click="check = true">Si</button>
                             </div>
