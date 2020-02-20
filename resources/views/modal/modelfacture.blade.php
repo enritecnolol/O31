@@ -22,8 +22,8 @@
                                 <label style="margin-left: 120px;"><strong> @{{tiponfc === '02' ? 'Factura contado' : 'Factura de credito'}}</strong></label>
                             </div>
                             <div class="form-group text-left" style="margin: 0">
-                                <label><strong>No.factura: </strong> </label>
-                                <label># @{{ lastid }}</label>
+                                <label><strong>No. Factura: </strong> </label>
+                                <label> @{{ lastid }}</label>
                             </div>
                             <div class="form-group text-left" style="margin: 0">
                                 <label><strong>Fecha: </strong> </label>
@@ -58,8 +58,8 @@
                                 <table style="width: 400px;">
                                     <thead style="border-bottom: 1px solid black;border-top: 1px solid black;font-weight: bold;text-align: left;">
                                     <tr>
-                                        <td style="font-weight: bold;color: #000;">Prod.</td>
-                                        <td style="font-weight: bold;color: #000;text-align: center;">Cant.</td>
+                                        <td style="font-weight: bold;color: #000;">Producto</td>
+                                        <td style="font-weight: bold;color: #000;text-align: center;">Cantidad</td>
                                         <td style="font-weight: bold;color: #000;" align="right">Total</td>
                                     </tr>
                                     </thead>
@@ -84,23 +84,23 @@
                                     <tbody>
                                     <tr>
                                         <td style="font-size: 14px;width: 70px;font-weight: bold;color: #000;text-align: right;">Bruto:</td>
-                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(bruto), 'RD$') }}</td>
+                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(bruto), '') }}</td>
                                     </tr>
                                     <tr v-if="parseFloat(totaldescuento) !== 0">
                                         <td style="font-size: 14px;width: 70px;font-weight: bold;color: #000;text-align: right;">Descuento: </td>
-                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(totaldescuento), 'RD$') }}</td>
+                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(totaldescuento), '') }}</td>
                                     </tr>
                                     <tr>
                                         <td style="font-size: 14px;width: 70px;font-weight: bold;color: #000;text-align: right;">Itbis: </td>
-                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(algoitbis), 'RD$') }}</td>
+                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(algoitbis), '') }}</td>
                                     </tr>
                                     <tr v-if="setting.leycamarero == 'si'">
                                         <td style="font-size: 14px;width: 70px;font-weight: bold;color: #000;text-align: right;">10% ley: </td>
-                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(leycamarero), 'RD$') }}</td>
+                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(leycamarero), '') }}</td>
                                     </tr>
                                     <tr>
                                         <td style="font-size: 14px;width: 70px;font-weight: bold;color: #000;text-align: right;">Neto: </td>
-                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(neto), 'RD$') }}</td>
+                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(neto), '') }}</td>
                                     </tr>
                                     <tr>
                                         <td style="font-size: 14px;width: 70px;font-weight: bold;color: #000;text-align: right;">-----</td>
@@ -108,7 +108,7 @@
                                     </tr>
                                     <tr>
                                         <td style="font-size: 14px;width: 70px;font-weight: bold;color: #000;text-align: right;">Efectivo: </td>
-                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(campodinero), 'RD$') }}</td>
+                                        <td style="font-size: 14px;width: 50px;text-align: right;color: #000;">@{{ format2(parseFloat(campodinero), '') }}</td>
                                     </tr>
                                     <tr>
                                         <td style="font-size: 14px;width: 70px;font-weight: bold;color: #000;text-align: right;">Devuelta: </td>
@@ -120,14 +120,14 @@
                         </div>
                         <div class="col-12">
                             <div style="border-top:1px solid #000; padding-top:10px;">
-                                <div class="" style="background-color:#000;padding:5px;width:85%;color:#fff;margin:0 auto;border-radius:3px;margin-top:20px;font-weight: bold;color: #000;">
+                                <div class="" style="padding:5px;width:85%;margin:0 auto;border-radius:3px;margin-top:20px;font-weight: bold;color: #000;">
                                     GRACIAS POR PREFERIRNOS
                                 </div>
                             </div>
                         </div>
                         <div class="col-12">
                             <div style="border-top:1px solid #000; padding-top:10px;">
-                                <div class="" style="background-color:#000;padding:5px;width:85%;color:#fff;margin:0 auto;border-radius:3px;margin-top:20px;font-weight: bold;color: #000;">
+                                <div class="" style="padding:5px;width:85%;margin:0 auto;border-radius:3px;margin-top:20px;font-weight: bold;color: #000;">
                                     Software POS: {{ url()->current() }}
                                 </div>
                             </div>

@@ -26,9 +26,6 @@
                     <li>
                         <a style="padding-left: 90px" href="/billing/clients">CLIENTES</a>
                     </li>
-                    <li>
-                        <a style="padding-left: 90px" href="/control/inventario">CONTROL DE INVENTARIO</a>
-                    </li>
                 </ul>
             </li>
             <li class="has-sub">
@@ -94,6 +91,10 @@
                     {{--</li>--}}
                 {{--</ul>--}}
             {{--</li>--}}
+            <li>
+                <a href="/control/inventario">
+                    <i class="fas fa-boxes"></i><strong>CONTROL DE INVENTARIO</strong></a>
+            </li>
             <li>
                 <a href="/reportv2">
                     <i class="fas fa-newspaper"></i><strong>REPORTES</strong></a>

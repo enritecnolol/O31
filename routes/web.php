@@ -307,6 +307,12 @@ Route::group(['middleware' => 'auth'], function () {
     /*=================================\- Terminos -/======================================================*/
     Route::post('/term', 'TermsController@store');
     Route::get('/terms/list', 'TermsController@getList');
+
+    /*=================================\- suppliers -/======================================================*/
+    Route::get('/suppliers', 'SuppliersController@index');
+    Route::post('/supplier', 'SuppliersController@store');
+    Route::post('/supplier/edit', 'SuppliersController@edit');
+    Route::get('/supplier/list', 'SuppliersController@supplierList');
 });
 
 Auth::routes();

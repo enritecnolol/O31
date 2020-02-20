@@ -5,15 +5,18 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
-              <div class="" style="float: left">
-
-              </div>
-              <div class="" style="float: right">
-<!--                <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>-->
+              <div class style="float: left"></div>
+              <div class style="float: right">
+                <!--                <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>-->
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 17px;">
-                    Nueva transaccion
-                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-success dropdown-toggle"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    style="border-radius: 17px;"
+                  >Nueva transaccion</button>
                   <div class="dropdown-menu">
                     <a class="dropdown-item" href="#" @click="ToInvoice(client)">Factura</a>
                     <a class="dropdown-item" href="#" @click="ToEstimate(client)">Cotizacion</a>
@@ -23,21 +26,27 @@
               </div>
             </div>
             <div class="col-md-12">
-              <hr>
+              <hr />
             </div>
             <div class="col-md-12 nameRecord" style="margin-top: 10px">
-              <div class="" style="float: left">
+              <div class style="float: left">
                 <h3>{{clientInfo.nombre}}</h3>
                 <p>{{clientInfo.direccion}}</p>
                 <p>{{clientInfo.observacion}}</p>
               </div>
-              <div class="" style="float: right">
+              <div class style="float: right">
                 <div class="stage__insight--open padding-left-10px">
-                  <div class="insights__amount-text" data-qbo-bind="text: openBalanceText">RD${{parseFloat(openBalance).formatMoney(2)}}</div>
+                  <div
+                    class="insights__amount-text"
+                    data-qbo-bind="text: openBalanceText"
+                  >RD${{parseFloat(openBalance).formatMoney(2)}}</div>
                   <div class="insights__label-text">Balance</div>
                 </div>
                 <div class="stage__insight--overdue padding-left-10px" style="margin-top: 10px">
-                  <div class="insights__amount-text" data-qbo-bind="text: overdueBalanceText">RD${{parseFloat(overDue).formatMoney(2)}}</div>
+                  <div
+                    class="insights__amount-text"
+                    data-qbo-bind="text: overdueBalanceText"
+                  >RD${{parseFloat(overDue).formatMoney(2)}}</div>
                   <div class="insights__label-text">Atrasado</div>
                 </div>
               </div>
@@ -45,12 +54,24 @@
             <div class="col-md-12" style="margin-top: 20px">
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active show" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Lista de transacciones</a>
+                  <a
+                    class="nav-link active show"
+                    id="home-tab"
+                    data-toggle="tab"
+                    href="#home"
+                    role="tab"
+                    aria-controls="home"
+                    aria-selected="true"
+                  >Lista de transacciones</a>
                 </li>
               </ul>
               <div class="tab-content pl-3 p-1" id="myTabContent">
-                <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
-
+                <div
+                  class="tab-pane fade active show"
+                  id="home"
+                  role="tabpanel"
+                  aria-labelledby="home-tab"
+                >
                   <general-table :hover="true" :bordered="true" style="margin-top: 15px">
                     <template slot="table-header">
                       <tr>
@@ -67,33 +88,87 @@
                     <template slot="table-body">
                       <template v-for="(item, index) in transactions">
                         <tr :key="index">
-                          <td style="font-size: 14px">{{moment(item.created_at).format('MMMM D YYYY, h:mm:ss a')}}</td>
-                          <td style="font-size: 14px" >{{item.type_sale}}</td>
-                          <th style="font-size: 14px" >#{{item.id}}</th>
-                          <td style="font-size: 14px" >{{item.due_date}}</td>
-                          <td style="font-size: 14px;text-align: right" >RD${{parseFloat(item.open_balance).formatMoney(2)}}</td>
-                          <td style="font-size: 14px;text-align: right" >RD${{parseFloat(item.total_facture).formatMoney(2)}}</td>
-                          <td  style="font-size: 14px" :class="item.status === 'COMPLETADO' || item.status === 'PAGADO' ? 'paid' : 'overdue'">{{item.status}}</td>
-                          <td style="font-size: 14px;text-align: right;width: 80px" >
+                          <td
+                            style="font-size: 14px"
+                          >{{moment(item.created_at).format('MMMM D YYYY, h:mm:ss a')}}</td>
+                          <td style="font-size: 14px">{{item.type_sale}}</td>
+                          <th style="font-size: 14px">#{{item.id}}</th>
+                          <td style="font-size: 14px">{{item.due_date}}</td>
+                          <td
+                            style="font-size: 14px;text-align: right"
+                          >RD${{parseFloat(item.open_balance).formatMoney(2)}}</td>
+                          <td
+                            style="font-size: 14px;text-align: right"
+                          >RD${{parseFloat(item.total_facture).formatMoney(2)}}</td>
+                          <td
+                            style="font-size: 14px"
+                            :class="item.status === 'COMPLETADO' || item.status === 'PAGADO' ? 'paid' : 'overdue'"
+                          >{{item.status}}</td>
+                          <td style="font-size: 14px;text-align: right;width: 80px">
                             <div class="btn-group" v-if="item.status === 'COMPLETADO'">
-                              <button type="button" class="btn btn-sm btn-link" @click="toPrint(item.id)">Imprimir</button>
-                              <button type="button" class="btn btn-sm btn-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-link"
+                                @click="toPrint(item.id)"
+                              >Imprimir</button>
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-link dropdown-toggle dropdown-toggle-split"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                              >
                                 <span class="sr-only">Toggle Dropdown</span>
                               </button>
                               <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#" onclick="return false;" @click="resentInvoice(item.id)" >Enviar</a>
-                                <a class="dropdown-item" href="#" onclick="return false;" @click="toView(item.id)">Ver</a>
+                                <a
+                                  class="dropdown-item"
+                                  href="#"
+                                  onclick="return false;"
+                                  @click="resentInvoice(item.id)"
+                                >Enviar</a>
+                                <a
+                                  class="dropdown-item"
+                                  href="#"
+                                  onclick="return false;"
+                                  @click="toView(item.id)"
+                                >Ver</a>
                               </div>
                             </div>
                             <div class="btn-group" v-if="item.status === 'DEUDA'">
-                              <button type="button" class="btn btn-sm btn-link" @click="BillPayment">Recibo de pago</button>
-                              <button type="button" class="btn btn-sm btn-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-link"
+                                @click="BillPayment"
+                              >Recibo de pago</button>
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-link dropdown-toggle dropdown-toggle-split"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                              >
                                 <span class="sr-only">Toggle Dropdown</span>
                               </button>
                               <div class="dropdown-menu">
-                                <a class="dropdown-item" onclick="return false;" href="#" @click="toPrint(item.id)">Imprimir</a>
-                                <a class="dropdown-item" href="#" onclick="return false;" @click="resentInvoice(item.id)" >Enviar</a>
-                                <a class="dropdown-item" href="#" onclick="return false;" @click="toView(item.id)">Ver</a>
+                                <a
+                                  class="dropdown-item"
+                                  onclick="return false;"
+                                  href="#"
+                                  @click="toPrint(item.id)"
+                                >Imprimir</a>
+                                <a
+                                  class="dropdown-item"
+                                  href="#"
+                                  onclick="return false;"
+                                  @click="resentInvoice(item.id)"
+                                >Enviar</a>
+                                <a
+                                  class="dropdown-item"
+                                  href="#"
+                                  onclick="return false;"
+                                  @click="toView(item.id)"
+                                >Ver</a>
                               </div>
                             </div>
                           </td>
@@ -103,9 +178,7 @@
                   </general-table>
                 </div>
               </div>
-
             </div>
-
           </div>
         </div>
       </div>
@@ -113,150 +186,144 @@
   </card-panel>
 </template>
 <script>
-  import cardPanel from "../cardPanel";
-  import generalTable from "../generalTable";
-  import moment from 'moment'
-  import 'moment/locale/es'  // without this line it didn't work
-  moment.locale('es')
-  export default {
-    components:{
-      cardPanel,
-      generalTable
-    },
-    data()
-    {
-      return {
-        client:'',
-        clientInfo:{},
-        overDue:0,
-        openBalance:0,
-        transactions:[]
-      }
-    },
-    methods:{
-      resentInvoice(id)
-      {
-        axios.get('/invoice/resent', {
-          params:{
-            invoice_id:id
+import cardPanel from "../cardPanel";
+import generalTable from "../generalTable";
+import moment from "moment";
+import "moment/locale/es"; // without this line it didn't work
+moment.locale("es");
+export default {
+  components: {
+    cardPanel,
+    generalTable
+  },
+  data() {
+    return {
+      client: "",
+      clientInfo: {},
+      overDue: 0,
+      openBalance: 0,
+      transactions: []
+    };
+  },
+  methods: {
+    resentInvoice(id) {
+      axios
+        .get("/invoice/resent", {
+          params: {
+            invoice_id: id
           }
         })
-        .then((resp) => {
+        .then(resp => {
           toastr.success("Correo Enviado con Exito");
-          console.log(resp)
+          console.log(resp);
         })
-        .catch((err) => {
-          console.log(err)
-        })
-      },
-      toPrint(id)
-      {
-        window.open('/invoice/print?invoice_id='+id, '_blank')
-      },
-      toView(id)
-      {
-        window.open('/invoice/print?invoice_id='+id+'&print=no', '_blank')
-      },
-      ToEstimate(id)
-      {
-        window.location.href = '/estimate?client='+id;
-      },
-      ToInvoice(id)
-      {
-        window.location.href = '/billing?client='+id;
-      },
-      BillPayment()
-      {
-        window.location.href = '/invoice/payment?client='+this.client;
-      },
-      fetchData(id)
-      {
-        axios.get('/client/details/data', {
-          params:{
-            client:this.client
-          }
-        })
-            .then((response) => {
-              this.clientInfo = response.data.clientInfo;
-              this.overDue = response.data.overDue.overdue;
-              this.openBalance = response.data.openBalance.balance;
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-      },
-      fetchTransactionsData(id)
-      {
-        axios.get('/client/details/transactions', {
-          params:{
-            client:id
-          }
-        })
-            .then((response) => {
-              this.transactions = response.data.transactions;
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-      },
-      getUrlVars()
-      {
-        var vars = [], hash;
-        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        for(var i = 0; i < hashes.length; i++)
-        {
-          hash = hashes[i].split('=');
-          vars.push(hash[0]);
-          vars[hash[0]] = hash[1];
-        }
-        return vars;
-      },
+        .catch(err => {
+          console.log(err);
+        });
     },
-    created() {
-      moment.locale('es');
-      if(this.getUrlVars(window.location.href)['client'])
-      {
-        this.client = this.getUrlVars(window.location.href)['client'];
-        this.fetchData(this.client)
-        this.fetchTransactionsData(this.client)
+    toPrint(id) {
+      window.open("/invoice/print?invoice_id=" + id, "_blank");
+    },
+    toView(id) {
+      window.open("/invoice/print?invoice_id=" + id + "&print=no", "_blank");
+    },
+    ToEstimate(id) {
+      window.location.href = "/estimate?client=" + id;
+    },
+    ToInvoice(id) {
+      window.location.href = "/billing?client=" + id;
+    },
+    BillPayment() {
+      window.location.href = "/invoice/payment?client=" + this.client;
+    },
+    fetchData(id) {
+      axios
+        .get("/client/details/data", {
+          params: {
+            client: this.client
+          }
+        })
+        .then(response => {
+          this.clientInfo = response.data.clientInfo;
+          this.overDue = response.data.overDue.overdue;
+          this.openBalance = response.data.openBalance.balance;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    fetchTransactionsData(id) {
+      axios
+        .get("/client/details/transactions", {
+          params: {
+            client: id
+          }
+        })
+        .then(response => {
+          this.transactions = response.data.transactions;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getUrlVars() {
+      var vars = [],
+        hash;
+      var hashes = window.location.href
+        .slice(window.location.href.indexOf("?") + 1)
+        .split("&");
+      for (var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split("=");
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
       }
+      return vars;
+    }
+  },
+  created() {
+    moment.locale("es");
+    if (this.getUrlVars(window.location.href)["client"]) {
+      this.client = this.getUrlVars(window.location.href)["client"];
+      this.fetchData(this.client);
+      this.fetchTransactionsData(this.client);
     }
   }
+};
 </script>
 <style>
-  .nameRecord .stage__insight--open {
-    border-left: 5px solid #f2b835;
-  }
-  .nameRecord .stage__insight--overdue {
-    border-left: 5px solid #ce5133;
-  }
-  .nameRecord .padding-left-10px {
-    padding-left: 10px;
-  }
-  .nameRecord .insights__amount-text {
-    font-size: 18px;
-    color: #56b349;
-    padding: 2px 4px 4px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    padding-bottom: 8px;
-    color: #000;
-    line-height: .85;
-  }
-  .nameRecord .insights__label-text {
-    letter-spacing: 1px;
-    margin-left: 5px;
-    color: #6e8ba8;
-    margin-top: -4px;
-    text-transform: uppercase;
-    font-size: 1.2rem;
-    line-height: .8;
-  }
-  .paid{
-    color: #108000;
-  }
-  .overdue {
-    color: #f95700;
-  }
+.nameRecord .stage__insight--open {
+  border-left: 5px solid #f2b835;
+}
+.nameRecord .stage__insight--overdue {
+  border-left: 5px solid #ce5133;
+}
+.nameRecord .padding-left-10px {
+  padding-left: 10px;
+}
+.nameRecord .insights__amount-text {
+  font-size: 18px;
+  color: #56b349;
+  padding: 2px 4px 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-bottom: 8px;
+  color: #000;
+  line-height: 0.85;
+}
+.nameRecord .insights__label-text {
+  letter-spacing: 1px;
+  margin-left: 5px;
+  color: #6e8ba8;
+  margin-top: -4px;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  line-height: 0.8;
+}
+.paid {
+  color: #108000;
+}
+.overdue {
+  color: #f95700;
+}
 </style>
