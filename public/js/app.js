@@ -70177,9 +70177,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     openTab: function openTab() {
       window.open("http://adgpos.adgsystems.do/print?date=" + JSON.stringify(this.date) + "&products=" + JSON.stringify(this.products) + "&seleccionado=Productos" + "&categories=" + JSON.stringify(this.categories) + "&totales=" + JSON.stringify(["", "", "", this.cantidadProductos(), "$" + this.formatMoney(this.montoTotalProducto())]));
     },
+    toPrint: function toPrint(id) {
+      window.open("/invoice/print?invoice_id=" + id, "_blank");
+    },
     openDetalle: function openDetalle(facture) {
       var _this3 = this;
 
+      console.log(facture);
+      if (facture.type_sale === "personalizado") {
+        this.toPrint(facture.id);
+        return;
+      }
       this.factureselect = facture;
       this.loading = true;
       axios.get("/return/facture/detalle", {
@@ -71442,11 +71450,12 @@ var render = function() {
                 _c(
                   "tr",
                   [
-                    _vm._l(_vm.headers, function(header) {
+                    _vm._l(_vm.headers, function(header, key) {
                       return [
                         _c(
                           "th",
                           {
+                            key: key,
                             staticClass: "text-center",
                             attrs: { scope: "col" }
                           },
@@ -71472,9 +71481,9 @@ var render = function() {
                 _vm._v(" "),
                 _vm.nfcleng
                   ? [
-                      _vm._l(_vm.data, function(item) {
+                      _vm._l(_vm.data, function(item, key) {
                         return [
-                          _c("tr", [
+                          _c("tr", { key: key }, [
                             _c("td", [
                               _c("div", { staticClass: "text-left" }, [
                                 _vm._v(

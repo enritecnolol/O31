@@ -58,8 +58,19 @@ class Reporteriav2Controller extends Controller
         $fechafin = new DateTime($request->date[1]);
         if ($request->seleccionado == "Ventas")
         {
-            $facturas = DB::connection('client')->select("SELECT id, date, IFNULL(factures.client, 'General') AS cliente, concat('$', format(brute, 2)) as bruto, concat('$', format(itbis, 2)) as itbis, concat('$', format(total_facture, 2)) as total_factura FROM `factures` WHERE  date BETWEEN '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format('Y-m-d')."' AND type_sale = 'express' ORDER BY `id` DESC");
-            $header = ["#Factura", "Fecha", "Cliente", "Bruto", "Itbis", "Total Factura", ""];
+//            $facturas = DB::connection('client')->select("SELECT id, date, IFNULL(factures.client, 'General') AS cliente, concat('$', format(brute, 2)) as bruto, concat('$', format(itbis, 2)) as itbis, concat('$', format(total_facture, 2)) as total_factura, type_sale FROM `factures` WHERE  date BETWEEN '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format('Y-m-d')."' ORDER BY `id` DESC");
+            $facturas = DB::connection('client')->select("SELECT
+       factures.id,
+       date,
+       IFNULL(c.nombre, 'General') AS cliente,
+       concat('$', format(brute, 2)) as bruto,
+       concat('$', format(itbis, 2)) as itbis,
+       concat('$', format(total_facture, 2)) as total_factura,
+       type_sale
+FROM factures
+left join clients c on factures.client = c.id
+WHERE  date BETWEEN '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format('Y-m-d')."' ORDER BY `id` DESC");
+            $header = ["#Factura", "Fecha", "Cliente", "Bruto", "Itbis", "Total Factura", "Tipo de venta",""];
             return ['data' => $facturas, 'header' => $header];
         }
         if ($request->seleccionado == "Productos")

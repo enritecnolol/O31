@@ -14,8 +14,8 @@
             </tr>
           </template>
           <tr>
-            <template v-for="header in headers">
-              <th scope="col" class="text-center">{{header}}</th>
+            <template v-for="(header, key) in headers">
+              <th scope="col" class="text-center" :key="key">{{header}}</th>
             </template>
           </tr>
         </thead>
@@ -40,8 +40,8 @@
           </template>
 
           <template v-if="nfcleng">
-            <template v-for="item in data">
-              <tr>
+            <template v-for="(item, key) in data">
+              <tr :key="key">
                 <td>
                   <div class="text-left">{{item.slug}} | {{item.tipo}}</div>
                 </td>
@@ -329,7 +329,15 @@ export default {
           ])
       );
     },
+    toPrint(id) {
+      window.open("/invoice/print?invoice_id=" + id, "_blank");
+    },
     openDetalle(facture) {
+      console.log(facture);
+      if (facture.type_sale === "personalizado") {
+        this.toPrint(facture.id);
+        return;
+      }
       this.factureselect = facture;
       this.loading = true;
       axios
