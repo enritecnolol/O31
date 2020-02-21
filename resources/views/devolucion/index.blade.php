@@ -46,9 +46,9 @@
                                         <div class="text-center">
                                             <div class="form-group">
                                                 <label for="factura"><h4>No.Factura</h4></label>
-                                                <input type="text" style="text-align: center" v-model="no_factura" @keypress.enter="datosfactura" class="form-control form-control-sm" id="factura" placeholder="">
+                                                <input type="text" style="text-align: center" v-model="no_factura" @keypress.enter="datosfactura(no_factura)" class="form-control form-control-sm" id="factura" placeholder="">
                                             </div>
-                                            <button class="btn btn-primary" @click="datosfactura">Buscar</button>
+                                            <button class="btn btn-primary" @click="datosfactura(no_factura)">Buscar</button>
                                         </div>
                                     </div>
                                     <div class="col-md-12" v-if="datofactura === 'vacio'">
@@ -325,11 +325,10 @@
                 },
                 nuevodetalle:function (i) {
                     _this = this;
-
-
                     for(var key in _this.datosdetallefactura)
                     {
-                        if (key === i.index)
+
+                        if (key == i.index)
                         {
                             var detalle = {
                                 name_product: _this.datosdetallefactura[key].name_product,
@@ -348,6 +347,12 @@
                 },
                 realizardevolucion:function () {
                     _this = this;
+                    if(_this.datosnuevodetalle.length == 0)
+                    {
+                        toastr.warning("Revise los producto a devolver", "Validador")
+                        return;
+                    }
+
                     axios.post('/devolucion/store', {
                         factura: _this.datofactura,
                         detalle_devolucion: _this.datosnuevodetalle,

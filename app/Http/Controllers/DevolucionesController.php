@@ -27,21 +27,23 @@ class DevolucionesController extends Controller
         $factura = Facture::find($request->id);
         $devolucions = Devolucion::where('factura_id', $request->id)->get();
 
+        $InvoiceDevolution =  Devolucion::where('factura_id', $request->id)->first();
         if  ($devolucions == '[]'){
             $detall_devolucion = 'vacia';
         }else{
-            $detall_devolucion = DB::connection('client')->select("SELECT factures.id, details.id, details.date, details.name_product, details.descuento, 
-                            details.quanlity - IFNULL(SUM(detalle_devolucions.quanlity),0) AS quanlity, 
-                            details.price - IFNULL(SUM(detalle_devolucions.price),0) AS price, 
-                            details.depot - IFNULL(SUM(detalle_devolucions.itbis),0) AS depot, 
-                            details.impost - IFNULL(SUM(detalle_devolucions.bruto),0) AS impost, 
-                            details.product_id,
-                             details.description
-                            FROM factures 
-                            INNER JOIN details on details.facture_id = factures.id OR details.invoice_id = factures.id 
-                            LEFT JOIN devolucions ON devolucions.factura_id = factures.id
-                            LEFT JOIN detalle_devolucions ON detalle_devolucions.devolucion_id = devolucions.id 
-                            WHERE factures.id = ".$request->id." GROUP BY details.id");
+            $detall_devolucion = DB::connection('client')->select("SELECT
+       factures.id, details.id, details.date, details.name_product, details.descuento,
+       details.quanlity - IFNULL(detalle_devolucions.quanlity, 0) AS quanlity,
+       details.price - IFNULL(detalle_devolucions.price, 0)       AS price,
+       ROUND(details.depot, 2) - IFNULL(detalle_devolucions.itbis, 0)       AS depot,
+       ROUND(details.impost, 2) - IFNULL(detalle_devolucions.bruto, 0)      AS impost,
+       details.product_id,
+       details.description
+FROM factures
+    LEFT JOIN devolucions ON devolucions.factura_id = factures.id
+    left JOIN details on details.facture_id = factures.id
+    left JOIN detalle_devolucions ON detalle_devolucions.devolucion_id = devolucions.id and details.product_id = detalle_devolucions.product_id
+WHERE devolucions.id = $InvoiceDevolution->id;");
         }
         if ($factura == ''){
             $factura = 'vacio';

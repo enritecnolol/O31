@@ -188,7 +188,6 @@ export default {
         this.phone === "" ||
         this.email === "" ||
         this.enrollment === "" ||
-        this.address === "" ||
         this.limitBalance === 0
       ) {
         toastr.warning("Revisar los campos obligatorio");
