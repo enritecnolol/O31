@@ -345,4 +345,12 @@ class BillingsController extends Controller
         });
 
     }
+    public function lastsInvoices()
+    {
+        $db = DB::connection('client');
+
+        $query = $db->table('factures')->orderBy('id', 'desc')->limit(9);
+
+        return $query->get();
+    }
 }

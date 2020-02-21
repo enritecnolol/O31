@@ -9,8 +9,24 @@
     @include('caja.siderbar')
 @endsection
 
+@section('style')
+    <style>
+        .loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url("{{URL::asset('loading2.gif')}}") 50% 50% no-repeat rgb(249,249,249);
+            opacity: .8;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="container">
+        <div class="loader" v-if="loading"></div>
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
@@ -30,9 +46,16 @@
                                         <div class="text-center">
                                             <div class="form-group">
                                                 <label for="factura"><h4>No.Factura</h4></label>
-                                                <input type="text" v-model="no_factura" @keypress.enter="datosfactura" class="form-control form-control-sm" id="factura" placeholder="">
+                                                <input type="text" style="text-align: center" v-model="no_factura" @keypress.enter="datosfactura" class="form-control form-control-sm" id="factura" placeholder="">
                                             </div>
                                             <button class="btn btn-primary" @click="datosfactura">Buscar</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" v-if="datofactura === 'vacio'">
+                                        <div class="row">
+                                            <div class="col-md-4" v-for="(item ,index) in invoicesList">
+                                                @include('devolucion.cardInvoice')
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12" v-if="datofactura != 'vacio'">
@@ -113,85 +136,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="container-fluid"  style="width: 600px;box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);">
-                                            <div id="myPrintArea">
-                                                <div class="row">
-                                                    <div class="col-md-12" style="color: #000;">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <div style="width: 400px;text-align: center;">
-                                                                    <img :src="'imagenes/'+compania.img" width="100" alt="">
-                                                                </div>
-                                                                <h3 style="color: #000;width: 400px;text-align: center;">@{{ compania.nombreempresa }}</h3>
-                                                                <p style="color: #000;width: 400px;text-align: center;">@{{ compania.pais }}, @{{ compania.ciudad }}, @{{ compania.direccion }} <br> @{{ compania.telefono }} </p>
-                                                                <label style="color: #000;width: 400px;text-align: center;"><strong> Devolucion sobre venta </strong></label>
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <b>Fecha :  </b>@{{ fecha }}
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <b style="color: #000;">No. Factura :</b> @{{ _this.datofactura.id }}
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <b style="color: #000;">No. Devolucion : </b> @{{ numerodevolucion }}
-                                                            </div>
-                                                            <div class="col-md-12" v-if="nfc">
-                                                                <b style="color: #000;">NCF :</b> @{{ nfc }}
-                                                            </div>
-                                                            <div class="col-md-12" v-if="nfc">
-                                                                <b style="color: #000;">NCF modificado:</b> @{{ _this.datofactura.nfc }}
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <hr style="background-color: #0062cc">
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <table style="width: 400px;">
-                                                                    <thead style="border-bottom: 1px solid black;border-top: 1px solid black;font-weight: bold;text-align: left;">
-                                                                    <tr>
-                                                                        {{--<th style="font-weight: bold;color: #000;">Prod.</th>--}}
-                                                                        <th style="font-weight: bold;color: #000;text-align: center">Cantidad</th>
-                                                                        <th style="font-weight: bold;color: #000;text-align: right">Precio</th>
-                                                                        <th style="font-weight: bold;color: #000;text-align: right">Itbis</th>
-                                                                        <th style="font-weight: bold;color: #000;text-align: right">Total</th>
-                                                                    </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    <template v-for="item in datosnuevodetalle">
-                                                                        <tr>
-                                                                            <td colspan="4" style="font-size: 14px;color: #000;text-align: left">@{{ item.name_product ? item.name_product : item.description }}</td>
-                                                                        </tr>
-                                                                        <tr style="">
-                                                                            {{--<td style="font-size: 14px;width: 20%;color: #000;">@{{ item.name_product }}</td>--}}
-                                                                            <td style="font-size: 14px;width: 4%;color: #000;text-align: center">
-                                                                                @{{ item.cantidad }}
-                                                                            </td>
-                                                                            <td style="font-size: 14px;width: 4%;color: #000;text-align: right">@{{ format2(item.bruto == 0 ? item.price : item.bruto, '') }}</td>
-                                                                            <td style="font-size: 14px;width: 4%;color: #000;text-align: right">@{{ format2(item.itbis, '') }}</td>
-                                                                            <td style="font-size: 14px;width: 10%;color: #000;text-align: right">@{{ format2(item.price * item.cantidad, '') }}</td>
-                                                                        </tr>
-                                                                    </template>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <hr style="color: #000;">
-                                                            </div>
-                                                            <div class="col-md-12" style="margin-top: 20px;margin-bottom: 20px">
-                                                                <div style="border-radius: 50px 50px 50px 50px;box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);">
-                                                                    <h3 style="color: #000;width: 400px;text-align: right;">Total: @{{ format2(totaldevolver, '') }}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <div style="border-top:1px solid #000; padding-top:10px;">
-                                                                    <div class="" style="padding:5px;width:85%;margin:0 auto;border-radius:3px;margin-top:20px;font-weight: bold;color: #000;">
-                                                                        GRACIAS POR PREFERIRNOS <br>
-                                                                        {{ url()->current() }}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            @include('devolucion.Invoice')
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -213,12 +158,12 @@
     <script>
 
         // $(document).ready(function() {
-            $("#printD").click(function () {
-                var mode = 'iframe'; //popup
-                var close = mode == "popup";
-                var options = { mode : mode, popClose : close};
-                $("div#myPrintArea").printArea(options);
-            });
+        $("#printD").click(function () {
+            var mode = 'iframe'; //popup
+            var close = mode == "popup";
+            var options = { mode : mode, popClose : close};
+            $("div#myPrintArea").printArea(options);
+        });
         // });
     </script>
     <script >
@@ -312,13 +257,28 @@
                     numerodevolucion:0,
                     fecha:'',
                     devolucionesanteriores:'',
-                    nfc:''
+                    nfc:'',
+                    invoicesList:[],
+                    loading:false
                 }
             },watch: {
             },
             mounted(){
             },
+            created()
+            {
+                this.listInvoices()
+            },
             methods:{
+                listInvoices()
+                {
+                    _this = this;
+                    axios.get('/invoices/last')
+                        .then((resp)=> {
+                            _this.invoicesList = resp.data
+                        })
+                        .catch( ( err )=> console.log(err))
+                },
                 format2(n, currency) {
                     return currency + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
                 },
@@ -336,9 +296,13 @@
                 decimal:function (i) {
                     return parseFloat(i).toFixed(2)
                 },
-                datosfactura:function () {
+                datosfactura:function (id) {
                     _this = this;
-
+                    if(id)
+                    {
+                        _this.no_factura = id
+                    }
+                    this.loading = true;
                     axios.post('/devolucion/buscar/factura', {
                         id:_this.no_factura
                     })
@@ -356,7 +320,8 @@
                         })
                         .catch(function (error) {
                             toastr.warning('Se ha producido un Error');
-                        });
+                        })
+                        .finally(()=> {_this.loading = false;});
                 },
                 nuevodetalle:function (i) {
                     _this = this;

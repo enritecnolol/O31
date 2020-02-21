@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="row-horizon">
                 <template v-for="(item, index) in mesasocupadas">
-                    <span class="categorias" style="margin-left: 2px;cursor: pointer" :class="{selectcategories : item.active}" @click="buscarordenmesa(item.id, index)">{{item.mesa.name}}</span>
+                    <span :key="index" class="categorias" style="margin-left: 2px;cursor: pointer" :class="{selectcategories : item.active}" @click="buscarordenmesa(item.id, index)">{{item.mesa.name}}</span>
                 </template>
             </div>
         </div>
@@ -63,7 +63,7 @@
                             </div>
                         </template>
                         <template v-for="(item, index) in productoselecionado">
-                            <itemcarrito @cambiarcantidad="cambiarcantidad" :index="index" :productoselecionado="item"></itemcarrito>
+                            <itemcarrito :key="index" @cambiarcantidad="cambiarcantidad" :index="index" :productoselecionado="item"></itemcarrito>
                         </template>
                     </div>
                     <div class="col-md-12" style="background: white">
@@ -334,7 +334,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="item in productoselecionado">
+                                <tr v-for="(item, key) in productoselecionado" :key="key">
                                     <td style="line-height: 1">{{item.producto.name}}</td>
                                     <td class="text-center">{{item.cantidad}}</td>
                                     <td class="text-center">{{item.producto.price}}.00</td>

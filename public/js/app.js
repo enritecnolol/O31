@@ -62071,6 +62071,7 @@ var render = function() {
                 _c(
                   "span",
                   {
+                    key: index,
                     staticClass: "categorias",
                     class: { selectcategories: item.active },
                     staticStyle: { "margin-left": "2px", cursor: "pointer" },
@@ -62140,6 +62141,7 @@ var render = function() {
                   _vm._l(_vm.productoselecionado, function(item, index) {
                     return [
                       _c("itemcarrito", {
+                        key: index,
                         attrs: { index: index, productoselecionado: item },
                         on: { cambiarcantidad: _vm.cambiarcantidad }
                       })
@@ -63512,8 +63514,11 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "tbody",
-                            _vm._l(_vm.productoselecionado, function(item) {
-                              return _c("tr", [
+                            _vm._l(_vm.productoselecionado, function(
+                              item,
+                              key
+                            ) {
+                              return _c("tr", { key: key }, [
                                 _c(
                                   "td",
                                   { staticStyle: { "line-height": "1" } },

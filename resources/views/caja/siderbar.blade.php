@@ -26,6 +26,9 @@
                     <li>
                         <a style="padding-left: 90px" href="/billing/clients">CLIENTES</a>
                     </li>
+                    <li>
+                        <a style="padding-left: 90px" href="/suppliers">PROVEDOR</a>
+                    </li>
                 </ul>
             </li>
             <li class="has-sub">
