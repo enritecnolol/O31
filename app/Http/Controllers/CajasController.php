@@ -326,7 +326,8 @@ class   CajasController extends Controller
     public function idcuadre($id){
         $caja = Caja::find($id);
         $json = json_decode($caja->cuadre, true);
-        return view('caja.elcuadre', compact('caja'), compact('json'));
+        $company = DB::connection('client')->table('configuracions')->first();
+        return view('caja.elcuadre', compact('caja'), compact('json'))->with(compact('company'));
 
 //        return $json;
     }

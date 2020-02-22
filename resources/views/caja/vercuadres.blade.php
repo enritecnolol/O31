@@ -23,26 +23,26 @@
 
 
             {{--<template v-if="cuadres == ''">--}}
-                {{--<div class="card">--}}
-                    {{--<div class="card-header">--}}
-                        {{--<Strong>Historial de Ventas</Strong>--}}
-                    {{--</div>--}}
-                    {{--<div class="card-body">--}}
-                        {{--<div class="text-center" style="margin-top: 10%;margin-bottom: 10%">--}}
-                            {{--<h2>Presiona el boton para ver el Historial de Cuadres</h2>--}}
-                        {{--</div>--}}
-                        {{--<div class="text-center">--}}
+            {{--<div class="card">--}}
+            {{--<div class="card-header">--}}
+            {{--<Strong>Historial de Ventas</Strong>--}}
+            {{--</div>--}}
+            {{--<div class="card-body">--}}
+            {{--<div class="text-center" style="margin-top: 10%;margin-bottom: 10%">--}}
+            {{--<h2>Presiona el boton para ver el Historial de Cuadres</h2>--}}
+            {{--</div>--}}
+            {{--<div class="text-center">--}}
 
-                            {{--<button type="button" @click="cargarcuadres()" class="btn btn-lg btn-outline-success">Ver</button>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
+            {{--<button type="button" @click="cargarcuadres()" class="btn btn-lg btn-outline-success">Ver</button>--}}
+            {{--</div>--}}
+            {{--</div>--}}
+            {{--</div>--}}
             {{--</template>--}}
 
             <template>
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive m-b-40">
+                        <div class="table-responsive m-b-40" style="height: 600px;overflow-y: auto;overflow-x: hidden">
                             <table class="table table-sm table-hover">
                                 <thead>
                                 <tr>
@@ -63,8 +63,8 @@
                                         <td>@{{ v.id }}</td>
                                         <td>@{{ v.fecha_apertura }}</td>
                                         <td>@{{ v.fecha_cierre }}</td>
-                                        <td>@{{ v.total_cierre }}</td>
-                                        <td>@{{ v.valor_apertura }}</td>
+                                        <td>@{{ format2(v.total_cierre, '') }}</td>
+                                        <td>@{{ format2(v.valor_apertura, '') }}</td>
                                         <td>@{{ v.total_venta }}</td>
                                         <td v-if="v.cuadreconf === 'Si'"><span class="badge badge-info">@{{ v.cuadreconf }}</span></td>
                                         <td v-else><span class="badge badge-danger">@{{ v.cuadreconf }}</span></td>
@@ -78,8 +78,8 @@
                                         <td>@{{ v.id }}</td>
                                         <td>@{{ v.fecha_apertura }}</td>
                                         <td>@{{ v.fecha_cierre }}</td>
-                                        <td>@{{ v.total_cierre }}</td>
-                                        <td>@{{ v.valor_apertura }}</td>
+                                        <td>@{{ format2(v.total_cierre, '') }}</td>
+                                        <td>@{{ format2(v.valor_apertura, '') }}</td>
                                         <td>@{{ v.total_venta }}</td>
                                         <td v-if="v.cuadreconf === 'Si'"><span class="badge badge-info">@{{ v.cuadreconf }}</span></td>
                                         <td v-else><span class="badge badge-danger">@{{ v.cuadreconf }}</span></td>
@@ -135,6 +135,9 @@
                 _this.cargarcuadres();
             },
             methods:{
+                format2(n, currency) {
+                    return currency + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+                },
                 cargarcuadres:function () {
                     this.loading = true;
                     _this = this;

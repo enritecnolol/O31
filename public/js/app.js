@@ -36465,6 +36465,7 @@ Vue.component('billing-customers', __webpack_require__(459));
 Vue.component('client-details', __webpack_require__(474));
 Vue.component('user-section', __webpack_require__(479));
 Vue.component('suppliers-section', __webpack_require__(487));
+Vue.component('print-report-ventas', __webpack_require__(507));
 
 Vue.prototype.moment = __WEBPACK_IMPORTED_MODULE_1_moment___default.a;
 Vue.prototype.$toastr = __WEBPACK_IMPORTED_MODULE_2__node_modules_toastr___default.a;
@@ -70180,7 +70181,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       }
     },
     openTab: function openTab() {
-      window.open("http://adgpos.adgsystems.do/print?date=" + JSON.stringify(this.date) + "&products=" + JSON.stringify(this.products) + "&seleccionado=Productos" + "&categories=" + JSON.stringify(this.categories) + "&totales=" + JSON.stringify(["", "", "", this.cantidadProductos(), "$" + this.formatMoney(this.montoTotalProducto())]));
+      if (this.seleccionado === "Ventas") {
+        window.open(window.location.origin + "/print/ventas?date=" + JSON.stringify(this.date) + "&seleccionado=Ventas");
+      }
+      window.open(window.location.origin + "/print?date=" + JSON.stringify(this.date) + "&products=" + JSON.stringify(this.products) + "&seleccionado=Productos" + "&categories=" + JSON.stringify(this.categories) + "&totales=" + JSON.stringify(["", "", "", this.cantidadProductos(), "$" + this.formatMoney(this.montoTotalProducto())]));
     },
     toPrint: function toPrint(id) {
       window.open("/invoice/print?invoice_id=" + id, "_blank");
@@ -71592,7 +71596,8 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "pull-right" }, [
-            _vm.data.length > 0 && _vm.seleccionado == "Productos"
+            _vm.data.length > 0 &&
+            (_vm.seleccionado == "Productos" || _vm.seleccionado == "Ventas")
               ? _c(
                   "button",
                   {
@@ -118326,9 +118331,7 @@ var render = function() {
                   _c("h3", [
                     _vm._v(
                       _vm._s(
-                        _vm.clientForm
-                          ? "Formulario de cliente"
-                          : "Clientes de facturación"
+                        _vm.clientForm ? "Formulario de cliente" : "Clientes"
                       )
                     )
                   ])
@@ -118418,7 +118421,8 @@ var render = function() {
                           [
                             _c("summary-invoices", {
                               attrs: {
-                                subtitle: " Pagado los ultimas 30 dias",
+                                subtitle:
+                                  " Facturas saldadas los ultimas 30 dias",
                                 summary: "paid_last_30_days"
                               }
                             })
@@ -118481,7 +118485,7 @@ var render = function() {
                                   item,
                                   index
                                 ) {
-                                  return _c("tr", [
+                                  return _c("tr", { key: index }, [
                                     _c(
                                       "td",
                                       {
@@ -128999,6 +129003,520 @@ module.exports = function listToStyles (parentId, list) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 501 */,
+/* 502 */,
+/* 503 */,
+/* 504 */,
+/* 505 */,
+/* 506 */,
+/* 507 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(512)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(510)
+/* template */
+var __vue_template__ = __webpack_require__(514)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Print/PrintReportVentas.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-46937d42", Component.options)
+  } else {
+    hotAPI.reload("data-v-46937d42", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 508 */,
+/* 509 */,
+/* 510 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            table_data: [],
+            headers: [],
+            filterHeaders: [],
+            title: "",
+            date: []
+        };
+    },
+
+    methods: {
+        dateCurrent: function dateCurrent() {
+            return moment().format('D MMMM YYYY, h:mm:ss a');
+        },
+        constains: function constains(str) {
+            if (typeof str == "string" && str.indexOf('.') > -1) {
+                return true;
+            } else if (str == 'Monto' || str == 'Importe' || str == 'Precio' || str == 'precio' || str == 'Cantidad vendido' || str == 'cantidad_producto') {
+                return true;
+            } else if (Number.isInteger(str)) {
+                return true;
+            }
+
+            return false;
+        },
+        DateFormat: function DateFormat(date) {
+            return moment(date).format('D MMMM  YYYY');
+        },
+        hidecolumn: function hidecolumn(key) {
+            var found = this.filterHeaders.find(function (e) {
+                return e.toLowerCase() == key.toLowerCase();
+            });
+
+            if (found) {
+                return true;
+            }
+            return false;
+        },
+        hideColumnsFunc: function hideColumnsFunc(val) {
+            var _this = this;
+
+            if (val === undefined) {
+                $("td,th").show();
+                setTimeout(function () {
+                    _this.filterHeaders.forEach(function (item) {
+                        var ind = _this.headers.indexOf(item) + 1;
+                        $("td:nth-child(" + ind + "),th:nth-child(" + ind + ")").hide();
+                    });
+                }, 10);
+            }
+
+            var ind = this.headers.indexOf(val) + 1;
+            $("td:nth-child(" + ind + "),th:nth-child(" + ind + ")").hide();
+        }
+    },
+    mounted: function mounted() {
+        var _this2 = this;
+
+        var url = new URL(window.location.href);
+        var date = url.searchParams.get("date");
+        this.date = JSON.parse(date);
+        var seleccionado = url.searchParams.get("seleccionado");
+        this.title = "Reporte de ventas";
+        axios.post('/reportv2/return/data', {
+            date: JSON.parse(date),
+            seleccionado: seleccionado
+        }).then(function (response) {
+            _this2.table_data = response.data['data'];
+            _this2.headers = response.data['header'];
+        }).catch(function (error) {
+            console.log(error);
+        }).finally(function () {
+            setTimeout(window.print(), 5000);
+        });
+    },
+    created: function created() {}
+});
+
+/***/ }),
+/* 511 */,
+/* 512 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(513);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("15dbca32", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-46937d42\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PrintReportVentas.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-46937d42\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PrintReportVentas.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 513 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.petite {\n       font-size: 10px;\n}\n.petitefooter {\n       font-size: 8px;\n}\n.button {\n       background-color: #4caf50; /* Green */\n       border: none;\n       color: white;\n       padding: 3px 32px;\n       text-align: center;\n       text-decoration: none;\n       display: inline-block;\n       font-size: 16px;\n       margin: 4px 2px;\n       -webkit-transition-duration: 0.4s; /* Safari */\n       transition-duration: 0.4s;\n       cursor: pointer;\n}\n.button2 {\n       background-color: white;\n       color: black;\n       border: 2px solid #008cba;\n}\n.button2:hover {\n       background-color: #008cba;\n       color: white;\n}\n@page {\n@bottom-right {\n           content: counter(page) \" of \" counter(pages);\n}\n}\n#pageFooter:after {\n       counter-increment: page;\n       content: \"Page \" counter(page);\n       left: 0;\n       top: 100%;\n       white-space: nowrap;\n       z-index: 20px;\n       -moz-border-radius: 5px;\n       -moz-box-shadow: 0px 0px 4px #222;\n       background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);\n}\n#content {\n       display: table;\n}\n#pageFooter {\n       display: table-footer-group;\n}\n#pageFooter:after {\n       counter-increment: page;\n       content: counter(page);\n}\n@page {\n       margin: 10px;\n       size: landscape;\n}\n@media print and (width: 8.5in) and (height: 11in) {\n@page {\n           margin: 10px;\n           size: landscape;\n}\n}\n#reportTable {\n       margin: 5px;\n}\nh5 {\n       font-weight: bold;\n}\n#theaderdata {\n       border-bottom: 1px solid black;\n       border-top: 1px solid black;\n       font-weight: bold;\n       text-align: left;\n}\ntfoot {\n       border-top: 1px solid black;\n       color: black;\n       font-weight: bold;\n       text-align: left;\n}\n#tbodydata {\n       text-align: left;\n}\n.signature {\n       border: 0;\n       border-bottom: 1px solid #000;\n}\ntable {\n       text-align: left;\n}\n.outTable {\n       text-align: left;\n}\nfooter {\n       position: absolute;\n       bottom: 60px;\n       width: 100%;\n       height: 100px;\n}\nbody {\n       background: white !important;\n       min-width: 600px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 514 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticStyle: { background: "white" } }, [
+    _c(
+      "div",
+      { staticStyle: { background: "white" }, attrs: { id: "reportTable" } },
+      [
+        _c(
+          "table",
+          { staticStyle: { "margin-top": "10px" }, attrs: { width: "100%" } },
+          [
+            _c("thead", [
+              _c("tr", [
+                _c("td", [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "container-fluid",
+                      staticStyle: { "margin-top": "10px" }
+                    },
+                    [
+                      _c("div", { staticClass: "row" }, [
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("div", { staticClass: "text-center" }, [
+                            _c("h6", [_vm._v(_vm._s(_vm.title))])
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", { staticStyle: { "border-top": "1px solid black" } }, [
+                _c("td", [
+                  _c("div", { staticClass: "container-fluid" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-6" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _c("h6", { staticStyle: { float: "left" } }, [
+                              _vm._v(
+                                "\n                                                  Rango de fecha:\n                                                  "
+                              ),
+                              _c("b", [
+                                _vm._v(_vm._s(_vm.DateFormat(_vm.date[0])))
+                              ]),
+                              _vm._v(" - "),
+                              _c("b", [
+                                _vm._v(_vm._s(_vm.DateFormat(_vm.date[1])))
+                              ])
+                            ])
+                          ])
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("tbody", [
+              _c("tr", [
+                _c("td", [
+                  _c("div", { attrs: { id: "" } }, [
+                    _c(
+                      "table",
+                      {
+                        staticStyle: { "margin-top": "5px" },
+                        attrs: { id: "tabledata", width: "100%" }
+                      },
+                      [
+                        _c("thead", { attrs: { id: "theaderdata" } }, [
+                          _c(
+                            "tr",
+                            _vm._l(_vm.headers, function(val, index) {
+                              return _c(
+                                "th",
+                                {
+                                  key: index,
+                                  style: _vm.hidecolumn(val)
+                                    ? "display:none;"
+                                    : ""
+                                },
+                                [
+                                  _c(
+                                    "b",
+                                    {
+                                      style: _vm.constains(val)
+                                        ? "float:right;"
+                                        : ""
+                                    },
+                                    [_vm._v(_vm._s(val))]
+                                  )
+                                ]
+                              )
+                            })
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          { attrs: { id: "tbodydata" } },
+                          [
+                            _vm._l(_vm.table_data, function(item, index) {
+                              return _c(
+                                "tr",
+                                { key: index },
+                                _vm._l(item, function(value, key) {
+                                  return _c(
+                                    "td",
+                                    {
+                                      key: key,
+                                      staticClass: "hide",
+                                      style: _vm.hidecolumn(key)
+                                        ? "display:none;"
+                                        : ""
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        {
+                                          style: _vm.constains(key)
+                                            ? "float:right;"
+                                            : ""
+                                        },
+                                        [_vm._v(_vm._s(value))]
+                                      )
+                                    ]
+                                  )
+                                })
+                              )
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "tr",
+                              {
+                                staticStyle: {
+                                  "border-top": "1px solid black",
+                                  color: "black",
+                                  "font-weight": "bold",
+                                  "text-align": "left"
+                                }
+                              },
+                              _vm._l(_vm.totales, function(val, index) {
+                                return _c(
+                                  "td",
+                                  { key: index, staticClass: "hide" },
+                                  [
+                                    _c(
+                                      "b",
+                                      {
+                                        style: _vm.constains(val)
+                                          ? "float:right;"
+                                          : ""
+                                      },
+                                      [_vm._v(_vm._s(val))]
+                                    )
+                                  ]
+                                )
+                              })
+                            )
+                          ],
+                          2
+                        )
+                      ]
+                    )
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("tfoot", [
+              _c("tr", [
+                _c("td", [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "container-fluid",
+                      staticStyle: { "margin-top": "10px" }
+                    },
+                    [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("h6", { staticStyle: { float: "right" } }, [
+                            _vm._v("Fecha: " + _vm._s(_vm.dateCurrent()))
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("div", { staticClass: "text-center" }, [
+        _c("h5", {}, [_vm._v("Business Intelligence")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-46937d42", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

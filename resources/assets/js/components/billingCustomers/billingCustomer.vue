@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-md-12">
             <div style="float: left">
-              <h3>{{clientForm ? 'Formulario de cliente' : 'Clientes de facturación'}}</h3>
+              <h3>{{clientForm ? 'Formulario de cliente' : 'Clientes'}}</h3>
             </div>
             <div style="float: right">
               <button
@@ -35,7 +35,7 @@
                   <summary-invoices :subtitle="' Facturas abierta'" :summary="'open_invoices'"/>
                 </div>
                 <div class="col">
-                  <summary-invoices :subtitle="' Pagado los ultimas 30 dias'" :summary="'paid_last_30_days'"/>
+                  <summary-invoices :subtitle="' Facturas saldadas los ultimas 30 dias'" :summary="'paid_last_30_days'"/>
                 </div>
               </div>
             </div>
@@ -57,7 +57,7 @@
                       </div>
                     </td>
                   </tr>
-                  <tr v-for="(item, index) in customerData.data">
+                  <tr v-for="(item, index) in customerData.data" :key="index">
                     <td style="width: 40%;cursor: pointer" @click="DetailClient(item.id)">{{item.nombre}}</td>
                     <td style="width: 40%">{{item.telefono}}</td>
                     <td align="right">RD${{parseFloat(item.balance).formatMoney(2)}}</td>

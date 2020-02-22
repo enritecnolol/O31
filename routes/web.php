@@ -295,6 +295,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/report/607', 'Reporteria607Controller@getData');
     /*=================================\- PRINT -/======================================================*/
     Route::get('/print', 'IndexController@printPage');
+    Route::get('/print/ventas', 'IndexController@printVentasPage');
     /*=================================\- Password -/======================================================*/
     Route::post('/change/pass', 'ConfiguracionesController@changepass');
 

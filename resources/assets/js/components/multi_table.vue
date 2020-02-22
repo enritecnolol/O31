@@ -87,7 +87,7 @@
           <button
             type="button"
             class="btn btn-success"
-            v-if="data.length > 0 && seleccionado == 'Productos'"
+            v-if="data.length > 0 && (seleccionado == 'Productos' || seleccionado == 'Ventas')"
             @click="openTab"
           >
             <i class="fas fa-print"></i> Imprimir
@@ -311,8 +311,18 @@ export default {
       }
     },
     openTab() {
+      if(this.seleccionado === "Ventas")
+      {
+        window.open(
+        window.location.origin +
+          "/print/ventas?date=" +
+          JSON.stringify(this.date) +
+          "&seleccionado=Ventas"
+          );
+      }
       window.open(
-        "http://adgpos.adgsystems.do/print?date=" +
+        window.location.origin +
+          "/print?date=" +
           JSON.stringify(this.date) +
           "&products=" +
           JSON.stringify(this.products) +
