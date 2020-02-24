@@ -41,7 +41,7 @@ class DevolucionesController extends Controller
        details.description
 FROM factures
     LEFT JOIN devolucions ON devolucions.factura_id = factures.id
-    left JOIN details on details.facture_id = factures.id
+    left JOIN details on details.facture_id = factures.id or details.invoice_id = factures.id
     left JOIN detalle_devolucions ON detalle_devolucions.devolucion_id = devolucions.id and details.product_id = detalle_devolucions.product_id
 WHERE devolucions.id = $InvoiceDevolution->id;");
         }

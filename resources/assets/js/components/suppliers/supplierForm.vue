@@ -43,19 +43,6 @@
           />
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="form-group">
-          <label for="email" class="form-control-label">Correo electronico:</label>
-          <input
-            :disabled="loading"
-            type="email"
-            v-model="form.email"
-            id="email"
-            placeholder
-            class="form-control form-control-sm"
-          />
-        </div>
-      </div>
       <div class="col-md-3">
         <div class="form-group">
           <label for="phone" class="form-control-label">Telefono:</label>
@@ -64,6 +51,19 @@
             type="text"
             v-model="form.phone"
             id="phone"
+            placeholder
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="email" class="form-control-label">Correo electronico:</label>
+          <input
+            :disabled="loading"
+            type="email"
+            v-model="form.email"
+            id="email"
             placeholder
             class="form-control form-control-sm"
           />

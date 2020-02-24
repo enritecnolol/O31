@@ -116,9 +116,8 @@ class BillingsController extends Controller
                     'fiscal' => ['ncf' => $nfc, 'NFCDueDate' => $NFCDueDate, 'config' => $config->generacomprobante],
                     'invoice_id' => $facture->id
                 ];
-                $pdf = PDF::loadView('emails.invoice', compact($dataPDF, 'dataPDF'), [], [
-                    'format' => 'A4-L'
-                ]);
+                $pdf = PDF::loadView('emails.invoice', compact($dataPDF, 'dataPDF'))->setPaper('a4', 'landscape');
+
                 $email = $request->email;
                 $fecha = date("Y-m-d", strtotime($request->invoice_date));
                 $dataMail = ['customer' => $request->client_id['label'], 'facture' => $request->invoice_number, 'auth_id' => Auth::id(), 'invoice_id' => $facture->id];

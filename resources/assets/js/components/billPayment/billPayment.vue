@@ -37,7 +37,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-12" style="margin-top: 50px">
+          <div class="col-md-12" style="margin-top: 10px">
             <div class="row">
               <div class="col-md-3">
                 <label>
@@ -53,14 +53,15 @@
               </div>
             </div>
           </div>
-          <div class="col-md-12" style="margin-top: 30px">
+          <div class="col-md-12" style="margin-top: 10">
             <div class="row">
               <div class="col-md-3">
-                <label>
+                <paymentsMethodsSelect @PaymentMethodsData="PaymentMethodsData" />
+                <!-- <label>
                   Metodos de pago:
                   <span style="color:red">*</span>
                 </label>
-                <v-select v-model="paymentMethods" :options="PaymentMethodsListForSelect" />
+                <v-select v-model="paymentMethods" :options="PaymentMethodsListForSelect" />-->
               </div>
               <div class="col-md-2">
                 <label for="reference">No. Referencia:</label>
@@ -98,11 +99,11 @@
           <div class="col-md-12">
             <hr />
           </div>
-          <div class="col-md-12" style="margin-top: 20px">
+          <div class="col-md-12" style="margin-top: 10px">
             <h4>Transacciones pendientes</h4>
           </div>
           <div class="col-md-12">
-            <general-table>
+            <general-table style="height:240px">
               <template slot="table-header">
                 <tr>
                   <th>
@@ -133,7 +134,7 @@
           <div class="col-md-12">
             <hr />
           </div>
-          <div class="col-md-12" style="margin-top: 50px">
+          <div class="col-md-12" style="margin-top: 20px">
             <div class="float-right">
               <div
                 style="width: 300px;height: 150px;box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);border-radius: 10px 10px 10px 10px;"
@@ -172,8 +173,18 @@
                   <i class="fas fa-save" /> Guardar
                 </button>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#" @click="save">Guardar</a>
-                  <a class="dropdown-item" href="#">Guardar y Enviar</a>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    onclick="return false;"
+                    @click="save(false)"
+                  >Guardar</a>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    onclick="return false;"
+                    @click="save(true)"
+                  >Guardar y Enviar</a>
                 </div>
               </div>
               <button class="btn btn-primary btn-sm" @click="cleanReceipt">
@@ -193,10 +204,17 @@ import Datepicker from "vuejs-datepicker";
 import money from "v-money";
 import generalTable from "../generalTable";
 import itemBody from "./itemBody";
+import paymentsMethodsSelect from "../paymentMethods/paymentsMethodsSelect";
 Vue.use(money, { precision: 4 });
 export default {
   name: "bill-payment",
-  components: { cardPanel, Datepicker, generalTable, itemBody },
+  components: {
+    cardPanel,
+    Datepicker,
+    generalTable,
+    itemBody,
+    paymentsMethodsSelect
+  },
   data() {
     return {
       selectedCustomer: "",
@@ -204,7 +222,6 @@ export default {
       clientsData: [],
       email: "",
       PaymentDate: "",
-      PaymentMethodList: [],
       reference: "",
       deposit: "",
       amountReceived: 0,
@@ -220,6 +237,9 @@ export default {
     };
   },
   methods: {
+    PaymentMethodsData(val) {
+      this.paymentMethods = val;
+    },
     save(send) {
       if (
         this.selectedCustomer === "" ||
@@ -238,7 +258,8 @@ export default {
           reference: this.reference,
           deposit_to: this.deposit,
           amount: this.AmountReceivedGeneral,
-          items: this.clientInvoices
+          items: this.clientInvoices,
+          send: send
         })
         .then(response => {
           toastr.success("La operacion fue realizado con exito", "Respuesta");
@@ -302,16 +323,7 @@ export default {
           console.log(error);
         });
     },
-    getPaymentsMethods() {
-      axios
-        .get("/payment/methods/without/paginate")
-        .then(response => {
-          this.PaymentMethodList = response["data"];
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
+
     setSelected(val) {
       let found = this.clientsData.find(e => e.id === val.code);
       if (found) {
@@ -396,16 +408,6 @@ export default {
         });
       }
       return array;
-    },
-    PaymentMethodsListForSelect() {
-      let array = [];
-      for (var index in this.PaymentMethodList) {
-        array.push({
-          label: this.PaymentMethodList[index].name,
-          code: this.PaymentMethodList[index].id
-        });
-      }
-      return array;
     }
   },
   watch: {
@@ -420,7 +422,6 @@ export default {
   },
   created() {
     this.ClientsDate();
-    this.getPaymentsMethods();
     var today = new Date();
     this.PaymentDate = today;
   }

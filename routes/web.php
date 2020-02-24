@@ -284,6 +284,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/client/details/transactions', 'BillingCustomersController@clientDetailsTransactions');
     /*=================================\- Recibo de factura -/======================================================*/
     Route::post('/pay/payment', 'PaymentsController@store');
+    Route::get('/pay/payment/test', 'PaymentsController@printTest');
     /*=================================\- metodos de pago -/======================================================*/
     Route::get('/payment/methods', 'PaymentMethodsController@index');
     Route::post('/payment/methods', 'PaymentMethodsController@store');

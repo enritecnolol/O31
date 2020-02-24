@@ -78,7 +78,7 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="limitBalance" class="form-control-label">
-              Limite de balance:
+              Limite de credito:
               <span style="color: red">*</span>
             </label>
             <money
@@ -111,7 +111,7 @@
             cols="80"
           />
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <div class="form-group">
             <label for="rnc" class="form-control-label">Terminos :</label>
             <select
@@ -126,6 +126,18 @@
                 <option :key="index" :value="item.id">{{item.name}}</option>
               </template>
             </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="contact" class="form-control-label">Contacto:</label>
+            <input
+              type="text"
+              id="contact"
+              placeholder
+              v-model="contact"
+              class="form-control form-control-sm"
+            />
           </div>
         </div>
         <div class="col-md-12">
@@ -162,6 +174,7 @@ export default {
       rnc: "",
       limitBalance: 0,
       term: "",
+      contact: "",
       money: {
         decimal: ".",
         thousands: ",",
@@ -207,7 +220,8 @@ export default {
           direccion: this.address,
           rnc: this.rnc,
           limitBalance: this.limitBalance,
-          term: this.term
+          term: this.term,
+          contact: this.contact
         })
         .then(response => {
           toastr.success("El cliente ha sido ingresado con exito");
@@ -229,7 +243,8 @@ export default {
         observation: "",
         address: "",
         rnc: "",
-        limitBalance: 0
+        limitBalance: 0,
+        contact: ""
       });
     },
     fetchData(id) {
@@ -250,6 +265,7 @@ export default {
           this.rnc = response.data.rnc;
           this.limitBalance = response.data.limitBalance;
           this.term = response.data.term;
+          this.contact = response.data.contact;
         })
         .catch(error => {
           console.log(error);

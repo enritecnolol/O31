@@ -59,7 +59,7 @@
         <div class="">
             <div class="" id="header">
                 <div class="">
-                    <img src="{{$dataPDF['company']->img}}" alt="" style="width: 100px;">
+                    <img src="imagenes/{{$dataPDF['company']->img}}" alt="" style="width: 100px;">
                 </div>
                 <div class="" style="margin-top: 20px">
                     <b>{{$dataPDF['company']->nombreempresa}} <br></b>
@@ -132,13 +132,17 @@
                         <div style="float: right;width: 200px;height: 150px;box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);border-radius: 10px 10px 10px 10px;">
                             <div class="">
                                 <div class="">
-                                    <div class="" style="margin-top: 10px;text-align: right"><b>SubTotal:</b></div>
-                                    <div class="" style="margin-top: 10px;text-align: right">RD$ {{number_format($dataPDF['data']['subtotal'], 2, '.', ',')}}</div>
+                                    <div>
+                                        <div class="" style="margin-top: 10px;text-align: left"><b>SubTotal:</b></div>
+                                        <div class="" style="margin-top: 10px;text-align: right">RD$ {{number_format($dataPDF['data']['subtotal'], 2, '.', ',')}}</div>
+                                    </div>
                                     <div class="">
                                         <hr>
                                     </div>
-                                    <div class="" style="text-align: right"><b>Monto Total:</b></div>
-                                    <div class="" style="text-align: right">RD$ {{number_format($dataPDF['data']['total'], 2, '.', ',')}}</div>
+                                    <div>
+                                        <div class="" style="text-align: left"><b>Monto Total:</b></div>
+                                        <div class="" style="text-align: right">RD$ {{number_format($dataPDF['data']['total'], 2, '.', ',')}}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

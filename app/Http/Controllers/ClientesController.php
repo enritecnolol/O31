@@ -33,6 +33,7 @@ class ClientesController extends Controller
         $cliente->rnc= $request->rnc;
         $cliente->limit_balance = $request->limitBalance;
         $cliente->term = $request->term;
+        $cliente->contact = $request->contact;
         $cliente->user_id= Auth::id();
         $cliente->save();
 
@@ -90,6 +91,7 @@ class ClientesController extends Controller
         $cliente->rnc = $request->rnc;
         $cliente->limit_balance = $request->limitBalance;
         $cliente->term = $request->term;
+        $cliente->contact = $request->contact;
         $cliente->update();
 
         return 'guardado';
