@@ -129400,67 +129400,35 @@ var render = function() {
                         _c(
                           "tbody",
                           { attrs: { id: "tbodydata" } },
-                          [
-                            _vm._l(_vm.table_data, function(item, index) {
-                              return _c(
-                                "tr",
-                                { key: index },
-                                _vm._l(item, function(value, key) {
-                                  return _c(
-                                    "td",
-                                    {
-                                      key: key,
-                                      staticClass: "hide",
-                                      style: _vm.hidecolumn(key)
-                                        ? "display:none;"
-                                        : ""
-                                    },
-                                    [
-                                      _c(
-                                        "span",
-                                        {
-                                          style: _vm.constains(key)
-                                            ? "float:right;"
-                                            : ""
-                                        },
-                                        [_vm._v(_vm._s(value))]
-                                      )
-                                    ]
-                                  )
-                                })
-                              )
-                            }),
-                            _vm._v(" "),
-                            _c(
+                          _vm._l(_vm.table_data, function(item, index) {
+                            return _c(
                               "tr",
-                              {
-                                staticStyle: {
-                                  "border-top": "1px solid black",
-                                  color: "black",
-                                  "font-weight": "bold",
-                                  "text-align": "left"
-                                }
-                              },
-                              _vm._l(_vm.totales, function(val, index) {
+                              { key: index },
+                              _vm._l(item, function(value, key) {
                                 return _c(
                                   "td",
-                                  { key: index, staticClass: "hide" },
+                                  {
+                                    key: key,
+                                    staticClass: "hide",
+                                    style: _vm.hidecolumn(key)
+                                      ? "display:none;"
+                                      : ""
+                                  },
                                   [
                                     _c(
-                                      "b",
+                                      "span",
                                       {
-                                        style: _vm.constains(val)
+                                        style: _vm.constains(key)
                                           ? "float:right;"
                                           : ""
                                       },
-                                      [_vm._v(_vm._s(val))]
+                                      [_vm._v(_vm._s(value))]
                                     )
                                   ]
                                 )
                               })
                             )
-                          ],
-                          2
+                          })
                         )
                       ]
                     )

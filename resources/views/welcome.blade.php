@@ -303,6 +303,16 @@
                             <div class="text-center" style="margin-bottom: 5px">
                                 <h5>Categorias</h5>
                             </div>
+                            <div class="card" id="categoria" style="height: auto;width: 150px;margin-right:10px;background: white;cursor: pointer;box-shadow:rgb(136, 136, 136) 1px 1px 5px;" @click="productosbuscados = ''">
+                                <div class="card-body">
+                                    <div class="mx-auto d-block">
+                                        <img class="rounded-circle mx-auto d-block image1" style=" height: 60px; width: 80px" src="imagenes/list-view-icon-png-4.png" alt="Card image cap">
+                                        <h5 class="text-sm-center mt-2 mb-1">Todos</h5>
+                                        <div class="location text-sm-center" style="color: #0062cc">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             @foreach($categoria as $cat)
                                 <div class="card" id="categoria" style="height: auto;width: 150px;margin-right:10px;background: white;cursor: pointer;box-shadow:rgb(136, 136, 136) 1px 1px 5px;" @click="productocategoria('<?php echo $cat->id; ?>'), cargarsubcategoria('<?php echo $cat->id; ?>'), cambio = 'subcategoria'">
                                     <div class="card-body">

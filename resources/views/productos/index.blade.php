@@ -76,23 +76,23 @@
                     <nav v-if="pagination.last_page>1" aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
                             <li v-if="pagination.current_page==1" class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1">Anterior</a>
+                                <a class="page-link" href="#" tabindex="-1" onclick="return false;">Anterior</a>
                             </li>
                             <li v-else class="page-item">
-                                <a class="page-link" href="#" tabindex="-1" @click="productosp(pagination.prev_page_url)">Anterior</a>
+                                <a class="page-link" href="#"  onclick="return false;" tabindex="-1" @click="productosp(pagination.prev_page_url)">Anterior</a>
                             </li>
 
                             <li v-for="page in pagination.last_page" v-if="pagination.current_page==page" class="page-item active">
-                                <a class="page-link" href="#">@{{ page }}</a>
+                                <a class="page-link" href="#" onclick="return false;">@{{ page }}</a>
                             </li>
                             <li v-else class="page-item">
-                                <a class="page-link" href="#" @click="productosp(pagination.path+'?page='+page)">@{{ page }}</a>
+                                <a class="page-link" href="#"  onclick="return false;" @click="productosp(pagination.path+'?page='+page)">@{{ page }}</a>
                             </li>
                             <li v-if="pagination.current_page==pagination.last_page" class="page-item disabled">
-                                <a class="page-link" href="#">Siguiente</a>
+                                <a class="page-link" onclick="return false;" href="#">Siguiente</a>
                             </li>
                             <li v-else class="page-item">
-                                <a class="page-link" href="#" @click="productosp(pagination.next_page_url)">Siguiente</a>
+                                <a class="page-link" onclick="return false;" href="#" @click="productosp(pagination.next_page_url)">Siguiente</a>
                             </li>
                         </ul>
                     </nav>

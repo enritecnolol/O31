@@ -63,7 +63,7 @@
                                     <span :style="constains(key) ? 'float:right;' : ''" >{{value}}</span>
                                     </td>
                                 </tr>
-                                <tr
+                                <!-- <tr
                                         style="border-top: 1px solid black;color: black;font-weight: bold;text-align: left;">
                                     <td
                                             class="hide"
@@ -72,7 +72,7 @@
                                     >
                                         <b :style="constains(val) ? 'float:right;' : ''">{{val}}</b>
                                     </td>
-                                </tr>
+                                </tr> -->
                                 </tbody>
                             </table>
                         </div>

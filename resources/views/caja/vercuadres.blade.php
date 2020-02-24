@@ -49,8 +49,8 @@
                                     <th></th>
                                     <th>fecha apertura</th>
                                     <th>fecha cierre</th>
-                                    <th>total cierre</th>
-                                    <th>Valor apertura</th>
+                                    <th style="text-align: right">total cierre</th>
+                                    <th style="text-align: right">Valor apertura</th>
                                     <th>Total venta</th>
                                     <th>cuadrada?</th>
                                     <th></th>
@@ -63,8 +63,8 @@
                                         <td>@{{ v.id }}</td>
                                         <td>@{{ v.fecha_apertura }}</td>
                                         <td>@{{ v.fecha_cierre }}</td>
-                                        <td>@{{ format2(v.total_cierre, '') }}</td>
-                                        <td>@{{ format2(v.valor_apertura, '') }}</td>
+                                        <td style="text-align: right">@{{ format2(v.total_cierre, '') }}</td>
+                                        <td style="text-align: right">@{{ format2(v.valor_apertura, '') }}</td>
                                         <td>@{{ v.total_venta }}</td>
                                         <td v-if="v.cuadreconf === 'Si'"><span class="badge badge-info">@{{ v.cuadreconf }}</span></td>
                                         <td v-else><span class="badge badge-danger">@{{ v.cuadreconf }}</span></td>
