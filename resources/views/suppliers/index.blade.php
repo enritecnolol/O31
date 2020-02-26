@@ -2,7 +2,7 @@
 @section('tittle','SofiaRD | Suplidores')
 
 @section('titulo')
-    <h3 style="color: white"><i class="fas fa-arrow-circle-right"></i> Suplidores</h3>
+    <h3 style="color: white"><i class="fas fa-arrow-circle-right"></i> Proveedores</h3>
 @endsection
 @section('aside')
     @include('caja.siderbar')

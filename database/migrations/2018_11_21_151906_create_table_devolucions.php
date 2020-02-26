@@ -24,6 +24,7 @@ class CreateTableDevolucions extends Migration
             $table->integer('factura_id');
             $table->integer('caja_id');
             $table->integer('user_id');
+            $table->string('ncf')->nullable($value = true);
             $table->timestamps();
         });
     }

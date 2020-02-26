@@ -68,4 +68,13 @@ class SuppliersController extends Controller
 
         return $query;
     }
+
+    public function supplierListSelect()
+    {
+        $db = DB::connection('client');
+
+        $query = $db->table('suppliers');
+
+        return $query->get();
+    }
 }

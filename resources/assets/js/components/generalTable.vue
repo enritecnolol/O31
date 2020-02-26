@@ -1,67 +1,67 @@
 <template>
   <div class="table-responsive">
-    <table class="table table-sm" :class="[hover ? 'table-hover' : '', bordered ? 'table-bordered':'']">
+    <table
+      class="table table-sm"
+      :class="[hover ? 'table-hover' : '', bordered ? 'table-bordered':'']"
+    >
       <thead>
         <slot name="table-header" />
       </thead>
       <tbody style="height: 10px !important; overflow: scroll; ">
-      <slot name="table-body" />
+        <slot name="table-body" />
       </tbody>
     </table>
     <pagination
-        v-if="paginate"
-        align="right"
-        :data="paginate"
-        :limit="1"
-        :show-disabled="true"
-        @pagination-change-page="changePage"/>
+      v-if="paginate"
+      align="right"
+      :data="paginate"
+      :limit="1"
+      :show-disabled="true"
+      @pagination-change-page="changePage"
+    />
   </div>
 </template>
 <script>
-  window.Vue = require('vue');
-  Vue.component('pagination', require('laravel-vue-pagination'));
-  export default {
-    props:{
-      pagination:{
-        type: Boolean,
-        default: false,
-      },
-      paginate: {
-        type:Object
-      },
-      hover:{
-        type:Boolean,
-        default: false
-      },
-      bordered:{
-        type:Boolean,
-        default: false
-      }
+window.Vue = require("vue");
+Vue.component("pagination", require("laravel-vue-pagination"));
+export default {
+  props: {
+    pagination: {
+      type: Boolean,
+      default: false
     },
-    components:{
-
+    paginate: {
+      type: Object
     },
-    data(){
-      return {
-
-      }
+    hover: {
+      type: Boolean,
+      default: false
     },
-    methods:{
-      changePage(page) {
-        this.$emit("pageChange", page);
-      },
+    bordered: {
+      type: Boolean,
+      default: false
+    }
+  },
+  components: {},
+  data() {
+    return {};
+  },
+  methods: {
+    changePage(page) {
+      this.$emit("pageChange", page);
     }
   }
+};
 </script>
 <style>
-  .table-responsive{
-    height:550px;
-    overflow:auto;
-  }
-  thead tr:nth-child(1) th{
-    background: white;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
+.table-responsive {
+  height: 450px;
+  overflow: auto;
+}
+thead tr:nth-child(1) th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
 </style>

@@ -24,6 +24,9 @@ class CreateTableDetail extends Migration
             $table->float('impost');
             $table->integer('product_id');
             $table->integer('facture_id');
+            $table->longText('description')->nullable($value = true);;
+            $table->integer('invoice_id')->nullable($value = true);;
+            $table->float('amount', 12,2)->nullable($value = true);;
             $table->timestamps();
         });
     }

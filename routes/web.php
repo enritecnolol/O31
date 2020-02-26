@@ -316,6 +316,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/supplier', 'SuppliersController@store');
     Route::post('/supplier/edit', 'SuppliersController@edit');
     Route::get('/supplier/list', 'SuppliersController@supplierList');
+    Route::get('/supplier/list/select', 'SuppliersController@supplierListSelect');
+    /*=================================\- Ordenes de compras -/======================================================*/
+    Route::get('/purchase/orders', 'purchaseOrdersController@index');
 });
 
 Auth::routes();

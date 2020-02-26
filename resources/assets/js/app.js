@@ -62,6 +62,7 @@ Vue.component('client-details', require('./components/clientDetails/clientDetail
 Vue.component('user-section', require('./components/RegisterUser/userSection'));
 Vue.component('suppliers-section', require('./components/suppliers/suppliersCard'));
 Vue.component('print-report-ventas', require('./components/Print/PrintReportVentas'));
+Vue.component('purchase-orders', require('./components/purchaseOrders/purchaseOrders'));
 
 Vue.prototype.moment = moment;
 Vue.prototype.$toastr = toastr;

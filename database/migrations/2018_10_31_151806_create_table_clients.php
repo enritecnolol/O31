@@ -22,6 +22,11 @@ class CreateTableClients extends Migration
             $table->longText('observacion')->nullable($value = true);
             $table->integer('puntos')->nullable($value = true);
             $table->integer('descuento')->nullable($value = true);
+            $table->longText('direccion')->nullable($value = true);
+            $table->string('direccion')->nullable($value = true);
+            $table->float('limit_balance', 12,2)->nullable($value = true);
+            $table->integer('term')->nullable($value = true);
+            $table->string('contact')->nullable($value = true);
             $table->integer('tarjeta_id');
             $table->integer('user_id');
             $table->timestamps();

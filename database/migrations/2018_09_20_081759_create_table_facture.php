@@ -36,8 +36,16 @@ class CreateTableFacture extends Migration
             $table->string('auth')->nullable($value = true);
             $table->string('tipo_nfc')->nullable($value = true);
             $table->string('nfc')->nullable($value = true);
+            $table->string('telefono_nfc')->nullable($value = true);
             $table->string('rnc_nfc')->nullable($value = true);
             $table->string('razon_nfc')->nullable($value = true);
+            $table->float('leycamarero', 8, 2)->nullable($value = true);
+            $table->date('due_date')->nullable($value = true);
+            $table->longText('address')->nullable($value = true);
+            $table->longText('note')->nullable($value = true);
+            $table->string('email')->nullable($value = true);
+            $table->float('open_balance', 8, 2)->nullable($value = true);
+            $table->string('paid_status')->nullable($value = true);
             $table->integer('caja_id');
             $table->integer('user_id');
             $table->timestamps();

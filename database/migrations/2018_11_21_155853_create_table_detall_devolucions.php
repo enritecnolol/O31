@@ -24,6 +24,7 @@ class CreateTableDetallDevolucions extends Migration
             $table->integer('product_id');
             $table->integer('devolucion_id');
             $table->integer('user_id');
+            $table->longText('description')->nullable($value = true);
             $table->timestamps();
         });
     }

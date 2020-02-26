@@ -72,10 +72,7 @@
     @yield('style')
 
 </head>
-<body class="animsition" data-animsition-in-class="fade-in-up"
-      data-animsition-in-duration="1000"
-      data-animsition-out-class="fade-out-up"
-      data-animsition-out-duration="800">
+<body class="animsition">
 <div class="page-wrapper">
     <!-- HEADER MOBILE-->
     <header class="header-mobile d-block d-lg-none">

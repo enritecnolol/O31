@@ -28,6 +28,8 @@ class CreateTableConfiguraciones extends Migration
             $table->string('generacomprobante');
             $table->integer('config_clp_dn_part')->nullable($value = true);
             $table->integer('config_clp_punt_generar')->nullable($value = true);
+            $table->string('leycamarero');
+            $table->string('rnc')->nullable($value = true);
             $table->integer('user_id');
             $table->timestamps();
         });
