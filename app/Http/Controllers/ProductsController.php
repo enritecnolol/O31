@@ -46,67 +46,24 @@ class ProductsController extends Controller
     {
         $product = new Product;
 
-//        $request->validate([
-//            'barcode' => 'bail|required|unique:products|max:255',
-//        ]);
-//        $validat = Product::all()->where("codigo", $request->input('barcode'))->first();
+        $request->validate([
+            'barcode' => 'bail|required|unique:client.products|max:255',
+        ]);
 
         if ($request->has('refimpuestoid') != 0){
             $itbis = 'si';
         }else{
             $itbis = 'no';
         }
-//SELECT products.*, impuestosrefs.descripcion, rangoimpuestos.porciento FROM products, impuestosrefs, rangoimpuestos WHERE products.impuestoref_id = impuestosrefs.id AND rangoimpuestos.referenciaitbis_id = impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta AND products.user_id = 1 AND products.id = 20
 
-        if ($request->has('Cbarra') or $request->has('existencia') or $request->has('impuesto')){
-
-            if ($request->hasFile('img')){
+            if ($request->hasFile('img')) {
                 $file = $request->file('img');
                 $file->storeAs('/', $file->getClientOriginalName());
-                $product->name = $request->input('nombre');
-                $product->price = $request->input('precio');
-                $product->barcode = $request->input('barcode');
-                $product->img = $file->getClientOriginalName();
-                $product->existence = 0;
-                $product->impost = 0;
-                $product->status = 0;
-                $product->impuestoref_id = $request->input('refimpuestoid');
-                $product->itbis = $itbis;
-                $product->user_id = Auth::id();
-                $product->categoria_id = $request->input('categoria');
-                $product->subcategoria_id = $request->input('subcategoria');
-                $product->compuesto = $request->input('compuesto');
-                $product->save();
-
-            }else{
-
-                $product->name = $request->input('nombre');
-                $product->price = $request->input('precio');
-                $product->barcode = $request->input('barcode');
-                $product->existence = 0;
-                $product->impost = 0;
-                $product->status = 0;
-                $product->impuestoref_id = $request->input('refimpuestoid');
-                $product->itbis = $itbis;
-                $product->img = 'default.png';
-                $product->user_id = Auth::id();
-                $product->categoria_id = $request->input('categoria');
-                $product->subcategoria_id = $request->input('subcategoria');
-                $product->compuesto = $request->input('compuesto');
-//            $product->unity_id = 0;
-                $product->save();
-
             }
-
-        }else{
-            if ($request->hasFile('img')){
-                $file = $request->file('img');
-                $file->storeAs('/', $file->getClientOriginalName());
-
                 $product->name = $request->input('nombre');
                 $product->price = $request->input('precio');
                 $product->barcode = $request->input('barcode');
-                $product->img = $file->getClientOriginalName();
+                $product->img = $request->hasFile('img') ? $file->getClientOriginalName() : 'default.jpg';
                 $product->existence = 0;
                 $product->impost = 0;
                 $product->status = 0;
@@ -118,25 +75,6 @@ class ProductsController extends Controller
                 $product->compuesto = $request->input('compuesto');
                 $product->save();
 
-            }else{
-                $product->name = $request->input('nombre');
-                $product->price = $request->input('precio');
-                $product->barcode = $request->input('barcode');
-                $product->existence = 0;
-                $product->impost = 0;
-                $product->status = 0;
-                $product->impuestoref_id = $request->input('refimpuestoid');
-                $product->itbis = $itbis;
-                $product->img = 'default.png';
-                $product->user_id = Auth::id();
-                $product->categoria_id = $request->input('categoria');
-                $product->subcategoria_id = $request->input('subcategoria');
-                $product->compuesto = $request->input('compuesto');
-                $product->save();
-
-            }
-
-        }
         return redirect('/productos');
 
 
