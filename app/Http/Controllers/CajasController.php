@@ -103,7 +103,12 @@ class   CajasController extends Controller
 
         $ventas = Facture::where('caja_id', $idcaja)->count();
 
-        $totalcierre = DB::connection('client')->table('factures')->select(DB::raw('SUM(total_facture) as total'))->where('caja_id', $idcaja)->get();
+        $totalcierre = DB::connection('client')
+            ->table('factures')
+            ->leftJoin('devolucions', 'factures.caja_id', '=', 'devolucions.caja_id')
+            ->select(DB::raw('sum(total_facture) - ifnull(sum(total_devolucion),0) as total'))
+            ->where('factures.caja_id', $idcaja)
+            ->get();
 
         if ($totalcierre == '[{"total":null}]'){
             $total = 0;

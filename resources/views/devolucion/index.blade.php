@@ -270,6 +270,10 @@
                 this.listInvoices()
             },
             methods:{
+                formatMoment(datetime)
+                {
+                   return moment(datetime).format('DD-MMM-YYYY hh:mm A')
+                },
                 listInvoices()
                 {
                     _this = this;

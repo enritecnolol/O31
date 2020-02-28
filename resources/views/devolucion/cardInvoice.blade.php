@@ -11,7 +11,7 @@
                 <p><b>No. Factura: </b>@{{ item.id }}</p>
             </div>
             <div class="col-md-6" style="margin-top: 10px">
-                <p><b>Fecha: </b> @{{ item.created_at }}</p>
+                <p><b>Fecha: </b> @{{ formatMoment(item.created_at) }}</p>
             </div>
             <div class="col-md-6" style="margin-top: 10px">
                 <p><b>Monto: </b> @{{ format2(item.total_facture, '') }}</p>

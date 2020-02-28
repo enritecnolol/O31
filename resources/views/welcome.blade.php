@@ -116,7 +116,6 @@
 @section('tittle',' SofiaRD | Punto Venta')
 
 @section('titulo')
-    {{--<MARQUEE width="100%" SCROLLDELAY=200><h5 style="color: white">acceso rapido: tecla inicio - Enfoca el codigo, tecla F8 - buscar cliente, tecla F7 - Crear Cliente, tecla FIN - Cobrar, tecla pagina abajo - Cancelar Compra</h5></MARQUEE>--}}
     <div class="" style="width: 90%">
         <h4 style="color: white;float: left">
             <i class="fas fa-arrow-right"></i> PUNTO DE VENTA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -380,28 +379,24 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <template v-if="existenciarep == 'no'">
+                                                <template v-if="existenciarep === 'no'">
                                                     <div class="overlay1">
                                                         <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
                                                     </div>
                                                 </template>
-                                                <template v-if="existenciarep == 'si'">
-                                                    <div class="overlay1" v-if="p.existence > 0 && p.compuesto == 'no'">
+                                                <template v-if="existenciarep === 'si'">
+                                                    <div class="overlay1" v-if="p.existence > 0 && p.compuesto === 'no'">
                                                         <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
                                                     </div>
-                                                    <div class="overlay1" v-if="p.existence == 0 && p.compuesto == 'si'">
+                                                    <div class="overlay1" v-if="p.existence == 0 && p.compuesto === 'si'">
                                                         <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
                                                     </div>
-                                                    <div class="overlay2" v-else-if="p.existence == 0 && p.compuesto =='no'">
+                                                    <div class="overlay2" v-else-if="p.existence == 0 && p.compuesto ==='no'">
                                                         <div class="text1"><i class="fas fa-times fa-3x" id="plus"></i></div>
                                                     </div>
                                                 </template>
                                             </div>
                                         </div>
-                                    </template>
-                                    <template v-if="cerrada === 'no es dia'">
-                                    </template>
-                                    <template v-for="p in productos" v-else-if="cerrada == 'C'">
                                     </template>
                                 </div>
                             </div>
