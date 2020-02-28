@@ -143,92 +143,96 @@ class BillingsController extends Controller
 
         try {
             $invoicesItemsDBId = array();
-            $invoicesItemsDB = DB::connection('client')->table('invoice_items')->where('invoice_id', $request->id)->get();
+            $invoicesItemsDB = DB::connection('client')->table('details')->where('invoice_id', $request->id)->get();
             foreach ($invoicesItemsDB as $invoiceD)
             {
                 array_push($invoicesItemsDBId, $invoiceD->id);
             }
 
-            $invoice = Invoice::find($request->id);
-            $invoice->invoice_number= $request->invoice_number;
-            $invoice->invoice_date = date("Y-m-d", strtotime($request->invoice_date));
-            $invoice->due_date = date("Y-m-d", strtotime($request->due_date));
-            $invoice->client_id = $request->client_id['code'];
-            $invoice->address = $request->address;
-            $invoice->note = $request->note;
-            $invoice->email = $request->email;
-            $invoice->subtotal = $request->subtotal;
-            $invoice->total = $request->total;
-            $invoice->open_balance = $request->total;
-            $invoice->update();
+            $facture = Facture::find($request->id);
+            $facture->date = date("Y-m-d", strtotime($request->invoice_date));
+            $facture->due_date = date("Y-m-d", strtotime($request->due_date));
+            $facture->client = $request->client_id['code'];
+            $facture->address = $request->address;
+            $facture->note = $request->note;
+            $facture->email = $request->email;
+            $facture->brute = $request->subtotal;
+            $facture->total_facture = $request->total;
+            $facture->open_balance = $request->total;
+            $facture->update();
 
             foreach ($request->details as $detail)
             {
                 if(!array_key_exists('id',$detail))
                 {
-                    $invoice_item = new Invoice_item();
+                    $detalle = new Detail();
+                    $detalle->date = now();
                     if($detail['product']['label'])
                     {
-                        $invoice_item->product = $detail['product']['label'];
+                        $detalle->name_product = $detail['product']['label'];
 
                         if(isset($detail['product']['code']))
                         {
-                            $invoice_item->product_id = $detail['product']['code'];
+                            $detalle->product_id = $detail['product']['code'];
                         }
                     }
-                    $invoice_item->description = $detail['description'];
-                    $invoice_item->quantity = $detail['quantity'];
-                    $invoice_item->price = $detail['price'];
-                    $invoice_item->discount = $detail['discount'];
-                    $invoice_item->amount = $detail['amount'];
-                    $invoice_item->invoice_id = $invoice->id;
-                    $invoice_item->save();
+                    $detalle->descuento = $detail['discount'];
+                    $detalle->quanlity = $detail['quantity'];
+                    $detalle->price = $detail['price'];
+                    $detalle->depot = 0;
+                    $detalle->impost = 0;
+                    $detalle->description = $detail['description'];
+                    $detalle->amount = $detail['amount'];
+                    $detalle->invoice_id = $facture->id;
+                    $detalle->save();
                     continue;
                 }
-                $invoice_item = Invoice_item::find($detail['id']);
-                if(in_array($detail['id'], $invoicesItemsDBId)){
+                $detalle = Detail::find($detail['id']);
 
+                if(in_array($detail['id'], $invoicesItemsDBId)){
                     if($detail['product']['label'])
                     {
-                        $invoice_item->product = $detail['product']['label'];
+                        $detalle->name_product = $detail['product']['label'];
 
                         if(isset($detail['product']['code']))
                         {
-                            $invoice_item->product_id = $detail['product']['code'];
+                            $detalle->product_id = $detail['product']['code'];
                         }
                     }
-                    $invoice_item->description = $detail['description'];
-                    $invoice_item->quantity = $detail['quantity'];
-                    $invoice_item->price = $detail['price'];
-                    $invoice_item->discount = $detail['discount'];
-                    $invoice_item->amount = $detail['amount'];
-                    $invoice_item->invoice_id = $invoice->id;
-                    $invoice_item->update();
+                    $detalle->descuento = $detail['discount'];
+                    $detalle->quanlity = $detail['quantity'];
+                    $detalle->price = $detail['price'];
+                    $detalle->description = $detail['description'];
+                    $detalle->amount = $detail['amount'];
+                    $detalle->invoice_id = $facture->id;
+                    $detalle->update();
                 }else{
-                    $invoice_item->delete();
+                    $detalle->delete();
                 }
 
             }
 
-//            if($request->send)
-//            {
-//                $company = DB::connection('client')->table('configuracions')->first();
-//                $dataPDF = [
-//                    'data' => $request,
-//                    'company' => $company
-//                ];
-//                $pdf = PDF::loadView('emails.invoice', compact($dataPDF, 'dataPDF'), [], [
-//                    'format' => 'A4-L'
-//                ]);
-//                $email = $request->email;
-//                $fecha = date("Y-m-d", strtotime($request->invoice_date));
-//                $dataMail = ['customer' => $request->client_id['label'], 'facture' => $request->invoice_number, 'auth_id' => Auth::id(), 'invoice_id' => $invoice];
-//                Mail::send('emails.invoicemail', compact($dataMail, 'dataMail'), function ($message) use ($email, $pdf, $fecha) {
-//                    $message->to($email);
-//                    $message->subject('Factura '. $fecha );
-//                    $message->attachData($pdf->output(), 'fecha.pdf');
-//                });
-//            }
+            if($request->send)
+            {
+                $company = DB::connection('client')->table('configuracions')->first();
+                $dataPDF = [
+                    'data' => $request,
+                    'company' => $company,
+                    'fiscal' => ['ncf' => $facture->nfc, 'NFCDueDate' => $facture->due_date, 'config' => $company->generacomprobante],
+                    'invoice_id' => $facture->id
+                ];
+                $pdf = PDF::loadView('emails.invoice', compact($dataPDF, 'dataPDF'), [], [
+                    'format' => 'A4-L'
+                ]);
+                $email = $request->email;
+                $fecha = date("Y-m-d", strtotime($request->invoice_date));
+                $dataMail = ['customer' => $request->client_id['label'], 'facture' => $request->id, 'auth_id' => Auth::id(), 'invoice_id' => $request->id];
+                Mail::send('emails.invoicemail', compact($dataMail, 'dataMail'), function ($message) use ($email, $pdf, $fecha) {
+                    $message->to($email);
+                    $message->subject('Factura '. $fecha );
+                    $message->attachData($pdf->output(), 'fecha.pdf');
+                });
+            }
 
             DB::commit();
 

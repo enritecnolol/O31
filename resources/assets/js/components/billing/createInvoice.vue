@@ -568,11 +568,14 @@ export default {
         ? this.dataEdit.date
         : this.dataEdit.invoice_date;
       this.dueDate = this.dataEdit.due_date;
-      this.selectedCustomer = this.clientsListForSelect.find(e =>
-        e.code === this.dataEdit.client_id
-          ? parseInt(this.dataEdit.client_id)
-          : parseInt(this.dataEdit.client)
+      let client = this.dataEdit.client_id
+        ? parseInt(this.dataEdit.client_id)
+        : parseInt(this.dataEdit.client);
+      this.selectedCustomer = this.clientsListForSelect.find(
+        e => e.code === client
       );
+      console.log(this.selectedCustomer);
+      console.log(client);
       this.address = this.dataEdit.address;
       this.codeEstimate = this.dataEdit.id;
       this.email = this.dataEdit.email;

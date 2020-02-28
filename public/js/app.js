@@ -112198,13 +112198,14 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
       });
     },
     completeForm: function completeForm() {
-      var _this5 = this;
-
       this.estimateDate = this.dataEdit.date ? this.dataEdit.date : this.dataEdit.invoice_date;
       this.dueDate = this.dataEdit.due_date;
+      var client = this.dataEdit.client_id ? parseInt(this.dataEdit.client_id) : parseInt(this.dataEdit.client);
       this.selectedCustomer = this.clientsListForSelect.find(function (e) {
-        return e.code === _this5.dataEdit.client_id ? parseInt(_this5.dataEdit.client_id) : parseInt(_this5.dataEdit.client);
+        return e.code === client;
       });
+      console.log(this.selectedCustomer);
+      console.log(client);
       this.address = this.dataEdit.address;
       this.codeEstimate = this.dataEdit.id;
       this.email = this.dataEdit.email;
@@ -112212,10 +112213,10 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
       this.note = this.dataEdit.note;
     },
     getProducts: function getProducts() {
-      var _this6 = this;
+      var _this5 = this;
 
       axios.get("/products/select").then(function (response) {
-        _this6.productsList = response["data"];
+        _this5.productsList = response["data"];
       }).catch(function (error) {
         console.log(error);
       });
@@ -112240,11 +112241,11 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
       this.items.splice(index, 1, item);
     },
     clientToInvoice: function clientToInvoice() {
-      var _this7 = this;
+      var _this6 = this;
 
       if (this.getUrlVars(window.location.href)["client"]) {
         this.selectedCustomer = this.clientsListForSelect.find(function (e) {
-          return e.code === parseInt(_this7.getUrlVars(window.location.href)["client"]);
+          return e.code === parseInt(_this6.getUrlVars(window.location.href)["client"]);
         });
         this.setSelected(this.selectedCustomer);
       }

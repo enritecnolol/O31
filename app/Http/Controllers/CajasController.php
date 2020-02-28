@@ -158,7 +158,12 @@ class   CajasController extends Controller
             $email = $config->emailinfo;
         }
 
-        $totaldias = DB::connection('client')->table('factures')->select(DB::connection('client')->raw('SUM(total_facture) as total'))->where('date', $caja->fecha_apertura)->get();
+        $totaldias = DB::connection('client')
+            ->table('factures')
+            ->leftJoin('devolucions', 'factures.caja_id', '=', 'devolucions.caja_id')
+            ->select(DB::raw('sum(total_facture) - ifnull(sum(total_devolucion),0) as total'))
+            ->where('factures.date', $caja->fecha_apertura)
+            ->get();
         if ($totaldias == '[{"total":null}]'){
             $totaldias = number_format(0);
         }else{
