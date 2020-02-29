@@ -132,8 +132,10 @@ WHERE  date BETWEEN '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format
         date('m');
         for ($i = 1; $i <= (int) date('m'); $i++)
         {
-            $query = DB::connection('client')
-                ->select("SELECT meses.id, meses.mes, IFNULL(name_product, description) name_product, description, cantidad,IFNULL(t2.Total, 0) as monto
+            if(count(DB::connection('client')->select("select * from details where EXTRACT(MONTH FROM date) = $i")) > 0)
+            {
+                $query = DB::connection('client')
+                    ->select("SELECT meses.id, meses.mes, IFNULL(name_product, description) name_product, description, cantidad,IFNULL(t2.Total, 0) as monto
                             FROM meses
                                 LEFT JOIN (
                                     SELECT MONTH(details.date) i,
@@ -147,8 +149,10 @@ WHERE  date BETWEEN '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format
                                     ) as t2 ON meses.id = t2.i where id = $i
                             ORDER BY meses.id");
 
-            array_push($data, $query);
-            array_push($months, $this->MonthName($i));
+                array_push($data, $query);
+                array_push($months, $this->MonthName($i));
+
+            }
         }
 
         $header = ['Producto', 'Cantidad' ,'Monto'];
