@@ -33,6 +33,9 @@ export default {
         },
         {
           tittle: "Reporte 607"
+        },
+        {
+          tittle: "Productos por meses"
         }
       ],
       seleccionado: ""
@@ -45,6 +48,10 @@ export default {
     cardseleccionado(i) {
       if (this.typereports[i.index].tittle === "Reporte 607") {
         window.location.href = "/reporte607";
+        return;
+      }
+      if (this.typereports[i.index].tittle === "Productos por meses") {
+        window.location.href = "/reportv2/product/meses";
         return;
       }
       this.seleccionado = this.typereports[i.index].tittle;

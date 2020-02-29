@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body" style="max-height: calc(100vh - 200px);overflow-y: auto;">
-                <div id="myPrintArea" style="color: #000;margin: 0 auto;display: inline;">
+                <div id="myPrintArea" style="color: #000;margin: 0 auto;display: inline;width: 400px;">
                     <div class="row">
                         <div class="col-12">
                             <div style="width: 400px;text-align: center;">
@@ -76,7 +76,7 @@
                             </div>
                         </div>
                         <div class="col-12">
-                            <div style="border-top:1px solid #000; padding-top:10px;"></div>
+                            <div style="border-top:1px solid #000; padding-top:10px;width: 400px;"></div>
                         </div>
                         <div class="col-12" style="margin-top: 10px">
                             <div style="margin-bottom: 5px;clear:both;">
@@ -119,15 +119,15 @@
                             </div>
                         </div>
                         <div class="col-12">
-                            <div style="border-top:1px solid #000; padding-top:10px;">
-                                <div class="" style="padding:5px;width:85%;margin:0 auto;border-radius:3px;margin-top:20px;font-weight: bold;color: #000;">
+                            <div style="border-top:1px solid #000; padding-top:10px;width: 400px;">
+                                <div class="" style="padding:5px;width:100%;margin:0 auto;border-radius:3px;margin-top:20px;font-weight: bold;color: #000;text-align: center">
                                     GRACIAS POR PREFERIRNOS
                                 </div>
                             </div>
                         </div>
                         <div class="col-12">
-                            <div style="border-top:1px solid #000; padding-top:10px;">
-                                <div class="" style="padding: 5px;width: 90%;margin: 15px auto 0px;border-radius: 3px;font-weight: bold;color: rgb(0, 0, 0);">
+                            <div style="border-top:1px solid #000; padding-top:10px;width: 400px;">
+                                <div class="" style="padding: 5px;width: 100%;margin: 15px auto 0px;border-radius: 3px;font-weight: bold;color: rgb(0, 0, 0);text-align: center">
                                     Software POS: {{ url()->current() }}
                                 </div>
                             </div>

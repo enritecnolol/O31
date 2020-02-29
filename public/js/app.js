@@ -36518,6 +36518,7 @@ Vue.component('user-section', __webpack_require__(489));
 Vue.component('suppliers-section', __webpack_require__(497));
 Vue.component('print-report-ventas', __webpack_require__(507));
 Vue.component('purchase-orders', __webpack_require__(512));
+Vue.component('report-product-meses', __webpack_require__(532));
 
 Vue.prototype.moment = __WEBPACK_IMPORTED_MODULE_1_moment___default.a;
 Vue.prototype.$toastr = __WEBPACK_IMPORTED_MODULE_2__node_modules_toastr___default.a;
@@ -69268,7 +69269,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -69313,6 +69314,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         tittle: "Caja"
       }, {
         tittle: "Reporte 607"
+      }, {
+        tittle: "Productos por meses"
       }],
       seleccionado: ""
     };
@@ -69325,6 +69328,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     cardseleccionado: function cardseleccionado(i) {
       if (this.typereports[i.index].tittle === "Reporte 607") {
         window.location.href = "/reporte607";
+        return;
+      }
+      if (this.typereports[i.index].tittle === "Productos por meses") {
+        window.location.href = "/reportv2/product/meses";
         return;
       }
       this.seleccionado = this.typereports[i.index].tittle;
@@ -69419,7 +69426,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.card-container[data-v-021d1b17]\n{\n    font-family: 'Open Sans', sans serif;\n    font-size: 120px;\n    font-weight: bold;\n\n    width: 317px;\n    height: 184px;\n    margin: 11px auto;\n\n    border-radius: 10px;\n\n    -webkit-perspective: 1400px;\n\n            perspective: 1400px;\n}\n.card-mio[data-v-021d1b17] {\n    position: relative;\n    height: 100%;\n    border-radius: 10px;\n    widht: 100%;\n    -webkit-transform-style: preserve-3d;\n            transform-style: preserve-3d;\n}\n.front[data-v-021d1b17]\n{\n    font-size: 32px;\n    color: #fff;\n    background: #2196f3;\n}\n.front[data-v-021d1b17],\n.back[data-v-021d1b17]\n{\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n\n    width: 100%;\n    height: 100%;\n\n    border-radius: 10px;\n\n    -webkit-box-pack: center;\n\n        -ms-flex-pack: center;\n\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-backface-visibility: hidden;\n            backface-visibility: hidden;\n}\n.back[data-v-021d1b17]\n{\n    position: absolute;\n    top: 0;\n    left: 0;\n    -webkit-transform: rotateY(180deg);\n            transform: rotateY(180deg);\n    color: #2196f3;\n    background: #fff;\n}\n\n", ""]);
+exports.push([module.i, "\n.card-container[data-v-021d1b17] {\n  font-family: \"Open Sans\", sans serif;\n  font-size: 120px;\n  font-weight: bold;\n\n  width: 317px;\n  height: 184px;\n  margin: 11px auto;\n\n  border-radius: 10px;\n\n  -webkit-perspective: 1400px;\n\n          perspective: 1400px;\n}\n.card-mio[data-v-021d1b17] {\n  position: relative;\n  height: 100%;\n  border-radius: 10px;\n  widht: 100%;\n  -webkit-transform-style: preserve-3d;\n          transform-style: preserve-3d;\n}\n.front[data-v-021d1b17] {\n  font-size: 32px;\n  color: #fff;\n}\n.front[data-v-021d1b17],\n.back[data-v-021d1b17] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n\n  width: 100%;\n  height: 100%;\n\n  border-radius: 10px;\n\n  -webkit-box-pack: center;\n\n      -ms-flex-pack: center;\n\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n}\n.back[data-v-021d1b17] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  -webkit-transform: rotateY(180deg);\n          transform: rotateY(180deg);\n  color: #2196f3;\n  background: #fff;\n}\n", ""]);
 
 // exports
 
@@ -69439,25 +69446,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: 'card',
-    components: {},
-    props: ['report', 'index'],
-    data: function data() {
-        return {};
-    },
+  name: "card",
+  components: {},
+  props: ["report", "index"],
+  data: function data() {
+    return {};
+  },
 
-    methods: {
-        seleccionado: function seleccionado() {
-            this.$emit('seleccionado', {
-                index: this.index
-            });
-        }
-    },
-    computed: {}
+  methods: {
+    seleccionado: function seleccionado() {
+      this.$emit("seleccionado", {
+        index: this.index
+      });
+    }
+  },
+  computed: {}
 });
 
 /***/ }),
@@ -69472,18 +69477,23 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "card-container",
+        staticClass: "card",
         staticStyle: { cursor: "pointer" },
         on: { click: _vm.seleccionado }
       },
       [
-        _c("div", { staticClass: "card-mio" }, [
-          _c("div", { staticClass: "front" }, [
-            _vm._v(
-              "\n               " + _vm._s(_vm.report.tittle) + "\n            "
-            )
-          ])
-        ])
+        _c(
+          "div",
+          {
+            staticClass: "card-body",
+            staticStyle: { height: "250px", background: "#2196f3" }
+          },
+          [
+            _c("div", { staticClass: "text-center front" }, [
+              _vm._v(_vm._s(_vm.report.tittle))
+            ])
+          ]
+        )
       ]
     )
   ])
@@ -131243,6 +131253,577 @@ module.exports = function listToStyles (parentId, list) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 526 */,
+/* 527 */,
+/* 528 */,
+/* 529 */,
+/* 530 */,
+/* 531 */,
+/* 532 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(533)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(535)
+/* template */
+var __vue_template__ = __webpack_require__(536)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/ReportProduct/reportTemplate.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0973600e", Component.options)
+  } else {
+    hotAPI.reload("data-v-0973600e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 533 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(534);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("5fb0edc2", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0973600e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./reportTemplate.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0973600e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./reportTemplate.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 534 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var escape = __webpack_require__(5);
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.loader {\n  position: fixed;\n  left: 0px;\n  top: 0px;\n  width: 100%;\n  height: 100%;\n  z-index: 9999;\n  background: url(" + escape(__webpack_require__(6)) + ") 50% 50% no-repeat\n    rgb(249, 249, 249);\n  opacity: 0.8;\n}\n.petite {\n  font-size: 10px;\n}\n.petitefooter {\n  font-size: 8px;\n}\n.button {\n  background-color: #4caf50; /* Green */\n  border: none;\n  color: white;\n  padding: 3px 32px;\n  text-align: center;\n  text-decoration: none;\n  display: inline-block;\n  font-size: 16px;\n  margin: 4px 2px;\n  -webkit-transition-duration: 0.4s; /* Safari */\n  transition-duration: 0.4s;\n  cursor: pointer;\n}\n.button2 {\n  background-color: white;\n  color: black;\n  border: 2px solid #008cba;\n}\n.button2:hover {\n  background-color: #008cba;\n  color: white;\n}\n@page {\n@bottom-right {\n    content: counter(page) \" of \" counter(pages);\n}\n}\n#pageFooter:after {\n  counter-increment: page;\n  content: \"Page \" counter(page);\n  left: 0;\n  top: 100%;\n  white-space: nowrap;\n  z-index: 20px;\n  -moz-border-radius: 5px;\n  -moz-box-shadow: 0px 0px 4px #222;\n  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);\n}\n#content {\n  display: table;\n}\n#pageFooter {\n  display: table-footer-group;\n}\n#pageFooter:after {\n  counter-increment: page;\n  content: counter(page);\n}\n@page {\n  margin: 10px;\n  size: landscape;\n}\n@media print and (width: 8.5in) and (height: 11in) {\n@page {\n    margin: 10px;\n    size: landscape;\n}\n}\n#reportTable {\n  margin: 5px;\n}\nh5 {\n  font-weight: bold;\n}\n#theaderdata {\n  border-bottom: 1px solid black;\n  border-top: 1px solid black;\n  font-weight: bold;\n  text-align: left;\n}\ntfoot {\n  border-top: 1px solid black;\n  color: black;\n  font-weight: bold;\n  text-align: left;\n}\n#tbodydata {\n  text-align: left;\n}\n.signature {\n  border: 0;\n  border-bottom: 1px solid #000;\n}\ntable {\n  text-align: left;\n}\n.outTable {\n  text-align: left;\n}\nfooter {\n  position: absolute;\n  bottom: 60px;\n  width: 100%;\n  height: 100px;\n}\nbody {\n  background: white !important;\n  min-width: 600px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 535 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      table_data: [],
+      headers: [],
+      filterHeaders: ["id", "mes", "description"],
+      title: "",
+      date: [],
+      months: [],
+      filterMoneyFormat: ["monto", "cantidadTotales"],
+      totales: [],
+      loading: false
+    };
+  },
+
+  methods: {
+    dateCurrent: function dateCurrent() {
+      return moment().format("D MMMM YYYY, h:mm:ss a");
+    },
+    constains: function constains(str) {
+      if (typeof str == "string" && str.indexOf(".") > -1) {
+        return true;
+      } else if (str == "Monto" || str == "Cantidad" || str == "monto" || str == "cantidad") {
+        return true;
+      } else if (Number.isInteger(str)) {
+        return true;
+      }
+
+      return false;
+    },
+    DateFormat: function DateFormat(date) {
+      return moment(date).format("D MMMM  YYYY");
+    },
+    hidecolumn: function hidecolumn(key) {
+      var found = this.filterHeaders.find(function (e) {
+        return e.toLowerCase() == key.toLowerCase();
+      });
+
+      if (found) {
+        return true;
+      }
+      return false;
+    },
+    hideColumnsFunc: function hideColumnsFunc(val) {
+      var _this = this;
+
+      if (val === undefined) {
+        $("td,th").show();
+        setTimeout(function () {
+          _this.filterHeaders.forEach(function (item) {
+            var ind = _this.headers.indexOf(item) + 1;
+            $("td:nth-child(" + ind + "),th:nth-child(" + ind + ")").hide();
+          });
+        }, 10);
+      }
+
+      var ind = this.headers.indexOf(val) + 1;
+      $("td:nth-child(" + ind + "),th:nth-child(" + ind + ")").hide();
+    },
+    moneyFormat: function moneyFormat(key, val) {
+      var found = this.filterMoneyFormat.find(function (e) {
+        return e.toLowerCase() == key.toLowerCase();
+      });
+
+      if (found) {
+        return parseFloat(val).formatMoney(2);
+      }
+      return val;
+    },
+    moneyFormatTotal: function moneyFormatTotal(key, val) {
+      var found = this.filterMoneyFormat.find(function (e) {
+        return e.toLowerCase() == Object.keys(val)[0].toLowerCase();
+      });
+
+      if (found) {
+        return parseFloat(val[Object.keys(val)[0]]).formatMoney(2);
+      }
+      return val[Object.keys(val)[0]];
+    },
+    getTotales: function getTotales() {
+      var totales = [];
+      this.table_data.forEach(function (arr) {
+        var cantidad = 0;
+        var monto = 0;
+        for (var item in arr) {
+          cantidad = cantidad + parseInt(arr[item]["cantidad"]);
+          monto += parseFloat(arr[item]["monto"]);
+        }
+        totales.push([{ empty: "" }, { cantidadTotales: cantidad }, { monto: monto }]);
+      });
+
+      this.totales = totales;
+    }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    this.title = "Reporte de productos por meses";
+    this.loading = true;
+    axios.post("/reportv2/product/meses").then(function (response) {
+      _this2.table_data = response.data["data"];
+      _this2.headers = response.data["header"];
+      _this2.months = response.data["months"];
+    }).catch(function (error) {
+      console.log(error);
+    }).finally(function () {
+      // setTimeout(window.print(), 5000);
+      _this2.loading = false;
+      _this2.getTotales();
+    });
+  },
+  created: function created() {}
+});
+
+/***/ }),
+/* 536 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticStyle: { background: "white" } }, [
+    _vm.loading ? _c("div", { staticClass: "loader" }) : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticStyle: { background: "white" }, attrs: { id: "reportTable" } },
+      [
+        _c(
+          "table",
+          { staticStyle: { "margin-top": "10px" }, attrs: { width: "100%" } },
+          [
+            _c("thead", [
+              _c("tr", [
+                _c("td", [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "container-fluid",
+                      staticStyle: { "margin-top": "10px" }
+                    },
+                    [
+                      _c("div", { staticClass: "row" }, [
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("div", { staticClass: "text-center" }, [
+                            _c("h6", [_vm._v(_vm._s(_vm.title))])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(1)
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.months, function(month, key) {
+                return _c("tr", { key: key }, [
+                  _c("td", [
+                    _c("div", [
+                      _c(
+                        "table",
+                        {
+                          staticStyle: { "margin-top": "5px" },
+                          attrs: { id: "tabledata", width: "100%" }
+                        },
+                        [
+                          _c("thead", { attrs: { id: "theaderdata" } }, [
+                            _c("tr", [
+                              _c(
+                                "td",
+                                {
+                                  staticStyle: {
+                                    "text-align": "center",
+                                    "font-size": "20px"
+                                  },
+                                  attrs: { colspan: "3" }
+                                },
+                                [_vm._v(_vm._s(month))]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "tr",
+                              {
+                                staticStyle: { "border-top": "1px solid black" }
+                              },
+                              _vm._l(_vm.headers, function(val, index) {
+                                return _c(
+                                  "th",
+                                  {
+                                    key: index,
+                                    style: _vm.hidecolumn(val)
+                                      ? "display:none;"
+                                      : ""
+                                  },
+                                  [
+                                    _c(
+                                      "b",
+                                      {
+                                        style: _vm.constains(val)
+                                          ? "float:right;"
+                                          : ""
+                                      },
+                                      [_vm._v(_vm._s(val))]
+                                    )
+                                  ]
+                                )
+                              })
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "tbody",
+                            { attrs: { id: "tbodydata" } },
+                            [
+                              _vm._l(_vm.table_data[key], function(
+                                item,
+                                index
+                              ) {
+                                return _c(
+                                  "tr",
+                                  { key: index },
+                                  _vm._l(item, function(value, llave) {
+                                    return _c(
+                                      "td",
+                                      {
+                                        key: llave,
+                                        staticClass: "hide",
+                                        style: _vm.hidecolumn(llave)
+                                          ? "display:none;"
+                                          : ""
+                                      },
+                                      [
+                                        _c(
+                                          "span",
+                                          {
+                                            style: _vm.constains(llave)
+                                              ? "float:right;"
+                                              : ""
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.moneyFormat(llave, value)
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  })
+                                )
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "tr",
+                                {
+                                  staticStyle: {
+                                    "border-top": "1px solid black",
+                                    color: "black",
+                                    "font-weight": "bold",
+                                    "text-align": "left"
+                                  }
+                                },
+                                _vm._l(_vm.totales[key], function(
+                                  valTotal,
+                                  indexTotal
+                                ) {
+                                  return _c(
+                                    "td",
+                                    { key: indexTotal, staticClass: "hide" },
+                                    [
+                                      _c(
+                                        "b",
+                                        {
+                                          style: _vm.constains(indexTotal)
+                                            ? "float:right;"
+                                            : ""
+                                        },
+                                        [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.moneyFormatTotal(
+                                                indexTotal,
+                                                valTotal
+                                              )
+                                            )
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                })
+                              )
+                            ],
+                            2
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                ])
+              })
+            ),
+            _vm._v(" "),
+            _c("tfoot", [
+              _c("tr", [
+                _c("td", [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "container-fluid",
+                      staticStyle: { "margin-top": "10px" }
+                    },
+                    [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("h6", { staticStyle: { float: "right" } }, [
+                            _vm._v("Fecha: " + _vm._s(_vm.dateCurrent()))
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("div", { staticClass: "text-center" }, [
+        _c("h5", {}, [_vm._v("Business Intelligence")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("div", [_vm._v("Año: 2020")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0973600e", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

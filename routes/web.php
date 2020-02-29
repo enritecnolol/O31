@@ -256,6 +256,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/reportv2/comprobantes/fiscales', 'Reporteriav2Controller@typenfcdata');
     Route::post('/reportv2/return/data', 'Reporteriav2Controller@returndata');
     Route::get('/return/facture/detalle', 'Reporteriav2Controller@facture_detalle');
+    Route::get('/reportv2/product/meses', 'Reporteriav2Controller@productMesesIndex');
+    Route::post('/reportv2/product/meses', 'Reporteriav2Controller@productMeses');
     /*=================================\- Cotizacion-/======================================================*/
     Route::get('/estimate', 'EstimatesController@index');
     Route::get('/estimate/list', 'EstimatesController@estimateList');

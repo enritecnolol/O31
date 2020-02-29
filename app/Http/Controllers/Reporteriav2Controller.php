@@ -95,6 +95,27 @@ WHERE  date BETWEEN '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format
             $header = ['Tipo NCF', 'NCF', 'Razon', 'Suplidor', '# Factura', 'Fecha', 'Tipo de Gastos', 'Subtotal', 'Descuento', 'ITBIS', 'Total Neto', 'Balance', 'Mono Apagar'];
             return ['data' => $cajas, 'header' => $header];
         }
+        if($request->seleccionado == "Productos por meses")
+        {
+            $data = DB::connection('client')
+                ->select("SELECT meses.id, meses.mes, name_product, description, IFNULL(t2.Total, 0) as monto, cantidad
+                            FROM meses
+                                LEFT JOIN (
+                                    SELECT MONTH(details.date) i,
+                                           SUM(details.price) as Total,
+                                           name_product,
+                                           description,
+                                           sum(quanlity) cantidad
+                                    FROM details
+                                    WHERE  (date between  DATE_FORMAT(NOW() ,'%Y-01-01') AND NOW())
+                                    GROUP BY i, name_product, description
+                                    ) as t2 ON meses.id = t2.i
+                            ORDER BY meses.id");
+
+            $header = ['Producto', 'Cantidad' ,'Monto'];
+
+            return ['data' => $data, 'header' => $header];
+        }
     }
 
     public function facture_detalle(Request $request){
@@ -102,5 +123,80 @@ WHERE  date BETWEEN '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format
         $detalles = Reportv2::Detallefacture($facture);
         $fat = Facture::find($facture);
         return [ 'detalle' => $detalles, 'facture' => $fat];
+    }
+
+    public function productMeses()
+    {
+        $data = array();
+        $months = array();
+        date('m');
+        for ($i = 1; $i <= (int) date('m'); $i++)
+        {
+            $query = DB::connection('client')
+                ->select("SELECT meses.id, meses.mes, IFNULL(name_product, description) name_product, description, cantidad,IFNULL(t2.Total, 0) as monto
+                            FROM meses
+                                LEFT JOIN (
+                                    SELECT MONTH(details.date) i,
+                                           SUM(details.price) as Total,
+                                           name_product,
+                                           description,
+                                           sum(quanlity) cantidad
+                                    FROM details
+                                    WHERE  (date between  DATE_FORMAT(NOW() ,'%Y-01-01') AND NOW())
+                                    GROUP BY i, name_product, description
+                                    ) as t2 ON meses.id = t2.i where id = $i
+                            ORDER BY meses.id");
+
+            array_push($data, $query);
+            array_push($months, $this->MonthName($i));
+        }
+
+        $header = ['Producto', 'Cantidad' ,'Monto'];
+
+        return ['data' => $data, 'header' => $header, 'months' => $months];
+    }
+
+    private function MonthName($mes)
+    {
+        if($mes == 1)
+        {
+            return "Enero";
+        }elseif ($mes == 2)
+        {
+            return "Febrero";
+        }elseif ($mes == 3)
+        {
+            return "Marzo";
+        }elseif ($mes == 4)
+        {
+            return "Abril";
+        }elseif ($mes == 5)
+        {
+            return "Mayo";
+        }elseif ($mes == 6)
+        {
+            return "Junio";
+        }elseif ($mes == 7)
+        {
+            return "Julio";
+        }elseif ($mes == 8)
+        {
+            return "Agosto";
+        }elseif ($mes == 9)
+        {
+            return "Septiembre";
+        }elseif ($mes == 10)
+        {
+            return "Octubre";
+        }elseif ($mes == 11)
+        {
+            return "Noviembre";
+        }else{
+            return "Diciembre";
+        }
+    }
+    public function productMesesIndex()
+    {
+        return view('reportv2.productMeses');
     }
 }

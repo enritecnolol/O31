@@ -368,11 +368,11 @@
                                 <div class="row " style="">
                                     <template v-for="p in productosbuscados !== '' ? productosbuscados : productos" v-if="cerrada === 'A'">
                                         <div class="col-sm-2 col-xs-4">
-                                            <div class="card"  style="box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);border-radius: 20px 20px 20px 20px;width: 130px;margin-left: 10px;margin-right: 10px;max-height: 184px;" @click="pfactura(p.id)" :title="p.name">
+                                            <div class="card"  style="box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);width: 130px;margin-left: 10px;margin-right: 10px;max-height: 184px;" @click="pfactura(p.id)" :title="p.name">
                                                 <div class="card-body" style="background: white;border-radius: 20px 20px 20px 20px;padding:0px">
                                                     <span class="badge badge-primary" style="position: absolute; top: -6px; left: -8px">@{{ p.barcode }}</span>
                                                     <div class="mx-auto d-block">
-                                                        <img class="mx-auto d-block" style="border-radius: 20px 20px 0px 0px;height:91px;width:128px" :src="'imagenes/'+p.img" alt="Card image cap">
+                                                        <img class="mx-auto d-block" style="height:91px;width:128px" :src="'imagenes/'+p.img" alt="Card image cap">
                                                         <h6 class="text-sm-center mt-2 mb-1" style="line-height: 1;">@{{ p.name }}</h6>
                                                         <div class="location text-sm-center" style="color: #0062cc">
                                                             <i class="fa fa-money-bill-alt"></i> @{{p.price}}
