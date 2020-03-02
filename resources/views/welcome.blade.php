@@ -502,9 +502,6 @@
             });
         });
     </script>
-
-
-
     <script>
         var productos = JSON.parse('{!! $productos !!}');
         var caja = '{!! $caja !!}';
@@ -664,7 +661,7 @@
                             rnc:'',
                             razon:''
                         },
-                        facturaimp:false,
+                        facturaimp: this.setting.autoprint === 1,
                         rncdevf:'',
                         lastid:'',
                         rncData:{},
@@ -722,13 +719,14 @@
                     this.fiscal = true;
                     this.tiponfc = '01';
                 },
-                config(){
+                config() {
                     axios.post('/configuracion/sale')
                         .then( (response) => {
                             for(var key in response['data']){
                                 this.setting = response["data"][key];
                                 break;
                             }
+                            this.facturaimp = this.setting.autoprint === 1;
                         })
                         .catch(function (error) {
                         });

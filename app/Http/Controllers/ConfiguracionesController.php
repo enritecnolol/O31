@@ -27,44 +27,29 @@ class ConfiguracionesController extends Controller
     public function store(Request $request)
     {
         $configuracion = new Configuracion();
+
         if ($request->hasFile('img')) {
             $file = $request->file('img');
             $file->storeAs('/', $file->getClientOriginalName());
-            $configuracion->nombreempresa = $request->nombreempresa;
-            $configuracion->telefono = $request->telefono;
-            $configuracion->rnc = $request->rnc;
-            $configuracion->ciudad = $request->ciudad;
-            $configuracion->pais = $request->pais;
-            $configuracion->direccion = $request->direccion;
-            $configuracion->img = $file->getClientOriginalName();
-            $configuracion->impuesto = $request->impuesto;
-            $configuracion->descuento = $request->descuento;
-            $configuracion->controlinv = $request->inventario;
-            $configuracion->emailinfo = $request->emailinfo;
-            $configuracion->generacomprobante = $request->generacomprobante;
-            $configuracion->leycamarero = $request->leycamarero;
-            $configuracion->user_id = Auth::id();
-            $configuracion->save();
-
-
-        }else{
-
-            $configuracion->nombreempresa = $request->nombreempresa;
-            $configuracion->telefono = $request->telefono;
-            $configuracion->rnc = $request->rnc;
-            $configuracion->ciudad = $request->ciudad;
-            $configuracion->pais = $request->pais;
-            $configuracion->direccion = $request->direccion;
-            $configuracion->img = 'default.jpg';
-            $configuracion->impuesto = $request->impuesto;
-            $configuracion->descuento = $request->descuento;
-            $configuracion->controlinv = $request->inventario;
-            $configuracion->emailinfo = $request->emailinfo;
-            $configuracion->generacomprobante = $request->generacomprobante;
-            $configuracion->leycamarero = $request->leycamarero;
-            $configuracion->user_id = Auth::id();
-            $configuracion->save();
         }
+
+        $configuracion->nombreempresa = $request->nombreempresa;
+        $configuracion->telefono = $request->telefono;
+        $configuracion->rnc = $request->rnc;
+        $configuracion->ciudad = $request->ciudad;
+        $configuracion->pais = $request->pais;
+        $configuracion->direccion = $request->direccion;
+        $configuracion->img = $request->hasFile('img') ? $file->getClientOriginalName() : 'default.jpg';
+        $configuracion->impuesto = $request->impuesto;
+        $configuracion->descuento = $request->descuento;
+        $configuracion->controlinv = $request->inventario;
+        $configuracion->emailinfo = $request->emailinfo;
+        $configuracion->generacomprobante = $request->generacomprobante;
+        $configuracion->leycamarero = $request->leycamarero;
+        $configuracion->autoprint = $request->auto_print;
+        $configuracion->user_id = Auth::id();
+        $configuracion->save();
+
         return redirect('/configuracion');
 
     }
@@ -72,39 +57,28 @@ class ConfiguracionesController extends Controller
     {
         $id = $request->id;
         $configuracion = Configuracion::find($id);
+
         if ($request->hasFile('img')) {
             $file = $request->file('img');
             $file->storeAs('/', $file->getClientOriginalName());
-            $configuracion->nombreempresa = $request->nombreempresa;
-            $configuracion->telefono = $request->telefono;
-            $configuracion->rnc = $request->rnc;
-            $configuracion->ciudad = $request->ciudad;
-            $configuracion->pais = $request->pais;
-            $configuracion->direccion = $request->direccion;
             $configuracion->img = $file->getClientOriginalName();
-            $configuracion->impuesto = $request->impuesto;
-            $configuracion->descuento = $request->descuento;
-            $configuracion->controlinv = $request->inventario;
-            $configuracion->emailinfo = $request->emailinfo;
-            $configuracion->generacomprobante = $request->generacomprobante;
-            $configuracion->leycamarero = $request->leycamarero;
-            $configuracion->update();
-
-        }else{
-            $configuracion->nombreempresa = $request->nombreempresa;
-            $configuracion->telefono = $request->telefono;
-            $configuracion->rnc = $request->rnc;
-            $configuracion->ciudad = $request->ciudad;
-            $configuracion->pais = $request->pais;
-            $configuracion->direccion = $request->direccion;
-            $configuracion->impuesto = $request->impuesto;
-            $configuracion->descuento = $request->descuento;
-            $configuracion->controlinv = $request->inventario;
-            $configuracion->emailinfo = $request->emailinfo;
-            $configuracion->generacomprobante = $request->generacomprobante;
-            $configuracion->leycamarero = $request->leycamarero;
-            $configuracion->update();
         }
+
+        $configuracion->nombreempresa = $request->nombreempresa;
+        $configuracion->telefono = $request->telefono;
+        $configuracion->rnc = $request->rnc;
+        $configuracion->ciudad = $request->ciudad;
+        $configuracion->pais = $request->pais;
+        $configuracion->direccion = $request->direccion;
+        $configuracion->impuesto = $request->impuesto;
+        $configuracion->descuento = $request->descuento;
+        $configuracion->controlinv = $request->inventario;
+        $configuracion->emailinfo = $request->emailinfo;
+        $configuracion->generacomprobante = $request->generacomprobante;
+        $configuracion->leycamarero = $request->leycamarero;
+        $configuracion->autoprint = $request->auto_print;
+        $configuracion->update();
+
 
         return redirect('/configuracion');
     }
