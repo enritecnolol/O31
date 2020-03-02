@@ -15,7 +15,7 @@
                     <div class="col-12">
                         <div class="text-right">
                             <span @click="facturaimp = true" v-if="!facturaimp" class="imp"><u>Imprimir Factura</u></span>
-                            <span v-else><u>por imprimir</u></span>
+                            <span v-else><u>Listo para Imprimir</u></span>
                         </div>
                     </div>
                 </div>
