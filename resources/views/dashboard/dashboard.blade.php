@@ -24,13 +24,9 @@
                     <div class="overview-item overview-item--c2">
                         <div class="overview__inner">
                             <div class="overview-box clearfix">
-                                <div class="icon">
-                                    <i class="zmdi zmdi-hc-5x zmdi-money"></i>
-                                </div>
-                                <br>
                                 <div class="text">
-                                    <h3>${{$totaldias}}.00</h3>
-                                    <span>Total del dia</span>
+                                    <h3>${{number_format($resumenDia->venta_total, 2, '.', ',')}}</h3>
+                                    <span>Venta del dia</span>
                                 </div>
                             </div>
                         </div>
@@ -40,13 +36,9 @@
                     <div class="overview-item overview-item--c2">
                         <div class="overview__inner">
                             <div class="overview-box clearfix">
-                                <div class="icon">
-                                    <i class="zmdi zmdi-shopping-cart"></i>
-                                </div>
-                                <br>
                                 <div class="text">
-                                    <h3>${{$ventassemana}}.00</h3>
-                                    <span>total semana</span>
+                                    <h3>${{number_format($resumenSemana->venta_total, 2, '.', ',')}}</h3>
+                                    <span>Venta de la semana</span>
                                 </div>
                             </div>
 
@@ -57,13 +49,9 @@
                     <div class="overview-item overview-item--c2">
                         <div class="overview__inner">
                             <div class="overview-box clearfix">
-                                <div class="icon">
-                                    <i class="zmdi zmdi-calendar-note"></i>
-                                </div>
-                                <br>
                                 <div class="text">
-                                    <h3>${{$ventasmes}}.00</h3>
-                                    <span>Total del mes</span>
+                                    <h3>${{number_format($resumenMes->venta_total, 2, '.', ',')}}</h3>
+                                    <span>Venta del mes</span>
                                 </div>
                             </div>
 
@@ -74,13 +62,111 @@
                     <div class="overview-item overview-item--c2">
                         <div class="overview__inner">
                             <div class="overview-box clearfix">
-                                <div class="icon">
-                                    <i class="zmdi zmdi-money"></i>
-                                </div>
-                                <br>
                                 <div class="text">
-                                    <h3>${{$totalventas}}.00</h3>
-                                    <span>Total Ventas - año</span>
+                                    <h3>${{number_format($resumenYear->venta_total, 2, '.', ',')}}</h3>
+                                    <span>Venta del año</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c3">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="text">
+                                    <h3>${{number_format($resumenDia->total_devuelto, 2, '.', ',')}}</h3>
+                                    <span>Devoluciones del dia</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c3">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="text">
+                                    <h3>${{number_format($resumenSemana->total_devuelto, 2, '.', ',')}}</h3>
+                                    <span>Devoluciones de la semana</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c3">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="text">
+                                    <h3>${{number_format($resumenMes->total_devuelto, 2, '.', ',')}}</h3>
+                                    <span>Devoluciones del mes</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c3">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="text">
+                                    <h3>${{number_format($resumenYear->total_devuelto, 2, '.', ',')}}</h3>
+                                    <span>Devoluciones del año</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c4">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="text">
+                                    <h3>${{number_format($resumenDia->total_neto, 2, '.', ',')}}</h3>
+                                    <span>Neto del dia</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c4">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="text">
+                                    <h3>${{number_format($resumenSemana->total_neto, 2, '.', ',')}}</h3>
+                                    <span>Neto de la semana</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c4">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="text">
+                                    <h3>${{number_format($resumenMes->total_neto, 2, '.', ',')}}</h3>
+                                    <span>Neto del mes</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c4">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="text">
+                                    <h3>${{number_format($resumenYear->total_neto, 2, '.', ',')}}</h3>
+                                    <span>Neto del año</span>
                                 </div>
                             </div>
 

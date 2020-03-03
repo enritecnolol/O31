@@ -253,37 +253,40 @@ class ApisController extends Controller
         return 'eliminado';
     }
     public function dashboard(){
-        $id = Auth::id();
-        $ventassemana = DB::connection('client')->select("SELECT SUM(total_facture) as total FROM factures where  date between date_sub(now(),INTERVAL 1 WEEK) and now()");
 
-        if ($ventassemana == '[{"total":null}]'){
-            $ventassemana = 0;
-        }else{
-            $ventassemana = number_format($ventassemana[0]->total);
-        }
         $StartThisYear = date("Y")."-01-01";
         $EndThisYear = date("Y")."-12-31";
-        $totalventas = DB::connection('client')->select("SELECT SUM(total_facture) as total FROM factures WHERE date BETWEEN '$StartThisYear' AND '$EndThisYear'");
 
-        if ($totalventas == '[{"total":null}]'){
-            $totalventas = 0;
-        }else{
-            $totalventas = number_format($totalventas[0]->total);
-        }
+        // Select de ventas , devolucion y neto
 
-        $totaldias = DB::connection('client')->table('factures')->select(DB::raw('SUM(total_facture) as total'))->where('date', date("Y-m-d"))->get();
-        if ($totaldias == '[{"total":null}]'){
-            $totaldias = 0;
-        }else{
-            $totaldias = number_format($totaldias[0]->total);
-        }
-        $ventasmes = DB::connection('client')->select("SELECT SUM(total_facture) as total FROM factures where month(date) = MONTH(CURDATE()) and year(date) = year(CURDATE())");
-        if ($ventasmes == '[{"total":null}]'){
-            $ventasmes = 0;
-        }else{
-            $ventasmes = number_format($ventasmes[0]->total);
-        }
+        $resumenDia = DB::connection('client')
+            ->table('factures')
+            ->leftJoin('devolucions', 'factures.id', '=', 'devolucions.factura_id')
+            ->select(DB::raw('sum(ifnull(total_devolucion,0)) as total_devuelto, ifnull(SUM(total_facture),0) as venta_total, ifnull(SUM(total_facture),0) - sum(ifnull(total_devolucion,0)) as total_neto'))
+            ->where('factures.date', date("Y-m-d"))->first();
 
+        $resumenSemana = DB::connection('client')
+            ->table('factures')
+            ->leftJoin('devolucions', 'factures.id', '=', 'devolucions.factura_id')
+            ->whereRaw('factures.date between date_sub(now(),INTERVAL 1 WEEK) and now()')
+            ->select(DB::raw('sum(ifnull(total_devolucion,0)) as total_devuelto, ifnull(SUM(total_facture),0) as venta_total, ifnull(SUM(total_facture),0) - sum(ifnull(total_devolucion,0)) as total_neto'))
+            ->first();
+
+        $resumenMes = DB::connection('client')
+            ->table('factures')
+            ->leftJoin('devolucions', 'factures.id', '=', 'devolucions.factura_id')
+            ->whereRaw('month(factures.date) = MONTH(CURDATE()) and year(factures.date) = year(CURDATE())')
+            ->select(DB::raw('sum(ifnull(total_devolucion,0)) as total_devuelto, ifnull(SUM(total_facture),0) as venta_total, ifnull(SUM(total_facture),0) - sum(ifnull(total_devolucion,0)) as total_neto'))
+            ->first();
+
+        $resumenYear = DB::connection('client')
+            ->table('factures')
+            ->leftJoin('devolucions', 'factures.id', '=', 'devolucions.factura_id')
+            ->whereBetween('factures.date', [$StartThisYear, $EndThisYear])
+            ->select(DB::raw('sum(ifnull(total_devolucion,0)) as total_devuelto, ifnull(SUM(total_facture),0) as venta_total, ifnull(SUM(total_facture),0) - sum(ifnull(total_devolucion,0)) as total_neto'))
+            ->first();
+
+//
         $diasconmasventas = json_encode(DB::connection('client')->select("SELECT (ELT(WEEKDAY(date) + 1, '1', '2', '3', '4', '5', '6', '7')) AS dia,(ELT(WEEKDAY(date) + 1, 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo')) AS DIA_SEMANA, SUM(total_facture) AS total FROM factures where (date between  DATE_FORMAT(NOW() ,'%Y-01-01') AND NOW() )    GROUP BY DIA_SEMANA, dia ORDER BY `dia` ASC"));
 //        SELECT meses.id, meses.mes, IFNULL(t2.Total, 0) FROM meses LEFT JOIN (SELECT MONTH(factures.date) i, SUM(factures.total_facture) as Total FROM factures GROUP BY i) as t2 ON meses.id = t2.i
         $pormes = json_encode(DB::connection('client')->select("SELECT meses.id, meses.mes, IFNULL(t2.Total, 0) as cantidad FROM meses LEFT JOIN (SELECT MONTH(factures.date) i, SUM(factures.total_facture) as Total FROM factures  WHERE  (date between  DATE_FORMAT(NOW() ,'%Y-01-01') AND NOW() ) GROUP BY i) as t2 ON meses.id = t2.i ORDER BY meses.id"));
@@ -294,12 +297,12 @@ class ApisController extends Controller
         $ventasporhoras = json_encode(DB::connection('client')->select("SELECT HOUR(created_at) AS horaa ,DATE_FORMAT(created_at, '%h %p') as hora,SUM(total_facture) as total FROM factures where month(date) = MONTH(CURDATE()) GROUP BY hora,horaa ORDER BY `horaa` ASC"));
 
         $graficogrande = json_encode(DB::connection('client')->select("SELECT date, SUM(factures.total_facture) as total FROM factures GROUP BY date"));
-
-        return view('dashboard.dashboard',
-            compact('totalventas'),
-            compact('ventasmes'))
-            ->with(compact('ventassemana'))
-            ->with(compact('totaldias'))
+//
+        return view('dashboard.dashboard')
+            ->with(compact('resumenDia'))
+            ->with(compact('resumenSemana'))
+            ->with(compact('resumenMes'))
+            ->with(compact('resumenYear'))
             ->with(compact('diasconmasventas'))
             ->with(compact('pormes'))
             ->with(compact('productosmasvendidos'))

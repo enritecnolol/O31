@@ -24,7 +24,7 @@
         <p style="font-size: 20px"><strong>Total Cierre</strong>: {{number_format($caja->total_cierre, 2, '.', ',')}}</p>
     </div>
     <hr>
-    <p style="margin-left: 60px;"> <strong>Segun Sistema</strong></p>
+    <p style="margin-left: 60px;font-size: 22px"> <strong>Segun Sistema</strong></p>
     <div>
         @if(array_key_exists("totalSinDevoluciones" ,$json["segunsistema"]))
         <p style="font-size: 20px"><strong>Total venta:    {{number_format($json["segunsistema"]["totalSinDevoluciones"], 2, '.', ',')}}</strong></p>
