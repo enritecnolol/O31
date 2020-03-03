@@ -205,14 +205,14 @@ export default {
         this.table_data = response.data["data"];
         this.headers = response.data["header"];
         this.months = response.data["months"];
+        this.loading = false;
       })
       .catch(error => {
         console.log(error);
       })
       .finally(() => {
-        // setTimeout(window.print(), 5000);
-        this.loading = false;
         this.getTotales();
+        setTimeout(window.print(), 5000);
       });
   },
   created() {}

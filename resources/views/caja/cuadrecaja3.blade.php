@@ -16,7 +16,7 @@
 
 @section('content')
 
-    <div class="container-fluid" v-show="cambio == 'opciones'">
+    <div class="container-fluid" v-show="cambio == 'opciones'" >
         <div class="card">
             <div class="card-header">
                 <strong style="color: #007bff">Cajas por Cuadrar</strong>
@@ -36,7 +36,7 @@
             </div>
         </div>
     </div>
-    <div v-show="cambio == 'caja'" class="section__content section__content--p30">
+    <div v-show="cambio == 'caja'" class="section__content section__content--p30" style="margin-top: -40px">
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header">
@@ -76,7 +76,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-4">
-                    <div class="card" style="height: 600px">
+                    <div class="card" style="height: 650px">
                         <div class="card-header"><strong style="color: #007bff">Billetes</strong></div>
                         <div class="card-body">
                             <table class="table table-hover table-sm">
@@ -154,7 +154,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="card" style="height: 600px">
+                    <div class="card" style="height: 650px">
                         <div class="card-header"><strong style="color: #007bff">Monedas</strong></div>
                         <div class="card-body">
                             <table class="table table-hover table-responsive table-sm">
@@ -210,22 +210,45 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="card" style="height: 600px">
+                    <div class="card" style="height: 650px">
                         <div class="card-header">
                             <strong style="color: #007bff">Cuadre segun ventas</strong>
                         </div>
                         <div class="card-body">
-                            <div class="form-group">
-                                <label  class="pr-1  form-control-label"> +&emsp;&emsp;<i class="fas fa-money-bill-alt"></i> Efectivo &emsp;= </label>
-                                <label  class="pr-1  form-control-label">&emsp;@{{ cajaefectivo }}</label>
-                            </div>
-                            <div class="form-group">
-                                <label class="pr-1  form-control-label">+&emsp;&emsp;<i class="fas fa-credit-card"></i> Tarjeta  &emsp;&nbsp;= </label>
-                                <label class="pr-1  form-control-label">&emsp;@{{ cajatarjeta }}</label>
-                            </div>
-                            <div class="form-group">
-                                <label  class="pr-1  form-control-label">+&emsp;&emsp;<i class="fas fa-suitcase"></i> Total  &emsp;&emsp;= </label>
-                                <label  class="pr-1  form-control-label">&emsp;@{{ totalcaja }}</label>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="">
+                                        <label  class="pr-1  form-control-label"> +&emsp;&emsp;<i class="fas fa-money-bill-alt"></i> Total Venta &emsp;= </label>
+                                        <label  class="pr-1  form-control-label">&emsp;@{{ totalSinDevoluciones }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="">
+                                        <label  class="pr-1  form-control-label"> +&emsp;&emsp;<i class="fas fa-undo"></i> Devoluciones &emsp;= </label>
+                                        <label  class="pr-1  form-control-label">&emsp;@{{ totalDevoluciones }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <hr>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="">
+                                        <label  class="pr-1  form-control-label"> +&emsp;&emsp;<i class="fas fa-money-bill-alt"></i> Efectivo &emsp;= </label>
+                                        <label  class="pr-1  form-control-label">&emsp;@{{ cajaefectivo }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="">
+                                        <label class="pr-1  form-control-label">+&emsp;&emsp;<i class="fas fa-credit-card"></i> Tarjeta  &emsp;&nbsp;= </label>
+                                        <label class="pr-1  form-control-label">&emsp;@{{ cajatarjeta }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="">
+                                        <label  class="pr-1  form-control-label">+&emsp;&emsp;<i class="fas fa-suitcase"></i> Total  &emsp;&emsp;= </label>
+                                        <label  class="pr-1  form-control-label">&emsp;@{{ totalcaja }}</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -319,6 +342,7 @@
                 totalcaja: 0,
                 cajaefectivo: 0,
                 cajatarjeta: 0,
+                totalDevoluciones:0,
                 dosk:0,
                 unok:0,
                 quinientos:0,
@@ -331,7 +355,8 @@
                 uno:0,
                 deposito:0,
                 egresos:0,
-                cambio :'opciones'
+                cambio :'opciones',
+                totalSinDevoluciones:0
             },
 
             methods:{
@@ -349,6 +374,8 @@
                             _this.totalcaja = response["data"][1];
                             _this.cajatarjeta = response["data"][2];
                             _this.cajaefectivo = response["data"][3];
+                            _this.totalDevoluciones= response["data"][4];
+                            _this.totalSinDevoluciones= response["data"][5];
                             _this.cambio ='caja'
                         })
                         .catch(function (error) {
@@ -384,12 +411,16 @@
                                 caja:       this.caja,
                                 fecha:      this.fecha,
                                 totalcaja:  this.totalcaja,
+                                totaldevolucion :this.totalDevoluciones,
+                                totalSinDevoluciones: this.totalSinDevoluciones,
 
                                 encaja:{
                                     segunsistema:{
                                         efectivo:this.cajaefectivo,
                                         tarjeta:this.cajatarjeta,
-                                        total: this.totalcaja
+                                        total: this.totalcaja,
+                                        totaldevolucion :this.totalDevoluciones,
+                                        totalSinDevoluciones: this.totalSinDevoluciones,
                                     },
                                     efectivocaja: this.efectivocaja,
                                     cajatarjeta: this.cajatarjeta,
@@ -432,58 +463,63 @@
 
                     if (isNaN(this.totalcuadre) || isNaN(this.efectivocaja) ){
                         alert('LLenar todos los espacio en blanco con 0 ')
-                    }else{
-                        if (this.sobrantecaja < 0) {
-                            this.confimarfaltante();
-                        }else {
-                            $.ajax({
-                                url: '/caja/cuadrarcaja',
-                                method: 'GET',
-                                data: {
-                                    caja:       this.caja,
-                                    fecha:      this.fecha,
-                                    totalcaja:  this.totalcaja,
-
-                                    encaja:{
-                                        segunsistema:{
-                                            efectivo:this.cajaefectivo,
-                                            tarjeta:this.cajatarjeta,
-                                            total: this.totalcaja
-                                        },
-                                        efectivocaja: this.efectivocaja,
-                                        cajatarjeta: this.cajatarjeta,
-                                        deposito:   this.deposito,
-                                        egresos:    this.egresos,
-                                        desglose:{
-                                            billetes:{
-                                                dosmil:       this.dosk,
-                                                mil:       this.unok,
-                                                quinientos: this.quinientos,
-                                                dociento:   this.dociento,
-                                                cien:       this.cien,
-                                                cincuenta:  this.cincuenta,
-                                            },
-                                            monedas:{
-                                                veinticinco:this.veinticinco,
-                                                diez:       this.diez,
-                                                cinco:      this.cinco,
-                                                uno:        this.uno,
-                                            }
-                                        }
-                                    }
-
-                                },
-                                success:function (dato) {
-                                    toastr.success('La caja ha sido Cuadrada');
-                                    setTimeout('document.location.reload()',1500);
-                                },
-                                error:function () {
-                                    toastr.error('Ha ocurrido un error en el cuadre');
-                                    setTimeout('document.location.reload()',1500);
-                                }
-                            });
-                        }
+                        return;
                     }
+                    if (this.sobrantecaja < 0) {
+                        this.confimarfaltante();
+                        return;
+                    }
+
+                    $.ajax({
+                        url: '/caja/cuadrarcaja',
+                        method: 'GET',
+                        data: {
+                            caja:       this.caja,
+                            fecha:      this.fecha,
+                            totalcaja:  this.totalcaja,
+                            totaldevolucion :this.totalDevoluciones,
+                            totalSinDevoluciones: this.totalSinDevoluciones,
+
+                            encaja:{
+                                segunsistema:{
+                                    efectivo:this.cajaefectivo,
+                                    tarjeta:this.cajatarjeta,
+                                    total: this.totalcaja,
+                                    totaldevolucion :this.totalDevoluciones,
+                                    totalSinDevoluciones: this.totalSinDevoluciones,
+                                },
+                                efectivocaja: this.efectivocaja,
+                                cajatarjeta: this.cajatarjeta,
+                                deposito:   this.deposito,
+                                egresos:    this.egresos,
+                                desglose:{
+                                    billetes:{
+                                        dosmil:       this.dosk,
+                                        mil:       this.unok,
+                                        quinientos: this.quinientos,
+                                        dociento:   this.dociento,
+                                        cien:       this.cien,
+                                        cincuenta:  this.cincuenta,
+                                    },
+                                    monedas:{
+                                        veinticinco:this.veinticinco,
+                                        diez:       this.diez,
+                                        cinco:      this.cinco,
+                                        uno:        this.uno,
+                                    }
+                                }
+                            }
+
+                        },
+                        success:function (dato) {
+                            toastr.success('La caja ha sido Cuadrada');
+                            setTimeout('document.location.reload()',1500);
+                        },
+                        error:function () {
+                            toastr.error('Ha ocurrido un error en el cuadre');
+                            setTimeout('document.location.reload()',1500);
+                        }
+                    });
 
                 }
 

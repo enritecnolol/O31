@@ -26,6 +26,10 @@
     <hr>
     <p style="margin-left: 60px;"> <strong>Segun Sistema</strong></p>
     <div>
+        @if(array_key_exists("totalSinDevoluciones" ,$json["segunsistema"]))
+        <p style="font-size: 20px"><strong>Total venta:    {{number_format($json["segunsistema"]["totalSinDevoluciones"], 2, '.', ',')}}</strong></p>
+        <p style="font-size: 20px"><strong>Total devuelto:     {{number_format($json["segunsistema"]["totaldevolucion"], 2, '.', ',')}}</strong></p>
+        @endif
         <p style="font-size: 20px"><strong>Efectivo:    {{number_format($json["segunsistema"]["efectivo"], 2, '.', ',')}}</strong></p>
         <p style="font-size: 20px"><strong>Tarjeta:     {{number_format($json["segunsistema"]["tarjeta"], 2, '.', ',')}}</strong></p>
         <p style="font-size: 20px"><strong>Total =      {{number_format($json["segunsistema"]["total"], 2, '.', ',')}}</strong></p>

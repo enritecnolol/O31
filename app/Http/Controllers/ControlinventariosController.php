@@ -24,7 +24,7 @@ class ControlinventariosController extends Controller
     }
     public function storecompra(Request $request)
     {
-        DB::begintransition();
+        DB::begintransaction();
         try{
 
             $compra = new Compra();
@@ -42,14 +42,14 @@ class ControlinventariosController extends Controller
                 $detalle = new Detalle_compra();
                 $detalle->fecha = $request->fecha;
                 $detalle->product_id = $pc['id'];
-                $detalle->cantidad = $pc['status'];
-                $detalle->cantidad = $pc['status'];
+                $detalle->cantidad = $pc['cantidad_comprada'];
+                $detalle->precio_compra = $pc['precio_compra'];
                 $detalle->compra_id = $idcompra->last()->id;
                 $detalle->user_id = Auth::id();
                 $detalle->save();
 
                 $product = Product::find($pc['id']);
-                $product->existence = $product->existence + $pc['status'];
+                $product->existence = $product->existence + $pc['cantidad_comprada'];
                 $product->update();
             }
             DB::commit();

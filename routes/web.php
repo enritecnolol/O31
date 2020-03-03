@@ -202,6 +202,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/control/inventario', 'ControlinventariosController@index');
     Route::post('/todos/productos', 'ControlinventariosController@todosproductos');
     Route::post('/store/compra', 'ControlinventariosController@storecompra');
+
     /*=================================\- Facturacion -/======================================================*/
     Route::get('/facturacion', 'FacturacionesController@index');
 

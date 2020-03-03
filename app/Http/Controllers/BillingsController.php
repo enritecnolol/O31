@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Caja;
 use App\Client;
 use App\Detail;
 use App\Detallesecuencia;
@@ -26,6 +27,7 @@ class BillingsController extends Controller
     {
         DB::beginTransaction();
         try{
+            $idcaja = Caja::all();
             $facture = new Facture();
             $facture->date = date("Y-m-d", strtotime($request->invoice_date));
             $facture->client = $request->client_id['code'];
@@ -80,7 +82,7 @@ class BillingsController extends Controller
                     $facture->razon_nfc = $request->datancf['razon'];
                 }
             }
-
+            $facture->caja_id = $idcaja->last()->id;
             $facture->save();
 
             foreach ($request->details as $detail)
