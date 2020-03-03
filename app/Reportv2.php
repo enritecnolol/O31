@@ -47,10 +47,30 @@ class Reportv2 extends Model
             }
             $productswhere = "AND details.product_id in ($ids)";
         }
-        return DB::connection('client')->select("SELECT products.id,products.name as producto, concat('$', format(products.price, 2)) as precio, SUM(details.quanlity) as cantidad_producto, concat('$', format(SUM(details.price), 2)) as Monto, SUM(details.price) as monto_normal
-              FROM details, products
-              WHERE details.product_id = products.id AND  DATE(details.date) BETWEEN '".$first."' AND '".$second."' $categoriesWhere $productswhere
-              GROUP BY products.id ORDER BY cantidad_producto desc");
+//        return DB::connection('client')->select("
+//SELECT products.id,products.name as producto, concat('$', format(products.price, 2)) as precio, SUM(details.quanlity) as cantidad_producto, concat('$', format(SUM(details.price), 2)) as Monto, SUM(details.price) as monto_normal
+//              FROM details, products
+//              WHERE details.product_id = products.id AND  DATE(details.date) BETWEEN '".$first."' AND '".$second."' $categoriesWhere $productswhere
+//              GROUP BY products.id ORDER BY cantidad_producto desc
+//              ");
+
+        return DB::connection('client')->select("
+        SELECT
+       products.id,
+       products.name as producto,
+       concat('$', format(products.price, 2)) as precio,
+       SUM(details.quanlity)- SUM(ifnull(d.quanlity,0)) as cantidad_producto,
+       concat('$', format(SUM(details.price) - SUM(ifnull(d.price,0)), 2)) as Monto,
+       SUM(details.price) - SUM(ifnull(d.price,0))  as monto_normal
+              FROM details
+                  join factures f on details.facture_id = f.id
+                 join products on details.product_id = products.id
+                  left join devolucions on f.id = devolucions.factura_id
+                left join detalle_devolucions d on products.id = d.product_id and d.devolucion_id = devolucions.id
+              WHERE  DATE(details.date)
+                     BETWEEN '".$first."' AND '".$second."'$categoriesWhere $productswhere
+              GROUP BY products.id ORDER BY cantidad_producto desc
+              ");
 
     }
     public function scopeCajasdate($query, $first, $second){
