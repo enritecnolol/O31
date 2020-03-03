@@ -138,19 +138,29 @@ WHERE  factures.date BETWEEN '".$fechainicio->format('Y-m-d')."' AND '".$fechafi
             if(count(DB::connection('client')->select("select * from details where EXTRACT(MONTH FROM date) = $i")) > 0)
             {
                 $query = DB::connection('client')
-                    ->select("SELECT meses.id, meses.mes, IFNULL(name_product, description) name_product, description, cantidad,IFNULL(t2.Total, 0) as monto
-                            FROM meses
-                                LEFT JOIN (
-                                    SELECT MONTH(details.date) i,
-                                           SUM(details.price) as Total,
-                                           name_product,
-                                           description,
-                                           sum(quanlity) cantidad
-                                    FROM details
-                                    WHERE  (date between  DATE_FORMAT(NOW() ,'%Y-01-01') AND NOW())
-                                    GROUP BY i, name_product, description
-                                    ) as t2 ON meses.id = t2.i where id = $i
-                            ORDER BY meses.id");
+                    ->select("
+SELECT meses.id,
+       meses.mes,
+       IFNULL(name_product, description) name_product,
+       description,
+       cantidad,
+       IFNULL(t2.Total, 0) as            monto
+FROM meses
+         LEFT JOIN (
+    SELECT MONTH(details.date)                                   i,
+           products.name                                      as name_product,
+           details.description,
+           SUM(details.quanlity) - SUM(ifnull(d.quanlity, 0)) as cantidad,
+           SUM(details.price) - SUM(ifnull(d.price, 0))       as Total
+    FROM details
+             join factures f on details.facture_id = f.id
+             join products on details.product_id = products.id
+             left join devolucions on f.id = devolucions.factura_id
+             left join detalle_devolucions d on products.id = d.product_id and d.devolucion_id = devolucions.id
+    WHERE (details.date between DATE_FORMAT(NOW(), '%Y-01-01') AND NOW())
+    GROUP BY i, name_product, description
+) as t2 ON meses.id = t2.i where id = $i
+ORDER BY meses.id");
 
                 array_push($data, $query);
                 array_push($months, $this->MonthName($i));
