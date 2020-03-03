@@ -67,8 +67,8 @@ class Reporteriav2Controller extends Controller
        concat('$', format(factures.itbis, 2)) as itbis,
        concat('$', format(total_facture, 2)) as total_factura,
        type_sale,
-              ifnull(total_devolucion,0) as total_devuelto,
-       ifnull(total_facture - total_devolucion,0) as total_neto
+       concat('$', format(ifnull(total_devolucion,0),2)) as total_devuelto,
+       concat('$', format(ifnull(total_facture - total_devolucion,0),2)) as total_neto
 FROM factures
 left join devolucions d on factures.id = d.factura_id
 left join clients c on factures.client = c.id
