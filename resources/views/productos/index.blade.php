@@ -141,7 +141,7 @@
                                     <button type="button" @click="producto(p.id)" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button type="button" class="btn btn-outline-danger btn-sm" @click="confimar(p.id)" title="Eliminar Producto">
+                                    <button type="button" class="btn btn-outline-danger btn-sm" @click="confimar(p.id)" title="Inactivar Producto">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </td>
@@ -239,7 +239,7 @@
                 },
                 confimar: function (id){
                     var txt;
-                    var r = confirm("Estas Seguro que quieres borrar este producto?");
+                    var r = confirm("Estas Seguro que quieres INACTIVAR este producto?");
                     if (r == true){
                         txt = this.borrar(id);
                     }
