@@ -1006,6 +1006,7 @@
                                 }
                             }
                             _this = this;
+                            _this.loading = true
                             $.ajax({
                                 url: '/facturacioncar',
                                 method: 'GET',
@@ -1035,6 +1036,7 @@
                                 },
                                 success: (dato) => {
                                     var _this = this;
+                                    _this.loading = false;
                                     if  (dato == "No es posible hacer la factura por falta de Comprobantes")
                                     {
                                         toastr.warning(dato, "validador");
@@ -1059,7 +1061,8 @@
                                         $('#pagofactura').modal('show');
                                     }
                                 },
-                                error:function () {
+                                error:() => {
+                                    _this.loading = false;
                                     toastr.error('A ocurrido un error al realizar la venta');
                                 }
 
@@ -1078,6 +1081,7 @@
                             }
                         }
                         _this = this;
+                        _this.loading = true;
                         $.ajax({
                             url: '/facturacioncar',
                             method: 'GET',
@@ -1106,6 +1110,7 @@
                             },
                             success: (dato) => {
                                 var _this = this;
+                                _this.loading = false;
                                 console.log(' 3 '+dato[1])
                                 if  (dato == "No es posible hacer la factura por falta de Comprobantes")
                                 {
@@ -1131,7 +1136,8 @@
                                     $('#pagofactura').modal('show');
                                 }
                             },
-                            error:function () {
+                            error: () => {
+                                _this.loading = false;
                                 toastr.error('A ocurrido un error al realizar la venta');
                             }
 
@@ -1160,6 +1166,7 @@
                                     }
                                 }
                                 _this = this;
+                                _this.loading = true;
                                 $.ajax({
                                     url: '/facturacioncar',
                                     method: 'GET',
@@ -1189,6 +1196,7 @@
                                     },
                                     success: (dato) => {
                                         var _this = this;
+                                        _this.loading = false;
                                         console.log(' 3 '+dato[1])
                                         if  (dato == "No es posible hacer la factura por falta de Comprobantes")
                                         {
@@ -1214,7 +1222,8 @@
                                             $('#pagofactura').modal('show');
                                         }
                                     },
-                                    error:function () {
+                                    error: () => {
+                                        _this.loading = false;
                                         toastr.error('A ocurrido un error al realizar la venta');
                                     }
 
@@ -1232,6 +1241,7 @@
                                 }
                             }
                         }
+                        this.loading = true;
                         axios.post('/facturacioncar', {
                             setting:this.setting,
                             tiponfc:this.tiponfc,
@@ -1256,6 +1266,7 @@
                             detalle: this.list
                         })
                             .then( (response) => {
+                                this.loading = false;
                                 let dato = response['data'];
                                 if  (dato == "No es posible hacer la factura por falta de Comprobantes")
                                 {
@@ -1281,7 +1292,8 @@
                                     $('#pagofactura').modal('show');
                                 }
                             })
-                            .catch(function (error) {
+                            .catch( (error) => {
+                                _this.loading = false;
                             });
 
                     }

@@ -172,7 +172,7 @@
                         <div class="col-sm-4">
                             <button style="width: 100%;" type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancelar</button></div>
                         <div class="col-sm-4">
-                            <button v-if="suma >= neto" type="button" @click="facturar()" style="width: 100%;" class="btn btn-success btn-lg">&nbsp;Pagar</button>
+                            <button v-if="suma >= neto" type="button" @click="facturar()" :disabled="loading" style="width: 100%;" class="btn btn-success btn-lg">&nbsp;Pagar</button>
                             <button v-else disabled type="button" style="width: 100%;" class="btn btn-primary btn-lg">&nbsp;Pagar</button></div>
                     </div>
                 </div>
