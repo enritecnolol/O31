@@ -89,7 +89,7 @@ class   CajasController extends Controller
     }
 
     public function cierrecaja(){
-        
+
 
         $fecha = date('Y-m-d');
         $id = Auth::id();
@@ -309,32 +309,32 @@ class   CajasController extends Controller
         $cajas = DB::connection('client')->table('cajas')->select('id','fecha_apertura','hora_apertura','fecha_cierre','almacen','valor_apertura','total_venta','total_cierre', 'usuario', 'status', 'caja_num', 'cuadreconf')->where('id',$idcaja)->get();
 
         $ventastotal = DB::connection('client')
-            ->table('factures')
-            ->leftJoin('devolucions', function ($leftJoin) {
-                $leftJoin->on('factures.caja_id', '=', 'devolucions.caja_id')
-                    ->on('factures.id', '=', 'devolucions.factura_id');
-            })
-            ->select(DB::raw('SUM(total_facture) - sum(ifnull(total_devolucion,0)) as total'))
-            ->where('factures.caja_id', $idcaja)->get();
+            ->select("select
+                        sum(total_facture) - (select ifnull(sum(total_devolucion),0) from devolucions where factures.caja_id = caja_id) as total
+                        from factures
+                        where factures.caja_id = $idcaja");
 
-        $ventasmonto_tarjeta = DB::connection('client')->table('factures')->select(DB::connection('client')->raw('SUM(Monto_tarjeta) as total_tarjeta'))->where('caja_id', $idcaja)->get();
-        $ventasmonto_efectivo = DB::connection('client')
+        $ventasmonto_tarjeta = DB::connection('client')
             ->table('factures')
-            ->leftJoin('devolucions', function ($leftJoin) {
-                $leftJoin->on('factures.caja_id', '=', 'devolucions.caja_id')
-                    ->on('factures.id', '=', 'devolucions.factura_id');
-            })
-            ->select(DB::raw('SUM(ifnull(factures.Monto_efectivo, total_facture)) - SUM(ifnull(total_devolucion,0)) as total_efectivo'))
-            ->where('factures.caja_id', $idcaja)->get();
+            ->select(DB::connection('client')->raw('SUM(Monto_tarjeta) as total_tarjeta'))
+            ->where('caja_id', $idcaja)
+            ->get();
+
+
+        $ventasmonto_efectivo = DB::connection('client')
+            ->select("select
+                        SUM(ifnull(factures.Monto_efectivo, total_facture)) - (select ifnull(sum(total_devolucion),0) from devolucions where factures.caja_id = caja_id) as total_efectivo
+                        from factures
+                        where factures.caja_id = $idcaja");
 
         $devoluciones = DB::connection('client')
             ->table('devolucions')
-            ->select(DB::raw('SUM(total_devolucion) as total_devuelto'))
+            ->select(DB::raw('ifnull(SUM(total_devolucion),0) as total_devuelto'))
             ->where('caja_id', $idcaja)->first();
 
         $VentasSinDevoluciones= DB::connection('client')
             ->table('factures')
-            ->select(DB::raw('SUM(total_facture) as total_sin_devoluciones'))
+            ->select(DB::raw('ifnull(SUM(total_facture),0) as total_sin_devoluciones'))
             ->where('caja_id', $idcaja)->first();
 
         $ventasmonto_devueltas = DB::connection('client')->table('factures')->select(DB::connection('client')->raw('SUM(returns) as total_devuelta'))->where('caja_id', $idcaja)->get();
@@ -351,7 +351,7 @@ class   CajasController extends Controller
         }
 
         if ($ventasmonto_efectivo == '[{"total_efectivo":null}]'){
-            $total_efectivo = 00;
+            $total_efectivo = 0;
         }else{
             $total_efectivo = $ventasmonto_efectivo[0]->total_efectivo - $ventasmonto_devueltas[0]->total_devuelta;
         }

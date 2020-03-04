@@ -21,7 +21,7 @@
             </div>
             <div class="row m-t-25">
                 <div class="col-sm-6 col-lg-3">
-                    <div class="overview-item overview-item--c2">
+                    <div class="overview-item overview-item--c2" style="margin-bottom: 10px !important;">
                         <div class="overview__inner">
                             <div class="overview-box clearfix">
                                 <div class="text">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="overview-item overview-item--c2">
+                    <div class="overview-item overview-item--c2" style="margin-bottom: 10px !important;">
                         <div class="overview__inner">
                             <div class="overview-box clearfix">
                                 <div class="text">
@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="overview-item overview-item--c2">
+                    <div class="overview-item overview-item--c2" style="margin-bottom: 10px !important;">
                         <div class="overview__inner">
                             <div class="overview-box clearfix">
                                 <div class="text">
@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="overview-item overview-item--c2">
+                    <div class="overview-item overview-item--c2" style="margin-bottom: 10px !important;">
                         <div class="overview__inner">
                             <div class="overview-box clearfix">
                                 <div class="text">
@@ -72,7 +72,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="overview-item overview-item--c3">
+                    <div class="overview-item overview-item--c3" style="margin-bottom: 10px !important;">
                         <div class="overview__inner">
                             <div class="overview-box clearfix">
                                 <div class="text">
@@ -84,7 +84,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="overview-item overview-item--c3">
+                    <div class="overview-item overview-item--c3" style="margin-bottom: 10px !important;">
                         <div class="overview__inner">
                             <div class="overview-box clearfix">
                                 <div class="text">
@@ -97,7 +97,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="overview-item overview-item--c3">
+                    <div class="overview-item overview-item--c3" style="margin-bottom: 10px !important;">
                         <div class="overview__inner">
                             <div class="overview-box clearfix">
                                 <div class="text">
@@ -110,7 +110,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="overview-item overview-item--c3">
+                    <div class="overview-item overview-item--c3" style="margin-bottom: 10px !important;">
                         <div class="overview__inner">
                             <div class="overview-box clearfix">
                                 <div class="text">
@@ -123,7 +123,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="overview-item overview-item--c4">
+                    <div class="overview-item overview-item--c4" style="margin-bottom: 10px !important;">
                         <div class="overview__inner">
                             <div class="overview-box clearfix">
                                 <div class="text">
@@ -135,7 +135,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="overview-item overview-item--c4">
+                    <div class="overview-item overview-item--c4" style="margin-bottom: 10px !important;">
                         <div class="overview__inner">
                             <div class="overview-box clearfix">
                                 <div class="text">
@@ -148,7 +148,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="overview-item overview-item--c4">
+                    <div class="overview-item overview-item--c4" style="margin-bottom: 10px !important;">
                         <div class="overview__inner">
                             <div class="overview-box clearfix">
                                 <div class="text">
@@ -161,7 +161,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="overview-item overview-item--c4">
+                    <div class="overview-item overview-item--c4" style="margin-bottom: 10px !important;">
                         <div class="overview__inner">
                             <div class="overview-box clearfix">
                                 <div class="text">
