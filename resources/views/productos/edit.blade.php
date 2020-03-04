@@ -41,8 +41,8 @@
                         </div>
                         <div class="form-group">
                             <label for="" class="control-label mb-1">Grabado de itbis ? </label>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" @click="check = false">No</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" @click="check = true">Si</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" :class="check ? '' : 'active'" @click="check = false">No</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm"  :class="check ? 'active' : ''"  @click="check = true">Si</button>
                         </div>
 
                         <div class="form-group" v-if="check == true">
@@ -79,7 +79,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group" v-if="datos.subcategoria_id != null">
+                        <div class="form-group">
                             <label for="exampleFormControlSelect1">Subcategoria</label>
                             <div class="input-group mb-2">
                                 <div class="input-group-prepend">
@@ -87,23 +87,7 @@
                                         <button type="button" data-toggle="modal" data-target="#createsubcategoria"><span style="color: #0062cc"><i class="fas fa-plus"></i></span></button>
                                     </div>
                                 </div>
-                                <select class="form-control" v-model="datos.subcategoria_id" required name="subcategoria" id="exampleFormControlSelect1">
-                                    <option value="">-selecciona-</option>
-                                    <template v-for="sc in listasubcategoriaedit">
-                                        <option :value="sc.id">@{{ sc.nombre }}</option>
-                                    </template>
-                                </select>
-                            </div>
-                        </div>
-                        <div v-else class="form-group">
-                            <label for="exampleFormControlSelect1">Subcategoria</label>
-                            <div class="input-group mb-2">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <button type="button" data-toggle="modal" disabled data-target="#createsubcategoria"><span style="color: #0062cc"><i class="fas fa-plus"></i></span></button>
-                                    </div>
-                                </div>
-                                <select class="form-control" v-model="datos.subcategoria_id" disabled name="subcategoria" id="exampleFormControlSelect1">
+                                <select class="form-control" v-model="datos.subcategoria_id" required :disabled="datos.subcategoria_id == null" name="subcategoria" id="exampleFormControlSelect1">
                                     <option value="">-selecciona-</option>
                                     <template v-for="sc in listasubcategoriaedit">
                                         <option :value="sc.id">@{{ sc.nombre }}</option>
@@ -112,6 +96,17 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label for="estadoSelect" class="control-label mb-1">Estado</label>
+                            <div class="container">
+                                <div class="row">
+                                    <select class="form-control" v-model="datos.estado" required name="estado" id="estadoSelect">
+                                        <option value="1">Activo</option>
+                                        <option value="0">Inactivo</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="row form-group" v-if="!image">
                             <div class="col col-md-3">

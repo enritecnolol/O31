@@ -1,49 +1,191 @@
 <template>
-  <div>
-    <div class="loader" v-if="existenciarep == 'no'">
-      <h3
-        style="color: red;position: absolute;left: 35%;top: 30%;"
-      >Usted no tiene acceso al control de inventario</h3>
-    </div>
-    <card-panel>
-      <template slot="body">
-        <div class="card-body">
-          <create-purchase-record />
-          <!-- <view-purchase-record /> -->
+  <card-panel style="margin-top:-50px;">
+    <template slot="body">
+      <div class="card-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <h4>orden de compra</h4>
+              <hr />
+            </div>
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="documentNo">Documento no:</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      placeholder="#0000"
+                      style="width:100px;"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="supplier">Proveedor:</label>
+                <v-select v-model="supplier" :options="suppliers" @input="setSelected" />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="orderDate">Fecha de pedido:</label>
+                <datepicker
+                  v-model="orderDate"
+                  class="form-control form-control-sm"
+                  :format="'yyyy-MM-dd'"
+                  name="orderDate"
+                />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="paymentDate">Fecha de pago:</label>
+                <datepicker
+                  v-model="paymentDate"
+                  class="form-control form-control-sm"
+                  :format="'yyyy-MM-dd'"
+                  name="paymentDate"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="supplierData">Datos provedor:</label>
+                <textarea
+                  v-model="supplierData"
+                  class="form-control form-control-sm"
+                  name="supplierData"
+                  id="supplierData"
+                  rows="3"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="note">Nota:</label>
+                <textarea
+                  v-model="note"
+                  class="form-control form-control-sm"
+                  name="note"
+                  id="note"
+                  rows="3"
+                />
+              </div>
+            </div>
+            <div class="col-md-12">
+              <general-table :hover="true" style="height:380px;">
+                <template slot="table-header">
+                  <tr>
+                    <th>Producto</th>
+                    <th style="text-align: right;">Cantidad</th>
+                    <th style="text-align: right;">Precio de compra</th>
+                    <th style="text-align: right;">Precio venta sin impuesto</th>
+                    <th style="text-align: right;">Precio total</th>
+                  </tr>
+                </template>
+                <template slot="table-body">
+                  <item-body
+                    v-for="(item, index) in items"
+                    :key="index"
+                    :productsList="productsList"
+                    :item="item"
+                  />
+                </template>
+              </general-table>
+            </div>
+            <div class="col-md-12" style="margin-top: 15px">
+              <estimate-total :subTotal="10000" />
+            </div>
+          </div>
         </div>
-      </template>
-    </card-panel>
-  </div>
+      </div>
+    </template>
+  </card-panel>
 </template>
 
 <script>
-import createPurchaseRecord from "./createPurchaseRecord";
 import cardPanel from "../cardPanel";
-import viewPurchaseRecord from "./viewPurchaseRecord";
+import generalTable from "../generalTable";
+import Datepicker from "vuejs-datepicker";
+import vSelect from "vue-select";
+import itemBody from "./itemBody";
+import EstimateTotal from "../estimate/Estimatetotal";
+import "vue-select/dist/vue-select.css";
+Vue.component("v-select", vSelect);
 export default {
-  components: { createPurchaseRecord, cardPanel, viewPurchaseRecord },
+  name: "purchase-record",
+  components: { cardPanel, Datepicker, generalTable, itemBody, EstimateTotal },
   data() {
     return {
-      existenciarep: ""
+      supplierList: [],
+      supplier: "",
+      orderDate: "",
+      paymentDate: "",
+      note: "",
+      productsList: [],
+      supplierData: "",
+      items: [
+        {
+          product: "",
+          quantity: 0,
+          unitPrice: 0,
+          sales_price_without_tax: 0
+        }
+      ]
     };
   },
   methods: {
-    existencia() {
+    fetchSupplier() {
       axios
-        .post("/configuracion/existencia")
+        .get("/supplier/list/select")
         .then(response => {
-          this.existenciarep = response["data"];
+          this.supplierList = response.data;
+          console.log(response);
         })
-        .catch(function(error) {
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    setSelected(val) {
+      console.log(val);
+    },
+    getProducts() {
+      axios
+        .get("/products/select")
+        .then(response => {
+          this.productsList = response["data"];
+        })
+        .catch(error => {
           console.log(error);
         });
     }
   },
+  computed: {
+    suppliers() {
+      let array = [];
+      this.supplierList.forEach(element => {
+        array.push({
+          label: element.name,
+          code: element.id
+        });
+      });
+      return array;
+    }
+  },
   created() {
-    this.existencia();
+    var today = new Date();
+    var paymentDate = new Date();
+    paymentDate.setDate(today.getDate() + 5);
+    this.orderDate = today;
+    this.paymentDate = paymentDate;
+    this.fetchSupplier();
+    this.getProducts();
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style>
 </style>

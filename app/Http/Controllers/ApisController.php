@@ -27,9 +27,6 @@ class ApisController extends Controller
 
         $data = Input::all();
 
-        return $request->img;
-
-
         $file = $request->file('img');
         $file->storeAs('/', $file->getClientOriginalName());
         if (Input::hasFile('img')){
@@ -123,50 +120,23 @@ class ApisController extends Controller
             $itbis = 'si';
         }
 
-        if ($request->hasFile('img')){
-            if ($request->hasFile('img')){
-                $file = $request->file('img');
-                $file->storeAs('/', $file->getClientOriginalName());
-                $product->name = $request->nombre;
-                $product->price = $request->precio;
-                $product->barcode = $request->Cbarra;
-                $product->img = $file->getClientOriginalName();;
-                $product->existence = 0;
-                $product->impost = 0;
-                $product->impuestoref_id = $request->refimpuestoid;
-                $product->itbis = $itbis;
-                $product->categoria_id = $request->categoria;
-                $product->subcategoria_id = $request->subcategoria;
-                $product->compuesto = $request->compuesto;
-                $product->update();
-
-            }else{
-
-                $product->name = $request->nombre;
-                $product->price = $request->precio;
-                $product->barcode = $request->Cbarra;
-                $product->existence = 0;
-                $product->impost = 0;
-                $product->impuestoref_id = $request->refimpuestoid;
-                $product->itbis = $itbis;
-                $product->categoria_id = $request->categoria;
-                $product->subcategoria_id = $request->subcategoria;
-                $product->compuesto = $request->compuesto;
-                $product->update();
-            }
-        }else{
-            $product->name = $request->nombre;
-            $product->price = $request->precio;
-            $product->barcode = $request->Cbarra;
-            $product->existence = 0;
-            $product->impost = 0;
-            $product->impuestoref_id = $request->refimpuestoid;
-            $product->itbis = $itbis;
-            $product->categoria_id = $request->categoria;
-            $product->subcategoria_id = $request->subcategoria;
-            $product->compuesto = $request->compuesto;
-            $product->update();
+        if ($request->hasFile('img')) {
+            $file = $request->file('img');
+            $file->storeAs('/', $file->getClientOriginalName());
+            $product->img = $file->getClientOriginalName();
         }
+        $product->name = $request->nombre;
+        $product->price = $request->precio;
+        $product->barcode = $request->Cbarra;
+        $product->impost = 0;
+        $product->impuestoref_id = $request->refimpuestoid;
+        $product->itbis = $itbis;
+        $product->categoria_id = $request->categoria;
+        $product->subcategoria_id = $request->subcategoria;
+        $product->compuesto = $request->compuesto;
+        $product->estado = $request->estado;
+        $product->update();
+
         return redirect('/productos');
     }
     public function cuadres(){
@@ -249,7 +219,8 @@ class ApisController extends Controller
     }
     public function eliminarproducto(Request $request){
         $product = Product::find($request->id);
-        $product->delete();
+        $product->estado = false;
+        $product->update();
         return 'eliminado';
     }
     public function dashboard(){
@@ -335,11 +306,15 @@ class ApisController extends Controller
     public function productospaginado(Request $request)
     {
         $id = Auth::id();
-        $productos = DB::connection('client')->table('products')
+        $productos = DB::connection('client')
+            ->table('products')
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
-            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
+            ->Leftjoin('rangoimpuestos',
+                'rangoimpuestos.referenciaitbis_id',
+                DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
 //            ->where('products.user_id', $id)
-            ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->paginate($request->paginate);
+            ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion')
+            )->paginate($request->paginate);
 
         return $productos;
     }
@@ -355,7 +330,11 @@ class ApisController extends Controller
         return $productos;
     }
     public function productosSelect(){
-        return DB::connection('client')->table('products')->select('id','name', 'price')->get();
+        return DB::connection('client')
+            ->table('products')
+            ->where('estado', true)
+            ->select('id','name', 'price')
+            ->get();
     }
 
 }

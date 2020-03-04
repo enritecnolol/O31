@@ -36,6 +36,7 @@
                             <th>Existencia</th>
                             <th>Precio</th>
                             <th>Impuesto</th>
+                            <th>Estado</th>
                             <th>Editar</th>
                         </tr>
                         </thead>
@@ -48,6 +49,7 @@
                                 <td>@{{p.existence}}</td>
                                 <td><strong>@{{p.price}}.00</strong></td>
                                 <td>@{{p.porciento}}%</td>
+                                <td :style="{color: p.estado ? 'green' : 'red'}">@{{p.estado ? 'Activo':'Inactivo'}}</td>
                                 <td>
                                     <button type="button" @click="producto(p.id)" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
                                         <i class="fas fa-edit"></i>
@@ -61,7 +63,7 @@
                         </template>
                         <template v-if="loading == true">
                             <tr>
-                                <td colspan="7">
+                                <td colspan="8">
                                     <div class="text-center">
                                         <img src="loading.gif" width="100" alt="">
                                     </div>
@@ -121,6 +123,7 @@
                             <th>Existencia</th>
                             <th>Precio</th>
                             <th>Impuesto</th>
+                            <th>Estado</th>
                             <th>Editar</th>
                         </tr>
                         </thead>
@@ -133,6 +136,7 @@
                                 <td>@{{p.existence}}</td>
                                 <td><strong>@{{p.price}}.00</strong></td>
                                 <td>@{{p.impost}}</td>
+                                <td :style="{color: p.estado ? 'green' : 'red'}">@{{p.estado ? 'Activo':'Inactivo'}}</td>
                                 <td>
                                     <button type="button" @click="producto(p.id)" class="btn btn-sm btn-warning mb-1" data-toggle="modal" data-target="#largeModal">
                                         <i class="fas fa-edit"></i>
@@ -248,8 +252,8 @@
                     })
                         .then(function (response) {
                             if (response["data"] == 'eliminado'){
-                                toastr.success('El producto ha sido eliminado');
-                                setTimeout('document.location.reload()',1000);
+                                toastr.success('El producto ha sido desactivado');
+                                _this.productosp();
                             }
                         })
                         .catch(function (error) {
@@ -391,7 +395,6 @@
                         paginate:_this.paginate
                     })
                         .then(function (response) {
-                            console.log(response);
                             _this.productospag = response['data'].data;
                             _this.setpaginator(response['data'])
                             _this.loading = false

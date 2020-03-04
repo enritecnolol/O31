@@ -51,7 +51,9 @@ class IndexController extends Controller
 
         $id = Auth::id();
         $caja =  Caja::all()->last();
-        $productos = DB::connection('client')->table('products')
+        $productos = DB::connection('client')
+            ->table('products')
+            ->where('estado', true)
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
             ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
             ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
