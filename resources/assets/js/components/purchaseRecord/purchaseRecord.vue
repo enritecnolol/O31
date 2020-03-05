@@ -5,7 +5,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
-              <h4>orden de compra</h4>
+              <h4>Orden de compra</h4>
               <hr />
             </div>
             <div class="col-md-12">
@@ -17,7 +17,7 @@
                       type="text"
                       class="form-control form-control-sm"
                       placeholder="#0000"
-                      style="width:100px;"
+                      style="width:130px;"
                     />
                   </div>
                 </div>
@@ -29,54 +29,58 @@
                 <v-select v-model="supplier" :options="suppliers" @input="setSelected" />
               </div>
             </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="invoice">Factura:</label>
+                <input
+                  id="invoice"
+                  type="text"
+                  class="form-control form-control-sm"
+                  style="width:150px;"
+                  placeholder="#0000"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ncf">NCF:</label>
+                <input
+                  id="ncf"
+                  type="text"
+                  class="form-control form-control-sm"
+                  style="width:250px;"
+                  placeholder="#0000"
+                />
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="purchaseOrder">Orden de compra:</label>
+                <input
+                  id="purchaseOrder"
+                  type="text"
+                  class="form-control form-control-sm"
+                  style="width:150px;"
+                />
+              </div>
+            </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="orderDate">Fecha de pedido:</label>
+                <label for="invoiceDate">Fecha fact:</label>
                 <datepicker
+                  style="width:300px;"
                   v-model="orderDate"
                   class="form-control form-control-sm"
                   :format="'yyyy-MM-dd'"
-                  name="orderDate"
+                  name="invoiceDate"
                 />
               </div>
             </div>
             <div class="col-md-4">
-              <div class="form-group">
-                <label for="paymentDate">Fecha de pago:</label>
-                <datepicker
-                  v-model="paymentDate"
-                  class="form-control form-control-sm"
-                  :format="'yyyy-MM-dd'"
-                  name="paymentDate"
-                />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="supplierData">Datos provedor:</label>
-                <textarea
-                  v-model="supplierData"
-                  class="form-control form-control-sm"
-                  name="supplierData"
-                  id="supplierData"
-                  rows="3"
-                />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="note">Nota:</label>
-                <textarea
-                  v-model="note"
-                  class="form-control form-control-sm"
-                  name="note"
-                  id="note"
-                  rows="3"
-                />
-              </div>
+              <select-term />
             </div>
             <div class="col-md-12">
-              <general-table :hover="true" style="height:380px;">
+              <general-table :hover="true" :responsive="false">
                 <template slot="table-header">
                   <tr>
                     <th>Producto</th>
@@ -96,7 +100,7 @@
                 </template>
               </general-table>
             </div>
-            <div class="col-md-12" style="margin-top: 15px">
+            <div class="col-md-12" style="margin-top: 30px">
               <estimate-total :subTotal="10000" />
             </div>
           </div>
@@ -114,10 +118,18 @@ import vSelect from "vue-select";
 import itemBody from "./itemBody";
 import EstimateTotal from "../estimate/Estimatetotal";
 import "vue-select/dist/vue-select.css";
+import selectTerm from "../terms/selectTerm";
 Vue.component("v-select", vSelect);
 export default {
   name: "purchase-record",
-  components: { cardPanel, Datepicker, generalTable, itemBody, EstimateTotal },
+  components: {
+    cardPanel,
+    Datepicker,
+    generalTable,
+    itemBody,
+    EstimateTotal,
+    selectTerm
+  },
   data() {
     return {
       supplierList: [],

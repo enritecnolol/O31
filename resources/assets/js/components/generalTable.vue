@@ -1,5 +1,5 @@
 <template>
-  <div class="table-responsive">
+  <div :class="responsive ? 'table-responsive' : ''">
     <table
       class="table table-sm"
       :class="[hover ? 'table-hover' : '', bordered ? 'table-bordered':'']"
@@ -40,6 +40,10 @@ export default {
     bordered: {
       type: Boolean,
       default: false
+    },
+    responsive: {
+      type: Boolean,
+      default: true
     }
   },
   components: {},

@@ -115860,6 +115860,10 @@ Vue.component("pagination", __webpack_require__(13));
     bordered: {
       type: Boolean,
       default: false
+    },
+    responsive: {
+      type: Boolean,
+      default: true
     }
   },
   components: {},
@@ -115884,7 +115888,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "table-responsive" },
+    { class: _vm.responsive ? "table-responsive" : "" },
     [
       _c(
         "table",
@@ -131913,6 +131917,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__estimate_Estimatetotal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__estimate_Estimatetotal__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_select_dist_vue_select_css__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_select_dist_vue_select_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vue_select_dist_vue_select_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__terms_selectTerm__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__terms_selectTerm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__terms_selectTerm__);
 //
 //
 //
@@ -132021,6 +132027,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
@@ -132032,7 +132043,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Vue.component("v-select", __WEBPACK_IMPORTED_MODULE_3_vue_select___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "purchase-record",
-  components: { cardPanel: __WEBPACK_IMPORTED_MODULE_0__cardPanel___default.a, Datepicker: __WEBPACK_IMPORTED_MODULE_2_vuejs_datepicker__["a" /* default */], generalTable: __WEBPACK_IMPORTED_MODULE_1__generalTable___default.a, itemBody: __WEBPACK_IMPORTED_MODULE_4__itemBody___default.a, EstimateTotal: __WEBPACK_IMPORTED_MODULE_5__estimate_Estimatetotal___default.a },
+  components: {
+    cardPanel: __WEBPACK_IMPORTED_MODULE_0__cardPanel___default.a,
+    Datepicker: __WEBPACK_IMPORTED_MODULE_2_vuejs_datepicker__["a" /* default */],
+    generalTable: __WEBPACK_IMPORTED_MODULE_1__generalTable___default.a,
+    itemBody: __WEBPACK_IMPORTED_MODULE_4__itemBody___default.a,
+    EstimateTotal: __WEBPACK_IMPORTED_MODULE_5__estimate_Estimatetotal___default.a,
+    selectTerm: __WEBPACK_IMPORTED_MODULE_7__terms_selectTerm___default.a
+  },
   data: function data() {
     return {
       supplierList: [],
@@ -132144,7 +132162,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -132166,7 +132184,7 @@ var render = function() {
           _c("div", { staticClass: "container-fluid" }, [
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-md-12" }, [
-                _c("h4", [_vm._v("orden de compra")]),
+                _c("h4", [_vm._v("Orden de compra")]),
                 _vm._v(" "),
                 _c("hr")
               ]),
@@ -132181,7 +132199,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("input", {
                         staticClass: "form-control form-control-sm",
-                        staticStyle: { width: "100px" },
+                        staticStyle: { width: "130px" },
                         attrs: { type: "text", placeholder: "#0000" }
                       })
                     ])
@@ -132214,18 +132232,59 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "invoice" } }, [
+                    _vm._v("Factura:")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control form-control-sm",
+                    staticStyle: { width: "150px" },
+                    attrs: { id: "invoice", type: "text", placeholder: "#0000" }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "ncf" } }, [_vm._v("NCF:")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control form-control-sm",
+                    staticStyle: { width: "250px" },
+                    attrs: { id: "ncf", type: "text", placeholder: "#0000" }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "purchaseOrder" } }, [
+                    _vm._v("Orden de compra:")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control form-control-sm",
+                    staticStyle: { width: "150px" },
+                    attrs: { id: "purchaseOrder", type: "text" }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
               _c("div", { staticClass: "col-md-4" }, [
                 _c(
                   "div",
                   { staticClass: "form-group" },
                   [
-                    _c("label", { attrs: { for: "orderDate" } }, [
-                      _vm._v("Fecha de pedido:")
+                    _c("label", { attrs: { for: "invoiceDate" } }, [
+                      _vm._v("Fecha fact:")
                     ]),
                     _vm._v(" "),
                     _c("datepicker", {
                       staticClass: "form-control form-control-sm",
-                      attrs: { format: "yyyy-MM-dd", name: "orderDate" },
+                      staticStyle: { width: "300px" },
+                      attrs: { format: "yyyy-MM-dd", name: "invoiceDate" },
                       model: {
                         value: _vm.orderDate,
                         callback: function($$v) {
@@ -132239,92 +132298,7 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-4" }, [
-                _c(
-                  "div",
-                  { staticClass: "form-group" },
-                  [
-                    _c("label", { attrs: { for: "paymentDate" } }, [
-                      _vm._v("Fecha de pago:")
-                    ]),
-                    _vm._v(" "),
-                    _c("datepicker", {
-                      staticClass: "form-control form-control-sm",
-                      attrs: { format: "yyyy-MM-dd", name: "paymentDate" },
-                      model: {
-                        value: _vm.paymentDate,
-                        callback: function($$v) {
-                          _vm.paymentDate = $$v
-                        },
-                        expression: "paymentDate"
-                      }
-                    })
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "supplierData" } }, [
-                    _vm._v("Datos provedor:")
-                  ]),
-                  _vm._v(" "),
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.supplierData,
-                        expression: "supplierData"
-                      }
-                    ],
-                    staticClass: "form-control form-control-sm",
-                    attrs: {
-                      name: "supplierData",
-                      id: "supplierData",
-                      rows: "3"
-                    },
-                    domProps: { value: _vm.supplierData },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.supplierData = $event.target.value
-                      }
-                    }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "note" } }, [_vm._v("Nota:")]),
-                  _vm._v(" "),
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.note,
-                        expression: "note"
-                      }
-                    ],
-                    staticClass: "form-control form-control-sm",
-                    attrs: { name: "note", id: "note", rows: "3" },
-                    domProps: { value: _vm.note },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.note = $event.target.value
-                      }
-                    }
-                  })
-                ])
-              ]),
+              _c("div", { staticClass: "col-md-4" }, [_c("select-term")], 1),
               _vm._v(" "),
               _c(
                 "div",
@@ -132332,10 +132306,7 @@ var render = function() {
                 [
                   _c(
                     "general-table",
-                    {
-                      staticStyle: { height: "380px" },
-                      attrs: { hover: true }
-                    },
+                    { attrs: { hover: true, responsive: false } },
                     [
                       _c("template", { slot: "table-header" }, [
                         _c("tr", [
@@ -132383,7 +132354,7 @@ var render = function() {
                 "div",
                 {
                   staticClass: "col-md-12",
-                  staticStyle: { "margin-top": "15px" }
+                  staticStyle: { "margin-top": "30px" }
                 },
                 [_c("estimate-total", { attrs: { subTotal: 10000 } })],
                 1
