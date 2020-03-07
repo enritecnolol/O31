@@ -17,7 +17,7 @@ class ComprobantesController extends Controller
     }
     public function store(Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
         try{
 
             if ($request->id != 0)
@@ -60,10 +60,10 @@ class ComprobantesController extends Controller
                 $detalle->save();
             }
 
-            DB::commit();
+            DB::connection('client')->commit();
             return 'bien';
         }catch (\Exception $e){
-            DB::rollBack();
+            DB::connection('client')->rollBack();
             return $e;
         }
 

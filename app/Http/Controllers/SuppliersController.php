@@ -16,7 +16,7 @@ class SuppliersController extends Controller
 
     public function store(Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
         try{
 
             $supplier = new Supplier();
@@ -28,18 +28,18 @@ class SuppliersController extends Controller
             $supplier->observation = $request->observation;
             $supplier->save();
 
-            DB::commit();
+            DB::connection('client')->commit();
             return response()->json(['message' => 'El provedor ha sido guardado correctamente'], 200);
         }catch (\Exception $e)
         {
-            DB::rollback();
+            DB::connection('client')->rollback();
             return response()->json($e, 400);
         }
     }
 
     public function edit(Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
         try{
 
             $supplier = Supplier::find($request->id);
@@ -51,11 +51,11 @@ class SuppliersController extends Controller
             $supplier->observation = $request->observation;
             $supplier->update();
 
-            DB::commit();
+            DB::connection('client')->commit();
             return response()->json(['message' => 'El provedor ha sido modificado correctamente'], 200);
         }catch (\Exception $e)
         {
-            DB::rollback();
+            DB::connection('client')->rollback();
             return response()->json($e, 400);
         }
     }

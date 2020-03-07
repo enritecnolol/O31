@@ -138,11 +138,12 @@
                             fechahasta: _this.fechahasta,
                             porciento: _this.porciento,
                         })
-                            .then(function(response){
+                            .then((response) =>{
+                                var _this = this
 
                                 if (response['data'] == 'guardado'){
                                     toastr.success('Se ha guardado con exito')
-
+                                    _this.datotabla = ''; _this.descripcion = ''; _this.identificador = '';
                                 }if (response['data'] == 'fecha ingresada se encuentra en un rango ya utilizado'){
                                     toastr.warning('fecha ingresada se encuentra en un rango ya utilizado');
                                 }if (response['data'] == 'fecha fin no puedes estar antes de la fecha inicial'){

@@ -26,7 +26,7 @@ class EstimatesController extends Controller
 
     public function confirmationEstimateDB (Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
 
         $clientDatabase = Client_database::where("auth_id", $request->auth)->first();
 
@@ -40,11 +40,11 @@ class EstimatesController extends Controller
             $estimate->confirmation_at = date('Y-m-d H:i');
             $estimate->update();
 
-            DB::commit();
+            DB::connection('client')->commit();
             return 'success';
 
         }catch (\Exception $e){
-            DB::rollBack();
+            DB::connection('client')->rollBack();
             return 'error';
         }
     }
@@ -98,7 +98,7 @@ class EstimatesController extends Controller
 
     public function store(Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
 
         if (count(DB::connection('client')->table('estimates')->where('estimatenumber', $request->estimateNumber)->get()) != 0)
         {
@@ -158,12 +158,12 @@ class EstimatesController extends Controller
                 });
             }
 
-            DB::commit();
+            DB::connection('client')->commit();
 
             return 'success';
         }catch (\Exception $e)
         {
-            DB::rollBack();
+            DB::connection('client')->rollBack();
             return $e;
         }
 
@@ -171,7 +171,7 @@ class EstimatesController extends Controller
 
     public function edit(Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
 
         try {
             $estimateDetailDBId = array();
@@ -259,12 +259,12 @@ class EstimatesController extends Controller
                 });
             }
 
-            DB::commit();
+            DB::connection('client')->commit();
 
             return 'success';
         }catch (\Exception $e)
         {
-            DB::rollBack();
+            DB::connection('client')->rollBack();
             return $e;
         }
 

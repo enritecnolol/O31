@@ -91,7 +91,7 @@ WHERE factures.id = 217 GROUP BY details.id
     }
     public function store(Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
         try{
             $idcaja = Caja::all();
             $userid = Auth::id();
@@ -199,12 +199,12 @@ WHERE factures.id = 217 GROUP BY details.id
 
             }
             $compania = Configuracion::all();
-            DB::commit();
+            DB::connection('client')->commit();
             return [$compania, $TotalDevolucion, date('d-m-Y'), $iddevolucion->last()->id, $nfc, $aviso];
 
         }catch (\Exception $exception)
         {
-            DB::rollBack();
+            DB::connection('client')->rollBack();
             return response()->json($exception, 400);
         }
 

@@ -25,7 +25,7 @@ class BillingsController extends Controller
     }
     public function store(Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
         try{
             $idcaja = Caja::all();
             $facture = new Facture();
@@ -130,18 +130,18 @@ class BillingsController extends Controller
                 });
             }
 
-            DB::commit();
+            DB::connection('client')->commit();
             return ['message' => 'success', 'notification' => $aviso, 'ncfDueDate' => $NFCDueDate, 'send' => $request->send];
         }catch (\Exception $e)
         {
-            DB::rollBack();
+            DB::connection('client')->rollBack();
             return response()->json($e, 400);
         }
 
     }
     public function edit(Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
 
         try {
             $invoicesItemsDBId = array();
@@ -236,12 +236,12 @@ class BillingsController extends Controller
                 });
             }
 
-            DB::commit();
+            DB::connection('client')->commit();
 
             return 'success';
         }catch (\Exception $e)
         {
-            DB::rollBack();
+            DB::connection('client')->rollBack();
             return $e;
         }
     }

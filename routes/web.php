@@ -322,6 +322,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/supplier/list/select', 'SuppliersController@supplierListSelect');
     /*=================================\- Ordenes de compras -/======================================================*/
     Route::get('/purchase/orders', 'purchaseOrdersController@index');
+    /*=================================\- compras -/======================================================*/
+    Route::post('/purchase', 'PurchasesController@store');
+    Route::get('/purchase/list', 'PurchasesController@listPaginate');
+    Route::get('/purchase/fetch', 'PurchasesController@getData');
 });
 
 Auth::routes();

@@ -122,7 +122,7 @@ class IndexController extends Controller
      */
     public function store(Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
         try{
 
             $idcaja = Caja::all();
@@ -250,11 +250,11 @@ class IndexController extends Controller
                     }
                 }
             }
-            DB::commit();
+            DB::connection('client')->commit();
             return ['bien', $nfc, $idfacture[0]->id, $aviso, $NFCDueDate];
 
         }catch (\Exception $e){
-            DB::rollBack();
+            DB::connection('client')->rollBack();
             return $e;
         }
     }
