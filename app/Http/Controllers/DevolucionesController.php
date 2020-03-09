@@ -38,7 +38,7 @@ class DevolucionesController extends Controller
        details.descuento,
        details.quanlity - IFNULL((select sum(quanlity)
                                   from detalle_devolucions
-                                  where devolucion_id in (select id from devolucions where factura_id = 705)
+                                  where devolucion_id in (select id from devolucions where factura_id = factures.id)
                                     and product_id = details.product_id), 0) AS quanlity,
        details.price - IFNULL((select sum(price)
                                   from detalle_devolucions
