@@ -90,7 +90,7 @@
                       <td>{{item.date_payment}}</td>
                       <td style="text-align: right">{{parseFloat(item.amount).formatMoney(2)}}</td>
                       <td>{{item.payment_method}}</td>
-                      <td style="text-align: center"><i class="fas fa-trash"  style="font-size: 22px;color: red" @click="deletePayment(item)"/></td>
+                      <td style="text-align: center"><i class="fas fa-trash"  style="font-size: 22px;color: red" @click="deletePayment(item)" v-if="data.balance !== 0"/></td>
                     </tr>
                   </template>
                 </general-table>
