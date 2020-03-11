@@ -104,6 +104,7 @@ class IndexController extends Controller
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
             ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
 //            ->where('products.user_id', Auth::id())
+            ->where('estado', true)
             ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
 
 //        foreach($productos as $producto)
