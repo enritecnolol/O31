@@ -223,6 +223,7 @@ export default {
       this.ncf = this.editData.ncf;
       this.invoiceDate = this.editData.invoice_date;
       this.term = this.editData.term_id;
+      this.kindPurchase = this.editData.kind_purchase;
       this.items = this.detailsFormat(this.editData.details);
     },
     loadingStatus(val) {
@@ -268,7 +269,7 @@ export default {
       let url = this.editData ? '/purchase/edit' : '/purchase';
       axios
         .post(url, {
-          id:this.editData.id,
+          id:this.editData ? this.editData.id : '',
           document_no: this.documentNo,
           supplier_id: this.supplier,
           invoice: this.invoice,

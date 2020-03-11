@@ -94,10 +94,10 @@
                     {{--</li>--}}
                 {{--</ul>--}}
             {{--</li>--}}
-            {{--<li>--}}
-                {{--<a href="/control/inventario">--}}
-                    {{--<i class="fas fa-boxes"></i><strong>CONTROL DE INVENTARIO</strong></a>--}}
-            {{--</li>--}}
+            <li>
+                <a href="/control/inventario">
+                    <i class="fas fa-boxes"></i><strong>CONTROL DE INVENTARIO</strong></a>
+            </li>
             <li>
                 <a href="/reportv2">
                     <i class="fas fa-newspaper"></i><strong>REPORTES</strong></a>

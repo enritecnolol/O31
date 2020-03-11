@@ -27,13 +27,13 @@
             <supplier-form @closeForm="supplierFormStatus(false)" :editData="editData" />
           </div>
           <div class="col-md-12" v-else>
-            <general-table :paginate="supplier" :hover="true" :bordered="true">
+            <general-table :paginate="supplier" :hover="true">
               <template slot="table-header">
                 <tr>
                   <th>Nombre</th>
-                  <th>Rnc</th>
                   <th>Contacto</th>
                   <th>Telefono</th>
+                  <th>Balance</th>
                   <th />
                 </tr>
               </template>
@@ -53,14 +53,20 @@
                   </td>
                 </tr>
                 <tr v-for="(item, index) in supplier.data" :key="index">
-                  <td>{{item.name}}</td>
-                  <td>{{item.rnc}}</td>
+                  <td @click="supplierDetails(item)" style="cursor: pointer">{{item.name}}</td>
                   <td>{{item.contact}}</td>
                   <td>{{item.phone}}</td>
+                  <td>RD${{parseFloat(item.balance).formatMoney(2)}}</td>
                   <td>
-                    <button class="btn btn-sm btn-warning" @click="DataToEdit(item)">
-                      <i class="fas fa-edit"></i>
-                    </button>
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-link" @click="DataToEdit(item)">Editar</button>
+                      <button type="button" class="btn btn-sm btn-light dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                      </button>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" onclick="return false;">Crear compra</a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
               </template>
@@ -87,6 +93,10 @@ export default {
     };
   },
   methods: {
+    supplierDetails(item)
+    {
+      window.location.href = '/supplier/details?supplier='+item.id;
+    },
     supplierFormStatus(val) {
       this.supplierForm = val;
       if (!val) {

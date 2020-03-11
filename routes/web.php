@@ -320,12 +320,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/supplier/edit', 'SuppliersController@edit');
     Route::get('/supplier/list', 'SuppliersController@supplierList');
     Route::get('/supplier/list/select', 'SuppliersController@supplierListSelect');
+    Route::get('/supplier/details', 'SuppliersController@indexSupplierDetails');
+    Route::get('/supplier/details/get', 'SuppliersController@supplierDetailsData');
     /*=================================\- Ordenes de compras -/======================================================*/
     Route::get('/purchase/orders', 'purchaseOrdersController@index');
     /*=================================\- compras -/======================================================*/
     Route::post('/purchase', 'PurchasesController@store');
+    Route::post('/purchase/edit', 'PurchasesController@edit');
     Route::get('/purchase/list', 'PurchasesController@listPaginate');
     Route::get('/purchase/fetch', 'PurchasesController@getData');
+    /*=================================\- pago de compra -/======================================================*/
+    Route::get('/purchase/payment', 'PurchasesController@purchasePaymentIndex');
+    Route::post('/purchase/payment', 'PurchasesController@purchasePaymentStore');
+    Route::delete('/purchase/payment', 'PurchasesController@purchasePaymentDelete');
+    Route::get('/purchase/data', 'PurchasesController@purchasePaymentData');
 });
 
 Auth::routes();

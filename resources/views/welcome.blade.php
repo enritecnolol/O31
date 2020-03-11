@@ -1009,7 +1009,7 @@
                             _this.loading = true
                             $.ajax({
                                 url: '/facturacioncar',
-                                method: 'GET',
+                                method: 'POST',
                                 data: {
                                     setting:this.setting,
                                     tiponfc:this.tiponfc,
@@ -1059,6 +1059,7 @@
                                             toastr.info(dato[3], "Aviso");
                                         }
                                         $('#pagofactura').modal('show');
+                                        this.productosindex()
                                     }
                                 },
                                 error:() => {
@@ -1082,36 +1083,32 @@
                         }
                         _this = this;
                         _this.loading = true;
-                        $.ajax({
-                            url: '/facturacioncar',
-                            method: 'GET',
-                            data: {
-                                setting:this.setting,
-                                tiponfc:this.tiponfc,
-                                datancf:this.datancf,
-                                existencias: this.existenciarep,
-                                puntos:this.puntosagenerar,
-                                cliente:this.clientedatos.id,
-                                devuelta:this.devuelta,
-                                preciop:this.neto,
-                                tipop:this.campotipop,
-                                banco:this.banco,
-                                auth: this.auth,
-                                bruto:this.bruto,
-                                itbis:this.algoitbis,
-                                neto:this.neto,
-                                leycamarero:this.leycamarero,
-                                descuento:this.totaldescuento,
-                                tipotarjeta: this.tipotarjeta,
-                                Numtarjeta: this.Numtarjeta,
-                                montotarjeta:this.montotarjeta,
-                                dinero:this.campodinero,
-                                detalle: this.list
-                            },
-                            success: (dato) => {
-                                var _this = this;
-                                _this.loading = false;
-                                console.log(' 3 '+dato[1])
+                        axios.post('/facturacioncar', {
+                            setting:this.setting,
+                            tiponfc:this.tiponfc,
+                            datancf:this.datancf,
+                            existencias: this.existenciarep,
+                            puntos:this.puntosagenerar,
+                            cliente:this.clientedatos.id,
+                            devuelta:this.devuelta,
+                            preciop:this.neto,
+                            tipop:this.campotipop,
+                            banco:this.banco,
+                            auth: this.auth,
+                            bruto:this.bruto,
+                            itbis:this.algoitbis,
+                            neto:this.neto,
+                            leycamarero:this.leycamarero,
+                            descuento:this.totaldescuento,
+                            tipotarjeta: this.tipotarjeta,
+                            Numtarjeta: this.Numtarjeta,
+                            montotarjeta:this.montotarjeta,
+                            dinero:this.campodinero,
+                            detalle: this.list
+                        })
+                            .then( (response) => {
+                                this.loading = false;
+                                let dato = response['data'];
                                 if  (dato == "No es posible hacer la factura por falta de Comprobantes")
                                 {
                                     toastr.warning(dato, "validador");
@@ -1124,24 +1121,22 @@
                                     this.rncdevf = dato[1];
                                     this.rncDueDate= dato[4];
                                     this.lastid = dato[2];
+                                    if  (dato[3] != "")
+                                    {
+                                        toastr.info(dato[3], "Aviso");
+                                    }
+                                    this.productosindex()
                                     if  (this.facturaimp === false){
                                         this.reset();
                                         // setTimeout('document.location.reload()',1000);
                                         return;
                                     }
-                                    if  (dato[3] != "")
-                                    {
-                                        toastr.info(dato[3], "Aviso");
-                                    }
                                     $('#pagofactura').modal('show');
                                 }
-                            },
-                            error: () => {
+                            })
+                            .catch( (error) => {
                                 _this.loading = false;
-                                toastr.error('A ocurrido un error al realizar la venta');
-                            }
-
-                        });
+                            });
 
                     }
                     else{
@@ -1169,7 +1164,7 @@
                                 _this.loading = true;
                                 $.ajax({
                                     url: '/facturacioncar',
-                                    method: 'GET',
+                                    method: 'POST',
                                     data: {
                                         setting:this.setting,
                                         tiponfc:this.tiponfc,
@@ -1212,6 +1207,7 @@
                                             this.lastid = dato[2];
                                             if  (this.facturaimp === false){
                                                 this.reset();
+                                                this.productosindex()
                                                 // setTimeout('document.location.reload()',1000);
                                                 return;
                                             }
@@ -1220,6 +1216,7 @@
                                                 toastr.info(dato[3], "Aviso");
                                             }
                                             $('#pagofactura').modal('show');
+
                                         }
                                     },
                                     error: () => {
@@ -1280,14 +1277,15 @@
                                     this.rncdevf = dato[1];
                                     this.rncDueDate= dato[4];
                                     this.lastid = dato[2];
+                                    if  (dato[3] != "")
+                                    {
+                                        toastr.info(dato[3], "Aviso");
+                                    }
+                                    this.productosindex();
                                     if  (this.facturaimp === false){
                                         this.reset();
                                         // setTimeout('document.location.reload()',1000);
                                         return;
-                                    }
-                                    if  (dato[3] != "")
-                                    {
-                                        toastr.info(dato[3], "Aviso");
                                     }
                                     $('#pagofactura').modal('show');
                                 }

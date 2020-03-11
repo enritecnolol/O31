@@ -54,11 +54,10 @@
                   <i class="fas fa-list" />
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" onclick="return false;" href="#">Preview</a>
-                  <a class="dropdown-item" onclick="return false;" href="#" @click="editData(item)">Editar</a>
-                  <a class="dropdown-item" onclick="return false;" href="#">Realizar pago</a>
-                  <a class="dropdown-item" onclick="return false;" href="#">Historial de pago</a>
-                  <a class="dropdown-item" onclick="return false;" href="#">Anular</a>
+<!--                  <a class="dropdown-item disabled" onclick="return false;" href="#">Preview</a>-->
+<!--                  <a class="dropdown-item disabled" onclick="return false;" href="#" @click="editData(item)">Editar</a>-->
+                  <a class="dropdown-item" onclick="return false;" href="#" @click="purchasePayment(item.id)">Realizar pago</a>
+                  <a class="dropdown-item" onclick="return false;" @click="purchasePayment(item.id)" href="#">Historial de pago</a>
                 </div>
               </div>
             </td>
@@ -81,6 +80,10 @@ export default {
     };
   },
   methods: {
+    purchasePayment(id)
+    {
+      window.location.href = '/purchase/payment?purchase='+id;
+    },
     editData(item)
     {
       this.$emit("editPurchase", item);

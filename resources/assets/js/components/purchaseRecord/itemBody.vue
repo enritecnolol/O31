@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td style="width:30%;">
-      <v-select :max-height="'200px'" v-model="item.product" :options="productsListForSelect" />
+      <v-select :max-height="'200px'" v-model="item.product" :options="productsListForSelect"  @input="setSelected"/>
     </td>
     <td style="text-align: right;width:5%;">
       <input
@@ -58,6 +58,14 @@ export default {
     };
   },
   methods: {
+    setSelected(value)
+    {
+      let found =  this.productsList.find(e => e.id === value.code);
+      if(found)
+      {
+        this.item.price = found.price
+      }
+    },
     deleteRow() {
       this.$emit("removeRow", this.index);
     }
