@@ -127689,7 +127689,7 @@ var render = function() {
                                       [_vm._v("Cantidad")]
                                     ),
                                     _vm._v(" "),
-                                    _c("th", [_vm._v("Tipo")]),
+                                    _c("th", [_vm._v("Tipo de pago")]),
                                     _vm._v(" "),
                                     _c(
                                       "th",
@@ -127708,7 +127708,7 @@ var render = function() {
                                     item,
                                     index
                                   ) {
-                                    return _c("tr", [
+                                    return _c("tr", { key: index }, [
                                       _c("td", [
                                         _vm._v(_vm._s(item.date_payment))
                                       ]),

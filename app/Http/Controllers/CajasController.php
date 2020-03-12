@@ -209,18 +209,21 @@ class   CajasController extends Controller
             $ventasmes = number_format($ventasmes[0]->total);
         }
 
-        $data = array(
-            'fecha'=> $caja->fecha_apertura,
-            'totalvendido' => $totaldias,
-            'totalgastos' => $totalgasto,
-            'totaldevolucion' => $totaldevolucion,
-            'totalmes' => $ventasmes,
-            'compania' => $configs[0],
-        );
+        if($email)
+        {
+            $data = array(
+                'fecha'=> $caja->fecha_apertura,
+                'totalvendido' => $totaldias,
+                'totalgastos' => $totalgasto,
+                'totaldevolucion' => $totaldevolucion,
+                'totalmes' => $ventasmes,
+                'compania' => $configs[0],
+            );
 
-        Mail::send('emails.resumendia', $data, function ($message) use ($email){
-            $message->to($email)->subject(' CoffeBreakPOS | Resumen del Dia');
-        });
+            Mail::send('emails.resumendia', $data, function ($message) use ($email){
+                $message->to($email)->subject(' CoffeBreakPOS | Resumen del Dia');
+            });
+        }
 
         return 'Actualizado';
 

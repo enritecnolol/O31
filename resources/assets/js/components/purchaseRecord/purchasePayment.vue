@@ -81,12 +81,12 @@
                     <tr>
                       <th>Fecha</th>
                       <th style="text-align: right">Cantidad</th>
-                      <th>Tipo</th>
+                      <th>Tipo de pago</th>
                       <th style="text-align: center">Acciones</th>
                     </tr>
                   </template>
                   <template slot="table-body">
-                    <tr v-for="(item, index) in data.payments">
+                    <tr v-for="(item, index) in data.payments" :key="index">
                       <td>{{item.date_payment}}</td>
                       <td style="text-align: right">{{parseFloat(item.amount).formatMoney(2)}}</td>
                       <td>{{item.payment_method}}</td>

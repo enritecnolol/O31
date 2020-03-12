@@ -118,7 +118,7 @@ WHERE factures.id = 217 GROUP BY details.id
 
             foreach ($request->get('detalle_devolucion') as $d)
             {
-                $TotalDevolucion = $TotalDevolucion + ($d['price'] * $d['cantidad']);
+                $TotalDevolucion = $TotalDevolucion + $d['price'];
                 $bruto = $bruto + $d['bruto'];
                 $itbis = $itbis + $d['itbis'];
             }
@@ -203,6 +203,7 @@ WHERE factures.id = 217 GROUP BY details.id
                 {
                     $existencia = $existencia->controlinv;
                 }
+
                 if ($existencia == 'si')
                 {
                     $product = Product::find($d['product_id']);

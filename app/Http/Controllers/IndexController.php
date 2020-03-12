@@ -256,7 +256,7 @@ class IndexController extends Controller
 
         }catch (\Exception $e){
             DB::connection('client')->rollBack();
-            return $e;
+            return response()->json($e, 400);
         }
     }
     public function prueba()
