@@ -49,7 +49,7 @@
                                 <td style="font-size: 14px;width: 4%;color: #000;text-align: center">
                                     @{{ item.cantidad }}
                                 </td>
-                                <td style="font-size: 14px;width: 4%;color: #000;text-align: right">@{{ format2(item.bruto == 0 ? item.price : item.bruto, '') }}</td>
+                                <td style="font-size: 14px;width: 4%;color: #000;text-align: right">@{{ format2(item.bruto == 0 ? item.price/item.cantidad : item.bruto, '') }}</td>
                                 <td style="font-size: 14px;width: 4%;color: #000;text-align: right">@{{ format2(item.itbis, '') }}</td>
                                 <td style="font-size: 14px;width: 10%;color: #000;text-align: right">@{{ format2(item.price, '') }}</td>
                             </tr>
