@@ -29,7 +29,7 @@ export default {
     fetchData() {
       this.loading = true;
       axios
-        .get("/supplier/list")
+        .get("/supplier/list/select")
         .then(response => {
           this.suppliers = response.data;
         })

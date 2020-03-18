@@ -76,21 +76,7 @@ WHERE factures.id = $request->id;");
 
         ];
     }
-    /*
-     *
-     *
-     * SELECT factures.id, details.id, details.date, details.name_product, details.descuento,
-details.quanlity - IFNULL(SUM(detalle_devolucions.quanlity),0) AS cantidad,
-details.price - IFNULL(SUM(detalle_devolucions.price),0) AS precio,
-details.depot - IFNULL(SUM(detalle_devolucions.itbis),0) AS itbis,
-details.impost - IFNULL(SUM(detalle_devolucions.bruto),0) AS bruto,
-details.product_id
-FROM factures
-INNER JOIN details on details.facture_id = factures.id
-LEFT JOIN devolucions ON devolucions.factura_id = factures.id
-LEFT JOIN detalle_devolucions ON detalle_devolucions.devolucion_id = devolucions.id  AND details.product_id = detalle_devolucions.product_id
-WHERE factures.id = 217 GROUP BY details.id
-     * */
+
     public function buscandoproductos(Request $request)
     {
         $producto = DB::connection('client')->table('products')
@@ -222,5 +208,14 @@ WHERE factures.id = 217 GROUP BY details.id
             return response()->json($exception, 400);
         }
 
+    }
+
+    public function ReturnsList($size = 10)
+    {
+        $query = DB::connection('client')
+        ->table('devolucions')
+        ->orderBY('id', 'desc');
+
+        return $query->paginate($size);
     }
 }

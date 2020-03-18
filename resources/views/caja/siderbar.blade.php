@@ -75,28 +75,21 @@
                     </li>
                 </ul>
             </li>
-            {{--<li class="has-sub">--}}
-                {{--<a class="js-arrow" href="#">--}}
-                    {{--<i class="fas fa-minus"></i><strong>GASTOS Y COMPRAS</strong>--}}
-                    {{--<span class="arrow">--}}
-                        {{--<i class="fas fa-angle-down"></i>--}}
-                    {{--</span>--}}
-                {{--</a>--}}
-                {{--<ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">--}}
-                    {{--<li>--}}
-                        {{--<a style="padding-left: 90px" href="/provedores">PROVEDORES</a>--}}
-                    {{--</li>--}}
-                    {{--<li>--}}
-                        {{--<a style="padding-left: 90px" href="/entrada/comprobante">ENTRADA DE COMBROBANTE</a>--}}
-                    {{--</li>--}}
-                    {{--<li>--}}
-                        {{--<a style="padding-left: 90px" href="/pago/entrada/comprobante">PAGO DE COMPROBANTE</a>--}}
-                    {{--</li>--}}
-                {{--</ul>--}}
-            {{--</li>--}}
-            <li>
-                <a href="/control/inventario">
-                    <i class="fas fa-boxes"></i><strong>CONTROL DE INVENTARIO</strong></a>
+            <li class="has-sub">
+                <a class="js-arrow" href="#">
+                    <i class="fas fa-boxes"></i><strong>COMPRAS</strong>
+                    <span class="arrow">
+                        <i class="fas fa-angle-down"></i>
+                    </span>
+                </a>
+                <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">
+                    <li>
+                        <a style="padding-left: 90px" href="/control/inventario">COMPRA</a>
+                    </li>
+                    <li>
+                        <a style="padding-left: 90px" href="/purchase/return">DEVOLUCIÓN DE COMPRA</a>
+                    </li>
+                </ul>
             </li>
             <li>
                 <a href="/reportv2">

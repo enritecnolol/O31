@@ -167,6 +167,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/devolucion/buscar/factura','DevolucionesController@buscarfactura');
     Route::post('/devolucion/buscando/producto','DevolucionesController@buscandoproductos');
     Route::post('/devolucion/store','DevolucionesController@store');
+    Route::get('/devolucion/list','DevolucionesController@ReturnsList');
+
 
     /*=================================\- Provedores -/======================================================*/
     Route::get('/provedores', 'ProvedoresController@index');
@@ -266,6 +268,7 @@ Route::group(['middleware' => 'auth'], function () {
 //    Route::get('/estimate/resend', 'EstimatesController@resendEstimate');
     Route::post('/estimate/edit', 'EstimatesController@edit');
     Route::get('/estimate/find', 'EstimatesController@getEstimateData');
+    Route::get('/estimate/duplicate', 'EstimatesController@duplicateEstimate');
     /*=================================\- Facturacion -/======================================================*/
     Route::get('/billing', 'BillingsController@index');
     Route::post('/invoice', 'BillingsController@store');
@@ -276,6 +279,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/invoice/print', 'BillingsController@printInvoice');
     Route::get('/invoice/resent', 'BillingsController@ResentInvoice');
     Route::get('/invoices/last', 'BillingsController@lastsInvoices');
+    Route::get('/invoices/duplicate', 'BillingsController@duplicateInvoice');
+    Route::get('/invoices/history', 'BillingsController@invoiceHistoryindex');
     /*=================================\- Pago de factura -/======================================================*/
     Route::get('/invoice/payment', 'BillingsController@PaymentIndex');
     /*=================================\- Clientes de facturacion -/======================================================*/
@@ -329,11 +334,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/purchase/edit', 'PurchasesController@edit');
     Route::get('/purchase/list', 'PurchasesController@listPaginate');
     Route::get('/purchase/fetch', 'PurchasesController@getData');
+    Route::get('/purchase/cancel', 'PurchasesController@cancelPurchase');
+    Route::get('/purchase/print', 'PurchasesController@printPurchase');
     /*=================================\- pago de compra -/======================================================*/
     Route::get('/purchase/payment', 'PurchasesController@purchasePaymentIndex');
     Route::post('/purchase/payment', 'PurchasesController@purchasePaymentStore');
     Route::delete('/purchase/payment', 'PurchasesController@purchasePaymentDelete');
     Route::get('/purchase/data', 'PurchasesController@purchasePaymentData');
+    /*=================================\- devolucion de compra -/======================================================*/
+    Route::get('/purchase/return', 'ReturnPurchasesController@index');
+    Route::get('/purchase/data/return', 'ReturnPurchasesController@purchaseReturnData');
+    Route::get('/purchase/return/list', 'ReturnPurchasesController@getListPaginate');
+    Route::post('/purchase/return', 'ReturnPurchasesController@store');
+    Route::get('/purchase/return/print', 'ReturnPurchasesController@printPurchaseReturn');
 });
 
 Auth::routes();

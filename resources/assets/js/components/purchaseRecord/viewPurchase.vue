@@ -41,11 +41,11 @@
             <td style="text-align: right;">RD${{parseFloat(item.balance).formatMoney(2)}}</td>
             <td style="text-align: center">
               <span
-                :style="{
+                  :style="{
                 color:spanColor(item.payment_status).color,
                 background:spanColor(item.payment_status).background
               }"
-                style="font-size: 13px;padding: 5px 10px;"
+                  style="font-size: 13px;padding: 5px 10px;"
               >{{item.payment_status}}</span>
             </td>
             <td>
@@ -54,10 +54,18 @@
                   <i class="fas fa-list" />
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-<!--                  <a class="dropdown-item disabled" onclick="return false;" href="#">Preview</a>-->
-<!--                  <a class="dropdown-item disabled" onclick="return false;" href="#" @click="editData(item)">Editar</a>-->
-                  <a class="dropdown-item" onclick="return false;" href="#" @click="purchasePayment(item.id)">Realizar pago</a>
-                  <a class="dropdown-item" onclick="return false;" @click="purchasePayment(item.id)" href="#">Historial de pago</a>
+                  <a class="dropdown-item" onclick="return false;" @click="preview(item.id)" href="#">Preview</a>
+                  <a class="dropdown-item"
+                     :class="item.payment_status === 'ANULADO' ? 'disabled' : ''"
+                     onclick="return false;" href="#"
+                     @click="purchasePayment(item.id)">Realizar pago</a>
+                  <a class="dropdown-item"
+                     :class="item.payment_status === 'ANULADO' ? 'disabled' : ''"
+                     onclick="return false;"
+                     @click="purchasePayment(item.id)" href="#">Historial de pago</a>
+                  <a class="dropdown-item" :class="item.payment_status === 'ANULADO' ? 'disabled' : ''"
+                     onclick="return false;"
+                     href="#" @click="cancelPurchase(item.id)">Anular</a>
                 </div>
               </div>
             </td>
@@ -69,82 +77,108 @@
 </template>
 
 <script>
-import generalTable from "../generalTable";
-export default {
-  components: { generalTable },
-  data() {
-    return {
-      loading: false,
-      tableData: {},
-      supplierList: []
-    };
-  },
-  methods: {
-    purchasePayment(id)
-    {
-      window.location.href = '/purchase/payment?purchase='+id;
+  import generalTable from "../generalTable";
+  export default {
+    components: { generalTable },
+    data() {
+      return {
+        loading: false,
+        tableData: {},
+        supplierList: []
+      };
     },
-    editData(item)
-    {
-      this.$emit("editPurchase", item);
-    },
-    spanColor(status) {
-      if (status === "COMPLETADO") {
-        return { color: "#354930", background: "#d5eed0" };
-      } else if (status === "NO PAGADO") {
-        return { color: "#6c432e", background: "#f8edcb" };
-      } else {
-        return { color: "#1e576c", background: "#c9e3ec" };
+    methods: {
+      preview(id)
+      {
+        window.open("/purchase/print?purchase_id=" + id, "_blank");
+      },
+      cancelPurchase(id)
+      {
+        var r = confirm("Esta seguro de querer anular la compra?");
+        if (r == true) {
+          this.loading = true;
+          axios.get('/purchase/cancel', {
+            params:{
+              id:id
+            }
+          })
+              .then((response) => {
+                toastr.success(response.data.message);
+              })
+              .catch((error) => {
+                toastr.error(error.response.data.message);
+                console.log(error.response)
+              })
+              .finally(() => {
+                this.loading = false;
+              })
+        }
+      },
+      purchasePayment(id)
+      {
+        window.location.href = '/purchase/payment?purchase='+id;
+      },
+      editData(item)
+      {
+        this.$emit("editPurchase", item);
+      },
+      spanColor(status) {
+        if (status === "COMPLETADO") {
+          return { color: "#354930", background: "#d5eed0" };
+        } else if (status === "NO PAGADO") {
+          return { color: "#6c432e", background: "#f8edcb" };
+        } else {
+          return { color: "#1e576c", background: "#c9e3ec" };
+        }
+      },
+      loadingStatus(val) {
+        this.loading = val
+        this.$emit("loadingStatus", val);
+      },
+      formStatus() {
+        this.$emit("formStatus", true);
+      },
+      fetch(page) {
+        this.loadingStatus(true);
+        axios
+            .get("/purchase/list", {
+              params: {
+                page: page
+              }
+            })
+            .then(response => {
+              this.tableData = response.data;
+            })
+            .catch(err => {
+              console.log(err);
+            })
+            .finally(() => {
+              this.loadingStatus(false);
+            });
+      },
+      fetchSupplier() {
+        axios
+            .get("/supplier/list/select")
+            .then(response => {
+              this.supplierList = response.data;
+            })
+            .catch(err => {
+              console.log(err);
+            });
+      },
+      searchSupplier(id) {
+        let found = this.supplierList.find(e => e.id === id);
+        if (found) {
+          return found.name;
+        }
+        return "No found";
       }
     },
-    loadingStatus(val) {
-      this.loading = val
-      this.$emit("loadingStatus", val);
-    },
-    formStatus() {
-      this.$emit("formStatus", true);
-    },
-    fetch(page) {
-      this.loadingStatus(true);
-      axios
-        .get("/purchase/list", {
-          params: {
-            page: page
-          }
-        })
-        .then(response => {
-          this.tableData = response.data;
-        })
-        .catch(err => {
-          console.log(err);
-        })
-        .finally(() => {
-          this.loadingStatus(false);
-        });
-    },
-    fetchSupplier() {
-      axios
-        .get("/supplier/list/select")
-        .then(response => {
-          this.supplierList = response.data;
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    searchSupplier(id) {
-      let found = this.supplierList.find(e => e.id === id);
-      if (found) {
-        return found.name;
-      }
-      return "No found";
+    created() {
+      this.fetch();
+      this.fetchSupplier();
     }
-  },
-  created() {
-    this.fetch();
-    this.fetchSupplier();
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>

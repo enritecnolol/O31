@@ -7,6 +7,7 @@ use App\Product;
 use App\purchaseDetail;
 use App\PurchasePayment;
 use App\purchases;
+use App\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -220,4 +221,59 @@ class PurchasesController extends Controller
             return response()->json($exception, 400);
         }
     }
+
+    public function cancelPurchase(Request $request)
+    {
+        DB::connection('client')->beginTransaction();
+        try{
+            $purchase = purchases::find($request->id);
+            $purchase->status = false;
+            $purchase->payment_status = "ANULADO";
+            $purchase->update();
+
+            $purchaseDetails = purchaseDetail::where('purchase_id', $request->id)->get();
+
+            foreach ($purchaseDetails as $item)
+            {
+                $product = Product::find($item->product_id);
+                if($product->existence == 0)
+                {
+                    return response()->json(["message" => "La anulacion no puede ser efectiva. Uno de los productos se encuentra con la existencia en 0"], 400);
+                }
+                $product->existence = $product->existence - $item->quantity;
+                $product->update();
+            }
+
+            DB::connection('client')->commit();
+            return 'success';
+        }catch (\Exception $exception)
+        {
+            DB::connection('client')->rollback();
+            return response()->json($exception, 400);
+        }
+    }
+
+    public function printPurchase(Request $request)
+    {
+        $config = DB::connection('client')->table('configuracions')->first();
+        $purchase = purchases::find($request->purchase_id);
+        $purchaseDetails = DB::connection('client')
+            ->table('purchase_details')
+            ->join('products', 'products.id', '=', 'purchase_details.product_id')
+            ->where('purchase_details.purchase_id', $request->purchase_id)
+            ->select('purchase_details.*', 'products.name')
+            ->get();
+        $purchase->details = json_decode($purchaseDetails, true);
+        $supplier = Supplier::find($purchase->supplier_id);
+        $purchase->supplier_name = $supplier->name;
+
+        $previewData = [
+          'company' => $config,
+          'data' => $purchase
+        ];
+
+        return view('purchaseOrders.preview')
+            ->with(compact('previewData', $previewData));
+    }
+
 }

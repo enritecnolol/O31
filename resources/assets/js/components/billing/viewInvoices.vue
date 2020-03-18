@@ -59,7 +59,8 @@
         <table-invoice :pagination="pagination" :paginate="tableData" @pageChange="getInvoice">
           <template slot="table-header">
             <th>No. factura</th>
-            <th>Fecha de factura</th>
+            <th>Fecha</th>
+            <th>Terminos</th>
             <th>Cliente</th>
             <th style="text-align: right">Total</th>
             <th>Estado</th>
@@ -77,6 +78,7 @@
             <tr v-for="(item, index) in tableData.data" :key="index">
               <th>#{{item.id}}</th>
               <td>{{moment(item.date).format('DD-MM-YYYY')}}</td>
+              <td>{{TermTitle(item.term_id)}}</td>
               <td>{{toShowClient(item.client)}}</td>
               <td style="text-align: right">{{parseFloat(item.total_facture).formatMoney(2)}}</td>
               <td>
@@ -113,17 +115,24 @@
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a
                       class="dropdown-item"
+                      :class="item.paid_status === 'PAGADO' ? 'disabled' : ''"
                       href="#"
                       onclick="return false;"
                       @click="dataEdit(item.id, item.paid_status)"
                     >Editar</a>
                     <a
                       class="dropdown-item"
+                      :class="item.paid_status === 'PAGADO' ? 'disabled' : ''"
                       href="#"
                       onclick="return false;"
                       @click="toPayment(item.client, item.paid_status)"
                     >Recibo de pago</a>
-                    <!--                    <a class="dropdown-item" href="#">Eliminar</a>-->
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      onclick="return false;"
+                      @click="purchaseReturn(item.id, item.paid_status)"
+                    >Devolución</a>
                   </div>
                 </div>
               </td>
@@ -150,11 +159,41 @@ export default {
         codeInvoice: "",
         status: "ALL"
       },
-      pagination: true
+      pagination: true,
+      termsList:[]
     };
   },
   methods: {
+    TermTitle(id)
+    {
+      let found = this.termsList.find(e => e.id == id)
+      if(found)
+      {
+        return found.name;
+      }
+      return "";
+    },
+    getTermsList() {
+      axios
+          .get("/terms/list")
+          .then(response => {
+            this.termsList = response.data;
+            console.log(response);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+    },
+    purchaseReturn(id, status)
+    {
+      window.location.href = "/devolucion?invoice=" + id;
+    },
     toPayment(id, status) {
+      if (status === "PAGADO") {
+        toastr.info("Esta factura ya ha sido pagada");
+        return;
+      }
+
       window.location.href = "/invoice/payment?client=" + id;
     },
     dataEdit(id, status) {
@@ -273,6 +312,7 @@ export default {
   created() {
     this.getInvoice();
     this.ClientsDate();
+    this.getTermsList();
   }
 };
 </script>

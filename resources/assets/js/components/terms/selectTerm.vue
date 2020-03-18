@@ -3,11 +3,11 @@
     <modal-terms @refreshTerms="getTermsList" />
     <div class="form-group">
       <label for="terms" class="form-control-label">Terminos :</label>
-      <select class="form-control" id="terms" v-model="term" style="width: 250px;">
+      <select class="form-control" id="terms" v-model="term"  style="width: 250px;">
         <option value>seleccionar</option>
         <option value="new" style="background: rgb(229, 229, 229);color: black">agregar nuevo</option>
         <template v-for="(item, index) in termsList">
-          <option :value="item.number_days" :key="index" @click="changeValue(index)">{{item.name}}</option>
+          <option :value="item.id" :key="index">{{item.name}}</option>
         </template>
       </select>
     </div>
@@ -36,18 +36,24 @@ export default {
           console.log(err);
         });
     },
-    changeValue(index) {
-      this.$emit("changeTerm", {
-        id: this.termsList[index].id,
-        number_days: this.termsList[index].number_days
-      });
+    changeValue(id) {
+      let found = this.termsList.find(e => e.id == id);
+      if(found)
+      {
+        this.$emit("changeTerm", {
+          id: found.id,
+          number_days: found.number_days
+        });
+      }
     }
   },
   watch: {
     term() {
       if (this.term === "new") {
         $("#exampleModal").modal("show");
+        return;
       }
+      this.changeValue(this.term);
     },
     termExternal() {
       var found = this.termsList.find(e => e.id == this.termExternal);
@@ -57,7 +63,7 @@ export default {
         })
         .indexOf(this.termExternal);
       if (found) {
-        this.term = found.number_days;
+        this.term = found.id;
         this.changeValue(index);
       }
     }

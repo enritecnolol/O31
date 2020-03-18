@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="float-left">
-          <h3>{{clientForm ? 'Crear cliente' : 'Factura'}}</h3>
+          <h3>{{clientForm ? 'Crear cliente' : createdOrEdit ? 'Editando Factura' : 'Creando Factura'}}</h3>
         </div>
         <div class="float-right">
           <button class="btn btn-sm btn-primary" @click="createFormStatus">Lista de Factura</button>
@@ -223,12 +223,16 @@
       <div class="col-md-12">
         <button class="btn btn-primary btn-sm" @click="save(false)">
           <i class="far fa-file-alt" />
-          {{createdOrEdit ? 'Editar' : 'Guardar'}}
+          {{createdOrEdit ? 'Salvar' : 'Guardar'}}
         </button>
         <button class="btn btn-success btn-sm" @click="save(true)">
           <i class="far fa-file-alt" />
           <i class="fas fa-paper-plane" />
-          {{createdOrEdit ? 'Editar' : 'Guardar'}} y enviar
+          {{createdOrEdit ? 'Salvar' : 'Guardar'}} y enviar
+        </button>
+        <button class="btn btn-success btn-sm" @click="duplicate(dataEdit.id)" v-if="createdOrEdit">
+          <i class="fas fa-paste" />
+          Duplicar
         </button>
       </div>
     </div>
@@ -293,6 +297,21 @@ export default {
     };
   },
   methods: {
+    duplicate(id)
+    {
+      axios.get('/invoices/duplicate', {
+        params:{
+          id:id
+        }
+      })
+      .then((response) => {
+        toastr.success(response.data.message)
+      })
+      .catch((error) => {
+        toastr.warning(error.response.data.message);
+        console.log(error)
+      })
+    },
     changeTerm({ id, number_days }) {
       if (number_days === "") {
         return;
@@ -501,7 +520,8 @@ export default {
           details: this.reduceItems,
           send: send,
           tiponfc: this.type_ncf,
-          datancf: this.data_ncf
+          datancf: this.data_ncf,
+          term:this.term
         })
         .then(response => {
           if (

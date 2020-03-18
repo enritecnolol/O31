@@ -165,12 +165,15 @@
       <div class="col-md-12">
         <button class="btn btn-warning btn-sm" @click="save(false)">
           <i class="far fa-file-alt" />
-          {{dataEdit ? 'Editar' : 'Guardar'}}
+          {{dataEdit ? 'Salvar' : 'Guardar'}}
         </button>
         <button class="btn btn-success btn-sm" @click="save(true)">
           <i class="far fa-file-alt" />
           <i class="fas fa-paper-plane" />
-          {{dataEdit ? 'Editar' : 'Guardar'}} y enviar
+          {{dataEdit ? 'Salvar' : 'Guardar'}} y enviar
+        </button>
+        <button class="btn btn-sm btn-primary" @click="duplicateEstimate(dataEdit.id)" v-if="dataEdit">
+          <i class="fas fa-paste" /> Duplicar
         </button>
       </div>
     </div>
@@ -226,6 +229,21 @@ export default {
     };
   },
   methods: {
+    duplicateEstimate(id)
+    {
+      axios.get('/estimate/duplicate', {
+        params:{
+          id:id
+        }
+      })
+          .then((response) => {
+            toastr.success(response.data.message)
+          })
+          .catch((error) => {
+            toastr.warning(error.response.data.message);
+            console.log(error)
+          })
+    },
     changeTerm(val) {
       if (val === "") {
         return;
@@ -233,7 +251,6 @@ export default {
       var today = new Date();
       var dueDate = new Date();
       dueDate.setDate(today.getDate() + val);
-      console.log(dueDate);
       this.dueDate = dueDate;
     },
     itemsEditFormat(items) {
