@@ -26,7 +26,7 @@ class EstimatesController extends Controller
 
     public function confirmationEstimateDB (Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
 
         $clientDatabase = Client_database::where("auth_id", $request->auth)->first();
 
@@ -40,11 +40,11 @@ class EstimatesController extends Controller
             $estimate->confirmation_at = date('Y-m-d H:i');
             $estimate->update();
 
-            DB::commit();
+            DB::connection('client')->commit();
             return 'success';
 
         }catch (\Exception $e){
-            DB::rollBack();
+            DB::connection('client')->rollBack();
             return 'error';
         }
     }
@@ -98,7 +98,7 @@ class EstimatesController extends Controller
 
     public function store(Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
 
         if (count(DB::connection('client')->table('estimates')->where('estimatenumber', $request->estimateNumber)->get()) != 0)
         {
@@ -107,7 +107,7 @@ class EstimatesController extends Controller
 
         try{
             $estimate = new Estimate();
-            $estimate->estimatenumber= $request->estimateNumber;
+            $estimate->estimatenumber = $request->estimateNumber;
             $estimate->estimatedate = date("Y-m-d", strtotime($request->estimateDate));
             $estimate->duedate = date("Y-m-d", strtotime($request->dueDate));
             $estimate->client_id = $request->client_id['code'];
@@ -158,12 +158,12 @@ class EstimatesController extends Controller
                 });
             }
 
-            DB::commit();
+            DB::connection('client')->commit();
 
             return 'success';
         }catch (\Exception $e)
         {
-            DB::rollBack();
+            DB::connection('client')->rollBack();
             return $e;
         }
 
@@ -171,7 +171,7 @@ class EstimatesController extends Controller
 
     public function edit(Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
 
         try {
             $estimateDetailDBId = array();
@@ -259,12 +259,12 @@ class EstimatesController extends Controller
                 });
             }
 
-            DB::commit();
+            DB::connection('client')->commit();
 
             return 'success';
         }catch (\Exception $e)
         {
-            DB::rollBack();
+            DB::connection('client')->rollBack();
             return $e;
         }
 
@@ -348,5 +348,49 @@ class EstimatesController extends Controller
         });
 
         return 'sent';
+    }
+
+    public function duplicateEstimate(Request $request)
+    {
+        $estimate = Estimate::find($request->id);
+        $estiamteDetails = DB::connection('client')->table('estimatedetails')->where('estimate_id', $request->id)->get();
+
+        DB::connection('client')->beginTransaction();
+        try{
+
+            $newEstimate = new Estimate();
+            $newEstimate->estimatenumber = $estimate->estimatenumber;
+            $newEstimate->estimatedate = date("Y-m-d", strtotime($estimate->estimatedate));
+            $newEstimate->duedate = date("Y-m-d", strtotime($estimate->duedate));
+            $newEstimate->client_id = $estimate->client_id;
+            $newEstimate->address = $estimate->address;
+            $newEstimate->note = $estimate->note;
+            $newEstimate->email = $estimate->email;
+            $newEstimate->subtotal = $estimate->subtotal;
+            $newEstimate->total = $estimate->total;
+            $newEstimate->save();
+
+            foreach ($estiamteDetails as $detail)
+            {
+                $estimateDetail = new EstimateDetail();
+                $estimateDetail->product = $detail->product;
+                $estimateDetail->product_id = $detail->product_id;
+                $estimateDetail->description = $detail->description;
+                $estimateDetail->quantity = $detail->quantity;
+                $estimateDetail->price = $detail->price;
+                $estimateDetail->discount = $detail->discount;
+                $estimateDetail->amount = $detail->amount;
+                $estimateDetail->estimate_id = $newEstimate->id;
+                $estimateDetail->save();
+            }
+
+            DB::connection('client')->commit();
+            return response()->json(["message" => "La cotizacion ha sido duplicado con exito"], 200);
+
+        }catch (\Exception $e)
+        {
+            DB::connection('client')->rollBack();
+            return response()->json($e, 400);
+        }
     }
 }

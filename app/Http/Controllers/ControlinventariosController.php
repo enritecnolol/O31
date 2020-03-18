@@ -24,7 +24,7 @@ class ControlinventariosController extends Controller
     }
     public function storecompra(Request $request)
     {
-        DB::begintransaction();
+        DB::connection('client')->begintransaction();
         try{
 
             $compra = new Compra();
@@ -52,13 +52,13 @@ class ControlinventariosController extends Controller
                 $product->existence = $product->existence + $pc['cantidad_comprada'];
                 $product->update();
             }
-            DB::commit();
+            DB::connection('client')->commit();
 
             return 'guardado';
 
         }catch (\Exception $exception)
         {
-            DB::rollback();
+            DB::connection('client')->rollback();
             return response()->json($exception, 400);
         }
     }

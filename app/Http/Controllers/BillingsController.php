@@ -25,7 +25,7 @@ class BillingsController extends Controller
     }
     public function store(Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
         try{
             $idcaja = Caja::all();
             $facture = new Facture();
@@ -83,6 +83,8 @@ class BillingsController extends Controller
                 }
             }
             $facture->caja_id = $idcaja->last()->id;
+            $facture->term_id = $request->term;
+            $facture->user_id = Auth::id();
             $facture->save();
 
             foreach ($request->details as $detail)
@@ -130,18 +132,18 @@ class BillingsController extends Controller
                 });
             }
 
-            DB::commit();
+            DB::connection('client')->commit();
             return ['message' => 'success', 'notification' => $aviso, 'ncfDueDate' => $NFCDueDate, 'send' => $request->send];
         }catch (\Exception $e)
         {
-            DB::rollBack();
+            DB::connection('client')->rollBack();
             return response()->json($e, 400);
         }
 
     }
     public function edit(Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
 
         try {
             $invoicesItemsDBId = array();
@@ -236,12 +238,12 @@ class BillingsController extends Controller
                 });
             }
 
-            DB::commit();
+            DB::connection('client')->commit();
 
             return 'success';
         }catch (\Exception $e)
         {
-            DB::rollBack();
+            DB::connection('client')->rollBack();
             return $e;
         }
     }
@@ -284,7 +286,7 @@ class BillingsController extends Controller
             ]);
         }
 
-        $data->where('type_sale','personalizado')->orderBy('id', 'desc');
+        $data->orderBy('id', 'desc');
 
         return $data->paginate(10);
     }
@@ -357,5 +359,90 @@ class BillingsController extends Controller
         $query = $db->table('factures')->orderBy('id', 'desc')->limit(9);
 
         return $query->get();
+    }
+
+    public function duplicateInvoice(Request $request)
+    {
+        $invoice = Facture::find($request->id);
+        $invoiceDetails = Detail::where('facture_id', $request->id)->orWhere('invoice_id', $request->id)->get();
+
+        DB::connection('client')->beginTransaction();
+
+        try{
+
+            $idcaja = Caja::all();
+            if($idcaja->last()->status != 'A')
+            {
+                return response()->json(["message" => "La caja actualmente se encuantra Cerrada"], 400);
+            }
+            $newInvoice = new Facture();
+            $newInvoice->date = $invoice->date;
+            $newInvoice->client = $invoice->client;
+            $newInvoice->address = $invoice->address;
+            $newInvoice->due_date = $invoice->due_date;
+            $newInvoice->note = $invoice->note;
+            $newInvoice->email = $invoice->email;
+            $newInvoice->brute = $invoice->brute;
+            $newInvoice->desc = 0;
+            $newInvoice->total_facture = $invoice->total_facture;
+            $newInvoice->open_balance = $invoice->open_balance;
+            $newInvoice->type_sale = $invoice->type_sale;
+            $newInvoice->status = $invoice->status;
+            $newInvoice->paid_status = $invoice->paid_status;
+            $newInvoice->caja_id = $idcaja->last()->id;
+            $newInvoice->term_id = $invoice->term_id;
+            $newInvoice->user_id = Auth::id();
+            $newInvoice->save();
+
+
+            foreach ($invoiceDetails as $detail)
+            {
+                $detalle = new Detail();
+                $detalle->date = now();
+                $detalle->name_product = $detail->name_product;
+                $detalle->descuento = $detail->descuento;
+                $detalle->quanlity = $detail->quanlity;
+                $detalle->price = $detail->price;
+                $detalle->depot = $detail->depot;
+                $detalle->impost = $detail->impost;
+                $detalle->description = $detail->description;
+                $detalle->amount = $detail->amount;
+                $detalle->invoice_id = $newInvoice->id;
+                $detalle->facture_id = $newInvoice->id;
+                $detalle->save();
+            }
+
+            DB::connection('client')->commit();
+            return response()->json(["message" => "La factura fue duplicada correctamente"], 200);
+
+        }catch (\Exception $e)
+        {
+            DB::connection('client')->rollback();
+            return response()->json($e, 400);
+        }
+    }
+
+    public function invoiceHistoryIndex()
+    {
+        return view('invoiceHistory.index');
+    }
+
+    public function invoiceHistory(Request $request)
+    {
+        $invoice = DB::connection('client')
+            ->table('factures')
+            ->leftJoin('clients', 'factures.client', '=', 'clients.id')
+            ->where('factures.id', $request->invoice)
+            ->select('factures.*', DB::raw('clients.nombre clientname'))
+            ->first();
+
+        $transactions = DB::connection('client')
+        ->select("select created_at, 'Devolucion' type, total_devolucion amount, itbis,0 discount
+                    from devolucions where factura_id = $request->invoice
+                    union all
+                    select created_at, 'Recibo de ingreso' type, pay amount, 0 itbis, 0 discount
+                    from payment_items where invoice_id = $request->invoice;
+                    ");
+        return ['invoice' => $invoice, 'transactions' => $transactions];
     }
 }

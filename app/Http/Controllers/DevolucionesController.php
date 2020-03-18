@@ -31,19 +31,32 @@ class DevolucionesController extends Controller
         if  ($devolucions == '[]'){
             $detall_devolucion = 'vacia';
         }else{
-            $detall_devolucion = DB::connection('client')->select("SELECT
-       factures.id, details.id, details.date, details.name_product, details.descuento,
-       details.quanlity - IFNULL(detalle_devolucions.quanlity, 0) AS quanlity,
-       details.price - IFNULL(detalle_devolucions.price, 0)       AS price,
-       ROUND(details.depot, 2) - IFNULL(detalle_devolucions.itbis, 0)       AS depot,
-       ROUND(details.impost, 2) - IFNULL(detalle_devolucions.bruto, 0)      AS impost,
+            $detall_devolucion = DB::connection('client')->select("SELECT factures.id,
+       details.id,
+       details.date,
+       details.name_product,
+       details.descuento,
+       details.quanlity - IFNULL((select sum(quanlity)
+                                  from detalle_devolucions
+                                  where devolucion_id in (select id from devolucions where factura_id = factures.id)
+                                    and product_id = details.product_id), 0) AS quanlity,
+       details.price - IFNULL((select sum(price)
+                                  from detalle_devolucions
+                                  where devolucion_id in (select id from devolucions where factura_id =  factures.id)
+                                    and product_id = details.product_id), 0)                  AS price,
+       ROUND(details.depot, 2) - IFNULL((select sum(itbis)
+                                  from detalle_devolucions
+                                  where devolucion_id in (select id from devolucions where factura_id =  factures.id)
+                                    and product_id = details.product_id), 0)        AS depot,
+       ROUND(details.impost, 2) - IFNULL((select sum(bruto)
+                                  from detalle_devolucions
+                                  where devolucion_id in (select id from devolucions where factura_id =  factures.id)
+                                    and product_id = details.product_id), 0)       AS impost,
        details.product_id,
        details.description
 FROM factures
-    LEFT JOIN devolucions ON devolucions.factura_id = factures.id
-    left JOIN details on details.facture_id = factures.id or details.invoice_id = factures.id
-    left JOIN detalle_devolucions ON detalle_devolucions.devolucion_id = devolucions.id and details.product_id = detalle_devolucions.product_id
-WHERE devolucions.id = $InvoiceDevolution->id;");
+         left JOIN details on details.facture_id = factures.id or details.invoice_id = factures.id
+WHERE factures.id = $request->id;");
         }
         if ($factura == ''){
             $factura = 'vacio';
@@ -63,21 +76,7 @@ WHERE devolucions.id = $InvoiceDevolution->id;");
 
         ];
     }
-    /*
-     *
-     *
-     * SELECT factures.id, details.id, details.date, details.name_product, details.descuento,
-details.quanlity - IFNULL(SUM(detalle_devolucions.quanlity),0) AS cantidad,
-details.price - IFNULL(SUM(detalle_devolucions.price),0) AS precio,
-details.depot - IFNULL(SUM(detalle_devolucions.itbis),0) AS itbis,
-details.impost - IFNULL(SUM(detalle_devolucions.bruto),0) AS bruto,
-details.product_id
-FROM factures
-INNER JOIN details on details.facture_id = factures.id
-LEFT JOIN devolucions ON devolucions.factura_id = factures.id
-LEFT JOIN detalle_devolucions ON detalle_devolucions.devolucion_id = devolucions.id  AND details.product_id = detalle_devolucions.product_id
-WHERE factures.id = 217 GROUP BY details.id
-     * */
+
     public function buscandoproductos(Request $request)
     {
         $producto = DB::connection('client')->table('products')
@@ -91,7 +90,7 @@ WHERE factures.id = 217 GROUP BY details.id
     }
     public function store(Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
         try{
             $idcaja = Caja::all();
             $userid = Auth::id();
@@ -105,7 +104,7 @@ WHERE factures.id = 217 GROUP BY details.id
 
             foreach ($request->get('detalle_devolucion') as $d)
             {
-                $TotalDevolucion = $TotalDevolucion + ($d['price'] * $d['cantidad']);
+                $TotalDevolucion = $TotalDevolucion + $d['price'];
                 $bruto = $bruto + $d['bruto'];
                 $itbis = $itbis + $d['itbis'];
             }
@@ -190,6 +189,7 @@ WHERE factures.id = 217 GROUP BY details.id
                 {
                     $existencia = $existencia->controlinv;
                 }
+
                 if ($existencia == 'si')
                 {
                     $product = Product::find($d['product_id']);
@@ -199,14 +199,23 @@ WHERE factures.id = 217 GROUP BY details.id
 
             }
             $compania = Configuracion::all();
-            DB::commit();
+            DB::connection('client')->commit();
             return [$compania, $TotalDevolucion, date('d-m-Y'), $iddevolucion->last()->id, $nfc, $aviso];
 
         }catch (\Exception $exception)
         {
-            DB::rollBack();
+            DB::connection('client')->rollBack();
             return response()->json($exception, 400);
         }
 
+    }
+
+    public function ReturnsList($size = 10)
+    {
+        $query = DB::connection('client')
+        ->table('devolucions')
+        ->orderBY('id', 'desc');
+
+        return $query->paginate($size);
     }
 }

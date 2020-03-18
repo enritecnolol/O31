@@ -343,7 +343,6 @@ export default {
       window.open("/invoice/print?invoice_id=" + id, "_blank");
     },
     openDetalle(facture) {
-      console.log(facture);
       if (facture.type_sale === "personalizado") {
         this.toPrint(facture.id);
         return;

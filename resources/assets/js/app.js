@@ -65,6 +65,11 @@ Vue.component('print-report-ventas', require('./components/Print/PrintReportVent
 Vue.component('purchase-orders', require('./components/purchaseOrders/purchaseOrders'));
 Vue.component('report-product-meses', require('./components/ReportProduct/reportTemplate'));
 Vue.component('purchase-record', require('./components/purchaseRecord/purchaseRecord'));
+Vue.component('purchase-payment', require('./components/purchaseRecord/purchasePayment'));
+Vue.component('supplier-details', require('./components/suppliers/supplierDetails'));
+Vue.component('returns-invoice', require('./components/ReturnsInvoice/returnsInvoice'));
+Vue.component('returns-purchase', require('./components/returnPurchases/returnPurchases'));
+Vue.component('invoice-history', require('./components/invoiceHistory/invoiceHistory'));
 
 Vue.prototype.moment = moment;
 Vue.prototype.$toastr = toastr;

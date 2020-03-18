@@ -81,7 +81,11 @@
       },
       createFormStatus(val)
       {
-        this.createForm = val
+        this.createForm = val;
+        if (!val)
+        {
+          this.dataEdit = null
+        }
       },
       getUrlVars()
       {

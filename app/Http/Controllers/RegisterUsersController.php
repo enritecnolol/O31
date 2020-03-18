@@ -20,7 +20,7 @@ class RegisterUsersController extends Controller
     public function store(Request $request)
     {
 
-        DB::begintransaction();
+        DB::connection('client')->begintransaction();
 
         if(User::where('email', $request['email'])->first() || UserClient::where('email', $request['email'])->first())
         {
@@ -44,12 +44,12 @@ class RegisterUsersController extends Controller
                 'client_databases_id' => $user_connection->client_databases_id
             ]);
 
-            DB::commit();
+            DB::connection('client')->commit();
             return $user;
 
         }catch (\Exception $exception)
         {
-            DB::rollback();
+            DB::connection('client')->rollback();
             return response()->json($exception, 400);
         }
 
@@ -58,7 +58,7 @@ class RegisterUsersController extends Controller
     public function resetPassword(Request $request)
     {
 
-        DB::begintransaction();
+        DB::connection('client')->begintransaction();
 
         try{
 
@@ -72,12 +72,12 @@ class RegisterUsersController extends Controller
             $userAuth->password = bcrypt("123456789");
             $userAuth->update();
 
-            DB::commit();
+            DB::connection('client')->commit();
             return response()->json(['message' => "La Contraseña se ha reseteado con exito"], 200);
 
         }catch (\Exception $exception)
         {
-            DB::rollback();
+            DB::connection('client')->rollback();
             return response()->json($exception, 400);
         }
 
@@ -92,19 +92,19 @@ class RegisterUsersController extends Controller
     public function disableAccount(Request $request)
     {
 
-        DB::begintransaction();
+        DB::connection('client')->begintransaction();
         try{
 
             $userClient = UserClient::find($request['user_id']);
             $userClient->status = false;
             $userClient->update();
 
-            DB::commit();
+            DB::connection('client')->commit();
             return response()->json(['message' => "El usuario que ha seleccionado ha sido deshabilitado"], 200);
 
         }catch (\Exception $e)
         {
-            DB::rollback();
+            DB::connection('client')->rollback();
             return response()->json($e, 400);
         }
 

@@ -2,9 +2,9 @@
   <div :class="responsive ? 'table-responsive' : ''">
     <table
       class="table table-sm"
-      :class="[hover ? 'table-hover' : '', bordered ? 'table-bordered':'']"
+      :class="[hover ? 'table-hover' : '', bordered ? 'table-bordered':'', striped ? 'table-striped' : '']"
     >
-      <thead>
+      <thead :class="[headerLight ? 'thead-light' : '']">
         <slot name="table-header" />
       </thead>
       <tbody style="height: 10px !important; overflow: scroll; ">
@@ -38,6 +38,14 @@ export default {
       default: false
     },
     bordered: {
+      type: Boolean,
+      default: false
+    },
+    striped: {
+      type: Boolean,
+      default: false
+    },
+    headerLight: {
       type: Boolean,
       default: false
     },

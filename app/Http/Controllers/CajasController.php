@@ -105,11 +105,9 @@ class   CajasController extends Controller
 
         $totalcierre = DB::connection('client')
             ->table('factures')
-            ->leftJoin('devolucions', function ($leftJoin) {
-                $leftJoin->on('factures.caja_id', '=', 'devolucions.caja_id')
-                    ->on('factures.id', '=', 'devolucions.factura_id');
-            })
-            ->select(DB::raw('sum(total_facture) - ifnull(sum(total_devolucion),0) as total'))
+            ->select(
+                DB::raw('sum(total_facture) - ifnull(sum((select sum(total_devolucion) from devolucions where factura_id = factures.id and devolucions.caja_id = factures.caja_id)), 0) as total')
+            )
             ->where('factures.caja_id', $idcaja)
             ->get();
 
@@ -211,18 +209,21 @@ class   CajasController extends Controller
             $ventasmes = number_format($ventasmes[0]->total);
         }
 
-        $data = array(
-            'fecha'=> $caja->fecha_apertura,
-            'totalvendido' => $totaldias,
-            'totalgastos' => $totalgasto,
-            'totaldevolucion' => $totaldevolucion,
-            'totalmes' => $ventasmes,
-            'compania' => $configs[0],
-        );
+        if($email)
+        {
+            $data = array(
+                'fecha'=> $caja->fecha_apertura,
+                'totalvendido' => $totaldias,
+                'totalgastos' => $totalgasto,
+                'totaldevolucion' => $totaldevolucion,
+                'totalmes' => $ventasmes,
+                'compania' => $configs[0],
+            );
 
-        Mail::send('emails.resumendia', $data, function ($message) use ($email){
-            $message->to($email)->subject(' CoffeBreakPOS | Resumen del Dia');
-        });
+            Mail::send('emails.resumendia', $data, function ($message) use ($email){
+                $message->to($email)->subject(' CoffeBreakPOS | Resumen del Dia');
+            });
+        }
 
         return 'Actualizado';
 

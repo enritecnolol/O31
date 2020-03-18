@@ -20,18 +20,18 @@ class PaymentMethodsController extends Controller
             return response()->json(['message' => 'Este metodo de pago existe'], 400);
         }
 
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
         try{
 
             $paymentMethod = new Payment_method();
             $paymentMethod->name =  $request->name;
             $paymentMethod->save();
 
-            DB::commit();
+            DB::connection('client')->commit();
             return 'success';
         }catch (\Exception $e)
         {
-            DB::rollback();
+            DB::connection('client')->rollback();
             return response()->json($e, 400);
         }
     }
@@ -55,18 +55,18 @@ class PaymentMethodsController extends Controller
             return response()->json(['message' => 'Este metodo de pago existe'], 400);
         }
 
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
         try{
 
             $paymentMethod = Payment_method::find($request->id);
             $paymentMethod->name =  $request->name;
             $paymentMethod->update();
 
-            DB::commit();
+            DB::connection('client')->commit();
             return 'edited';
         }catch (\Exception $e)
         {
-            DB::rollback();
+            DB::connection('client')->rollback();
             return response()->json($e, 400);
         }
     }

@@ -333,7 +333,7 @@ class ApisController extends Controller
         return DB::connection('client')
             ->table('products')
             ->where('estado', true)
-            ->select('id','name', 'price')
+            ->select('id','name', 'price', 'barcode')
             ->get();
     }
 

@@ -104,6 +104,7 @@ class IndexController extends Controller
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
             ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
 //            ->where('products.user_id', Auth::id())
+            ->where('estado', true)
             ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
 
 //        foreach($productos as $producto)
@@ -122,7 +123,7 @@ class IndexController extends Controller
      */
     public function store(Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
         try{
 
             $idcaja = Caja::all();
@@ -146,7 +147,8 @@ class IndexController extends Controller
             $facture->Monto_tarjeta = $request->montotarjeta;
             $facture->Monto_efectivo = $request->dinero;
             $facture->returns = $request->devuelta;
-            $facture->status = 'Pago';
+            $facture->status = 'COMPLETADO';
+            $facture->paid_status = 'PAGADO';
             $facture->type_sale = 'express';
             $facture->type_tarject = $request->tipotarjeta;
             $facture->Numbertar = $request->Numtarjeta;
@@ -250,12 +252,12 @@ class IndexController extends Controller
                     }
                 }
             }
-            DB::commit();
+            DB::connection('client')->commit();
             return ['bien', $nfc, $idfacture[0]->id, $aviso, $NFCDueDate];
 
         }catch (\Exception $e){
-            DB::rollBack();
-            return $e;
+            DB::connection('client')->rollBack();
+            return response()->json($e, 400);
         }
     }
     public function prueba()

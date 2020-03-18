@@ -16,7 +16,7 @@ class PaymentsController extends Controller
 {
     public function store(Request $request)
     {
-        DB::beginTransaction();
+        DB::connection('client')->beginTransaction();
         try{
 
             $config = DB::connection('client')->table('configuracions')->first();
@@ -83,11 +83,11 @@ class PaymentsController extends Controller
                 });
             }
 
-            DB::commit();
+            DB::connection('client')->commit();
             return 'success';
         }catch (\Exception $e)
         {
-            DB::rollback();
+            DB::connection('client')->rollback();
             return response()->json($e, 400);
         }
     }
