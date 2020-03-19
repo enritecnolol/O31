@@ -516,7 +516,7 @@ export default {
           email: this.email,
           note: this.note,
           subtotal: this.subTotal,
-          total: this.subTotal,
+          total: this.subTotal - this.discount,
           details: this.reduceItems,
           send: send,
           tiponfc: this.type_ncf,

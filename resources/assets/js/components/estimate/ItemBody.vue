@@ -89,7 +89,7 @@ export default {
       handler(val, oldVal) {
         let discount =
           this.item.price * this.item.quantity * (this.item.discount / 100);
-        this.item.amount = this.item.price * this.item.quantity - discount;
+          this.item.amount = this.item.price * this.item.quantity;
 
         this.$emit("replaceElement", {
           index: this.index,

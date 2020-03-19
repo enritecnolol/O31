@@ -24,7 +24,7 @@
           <div class="col-md-6">
             <b>Monto Total:</b>
           </div>
-          <div class="col-md-6">RD${{parseFloat(subTotal).formatMoney(2)}}</div>
+          <div class="col-md-6">RD${{parseFloat(subTotal - discount).formatMoney(2)}}</div>
         </div>
       </div>
     </div>
