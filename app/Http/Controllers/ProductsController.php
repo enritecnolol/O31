@@ -16,14 +16,15 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $id = Auth::id();
-
-        $productos = DB::connection('client')->table('products')
-            ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
-            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
-            ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->paginate(8);
-
-        return view('productos.index', compact('productos'));
+//        $id = Auth::id();
+//
+//        $productos = DB::connection('client')->table('products')
+//            ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
+//            ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
+//            ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->paginate(8);
+//
+//        return view('productos.index', compact('productos'));
+        return view('products.index');
     }
 
     public function index2()
