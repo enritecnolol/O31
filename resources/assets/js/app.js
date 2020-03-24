@@ -70,6 +70,7 @@ Vue.component('supplier-details', require('./components/suppliers/supplierDetail
 Vue.component('returns-invoice', require('./components/ReturnsInvoice/returnsInvoice'));
 Vue.component('returns-purchase', require('./components/returnPurchases/returnPurchases'));
 Vue.component('invoice-history', require('./components/invoiceHistory/invoiceHistory'));
+Vue.component('products-manager', require('./components/productsManager/productsManager'));
 
 Vue.prototype.moment = moment;
 Vue.prototype.$toastr = toastr;

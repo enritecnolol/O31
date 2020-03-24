@@ -52,7 +52,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/buscar', 'ApisController@buscarp'); // api para buscar producto
     Route::get('/buscar/producto/referencia', 'ApisController@buscarproductoreferencia'); // api para buscar producto
     Route::post('anja/{id}', 'ApisController@update' );// api para actualizar los productos
-    Route::post('eliminar/producto', 'ApisController@eliminarproducto' );// Eliminar productos
+    Route::post('/eliminar/producto', 'ApisController@eliminarproducto' );// Eliminar productos
     Route::post('/itbis/producto', 'ApisController@itbisporproducto' );// Eliminar productos
     Route::post('/reportes/resultado', 'ApisController@ultimoid' );//
     Route::post('/productos/paginate', 'ApisController@productospaginado' );//
@@ -75,6 +75,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/productos', 'ProductsController'); // controller de manejo de los productos
     Route::post('/all/productos', 'ApisController@allproduct'); // controller de manejo de los productos
     Route::get('/products/select', 'ApisController@productosSelect');
+    Route::get('/products/select/purchase', 'ApisController@productosSelectforPurchase');
+    Route::get('/products/select/sale', 'ApisController@productosSelectforSale');
     /*=================================\Categorias/======================================================*/
     Route::get('categorias', 'CategoriasController@index'); // controller de manejo de los productos
     Route::post('categorias/nueva', 'CategoriasController@nuevacategoria'); // controller de manejo de los productos
@@ -348,6 +350,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/purchase/return/list', 'ReturnPurchasesController@getListPaginate');
     Route::post('/purchase/return', 'ReturnPurchasesController@store');
     Route::get('/purchase/return/print', 'ReturnPurchasesController@printPurchaseReturn');
+    /*=================================\- Productos -/======================================================*/
+    Route::get('/products', 'ProductsController@index2');
+    Route::post('/products/img', 'ProductsController@TestIMG');
 });
 
 Auth::routes();

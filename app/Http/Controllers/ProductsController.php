@@ -26,6 +26,19 @@ class ProductsController extends Controller
         return view('productos.index', compact('productos'));
     }
 
+    public function index2()
+    {
+        return view('products.index');
+    }
+
+    public function TestIMG(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            return 'Tiene img';
+        }
+        return 'no tiene';
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -36,49 +49,55 @@ class ProductsController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $product = new Product;
+        DB::connection('client')->beginTransaction();
 
-        $request->validate([
-            'barcode' => 'bail|required|unique:client.products|max:255',
-        ]);
+        try {
 
-        if ($request->has('refimpuestoid') != 0){
-            $itbis = 'si';
-        }else{
-            $itbis = 'no';
-        }
+            if(DB::connection('client')->table('products')->where('barcode', $request->input('barcode'))->first())
+            {
+                return response()->json(['message' => "Este codigo de barra no esta disponible"], 400);
+            }
+
+            if ($request->has('refimpuestoid') != 0){
+                $itbis = 'si';
+            }else{
+                $itbis = 'no';
+            }
 
             if ($request->hasFile('img')) {
                 $file = $request->file('img');
                 $file->storeAs('/', $file->getClientOriginalName());
             }
-                $product->name = $request->input('nombre');
-                $product->price = $request->input('precio');
-                $product->barcode = $request->input('barcode');
-                $product->img = $request->hasFile('img') ? $file->getClientOriginalName() : 'default.jpg';
-                $product->existence = 0;
-                $product->impost = 0;
-                $product->status = 0;
-                $product->impuestoref_id = $request->input('refimpuestoid');
-                $product->itbis = $itbis;
-                $product->user_id = Auth::id();
-                $product->categoria_id = $request->input('categoria');
-                $product->subcategoria_id = $request->input('subcategoria');
-                $product->compuesto = $request->input('compuesto');
-                $product->save();
+            $product->name = $request->input('nombre');
+            $product->price = $request->input('precio');
+            $product->barcode = $request->input('barcode');
+            $product->img = $request->hasFile('img') ? $file->getClientOriginalName() : 'default.jpg';
+            $product->existence = 0;
+            $product->impost = 0;
+            $product->status = 0;
+            $product->impuestoref_id = $request->input('refimpuestoid');
+            $product->itbis = $itbis;
+            $product->user_id = Auth::id();
+            $product->categoria_id = $request->input('categoria');
+            $product->subcategoria_id = $request->input('subcategoria');
+            $product->compuesto = $request->input('compuesto');
+            $product->sale_config = $request->input('saleConfig');
+            $product->service_config = $request->input('serviceConfig');
+            $product->inventory_config = $request->input('inventoryConfig');
+            $product->purchase_config = $request->input('purchaseConfig');
+            $product->save();
 
-        return redirect('/productos');
-
-
-    }
+            DB::connection('client')->commit();
+            return response()->json(['message' => "EL producto fue ingresado con exito"], 200);
+        }catch (\Exception $e)
+        {
+            DB::connection('client')->rollback();
+            return response()->json($e, 400);
+        }
+            }
     public function update(Request $request){
 
         if ($request->hasFile('img')){

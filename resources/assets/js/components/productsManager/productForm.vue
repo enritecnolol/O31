@@ -1,0 +1,329 @@
+<template>
+    <form @submit="save" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="float-left">
+                    <h3>Formulario de Producto</h3>
+                </div>
+                <div class="float-right">
+                    <button type="button"
+                            class="btn btn-danger"
+                            @click="goBack"><i class="fas fa-angle-left" /> Volver</button>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <hr>
+            </div>
+            <div class="col-md-2">
+                <div class="group-control">
+                    <label for="code" class="control-label mb-1" >codigo:</label>
+                    <input id="code" type="text" class="form-control form-control-sm" v-model="code" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="group-control">
+                    <label for="name" class="control-label mb-1" >Nombre:</label>
+                    <input id="name" type="text" class="form-control form-control-sm" v-model="name" required>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="group-control">
+                    <label for="price" class="control-label mb-1" >Precio:</label>
+                    <money
+                            id="price"
+                            v-model="price"
+                            v-bind="money"
+                            class="form-control form-control-sm"
+                            style="text-align: right"
+                            required
+                    />
+                </div>
+            </div>
+            <div class="col-md-6" style="margin-top: 20px">
+                <div class="form-group">
+                    <label for="compositeProduct" class="control-label mb-1">El producto es Compuesto?</label>
+                    <select id="compositeProduct"
+                            required
+                            v-model="compositeProduct"
+                            class="form-control form-control-sm"
+                            style="width: 250px"
+                            name="compositeProduct">
+                        <option value="no">No</option>
+                        <option value="si">Si</option>
+                    </select>
+                    <small><b>Nota: </b>Los producto con que son compuesto no se le lleva la existencia en cuenta.</small>
+                </div>
+            </div>
+            <div class="col-md-6" style="margin-top: 20px">
+                <div class="form-group">
+                    <label for="itbis" class="control-label mb-1">Gravado de itbis</label>
+                    <select id="itbis"
+                            required
+                            v-model="itbis"
+                            class="form-control form-control-sm"
+                            style="width: 250px"
+                            name="compositeProduct">
+                        <option :value="0">No ITBIS</option>
+                        <template v-for="(ref, index) in dataiItbisList">
+                            <option :value="ref.id" :key="index">{{ ref.descripcion}}</option>
+                        </template>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="categories">Categoria:</label>
+                    <div class="input-group mb-2" style="width: 260px;">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <button type="button" data-toggle="modal" data-target="#nuevacategoria"><span style="color: green"><i class="fas fa-plus"></i></span></button>
+                            </div>
+                        </div>
+                        <select class="form-control"  v-model="category"  id="categories" required>
+                            <option value="">Selecciona</option>
+                            <template v-for="(c, index) in categoriesList">
+                                <option :value="c.id" :key="index">{{ c.nombre }}</option>
+                            </template>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="inputFileUpload" class=" form-control-label">Imagen</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="file"
+                               id="inputFileUpload"
+                               name="filename"
+                               class="form-control-file"
+                               @change="onFileChange"
+                        >
+                    </div>
+                    <div class="col-md-12">
+                        <img class="rounded-circle mx-auto d-block" :src="'imagenes/'+img" alt="" style="width: 60px">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ProductStatus">Estado:</label>
+                    <select
+                            id="ProductStatus"
+                            class="form-control form-control-sm"
+                            v-model="status"
+                    >
+                        <option :value="0">Inactivo</option>
+                        <option :value="1">Activo</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="productSale" v-model="saleConfig">
+                    <label class="form-check-label" for="productSale">Producto de venta</label>
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="ProductPurchase" v-model="purchaseConfig">
+                    <label class="form-check-label" for="ProductPurchase">Producto de compra</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="ServiceProduct" v-model="serviceConfig">
+                    <label class="form-check-label" for="ServiceProduct">Producto de servicio</label>
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="InventaryProduct" v-model="inventoryConfig">
+                    <label class="form-check-label" for="InventaryProduct">Producto de inventario</label>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="float-right">
+                    <button type="submit" class="btn btn-primary" value="Upload"><i class="fas fa-save" /> Salvar</button>
+                    <button type="button" class="btn btn-danger"
+                            @click="confirmProduct"
+                            v-if="editData"
+                    ><i class="fas fa-trash-alt" /> Inactivar</button>
+                    <button type="button" class="btn btn-warning" @click="back"><i class="fas fa-times" /> Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</template>
+
+<script>
+    import money from "v-money";
+    Vue.use(money, { precision: 4 });
+    export default {
+        props:['editData'],
+        components:{},
+        data()
+        {
+            return{
+                money: {
+                    decimal: ".",
+                    thousands: ",",
+                    prefix: "RD$ ",
+                    precision: 2,
+                    masked: false
+                },
+                code:'',
+                name:'',
+                price:0,
+                compositeProduct:'no',
+                itbis:0,
+                dataiItbisList:[],
+                category:'',
+                categoriesList:[],
+                filename: '',
+                file: '',
+                success: '',
+                status:1,
+                img:'default.jpg',
+                saleConfig:false,
+                serviceConfig:false,
+                inventoryConfig:false,
+                purchaseConfig:false,
+            }
+        },
+        methods:{
+            confirmProduct (){
+                var txt;
+                var r = confirm("Estas Seguro que quieres INACTIVAR este producto?");
+                if (r == true){
+                    txt = this.deleteProduct(this.editData.id);
+                }
+            },
+            deleteProduct(id){
+                axios.post('/eliminar/producto',{
+                    id:id
+                })
+                    .then((response) => {
+                        toastr.success(response.data.message);
+                        this.reset();
+                        this.$emit('refreshData')
+                    })
+                    .catch((error) => {
+                        console.log(error.response.data.message)
+                    });
+            },
+            goBack()
+            {
+                this.$emit('productForm')
+            },
+            onFileChange(e)
+            {
+                this.filename = "Selected File: " + e.target.files[0].name;
+                this.file = e.target.files[0];
+            },
+            itbisList()
+            {
+                axios.post('/impuestoref/datos/producto',)
+                    .then((response) => {
+                        this.dataiItbisList = response.data;
+                    })
+                    .catch( (error) => {
+                        console.log(error)
+                    });
+            },
+            getCategoriesList() {
+                axios.post('/ver/categoria')
+                    .then( (response) => {
+                        this.categoriesList = response["data"];
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
+            },
+            save(e)
+            {
+                e.preventDefault();
+                const config = {
+                    headers: {
+                        'content-type': 'multipart/form-data',
+                    }
+                };
+                // form data
+                let formData = new FormData();
+                if(this.editData)
+                {
+                    formData.append('id', this.editData.id);
+                }
+                formData.append('img', this.file);
+                formData.append('barcode', this.code);
+                formData.append('nombre', this.name);
+                formData.append('precio', this.price);
+                formData.append('refimpuestoid', this.itbis);
+                formData.append('categoria', this.category);
+                formData.append('subcategoria', '');
+                formData.append('compuesto', this.compositeProduct);
+                formData.append('estado', this.status);
+                formData.append('saleConfig', this.saleConfig ? 1 : 0);
+                formData.append('serviceConfig', this.serviceConfig ? 1 : 0);
+                formData.append('inventoryConfig', this.inventoryConfig ? 1 : 0);
+                formData.append('purchaseConfig', this.purchaseConfig ? 1 : 0);
+
+                // send upload request
+                let url = this.editData ? '/anja/' + this.editData.id : 'products';
+                axios.post(url, formData, config)
+                    .then( (response) => {
+                        toastr.success(response.data.message);
+                        this.reset();
+                        this.$emit('refreshData')
+                    })
+                    .catch( (error) => {
+                        toastr.error(error.response.data.message);
+                    });
+            },
+            back()
+            {
+                this.$emit('refreshData');
+            },
+            reset()
+            {
+                this.file = "";
+                this.filename = "";
+                this.code = "";
+                this.name = "";
+                this.price = "";
+                this.itbis = "";
+                this.category = "";
+                this.compositeProduct = "";
+                this.saleConfig = false;
+                this.serviceConfig = false;
+                this.inventoryConfig = false;
+                this.purchaseConfig = false;
+            },
+            completeForm()
+            {
+                this.code = this.editData.barcode;
+                this.name = this.editData.name;
+                this.price = this.editData.price;
+                this.itbis = this.editData.impuestoref_id;
+                this.category = this.editData.categoria_id;
+                this.compositeProduct = this.editData.compuesto;
+                this.status = this.editData.estado;
+                this.img = this.editData.img;
+                this.saleConfig = this.editData.sale_config;
+                this.serviceConfig = this.editData.service_config;
+                this.inventoryConfig = this.editData.inventory_config;
+                this.purchaseConfig = this.editData.purchase_config;
+            }
+        },
+        created() {
+            this.itbisList();
+            this.getCategoriesList();
+            if(this.editData)
+            {
+                this.completeForm()
+            }
+        }
+    }
+</script>
+
+
+<style scoped>
+
+</style>

@@ -35,7 +35,7 @@ class   CajasController extends Controller
             $cuadre = $fecha["cuadreconf"];
 
         }
-        return view('caja.iniciocaja', compact('fecha', $fecha), compact('cerrad', $cerrad))->with(compact('cuadre', $cuadre));
+        return view('caja.iniciocaja', compact('fecha', $fecha), compact('cerrad'))->with(compact('cuadre'));
     }
 
     /**

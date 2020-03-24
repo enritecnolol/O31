@@ -110,34 +110,46 @@ class ApisController extends Controller
 
 
     public function update(Request $request){
+        DB::connection('client')->beginTransaction();
+        try{
 
-        $id = $request->id;
-        $product = Product::find($id);
+            $id = $request->id;
+            $product = Product::find($id);
 
-        if ($request->has('refimpuestoid') == 0){
-            $itbis = 'no';
-        }else{
-            $itbis = 'si';
+            if ($request->has('refimpuestoid') == 0){
+                $itbis = 'no';
+            }else{
+                $itbis = 'si';
+            }
+
+            if ($request->hasFile('img')) {
+                $file = $request->file('img');
+                $file->storeAs('/', $file->getClientOriginalName());
+                $product->img = $file->getClientOriginalName();
+            }
+            $product->name = $request->nombre;
+            $product->price = $request->precio;
+            $product->barcode = $request->barcode;
+            $product->impost = 0;
+            $product->impuestoref_id = $request->refimpuestoid;
+            $product->itbis = $itbis;
+            $product->categoria_id = $request->categoria;
+            $product->subcategoria_id = $request->subcategoria;
+            $product->compuesto = $request->compuesto;
+            $product->estado = $request->estado;
+            $product->sale_config = $request->saleConfig;
+            $product->service_config = $request->serviceConfig;
+            $product->inventory_config = $request->inventoryConfig;
+            $product->purchase_config = $request->purchaseConfig;
+            $product->update();
+
+            DB::connection('client')->commit();
+            return response()->json(["message"=> "Este producto ha sido editado con exito"], 200);
+        }catch (\Exception $e)
+        {
+            DB::connection('client')->rollback();
+            return response()->json($e, 400);
         }
-
-        if ($request->hasFile('img')) {
-            $file = $request->file('img');
-            $file->storeAs('/', $file->getClientOriginalName());
-            $product->img = $file->getClientOriginalName();
-        }
-        $product->name = $request->nombre;
-        $product->price = $request->precio;
-        $product->barcode = $request->Cbarra;
-        $product->impost = 0;
-        $product->impuestoref_id = $request->refimpuestoid;
-        $product->itbis = $itbis;
-        $product->categoria_id = $request->categoria;
-        $product->subcategoria_id = $request->subcategoria;
-        $product->compuesto = $request->compuesto;
-        $product->estado = $request->estado;
-        $product->update();
-
-        return redirect('/productos');
     }
     public function cuadres(){
 
@@ -218,10 +230,12 @@ class ApisController extends Controller
         return $productos;
     }
     public function eliminarproducto(Request $request){
+
         $product = Product::find($request->id);
         $product->estado = false;
         $product->update();
-        return 'eliminado';
+
+        return response()->json(['message' => "Este producto ha sido desactivado"], 200);
     }
     public function dashboard(){
 
@@ -312,9 +326,26 @@ class ApisController extends Controller
             ->Leftjoin('rangoimpuestos',
                 'rangoimpuestos.referenciaitbis_id',
                 DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
-//            ->where('products.user_id', $id)
-            ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion')
-            )->paginate($request->paginate);
+            ->select(
+                DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion')
+            );
+
+        if($request->search)
+        {
+            $productos = $productos->where('products.name', 'like', '%'.$request->search.'%');
+        }
+
+        if($request->filter['category'])
+        {
+            $productos = $productos->where('products.categoria_id', '=', $request->filter['category']);
+        }
+
+        if($request->filter['status'] && $request->filter['status'] != 'all')
+        {
+            $productos = $productos->where('products.estado', '=', $request->filter['status'] == 1 ? true : false);
+        }
+
+        $productos = $productos->paginate($request->paginate ? $request->paginate : 5);
 
         return $productos;
     }
@@ -329,10 +360,30 @@ class ApisController extends Controller
 
         return $productos;
     }
+
     public function productosSelect(){
         return DB::connection('client')
             ->table('products')
             ->where('estado', true)
+            ->select('id','name', 'price', 'barcode')
+            ->get();
+    }
+
+    public function productosSelectforPurchase(){
+        return DB::connection('client')
+            ->table('products')
+            ->where('estado', true)
+            ->where('purchase_config', true)
+            ->select('id','name', 'price', 'barcode')
+            ->get();
+    }
+
+    public function productosSelectforSale(){
+        return DB::connection('client')
+            ->table('products')
+            ->where('estado', true)
+            ->where('sale_config', true)
+            ->orWhere('service_config', true)
             ->select('id','name', 'price', 'barcode')
             ->get();
     }

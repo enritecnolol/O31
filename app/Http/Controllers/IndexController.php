@@ -54,12 +54,14 @@ class IndexController extends Controller
         $productos = DB::connection('client')
             ->table('products')
             ->where('estado', true)
+            ->where('sale_config', true)
+            ->orWhere('service_config', true)
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
             ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
             ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
 
         if ($caja == '[]' || $caja == null){
-            $cerrada = 'C';
+            $cerrada = "C";
         }else{
             if($caja->fecha_apertura != date("Y-m-d") and $caja->status == 'A'){
                 $cerrada = 'no es dia';
@@ -81,7 +83,7 @@ class IndexController extends Controller
         }
 
         return view('welcome',['caja' => json_encode($caja)] ,['productos' => json_encode($productos)])
-            ->with(compact('cerrada', $cerrada))
+            ->with(compact('cerrada'))
             ->with(compact('categoria', $categoria))
             ->with(compact('alerta'))
             ->with(compact('config'));
@@ -225,7 +227,6 @@ class IndexController extends Controller
             foreach($request->get('detalle') as $d) {
 
                 $detalle = new Detail();
-
                 $detalle->date = now();
                 $detalle->name_product = $d["name"];
                 $detalle->descuento = $d['desc'];

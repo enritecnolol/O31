@@ -341,7 +341,7 @@ export default {
     },
     getProducts() {
       axios
-        .get("/products/select")
+        .get("/products/select/purchase")
         .then(response => {
           this.productsList = response["data"];
           if(this.editData)

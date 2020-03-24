@@ -604,7 +604,7 @@ export default {
     },
     getProducts() {
       axios
-        .get("/products/select")
+        .get("/products/select/sale")
         .then(response => {
           this.productsList = response["data"];
         })
