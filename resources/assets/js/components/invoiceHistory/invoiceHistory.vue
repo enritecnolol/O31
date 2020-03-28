@@ -7,6 +7,16 @@
             <h2>Historial de facturas</h2>
             <hr style="background-color: rgb(0, 98, 204)">
           </div>
+          <div class="col-md-12">
+            <input
+                    style="text-align: center"
+                    type="text"
+                    class="form-control"
+                    v-model="invoice"
+                    @keypress.enter="searchHistory(invoice)"
+                    placeholder="No. Factura"
+            >
+          </div>
           <div class="col-md-12" v-if="!invoiceData">
             <general-table :paginate="tableData" :hover="true" @pageChange="getInvoice" :responsive="false">
               <template slot="table-header">
@@ -85,12 +95,14 @@
         termsList:null,
         invoiceToSearch:"",
         invoiceData:null,
-        invoiceTransactions:null
+        invoiceTransactions:null,
+        invoice:""
       }
     },
     methods:{
       cleanHistory()
       {
+        this.invoice = "";
         this.invoiceToSearch = "";
         this.invoiceData = null;
         this.invoiceTransactions = null;

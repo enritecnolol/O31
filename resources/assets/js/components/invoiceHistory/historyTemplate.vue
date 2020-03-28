@@ -51,7 +51,7 @@
                     </tr>
                 </template>
                 <template slot="table-body">
-                    <tr v-if="invoiceTransactions.lenght == 0">
+                    <tr v-if="invoiceTransactions.length === 0">
                         <td colspan="5" style="text-align: center">No hemos encontrado ningun tipo de transaccion</td>
                     </tr>
                     <tr v-for="(item,index) in invoiceTransactions" :key="index">
@@ -79,7 +79,7 @@
             {
                 this.$emit('cleanHistory')
             }
-        }
+        },
     }
 </script>
 

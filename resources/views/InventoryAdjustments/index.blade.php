@@ -1,0 +1,16 @@
+@extends('main.app')
+@section('tittle','SofiaRD | Ajuste de inventario')
+
+@section('titulo')
+    <h3 style="color: white"><i class="fas fa-arrow-circle-right"></i> Ajuste de inventario</h3>
+@endsection
+@section('aside')
+    @include('caja.siderbar')
+@endsection
+@section('content')
+    <inventory-adjustment />
+@endsection
+
+@section('scriptp')
+    <script src="/js/app.js"></script>
+@endsection

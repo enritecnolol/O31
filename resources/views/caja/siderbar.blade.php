@@ -73,7 +73,14 @@
                     <li>
                         <a style="padding-left: 90px" href="/devolucion">DEVOLUCIÓN</a>
                     </li>
+                    <li>
+                        <a style="padding-left: 90px" href="/invoices/history">HISTORIAL DE FACTURA</a>
+                    </li>
                 </ul>
+            </li>
+            <li>
+                <a href="/inventory/Adjustments">
+                    <i class="fas fa-list-alt"></i><strong>AJUSTE DE INVENTARIO</strong></a>
             </li>
             <li class="has-sub">
                 <a class="js-arrow" href="#">

@@ -10,6 +10,7 @@
       <tbody style="height: 10px !important; overflow: scroll; ">
         <slot name="table-body" />
       </tbody>
+      <slot name="table-footer" />
     </table>
     <pagination
       v-if="paginate"

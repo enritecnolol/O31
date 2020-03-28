@@ -353,6 +353,10 @@ Route::group(['middleware' => 'auth'], function () {
     /*=================================\- Productos -/======================================================*/
     Route::get('/products', 'ProductsController@index2');
     Route::post('/products/img', 'ProductsController@TestIMG');
+    /*=================================\- Ajuste de inventario -/======================================================*/
+    Route::get('/inventory/Adjustments', 'InventoryAdjustmentsController@index');
+    Route::post('/inventory/Adjustments', 'InventoryAdjustmentsController@store');
+    Route::get('/inventory/Adjustments/list', 'InventoryAdjustmentsController@getList');
 });
 
 Auth::routes();
