@@ -23,11 +23,12 @@ class InventoryAdjustmentsController extends Controller
         try {
 
             $InventoryAdjustments = new InventoryAdjustments();
-            $InventoryAdjustments->document = $request->document;
+            $InventoryAdjustments->document = "0";
             $InventoryAdjustments->date_document = $request->date_document;
             $InventoryAdjustments->concept = $request->concept;
             $InventoryAdjustments->note = $request->note;
             $InventoryAdjustments->total = $request->total;
+            $InventoryAdjustments->fit_type = $request->fitType;
             $InventoryAdjustments->save();
 
             foreach ($request->details as $detail)
@@ -40,12 +41,30 @@ class InventoryAdjustmentsController extends Controller
                 $InventoryAdjustmentsDetails->save();
 
                 $product = Product::find($detail['product']['code']);
-                $product->existence = $product->existence +  $detail['quantity'];
+
+                if($request->fitType == "EI")
+                {
+                    $product->existence = $product->existence +  $detail['quantity'];
+
+                }else if($request->fitType == "SI")
+                {
+                    $product->existence = $product->existence - $detail['quantity'];
+
+                }else{
+                    $product->existence = $detail['quantity'];
+                }
+
                 $product->update();
             }
 
+            $company = DB::connection('client')->table('configuracions')->first();
+
             DB::connection('client')->commit();
-            return response()->json(['message' => 'El ajuste de inventario fue guardado con exito'], 200);
+            return response()->json([
+                'message' => 'El ajuste de inventario fue guardado con exito',
+                'document_id' => $InventoryAdjustments->id,
+                'company' => $company
+            ], 200);
         }catch (\Exception $exception)
         {
             DB::connection('client')->rollback();
@@ -57,9 +76,34 @@ class InventoryAdjustmentsController extends Controller
     {
         $db = DB::connection('client');
 
-        $query = $db->table('inventory_adjustments')
-            ->paginate($request->size ? $request->size : 5);
+        $query = $db->table('inventory_adjustments');
+        if($request->search)
+        {
+            $query = $query->where('id', $request->search);
+        }
+        $query = $query->paginate($request->size ? $request->size : 5);
 
         return $query;
+    }
+
+    public function getData(Request $request)
+    {
+        $InventoryAdjustments = InventoryAdjustments::find($request->id);
+
+        $InventoryAdjustmentsDetails =  DB::connection('client')
+            ->table('inventory_adjustments_details')
+            ->join('products', 'inventory_adjustments_details.product_id', '=', 'products.id')
+            ->where('inventory_adjustments_id', $request->id)
+            ->select('inventory_adjustments_details.*', 'products.name')
+            ->get();
+
+        $company = DB::connection('client')->table('configuracions')->first();
+
+        return response()->json([
+            'InventoryAdjustments' => $InventoryAdjustments,
+            'InventoryAdjustmentsDetails' => $InventoryAdjustmentsDetails,
+            'company' => $company
+        ], 200);
+
     }
 }

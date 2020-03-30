@@ -357,6 +357,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/inventory/Adjustments', 'InventoryAdjustmentsController@index');
     Route::post('/inventory/Adjustments', 'InventoryAdjustmentsController@store');
     Route::get('/inventory/Adjustments/list', 'InventoryAdjustmentsController@getList');
+    Route::get('/inventory/Adjustments/dataInfo', 'InventoryAdjustmentsController@getData');
 });
 
 Auth::routes();
