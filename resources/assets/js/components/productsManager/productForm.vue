@@ -34,6 +34,7 @@
                         <div class="group-control">
                             <label for="price" class="control-label mb-1" >Precio:</label>
                             <money
+                                    v-if="!resetPriceInput"
                                     id="price"
                                     v-model="price"
                                     v-bind="money"
@@ -46,7 +47,7 @@
                     <div class="col-md-3" style="margin-top: 15px">
                         <div class="group-control">
                             <label for="cost" class="control-label mb-1" >Costo:</label>
-                            <money
+                            <money v-if="!resetCostInput"
                                     id="cost"
                                     v-model="cost"
                                     v-bind="money"
@@ -173,6 +174,8 @@
         data()
         {
             return{
+                resetCostInput:false,
+                resetPriceInput:false,
                 money: {
                     decimal: ".",
                     thousands: ",",
@@ -344,6 +347,28 @@
                 if (this.category === "create")
                 {
                     $('#newCategory').modal('show')
+                }
+            },
+            cost(newCost, oldCost)
+            {
+                if(newCost > 999999999.99)
+                {
+                    this.resetCostInput = true;
+                    this.cost = oldCost;
+                    setTimeout(() => {
+                        this.resetCostInput = false;
+                    },1)
+                }
+            },
+            price(newPrice, oldPrice)
+            {
+                if(newPrice > 999999999.99)
+                {
+                    this.resetPriceInput = true;
+                    this.price = oldPrice;
+                    setTimeout(() => {
+                        this.resetPriceInput = false;
+                    },1)
                 }
             }
         },

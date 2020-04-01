@@ -133436,7 +133436,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -133616,6 +133616,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -133625,6 +133626,8 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_v_money___default.a, { precision: 4 });
     components: { newCategory: __WEBPACK_IMPORTED_MODULE_1__categoryModal___default.a },
     data: function data() {
         return {
+            resetCostInput: false,
+            resetPriceInput: false,
             money: {
                 decimal: ".",
                 thousands: ",",
@@ -133785,6 +133788,28 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_v_money___default.a, { precision: 4 });
         category: function category() {
             if (this.category === "create") {
                 $('#newCategory').modal('show');
+            }
+        },
+        cost: function cost(newCost, oldCost) {
+            var _this5 = this;
+
+            if (newCost > 999999999.99) {
+                this.resetCostInput = true;
+                this.cost = oldCost;
+                setTimeout(function () {
+                    _this5.resetCostInput = false;
+                }, 1);
+            }
+        },
+        price: function price(newPrice, oldPrice) {
+            var _this6 = this;
+
+            if (newPrice > 999999999.99) {
+                this.resetPriceInput = true;
+                this.price = oldPrice;
+                setTimeout(function () {
+                    _this6.resetPriceInput = false;
+                }, 1);
             }
         }
     },
@@ -134272,26 +134297,28 @@ var render = function() {
                       [_vm._v("Precio:")]
                     ),
                     _vm._v(" "),
-                    _c(
-                      "money",
-                      _vm._b(
-                        {
-                          staticClass: "form-control form-control-sm",
-                          staticStyle: { "text-align": "right" },
-                          attrs: { id: "price", required: "" },
-                          model: {
-                            value: _vm.price,
-                            callback: function($$v) {
-                              _vm.price = $$v
+                    !_vm.resetPriceInput
+                      ? _c(
+                          "money",
+                          _vm._b(
+                            {
+                              staticClass: "form-control form-control-sm",
+                              staticStyle: { "text-align": "right" },
+                              attrs: { id: "price", required: "" },
+                              model: {
+                                value: _vm.price,
+                                callback: function($$v) {
+                                  _vm.price = $$v
+                                },
+                                expression: "price"
+                              }
                             },
-                            expression: "price"
-                          }
-                        },
-                        "money",
-                        _vm.money,
-                        false
-                      )
-                    )
+                            "money",
+                            _vm.money,
+                            false
+                          )
+                        )
+                      : _vm._e()
                   ],
                   1
                 )
@@ -134318,26 +134345,28 @@ var render = function() {
                       [_vm._v("Costo:")]
                     ),
                     _vm._v(" "),
-                    _c(
-                      "money",
-                      _vm._b(
-                        {
-                          staticClass: "form-control form-control-sm",
-                          staticStyle: { "text-align": "right" },
-                          attrs: { id: "cost", required: "" },
-                          model: {
-                            value: _vm.cost,
-                            callback: function($$v) {
-                              _vm.cost = $$v
+                    !_vm.resetCostInput
+                      ? _c(
+                          "money",
+                          _vm._b(
+                            {
+                              staticClass: "form-control form-control-sm",
+                              staticStyle: { "text-align": "right" },
+                              attrs: { id: "cost", required: "" },
+                              model: {
+                                value: _vm.cost,
+                                callback: function($$v) {
+                                  _vm.cost = $$v
+                                },
+                                expression: "cost"
+                              }
                             },
-                            expression: "cost"
-                          }
-                        },
-                        "money",
-                        _vm.money,
-                        false
-                      )
-                    )
+                            "money",
+                            _vm.money,
+                            false
+                          )
+                        )
+                      : _vm._e()
                   ],
                   1
                 )
