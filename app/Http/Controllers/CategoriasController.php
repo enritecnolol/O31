@@ -44,6 +44,44 @@ class CategoriasController extends Controller
         return redirect('categorias');
 
     }
+
+    public function store(Request $request){
+        DB::connection("client")->beginTransaction();
+
+        if(DB::connection('client')->table('categorias')->where('codigo', $request->code)->first())
+        {
+            return response()->json([
+               "message" => "Este codigo ya esta utilizado"
+            ], 400);
+        }
+
+        try {
+
+            $categoria = new Categoria();
+            $categoria->img = 'default.jpg';
+            if ($request->hasFile('img')) {
+                $file = $request->file('img');
+                $file->storeAs('/', $file->getClientOriginalName());
+                $categoria->img = $file->getClientOriginalName();
+            }
+            $categoria->nombre = $request->name;
+            $categoria->codigo = $request->code;
+            $categoria->user_id = Auth::id();
+            $categoria->save();
+
+            DB::connection("client")->commit();
+            return response()->json([
+                'message' => "La categoria se ha creado con exito"
+            ], 200);
+
+        }catch (\Exception $exception)
+        {
+            DB::connection("client")->rollback();
+            return response()->json($exception, 400);
+        }
+
+    }
+
     public function editarcategoria(Request $request){
         $id = $request->idcategoria;
         $categoria = Categoria::find($id);

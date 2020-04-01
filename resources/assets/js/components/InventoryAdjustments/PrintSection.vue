@@ -63,7 +63,7 @@
                         <tfoot>
                         <tr>
                             <td colspan="4"></td>
-                            <th style="text-align: right">{{dataHeader.total ? dataHeader.total : totalItems}}</th>
+                            <th style="text-align: right">{{parseFloat(dataHeader.total ? dataHeader.total : totalItems).formatMoney(2)}}</th>
                         </tr>
                         </tfoot>
                     </template>

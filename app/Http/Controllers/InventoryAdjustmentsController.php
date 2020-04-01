@@ -45,11 +45,9 @@ class InventoryAdjustmentsController extends Controller
                 if($request->fitType == "EI")
                 {
                     $product->existence = $product->existence +  $detail['quantity'];
-
                 }else if($request->fitType == "SI")
                 {
                     $product->existence = $product->existence - $detail['quantity'];
-
                 }else{
                     $product->existence = $detail['quantity'];
                 }

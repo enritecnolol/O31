@@ -14,151 +14,162 @@
             <div class="col-md-12">
                 <hr>
             </div>
-            <div class="col-md-2">
-                <div class="group-control">
-                    <label for="code" class="control-label mb-1" >codigo:</label>
-                    <input id="code" type="text" class="form-control form-control-sm" v-model="code" required>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="group-control">
-                    <label for="name" class="control-label mb-1" >Nombre:</label>
-                    <input id="name" type="text" class="form-control form-control-sm" v-model="name" required>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="group-control">
-                    <label for="price" class="control-label mb-1" >Precio:</label>
-                    <money
-                            id="price"
-                            v-model="price"
-                            v-bind="money"
-                            class="form-control form-control-sm"
-                            style="text-align: right"
-                            required
-                    />
-                </div>
-            </div>
-            <div class="col-md-6" style="margin-top: 20px">
-                <div class="form-group">
-                    <label for="compositeProduct" class="control-label mb-1">El producto es Compuesto?</label>
-                    <select id="compositeProduct"
-                            required
-                            v-model="compositeProduct"
-                            class="form-control form-control-sm"
-                            style="width: 250px"
-                            name="compositeProduct">
-                        <option value="no">No</option>
-                        <option value="si">Si</option>
-                    </select>
-                    <small><b>Nota: </b>Los producto con que son compuesto no se le lleva la existencia en cuenta.</small>
-                </div>
-            </div>
-            <div class="col-md-6" style="margin-top: 20px">
-                <div class="form-group">
-                    <label for="itbis" class="control-label mb-1">Gravado de itbis</label>
-                    <select id="itbis"
-                            required
-                            v-model="itbis"
-                            class="form-control form-control-sm"
-                            style="width: 250px"
-                            name="compositeProduct">
-                        <option :value="0">No ITBIS</option>
-                        <template v-for="(ref, index) in dataiItbisList">
-                            <option :value="ref.id" :key="index">{{ ref.descripcion}}</option>
-                        </template>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="categories">Categoria:</label>
-                    <div class="input-group mb-2" style="width: 260px;">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <button type="button" data-toggle="modal" data-target="#nuevacategoria"><span style="color: green"><i class="fas fa-plus"></i></span></button>
-                            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="group-control">
+                            <label for="name" class="control-label mb-1" >Nombre:</label>
+                            <input id="name" type="text" class="form-control form-control-sm" v-model="name" required>
                         </div>
-                        <select class="form-control"  v-model="category"  id="categories" required>
-                            <option value="">Selecciona</option>
-                            <template v-for="(c, index) in categoriesList">
-                                <option :value="c.id" :key="index">{{ c.nombre }}</option>
-                            </template>
-                        </select>
+                    </div>
+                    <div class="col-md-2"/>
+                    <div class="col-md-3">
+                        <div class="group-control">
+                            <label for="code" class="control-label mb-1" >codigo:</label>
+                            <input id="code" type="text" class="form-control form-control-sm" v-model="code" required>
+                        </div>
+                    </div>
+                    <div class="col-md-9" />
+                    <div class="col-md-3" style="margin-top: 15px">
+                        <div class="group-control">
+                            <label for="price" class="control-label mb-1" >Precio:</label>
+                            <money
+                                    id="price"
+                                    v-model="price"
+                                    v-bind="money"
+                                    class="form-control form-control-sm"
+                                    style="text-align: right"
+                                    required
+                            />
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="margin-top: 15px">
+                        <div class="group-control">
+                            <label for="cost" class="control-label mb-1" >Costo:</label>
+                            <money
+                                    id="cost"
+                                    v-model="cost"
+                                    v-bind="money"
+                                    class="form-control form-control-sm"
+                                    style="text-align: right"
+                                    required
+                            />
+                        </div>
+                    </div>
+                    <div class="col-md-6"/>
+                    <div class="col-md-6" style="margin-top: 15px">
+                        <div class="form-group">
+                            <label for="itbis" class="control-label mb-1">Gravado de itbis</label>
+                            <select id="itbis"
+                                    required
+                                    v-model="itbis"
+                                    class="form-control form-control-sm"
+                                    name="compositeProduct">
+                                <option :value="0">No ITBIS</option>
+                                <template v-for="(ref, index) in dataiItbisList">
+                                    <option :value="ref.id" :key="index">{{ ref.descripcion}}</option>
+                                </template>
+                            </select>
+                        </div>
+                    </div>
+<!--                    <div class="col-md-6" style="margin-top: 20px">-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="compositeProduct" class="control-label mb-1">El producto es Compuesto?</label>-->
+<!--                            <select id="compositeProduct"-->
+<!--                                    required-->
+<!--                                    v-model="compositeProduct"-->
+<!--                                    class="form-control form-control-sm"-->
+<!--                                    style="width: 250px"-->
+<!--                                    name="compositeProduct">-->
+<!--                                <option value="no">No</option>-->
+<!--                                <option value="si">Si</option>-->
+<!--                            </select>-->
+<!--                            <small><b>Nota: </b>Los producto con que son compuesto no se le lleva la existencia en cuenta.</small>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <div class="col-md-6" style="margin-top: 15px">
+                        <div class="form-group">
+                            <label for="categories">Categoria:</label>
+                            <select class="form-control form-control-sm"  v-model="category"  id="categories" required>
+                                <option value="">Selecciona</option>
+                                <template v-for="(c, index) in categoriesList">
+                                    <option :value="c.id" :key="index">{{ c.nombre }}</option>
+                                </template>
+                                <option value="create" style="background-color: #2b32b2;color:white;">Crear categoria</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="productSale" v-model="saleConfig">
+                            <label class="form-check-label" for="productSale">Producto de venta</label>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="ProductPurchase" v-model="purchaseConfig">
+                            <label class="form-check-label" for="ProductPurchase">Producto de compra</label>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="ServiceProduct" v-model="serviceConfig">
+                            <label class="form-check-label" for="ServiceProduct">Producto de servicio</label>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="InventaryProduct" v-model="inventoryConfig">
+                            <label class="form-check-label" for="InventaryProduct">Producto de inventario</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2"/>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="ProductStatus">Estado:</label>
+                            <select
+                                    id="ProductStatus"
+                                    class="form-control form-control-sm"
+                                    v-model="status"
+                            >
+                                <option :value="0">Inactivo</option>
+                                <option :value="1">Activo</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label for="inputFileUpload" class=" form-control-label">Imagen</label>
-                    </div>
-                    <div class="col-12 col-md-9">
-                        <input type="file"
-                               id="inputFileUpload"
-                               name="filename"
-                               class="form-control-file"
-                               @change="onFileChange"
-                        >
-                    </div>
-                    <div class="col-md-12">
-                        <img class="rounded-circle mx-auto d-block" :src="'imagenes/'+img" alt="" style="width: 60px">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="ProductStatus">Estado:</label>
-                    <select
-                            id="ProductStatus"
-                            class="form-control form-control-sm"
-                            v-model="status"
-                    >
-                        <option :value="0">Inactivo</option>
-                        <option :value="1">Activo</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="productSale" v-model="saleConfig">
-                    <label class="form-check-label" for="productSale">Producto de venta</label>
-                </div>
-                <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="ProductPurchase" v-model="purchaseConfig">
-                    <label class="form-check-label" for="ProductPurchase">Producto de compra</label>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="ServiceProduct" v-model="serviceConfig">
-                    <label class="form-check-label" for="ServiceProduct">Producto de servicio</label>
-                </div>
-                <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="InventaryProduct" v-model="inventoryConfig">
-                    <label class="form-check-label" for="InventaryProduct">Producto de inventario</label>
-                </div>
+            <div class="col-md-4 text-center">
+                <input
+                        style="display: none"
+                        ref="cover"
+                        type="file"
+                        id="inputFileUpload"
+                        name="filename"
+                        class="form-control-file"
+                        @change="onFileChange"
+                >
+                <img :src="urlImg ? urlImg : 'imagenes/'+img" alt="" style="width: 150px;margin-top: 32%;cursor:pointer" @click="$refs.cover.click()">
+                <label>Haga click en la imagen para cambiarla</label>
             </div>
             <div class="col-md-12">
                 <div class="float-right">
                     <button type="submit" class="btn btn-primary" value="Upload"><i class="fas fa-save" /> Salvar</button>
-                    <button type="button" class="btn btn-danger"
-                            @click="confirmProduct"
-                            v-if="editData"
-                    ><i class="fas fa-trash-alt" /> Inactivar</button>
+                    <!--                    <button type="button" class="btn btn-danger"-->
+                    <!--                            @click="confirmProduct"-->
+                    <!--                            v-if="editData"-->
+                    <!--                    ><i class="fas fa-trash-alt" /> Inactivar</button>-->
                     <button type="button" class="btn btn-warning" @click="back"><i class="fas fa-times" /> Cancelar</button>
                 </div>
             </div>
         </div>
+        <newCategory @refreshCategory="getCategoriesList"/>
     </form>
 </template>
 
 <script>
     import money from "v-money";
+    import newCategory from "./categoryModal";
     Vue.use(money, { precision: 4 });
     export default {
         props:['editData'],
-        components:{},
+        components:{newCategory},
         data()
         {
             return{
@@ -172,6 +183,7 @@
                 code:'',
                 name:'',
                 price:0,
+                cost:0,
                 compositeProduct:'no',
                 itbis:0,
                 dataiItbisList:[],
@@ -186,6 +198,7 @@
                 serviceConfig:false,
                 inventoryConfig:false,
                 purchaseConfig:false,
+                urlImg:""
             }
         },
         methods:{
@@ -211,12 +224,15 @@
             },
             goBack()
             {
+                this.reset();
                 this.$emit('productForm')
             },
             onFileChange(e)
             {
+                console.log(e)
                 this.filename = "Selected File: " + e.target.files[0].name;
                 this.file = e.target.files[0];
+                this.urlImg = URL.createObjectURL(this.file);
             },
             itbisList()
             {
@@ -232,6 +248,7 @@
                 axios.post('/ver/categoria')
                     .then( (response) => {
                         this.categoriesList = response["data"];
+                        this.category = "";
                     })
                     .catch((error) => {
                         console.log(error)
@@ -255,6 +272,7 @@
                 formData.append('barcode', this.code);
                 formData.append('nombre', this.name);
                 formData.append('precio', this.price);
+                formData.append('cost', this.cost);
                 formData.append('refimpuestoid', this.itbis);
                 formData.append('categoria', this.category);
                 formData.append('subcategoria', '');
@@ -288,6 +306,7 @@
                 this.code = "";
                 this.name = "";
                 this.price = "";
+                this.cost = "";
                 this.itbis = "";
                 this.category = "";
                 this.compositeProduct = "";
@@ -301,6 +320,7 @@
                 this.code = this.editData.barcode;
                 this.name = this.editData.name;
                 this.price = this.editData.price;
+                this.cost = this.editData.cost;
                 this.itbis = this.editData.impuestoref_id;
                 this.category = this.editData.categoria_id;
                 this.compositeProduct = this.editData.compuesto;
@@ -310,6 +330,15 @@
                 this.serviceConfig = this.editData.service_config;
                 this.inventoryConfig = this.editData.inventory_config;
                 this.purchaseConfig = this.editData.purchase_config;
+            }
+        },
+        watch:{
+            category()
+            {
+                if (this.category === "create")
+                {
+                    $('#newCategory').modal('show')
+                }
             }
         },
         created() {

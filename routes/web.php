@@ -60,6 +60,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     ///////////////////////////////////////-Categoria-////////////////////////////////////////////////////
     Route::post('/crear/categoria', 'ApisController@crearcategoriarapida');// api para agregar categoria rapido en productos
+    Route::post('/category', 'CategoriasController@store'); // api para agregar categoria rapido en productos
     Route::post('/ver/categoria', 'ApisController@cargarcategoria');// api ver categoria
     Route::post('vender/productos/categoria', 'ApisController@productoscategoria' );// api para sacar las categoria en la pantalla de vender
     Route::get('productos/categoria', 'ApisController@productosporcategoria' );//productos por categoria

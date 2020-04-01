@@ -129,6 +129,7 @@ class ApisController extends Controller
             }
             $product->name = $request->nombre;
             $product->price = $request->precio;
+            $product->cost = $request->cost;
             $product->barcode = $request->barcode;
             $product->impost = 0;
             $product->impuestoref_id = $request->refimpuestoid;

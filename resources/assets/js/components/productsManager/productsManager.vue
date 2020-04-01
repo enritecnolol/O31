@@ -4,7 +4,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12" v-if="productForm">
-                        <product-form @productForm="productForm = false" :editData="editData" @refreshData="refreshData"/>
+                        <product-form @productForm="productFormStatus" :editData="editData" @refreshData="refreshData"/>
                     </div>
                     <div class="col-md-12" v-else>
                         <div class="row">
@@ -171,6 +171,11 @@
             }
         },
         methods:{
+            productFormStatus()
+            {
+                this.productForm = false;
+                this.editData = null;
+            },
             categoriesSelect(i)
             {
                 this.filter.category = i.categories;

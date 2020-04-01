@@ -74,6 +74,7 @@ class ProductsController extends Controller
             }
             $product->name = $request->input('nombre');
             $product->price = $request->input('precio');
+            $product->cost = $request->input('cost');
             $product->barcode = $request->input('barcode');
             $product->img = $request->hasFile('img') ? $file->getClientOriginalName() : 'default.jpg';
             $product->existence = 0;
