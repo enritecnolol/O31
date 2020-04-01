@@ -252,6 +252,10 @@
                     .then( (response) => {
                         this.categoriesList = response["data"];
                         this.category = "";
+                        if(this.editData)
+                        {
+                            this.completeForm()
+                        }
                     })
                     .catch((error) => {
                         console.log(error)
