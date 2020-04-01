@@ -293,7 +293,7 @@
                 formData.append('purchaseConfig', this.purchaseConfig ? 1 : 0);
 
                 // send upload request
-                let url = this.editData ? '/anja/' + this.editData.id : 'products';
+                let url = this.editData ? '/anja/' + this.editData.id : 'productos';
                 axios.post(url, formData, config)
                     .then( (response) => {
                         toastr.success(response.data.message);

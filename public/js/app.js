@@ -133741,7 +133741,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_v_money___default.a, { precision: 4 });
             formData.append('purchaseConfig', this.purchaseConfig ? 1 : 0);
 
             // send upload request
-            var url = this.editData ? '/anja/' + this.editData.id : 'products';
+            var url = this.editData ? '/anja/' + this.editData.id : 'productos';
             axios.post(url, formData, config).then(function (response) {
                 toastr.success(response.data.message);
                 _this4.reset();
