@@ -5,7 +5,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for>Nombre Cliente</label>
-            <input type="text" v-model="namec" class="form-control form-control-sm" />
+            <input type="text" maxlength="50" v-model="namec" class="form-control form-control-sm" />
           </div>
         </div>
         <div class="col-md-6">
@@ -27,7 +27,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for>Base de datos</label>
-            <input type="text" class="form-control form-control-sm" v-model="database" />
+            <input type="text" maxlength="50" class="form-control form-control-sm" v-model="database" />
           </div>
         </div>
         <div class="col-md-6">

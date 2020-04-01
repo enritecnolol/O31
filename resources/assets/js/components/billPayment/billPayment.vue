@@ -27,7 +27,7 @@
                   Email:
                   <span style="color:red">*</span>
                 </label>
-                <input type="text" class="form-control form-control-sm" id="email" v-model="email" />
+                <input type="text" maxlength="50" class="form-control form-control-sm" id="email" v-model="email" />
               </div>
               <div class="col-md-6">
                 <div class="float-right">
@@ -67,6 +67,7 @@
                 <label for="reference">No. Referencia:</label>
                 <input
                   type="text"
+                  maxlength="50"
                   class="form-control form-control-sm"
                   id="reference"
                   v-model="reference"
@@ -76,6 +77,7 @@
                 <label for="deposit">Depositado a :</label>
                 <input
                   type="text"
+                  maxlength="50"
                   class="form-control form-control-sm"
                   id="deposit"
                   v-model="deposit"

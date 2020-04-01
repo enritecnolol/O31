@@ -59,11 +59,13 @@ class CategoriasController extends Controller
 
             $categoria = new Categoria();
             $categoria->img = 'default.jpg';
+
             if ($request->hasFile('img')) {
                 $file = $request->file('img');
                 $file->storeAs('/', $file->getClientOriginalName());
                 $categoria->img = $file->getClientOriginalName();
             }
+
             $categoria->nombre = $request->name;
             $categoria->codigo = $request->code;
             $categoria->user_id = Auth::id();
@@ -83,6 +85,7 @@ class CategoriasController extends Controller
     }
 
     public function editarcategoria(Request $request){
+        
         $id = $request->idcategoria;
         $categoria = Categoria::find($id);
 

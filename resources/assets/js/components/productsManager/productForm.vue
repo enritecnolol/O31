@@ -19,14 +19,14 @@
                     <div class="col-md-10">
                         <div class="group-control">
                             <label for="name" class="control-label mb-1" >Nombre:</label>
-                            <input id="name" type="text" class="form-control form-control-sm" v-model="name" required>
+                            <input id="name" maxlength="50" type="text" class="form-control form-control-sm" v-model="name" required>
                         </div>
                     </div>
                     <div class="col-md-2"/>
                     <div class="col-md-3">
                         <div class="group-control">
                             <label for="code" class="control-label mb-1" >codigo:</label>
-                            <input id="code" type="text" class="form-control form-control-sm" v-model="code" required>
+                            <input id="code" type="text" maxlength="10" class="form-control form-control-sm" v-model="code" required>
                         </div>
                     </div>
                     <div class="col-md-9" />
@@ -263,6 +263,12 @@
                     }
                 };
                 // form data
+                if(this.cost.toString().length > 12 || this.price.toString().length > 12)
+                {
+                    toastr.warning("Hemos encontrado una irregularidad en los numeros");
+                    return;
+
+                }
                 let formData = new FormData();
                 if(this.editData)
                 {

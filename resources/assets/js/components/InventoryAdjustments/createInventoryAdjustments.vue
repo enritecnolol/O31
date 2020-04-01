@@ -41,7 +41,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="concept">Concepto: <span style="color: red">*</span></label>
-                    <input id="concept" type="text" class="form-control form-control-sm" v-model="concept">
+                    <input id="concept" type="text" maxlength="191" class="form-control form-control-sm" v-model="concept">
                 </div>
                 <div class="form-group">
                     <label for="fitType">Tipo ajuste:</label>

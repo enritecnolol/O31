@@ -2,7 +2,7 @@
     <form @submit.prevent="save">
       <div class="form-group">
         <label for="name">Nombre</label>
-        <input type="text" class="form-control" id="name" v-model="name">
+        <input type="text" maxlength="50" class="form-control" id="name" v-model="name">
       </div>
       <div class="form-group">
         <label for="email">Correo Electronico</label>

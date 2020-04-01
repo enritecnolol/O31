@@ -12,7 +12,7 @@
                     <form @submit.prevent="save" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="name" class="control-label mb-1" >Nombre Categoria</label>
-                            <input id="name" v-model="name" name="name" required type="text" class="form-control">
+                            <input id="name" v-model="name" maxlength="50" name="name" required type="text" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="code" class="control-label mb-1" >Codigo:</label>

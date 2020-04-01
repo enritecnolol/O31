@@ -32,6 +32,7 @@
           </label>
           <input
             type="text"
+            maxlength="50"
             class="form-control form-control-sm"
             v-model="email"
             id="TexInputEmail"
@@ -109,6 +110,7 @@
               v-model="data_ncf.telefono"
               class="form-control form-control-sm"
               type="text"
+              maxlength="50"
             />
           </div>
         </div>
@@ -143,6 +145,7 @@
               v-model="data_ncf.razon"
               class="form-control form-control-sm"
               type="text"
+              maxlength="50"
             />
           </div>
         </div>
