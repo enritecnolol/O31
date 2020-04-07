@@ -35,8 +35,6 @@ class ImpuestosController extends Controller
 
         if ($itbis == '[]'){
             $itbis = 'no resultado';
-        }else{
-            $itbis =$itbis;
         }
 
         return $itbis;

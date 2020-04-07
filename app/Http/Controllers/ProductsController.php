@@ -85,11 +85,12 @@ class ProductsController extends Controller
             $product->user_id = Auth::id();
             $product->categoria_id = $request->input('categoria');
             $product->subcategoria_id = $request->input('subcategoria');
-            $product->compuesto = $request->input('compuesto');
+            $product->compuesto = $request->input('inventoryConfig') ? "si":"no";
             $product->sale_config = $request->input('saleConfig');
             $product->service_config = $request->input('serviceConfig');
             $product->inventory_config = $request->input('inventoryConfig');
             $product->purchase_config = $request->input('purchaseConfig');
+            $product->description = $request->input('description');
             $product->save();
 
             DB::connection('client')->commit();

@@ -136,12 +136,13 @@ class ApisController extends Controller
             $product->itbis = $itbis;
             $product->categoria_id = $request->categoria;
             $product->subcategoria_id = $request->subcategoria;
-            $product->compuesto = $request->compuesto;
+            $product->compuesto = $request->inventoryConfig ? "si":"no";
             $product->estado = $request->estado;
             $product->sale_config = $request->saleConfig;
             $product->service_config = $request->serviceConfig;
             $product->inventory_config = $request->inventoryConfig;
             $product->purchase_config = $request->purchaseConfig;
+            $product->description = $request->description;
             $product->update();
 
             DB::connection('client')->commit();
@@ -382,10 +383,24 @@ class ApisController extends Controller
     public function productosSelectforSale(){
         return DB::connection('client')
             ->table('products')
+            ->Leftjoin(
+                'impuestosrefs',
+                'products.impuestoref_id',
+                'impuestosrefs.id'
+            )
+            ->Leftjoin(
+                'rangoimpuestos',
+                'rangoimpuestos.referenciaitbis_id',
+                DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta')
+            )
             ->where('estado', true)
             ->where('sale_config', true)
             ->orWhere('service_config', true)
-            ->select('id','name', 'price', 'barcode')
+            ->select('products.id','name', 'price', 'barcode', 'description',
+                DB::connection('client')->raw('IFNULL(impuestosrefs.descripcion, "") AS itbis_description'),
+                DB::connection('client')->raw('IFNULL(rangoimpuestos.porciento, 0) AS porciento'),
+                'impuestoref_id'
+            )
             ->get();
     }
 

@@ -113,7 +113,7 @@ class BillingCustomersController extends Controller
                 DB::raw('amount total_facture'),
                 DB::raw("'PAGADO' status"), 'created_at')
             ->union($transactionsInvoices)
-            ->orderBy('date');
+            ->orderBy('created_at','desc');
 
         return [
             'transactions' => $transactionsPayments->get()

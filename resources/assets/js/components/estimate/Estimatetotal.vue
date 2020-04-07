@@ -8,15 +8,24 @@
           <div class="col-md-6" style="margin-top: 10px">
             <b>SubTotal:</b>
           </div>
-          <div class="col-md-6" style="margin-top: 10px">RD${{parseFloat(subTotal).formatMoney(2)}}</div>
+          <div class="col-md-6" style="margin-top: 10px;text-align: right;">RD${{parseFloat(subTotal).formatMoney(2)}}</div>
           <template v-if="discount">
             <div class="col-md-6" style="margin-top: 10px">
               <b>Descuento:</b>
             </div>
             <div
               class="col-md-6"
-              style="margin-top: 10px"
+              style="margin-top: 10px;text-align: right;"
             >RD${{parseFloat(discount).formatMoney(2)}}</div>
+          </template>
+          <template v-if="tax">
+            <div class="col-md-6" style="margin-top: 10px">
+              <b >Impuestos:</b>
+            </div>
+            <div
+              class="col-md-6"
+              style="margin-top: 10px;text-align: right;"
+            >RD${{parseFloat(tax).formatMoney(2)}}</div>
           </template>
           <div class="col-md-12">
             <hr />
@@ -24,7 +33,7 @@
           <div class="col-md-6">
             <b>Monto Total:</b>
           </div>
-          <div class="col-md-6">RD${{parseFloat(subTotal - discount).formatMoney(2)}}</div>
+          <div class="col-md-6" style="text-align: right;">RD${{parseFloat(total).formatMoney(2)}}</div>
         </div>
       </div>
     </div>
@@ -32,7 +41,7 @@
 </template>
 <script>
 export default {
-  props: ["subTotal", "discount"]
+  props: ["subTotal", "discount", "tax", "total"]
 };
 </script>
 <style>

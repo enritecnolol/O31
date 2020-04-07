@@ -31,11 +31,11 @@
             <span style="color:red">*</span>
           </label>
           <input
-            type="text"
-            class="form-control form-control-sm"
-            v-model="email"
-            id="TexInputEmail"
-            style="width: 300px;"
+                  type="text"
+                  class="form-control form-control-sm"
+                  v-model="email"
+                  id="TexInputEmail"
+                  style="width: 300px;"
           />
         </div>
       </div>
@@ -50,10 +50,10 @@
               <span style="color:red">*</span>
             </label>
             <datepicker
-              v-model="estimateDate"
-              class="form-control form-control-sm"
-              :format="'yyyy-MM-dd'"
-              name="estimateDate"
+                    v-model="estimateDate"
+                    class="form-control form-control-sm"
+                    :format="'yyyy-MM-dd'"
+                    name="estimateDate"
             />
           </div>
           <div class="col-md-4">
@@ -62,10 +62,10 @@
               <span style="color:red">*</span>
             </label>
             <datepicker
-              v-model="dueDate"
-              class="form-control form-control-sm"
-              :format="'yyyy-MM-dd'"
-              name="dueDate"
+                    v-model="dueDate"
+                    class="form-control form-control-sm"
+                    :format="'yyyy-MM-dd'"
+                    name="dueDate"
             />
           </div>
         </div>
@@ -86,11 +86,11 @@
             <span style="color:red">*</span>
           </label>
           <input
-            type="text"
-            class="form-control form-control-sm"
-            placeholder="#0000"
-            v-model="codeEstimate"
-            id="TexInput1"
+                  type="text"
+                  class="form-control form-control-sm"
+                  placeholder="#0000"
+                  v-model="codeEstimate"
+                  id="TexInput1"
           />
         </div>
       </div>
@@ -121,7 +121,7 @@
               <p style="float: right">Precio</p>
             </th>
             <th>
-              <p style="float: right">Descuento</p>
+              <p style="float: right">Itbis</p>
             </th>
             <th>
               <p style="float: right">Importe</p>
@@ -131,12 +131,13 @@
           <template slot="table-body">
             <template v-for="(item, index) in items">
               <itemBody
-                :key="index"
-                :index="index"
-                :item="item"
-                :products-list="productsList"
-                @removeItem="removeElement"
-                @replaceElement="replaceElement"
+                      :list-itbis="ListItbis"
+                      :key="index"
+                      :index="index"
+                      :item="item"
+                      :products-list="productsList"
+                      @removeItem="removeElement"
+                      @replaceElement="replaceElement"
               />
             </template>
           </template>
@@ -151,7 +152,7 @@
         <hr />
       </div>
       <div class="col-md-12" style="margin-top: 15px">
-        <estimate-total :subTotal="subTotal" />
+        <estimate-total :subTotal="subTotal" :total="total" :tax="tax"  />
         <div class="float-left">
           <div class="form-group">
             <label for="NoteTextArea">Nota:</label>
@@ -180,172 +181,38 @@
   </div>
 </template>
 <script>
-import Vue from "vue";
-import vSelect from "vue-select";
-import "vue-select/dist/vue-select.css";
-import money from "v-money";
-Vue.use(money, { precision: 4 });
-Vue.component("v-select", vSelect);
-import Datepicker from "vuejs-datepicker";
-import tableEstimate from "./table-estimate";
-import itemBody from "./ItemBody";
-import clientForm from "./clientForm";
-import EstimateTotal from "./Estimatetotal";
-import selectTerm from "../terms/selectTerm";
+  import Vue from "vue";
+  import vSelect from "vue-select";
+  import "vue-select/dist/vue-select.css";
+  import money from "v-money";
+  Vue.use(money, { precision: 4 });
+  Vue.component("v-select", vSelect);
+  import Datepicker from "vuejs-datepicker";
+  import tableEstimate from "./table-estimate";
+  import itemBody from "./ItemBody";
+  import clientForm from "./clientForm";
+  import EstimateTotal from "./Estimatetotal";
+  import selectTerm from "../terms/selectTerm";
 
-export default {
-  name: "create-estimate",
-  components: {
-    Datepicker,
-    tableEstimate,
-    itemBody,
-    clientForm,
-    EstimateTotal,
-    selectTerm
-  },
-  props: ["dataEdit"],
-  data() {
-    return {
-      clientForm: false,
-      estimateDate: "",
-      dueDate: "",
-      selectedCustomer: "",
-      clientsData: [],
-      productsList: [],
-      items: [
-        {
-          product: "",
-          description: "",
-          quantity: "1",
-          price: 0,
-          discount: 0,
-          amount: 0
-        }
-      ],
-      note: "",
-      address: "",
-      codeEstimate: "",
-      email: ""
-    };
-  },
-  methods: {
-    duplicateEstimate(id)
-    {
-      axios.get('/estimate/duplicate', {
-        params:{
-          id:id
-        }
-      })
-          .then((response) => {
-            toastr.success(response.data.message)
-          })
-          .catch((error) => {
-            toastr.warning(error.response.data.message);
-            console.log(error)
-          })
+  export default {
+    name: "create-estimate",
+    components: {
+      Datepicker,
+      tableEstimate,
+      itemBody,
+      clientForm,
+      EstimateTotal,
+      selectTerm
     },
-    changeTerm(val) {
-      if (val === "") {
-        return;
-      }
-      var today = new Date();
-      var dueDate = new Date();
-      dueDate.setDate(today.getDate() + val);
-      this.dueDate = dueDate;
-    },
-    itemsEditFormat(items) {
-      let array = [];
-      for (var index in items) {
-        array.push({
-          id: items[index].id,
-          product: {
-            label: items[index].product,
-            code: items[index].product_id
-          },
-          description: items[index].description,
-          quantity: items[index].quantity,
-          price: items[index].price,
-          discount: items[index].discount,
-          amount: items[index].amount,
-          product_id: items[index].product_id
-        });
-      }
-      return array;
-    },
-    createFormStatus() {
-      this.$emit("createFormStatus", false);
-    },
-    setSelected(val) {
-      let found = this.clientsData.find(e => e.id === val.code);
-      if (found) {
-        this.address = found.direccion;
-        this.email = found.email;
-      }
-    },
-    hideClientForm() {
-      this.clientForm = false;
-      this.ClientsDate();
-    },
-    labelView(label) {
-      return label.label ? label.label : label;
-    },
-    loading(val) {
-      this.$emit("loading", val);
-    },
-    save(send) {
-      if (
-        this.selectedCustomer === "" ||
-        this.codeEstimate === "" ||
-        this.email === "" ||
-        this.address === "" ||
-        this.selectedCustomer === ""
-      ) {
-        toastr.warning("por favor llenar los datos necesarios");
-        return;
-      }
-      if (this.reduceItems.length === 0) {
-        toastr.warning("La factura no posee articulos vinculados");
-        return;
-      }
-      this.loading(true);
-      let url = this.dataEdit ? "/estimate/edit" : "/estimate";
-      axios
-        .post(url, {
-          id: this.dataEdit ? this.dataEdit.id : this.dataEdit,
-          estimateNumber: this.codeEstimate,
-          estimateDate: this.estimateDate,
-          dueDate: this.dueDate,
-          client_id: this.selectedCustomer,
-          address: this.address,
-          email: this.email,
-          note: this.note,
-          subtotal: this.subTotal,
-          total: this.subTotal,
-          details: this.reduceItems,
-          send: send
-        })
-        .then(response => {
-          toastr.success("Datos guardado correctamente");
-          this.reset();
-        })
-        .catch(error => {
-          toastr.warning(error.response.data.message);
-          console.log(error.response.data.message);
-        })
-        .finally(() => {
-          this.loading(false);
-        });
-    },
-    reset() {
-      var today = new Date();
-      var dueDate = new Date();
-      dueDate.setDate(today.getDate() + 15);
-
-      Object.assign(this.$data, {
+    props: ["dataEdit"],
+    data() {
+      return {
         clientForm: false,
-        estimateDate: today,
-        dueDate: dueDate,
+        estimateDate: "",
+        dueDate: "",
         selectedCustomer: "",
+        clientsData: [],
+        productsList: [],
         items: [
           {
             product: "",
@@ -353,144 +220,358 @@ export default {
             quantity: "1",
             price: 0,
             discount: 0,
-            amount: 0
+            amount: 0,
+            tax:0
           }
         ],
         note: "",
         address: "",
         codeEstimate: "",
-        email: ""
-      });
+        email: "",
+        settings: {},
+        ListItbis:[]
+      };
     },
-    ClientsDate() {
-      axios
-        .post("/clientes/datos/tabla2")
-        .then(response => {
-          this.clientsData = response["data"];
-          if (this.dataEdit) this.completeForm();
-          this.clientToEstimate();
+    methods: {
+      itbisList()
+      {
+        axios.post("/impuestoref/datos/producto")
+                .then((res) => {
+                  this.ListItbis = res.data;
+                  console.log(res)
+                })
+                .catch((error) => {
+                  console.log(error)
+                })
+      },
+      config() {
+        axios
+                .post("/configuracion/sale")
+                .then(response => {
+                  for (var key in response["data"]) {
+                    this.settings = response["data"][key];
+                    break;
+                  }
+                })
+                .catch(function(error) {});
+      },
+      duplicateEstimate(id)
+      {
+        axios.get('/estimate/duplicate', {
+          params:{
+            id:id
+          }
         })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-    completeForm() {
-      this.estimateDate = this.dataEdit.estimatedate;
-      this.dueDate = this.dataEdit.duedate;
-      this.selectedCustomer = this.clientsListForSelect.find(
-        e => e.code === this.dataEdit.client_id
-      );
-      this.address = this.dataEdit.address;
-      this.codeEstimate = this.dataEdit.estimatenumber;
-      this.email = this.dataEdit.email;
-      this.items = this.itemsEditFormat(this.dataEdit.estimate_details);
-    },
-    getProducts() {
-      axios
-        .get("/products/select/sale")
-        .then(response => {
-          this.productsList = response["data"];
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-    addrow() {
-      this.items.push({
-        product: "",
-        description: "",
-        quantity: 1,
-        price: 0.0,
-        discount: 0,
-        amount: 0.0
-      });
-    },
-    removeElement(index) {
-      this.items.splice(index, 1);
-    },
-    replaceElement({ index, item }) {
-      this.items.splice(index, 1, item);
-    },
-    clientToEstimate() {
-      if (this.getUrlVars(window.location.href)["client"]) {
-        this.selectedCustomer = this.clientsListForSelect.find(
-          e =>
-            e.code === parseInt(this.getUrlVars(window.location.href)["client"])
-        );
-        this.setSelected(this.selectedCustomer);
-      }
-    },
-    getUrlVars() {
-      var vars = [],
-        hash;
-      var hashes = window.location.href
-        .slice(window.location.href.indexOf("?") + 1)
-        .split("&");
-      for (var i = 0; i < hashes.length; i++) {
-        hash = hashes[i].split("=");
-        vars.push(hash[0]);
-        vars[hash[0]] = hash[1];
-      }
-      return vars;
-    }
-  },
-  computed: {
-    reduceItems() {
-      let array = [];
-      for (var index in this.items) {
-        if (
-          this.items[index].product !== "" ||
-          this.items[index].description !== ""
-        ) {
-          array.push(this.items[index]);
+                .then((response) => {
+                  toastr.success(response.data.message)
+                })
+                .catch((error) => {
+                  toastr.warning(error.response.data.message);
+                  console.log(error)
+                })
+      },
+      changeTerm(val) {
+        if (val === "") {
+          return;
         }
-      }
-      return array;
-    },
-    clientsListForSelect() {
-      let array = [];
-      for (var index in this.clientsData) {
-        array.push({
-          label: this.clientsData[index].nombre,
-          code: this.clientsData[index].id
+        var today = new Date();
+        var dueDate = new Date();
+        dueDate.setDate(today.getDate() + val);
+        this.dueDate = dueDate;
+      },
+      itemsEditFormat(items) {
+        let array = [];
+        for (var index in items) {
+          array.push({
+            id: items[index].id,
+            product: {
+              label: items[index].product,
+              code: items[index].product_id
+            },
+            description: items[index].description,
+            quantity: items[index].quantity,
+            price: items[index].price,
+            discount: items[index].discount,
+            amount: items[index].amount,
+            product_id: items[index].product_id,
+            tax:items[index].impuestoref_id
+          });
+        }
+        return array;
+      },
+      createFormStatus() {
+        this.$emit("createFormStatus", false);
+      },
+      setSelected(val) {
+        let found = this.clientsData.find(e => e.id === val.code);
+        if (found) {
+          this.address = found.direccion;
+          this.email = found.email;
+        }
+      },
+      hideClientForm() {
+        this.clientForm = false;
+        this.ClientsDate();
+      },
+      labelView(label) {
+        return label.label ? label.label : label;
+      },
+      loading(val) {
+        this.$emit("loading", val);
+      },
+      save(send) {
+        if (
+                this.selectedCustomer === "" ||
+                this.codeEstimate === "" ||
+                this.email === "" ||
+                this.address === "" ||
+                this.selectedCustomer === ""
+        ) {
+          toastr.warning("por favor llenar los datos necesarios");
+          return;
+        }
+        if (this.reduceItems.length === 0) {
+          toastr.warning("La factura no posee articulos vinculados");
+          return;
+        }
+        this.loading(true);
+        let url = this.dataEdit ? "/estimate/edit" : "/estimate";
+        axios
+                .post(url, {
+                  id: this.dataEdit ? this.dataEdit.id : this.dataEdit,
+                  estimateNumber: this.codeEstimate,
+                  estimateDate: this.estimateDate,
+                  dueDate: this.dueDate,
+                  client_id: this.selectedCustomer,
+                  address: this.address,
+                  email: this.email,
+                  note: this.note,
+                  subtotal: this.subTotal,
+                  tax: this.tax,
+                  total: this.total,
+                  details: this.reduceItems,
+                  send: send
+                })
+                .then(response => {
+                  toastr.success("Datos guardado correctamente");
+                  this.reset();
+                })
+                .catch(error => {
+                  toastr.warning(error.response.data.message);
+                })
+                .finally(() => {
+                  this.loading(false);
+                });
+      },
+      reset() {
+        var today = new Date();
+        var dueDate = new Date();
+        dueDate.setDate(today.getDate() + 15);
+
+        Object.assign(this.$data, {
+          clientForm: false,
+          estimateDate: today,
+          dueDate: dueDate,
+          selectedCustomer: "",
+          items: [
+            {
+              product: "",
+              description: "",
+              quantity: "1",
+              price: 0,
+              discount: 0,
+              amount: 0
+            }
+          ],
+          note: "",
+          address: "",
+          codeEstimate: "",
+          email: ""
         });
-      }
-      return array;
-    },
-    productsListForSelect() {
-      let array = [];
-      for (var index in this.productsList) {
-        array.push({
-          label: this.productsList[index].name,
-          code: this.productsList[index].id
+      },
+      ClientsDate() {
+        axios
+                .post("/clientes/datos/tabla2")
+                .then(response => {
+                  this.clientsData = response["data"];
+                  if (this.dataEdit) this.completeForm();
+                  this.clientToEstimate();
+                })
+                .catch(error => {
+                  console.log(error);
+                });
+      },
+      completeForm() {
+        this.estimateDate = this.dataEdit.estimatedate;
+        this.dueDate = this.dataEdit.duedate;
+        this.selectedCustomer = this.clientsListForSelect.find(
+                e => e.code === this.dataEdit.client_id
+        );
+        this.address = this.dataEdit.address;
+        this.codeEstimate = this.dataEdit.estimatenumber;
+        this.email = this.dataEdit.email;
+        this.items = this.itemsEditFormat(this.dataEdit.estimate_details);
+      },
+      getProducts() {
+        axios
+                .get("/products/select/sale")
+                .then(response => {
+                  this.productsList = response["data"];
+                })
+                .catch(error => {
+                  console.log(error);
+                });
+      },
+      addrow() {
+        this.items.push({
+          product: "",
+          description: "",
+          quantity: 1,
+          price: 0.0,
+          discount: 0,
+          amount: 0.0,
+          tax:0
         });
+      },
+      removeElement(index) {
+        this.items.splice(index, 1);
+      },
+      replaceElement({ index, item }) {
+        this.items.splice(index, 1, item);
+      },
+      clientToEstimate() {
+        if (this.getUrlVars(window.location.href)["client"]) {
+          this.selectedCustomer = this.clientsListForSelect.find(
+                  e =>
+                          e.code === parseInt(this.getUrlVars(window.location.href)["client"])
+          );
+          this.setSelected(this.selectedCustomer);
+        }
+      },
+      getUrlVars() {
+        var vars = [],
+                hash;
+        var hashes = window.location.href
+                .slice(window.location.href.indexOf("?") + 1)
+                .split("&");
+        for (var i = 0; i < hashes.length; i++) {
+          hash = hashes[i].split("=");
+          vars.push(hash[0]);
+          vars[hash[0]] = hash[1];
+        }
+        return vars;
       }
-      return array;
     },
-    subTotal() {
-      let total = 0;
-      for (var index in this.items) {
-        total = total + parseFloat(this.items[index].amount);
+    computed: {
+      reduceItems() {
+        let array = [];
+        for (var index in this.items) {
+          if (
+                  this.items[index].product !== "" ||
+                  this.items[index].description !== ""
+          ) {
+            array.push(this.items[index]);
+          }
+        }
+        return array;
+      },
+      clientsListForSelect() {
+        let array = [];
+        for (var index in this.clientsData) {
+          array.push({
+            label: this.clientsData[index].nombre,
+            code: this.clientsData[index].id
+          });
+        }
+        return array;
+      },
+      productsListForSelect() {
+        let array = [];
+        for (var index in this.productsList) {
+          array.push({
+            label: this.productsList[index].name,
+            code: this.productsList[index].id
+          });
+        }
+        return array;
+      },
+      total()
+      {
+        return this.subTotal + this.tax;
+      },
+      subTotal() {
+        let total = 0;
+
+        for (var index in this.items) {
+          var impost = this.ListItbis.find(e => e.id == this.items[index].tax);
+          if(!impost)
+          {
+            impost = {
+              porciento:0
+            }
+          }
+
+          var price = this.items[index].price *
+                  this.items[index].quantity;
+
+          if (this.settings.impuesto === "incluido")
+          {
+            total += price / parseFloat('1.'+ impost.porciento);
+          }else{
+            total += price + (price * parseFloat('0.' + impost.porciento));
+          }
+
+        }
+
+        return total;
+      },
+      tax() {
+        let tax = 0;
+        if(!this.ListItbis)
+        {
+          return 0;
+        }
+        for (var index in this.items) {
+          var impost = this.ListItbis.find(e => e.id == this.items[index].tax);
+          if(!impost)
+          {
+            impost = {
+              porciento:0
+            }
+          }
+
+          var price = this.items[index].price *
+                  this.items[index].quantity;
+
+          if (this.settings.impuesto === "incluido")
+          {
+            tax += price -  (price / parseFloat('1.'+ impost.porciento));
+          }else{
+            tax += price * parseFloat('0.' + impost.porciento);
+          }
+
+        }
+        return tax;
       }
-      return total;
+    },
+    created() {
+      this.getProducts();
+      this.config();
+      this.itbisList();
+      this.ClientsDate();
+      var today = new Date();
+      var dueDate = new Date();
+      dueDate.setDate(today.getDate() + 5);
+      this.estimateDate = today;
+      this.dueDate = dueDate;
     }
-  },
-  created() {
-    this.getProducts();
-    this.ClientsDate();
-    var today = new Date();
-    var dueDate = new Date();
-    dueDate.setDate(today.getDate() + 5);
-    this.estimateDate = today;
-    this.dueDate = dueDate;
-  }
-};
+  };
 </script>
 <style>
-.createCustomer:hover {
-  color: #0e3bbb !important;
-}
-input[type="number"] {
-  text-align: right;
-}
+  .createCustomer:hover {
+    color: #0e3bbb !important;
+  }
+  input[type="number"] {
+    text-align: right;
+  }
 </style>

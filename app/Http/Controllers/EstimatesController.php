@@ -114,8 +114,9 @@ class EstimatesController extends Controller
             $estimate->address = $request->address;
             $estimate->note = $request->note;
             $estimate->email = $request->email;
-            $estimate->subtotal = $request->subtotal;
             $estimate->total = $request->total;
+            $estimate->tax = $request->tax;
+            $estimate->subtotal = $request->subtotal;
             $estimate->save();
 
             foreach ($request->details as $detail)
@@ -302,7 +303,27 @@ class EstimatesController extends Controller
     public function getEstimateData(Request $request)
     {
         $estimate = Estimate::find($request->estimate_id);
-        $estimate->estimate_details = DB::connection('client')->table('estimatedetails')->where('estimate_id', $request->estimate_id)->get();
+        $estimate->estimate_details =
+            DB::connection('client')
+                ->table('estimatedetails')
+                ->join('products','products.id','=','estimatedetails.product_id')
+                ->Leftjoin(
+                    'impuestosrefs',
+                    'products.impuestoref_id',
+                    'impuestosrefs.id'
+                )
+                ->Leftjoin(
+                    'rangoimpuestos',
+                    'rangoimpuestos.referenciaitbis_id',
+                    DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta')
+                )
+                ->where('estimate_id', $request->estimate_id)
+                ->select('estimatedetails.*',
+                    DB::connection('client')->raw('IFNULL(impuestosrefs.descripcion, "") AS itbis_description'),
+                    DB::connection('client')->raw('IFNULL(rangoimpuestos.porciento, 0) AS porciento'),
+                    'impuestoref_id'
+                )
+                ->get();
 
         return $estimate;
     }

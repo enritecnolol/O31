@@ -10,6 +10,7 @@ use App\Estimate;
 use App\Facture;
 use App\Invoice;
 use App\Invoice_item;
+use App\Term;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -37,11 +38,19 @@ class BillingsController extends Controller
             $facture->email = $request->email;
             $facture->brute = $request->subtotal;
             $facture->desc = 0;
+            $facture->itbis = $request->tax;
             $facture->total_facture = $request->total;
             $facture->open_balance = $request->total;
             $facture->type_sale = 'personalizado';
             $facture->status = 'DEUDA';
             $facture->paid_status = 'NO PAGADO';
+            $term = Term::find($request->term);
+            if($term->number_days == 0)
+            {
+                $facture->open_balance = 0;
+                $facture->status = 'COMPLETADO';
+                $facture->paid_status = 'PAGADO';
+            }
             $nfc = '';
             $aviso = '';
             $NFCDueDate = '';
@@ -111,7 +120,6 @@ class BillingsController extends Controller
                 $detalle->save();
             }
 
-
             if($request->send)
             {
                 $dataPDF = [
@@ -161,6 +169,7 @@ class BillingsController extends Controller
             $facture->note = $request->note;
             $facture->email = $request->email;
             $facture->brute = $request->subtotal;
+            $facture->itbis = $request->tax;
             $facture->total_facture = $request->total;
             $facture->open_balance = $request->total;
             $facture->update();
@@ -251,7 +260,26 @@ class BillingsController extends Controller
     public function getInvoiceData(Request $request)
     {
         $facture = Facture::find($request->invoice_id);
-        $facture->invoice_details = DB::connection('client')->table('details')->where('invoice_id', $request->invoice_id)->get();
+        $facture->invoice_details = DB::connection('client')
+            ->table('details')
+            ->join('products','products.id','=','details.product_id')
+            ->Leftjoin(
+                'impuestosrefs',
+                'products.impuestoref_id',
+                'impuestosrefs.id'
+            )
+            ->Leftjoin(
+                'rangoimpuestos',
+                'rangoimpuestos.referenciaitbis_id',
+                DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta')
+            )
+            ->where('invoice_id', $request->invoice_id)
+            ->select('details.*',
+                DB::connection('client')->raw('IFNULL(impuestosrefs.descripcion, "") AS itbis_description'),
+                DB::connection('client')->raw('IFNULL(rangoimpuestos.porciento, 0) AS porciento'),
+                'impuestoref_id'
+            )
+            ->get();
 
         return $facture;
     }

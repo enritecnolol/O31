@@ -122,7 +122,7 @@ class ImpuestosrefsController extends Controller
     public function datosimpuestorefproducto()
     {
         $id = Auth::id();
-        $ref = DB::connection('client')->select("SELECT impuestosrefs.* FROM impuestosrefs, rangoimpuestos WHERE impuestosrefs.id = rangoimpuestos.referenciaitbis_id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta");
+        $ref = DB::connection('client')->select("SELECT impuestosrefs.*, rangoimpuestos.porciento FROM impuestosrefs, rangoimpuestos WHERE impuestosrefs.id = rangoimpuestos.referenciaitbis_id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta");
         return $ref;
     }
 }
