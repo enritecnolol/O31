@@ -6,10 +6,10 @@
       <div :class="landscape ? 'col-sm' : ''" >
         <select class="form-control" id="terms" v-model="term"  style="width: 250px;">
           <option value>seleccionar</option>
-          <option value="new" style="background: rgb(229, 229, 229);color: black">agregar nuevo</option>
           <template v-for="(item, index) in termsList">
             <option :value="item.id" :key="index">{{item.name}}</option>
           </template>
+          <option value="new" style="background: rgb(229, 229, 229);color: black">agregar nuevo</option>
         </select>
       </div>
     </div>
@@ -65,15 +65,18 @@ export default {
       this.changeValue(this.term);
     },
     termExternal() {
-      var found = this.termsList.find(e => e.id == this.termExternal);
-      var index = this.termsList
-        .map(e => {
-          return e.id;
-        })
-        .indexOf(this.termExternal);
-      if (found) {
-        this.term = found.id;
-        this.changeValue(index);
+      if(this.term == "")
+      {
+        var found = this.termsList.find(e => e.id == this.termExternal);
+        var index = this.termsList
+                .map(e => {
+                  return e.id;
+                })
+                .indexOf(this.termExternal);
+        if (found) {
+          this.term = found.id;
+          this.changeValue(index);
+        }
       }
     }
   },

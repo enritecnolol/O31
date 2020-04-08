@@ -5,14 +5,19 @@
         <div class="float-left">
           <h3>{{clientForm ? 'Crear cliente' : createdOrEdit ? 'Editando Factura' : 'Creando Factura'}}</h3>
         </div>
-        <div class="float-right">
+        <div class="float-right" v-if="!clientForm">
           <button class="btn btn-sm btn-primary" @click="createFormStatus">Lista de Factura</button>
+        </div>
+        <div class="float-right" v-else>
+          <button class="btn-sm btn-warning" @click="hideClientForm">
+            <i class="fas fa-angle-left" /> Volver
+          </button>
         </div>
       </div>
       <div class="col-md-12">
         <hr />
       </div>
-      <div class="col-md-12">
+      <div class="col-md-12" v-show="!clientForm">
         <div class="row">
           <div class="col-md-8">
             <div class="row">
@@ -139,13 +144,6 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12" style="margin-bottom: 20px" v-if="clientForm">
-        <div class="float-right">
-          <button class="btn-sm btn-warning" @click="hideClientForm">
-            <i class="fas fa-angle-left" /> Volver
-          </button>
-        </div>
-      </div>
       <div class="col-md-12">
         <client-form v-if="clientForm" @hideForm="clientForm = false" />
       </div>
@@ -214,6 +212,7 @@
                       id="terms"
                       rows="4"
                       style="width:470px;"
+                      v-model="termNote"
               />
             </div>
           </div>
@@ -252,6 +251,7 @@
   import selectTerm from "../terms/selectTerm";
   Vue.use(money, { precision: 4 });
   Vue.component("v-select", vSelect);
+  import modalBig from "../modal/modalBig";
 
   export default {
     name: "create-estimate",
@@ -261,7 +261,8 @@
       clientForm,
       EstimateTotal,
       tableEstimate,
-      selectTerm
+      selectTerm,
+      modalBig
     },
     props: ["dataEdit", "loading"],
     data() {
@@ -297,7 +298,8 @@
         rnc_data: {},
         settings: {},
         idCedula:"",
-        ListItbis:[]
+        ListItbis:[],
+        termNote:""
       };
     },
     methods: {
@@ -468,6 +470,7 @@
       },
       hideClientForm() {
         this.clientForm = false;
+        this.selectedCustomer = "";
         this.ClientsDate();
       },
       labelView(label) {
@@ -540,7 +543,8 @@
                   send: send,
                   tiponfc: this.type_ncf,
                   datancf: this.data_ncf,
-                  term:this.term
+                  term:this.term,
+                  term_note:this.termNote
                 })
                 .then(response => {
                   if (
@@ -588,7 +592,8 @@
           note: "",
           address: "",
           codeEstimate: "",
-          email: ""
+          email: "",
+          termNote:""
         });
       },
       ClientsDate() {
@@ -620,6 +625,7 @@
         this.email = this.dataEdit.email;
         this.items = this.itemsEditFormat(this.dataEdit.invoice_details);
         this.note = this.dataEdit.note;
+        this.termNote = this.dataEdit.term_note
       },
       getProducts() {
         axios
@@ -706,6 +712,11 @@
             code: this.clientsData[index].id
           });
         }
+        array.push({
+          label:"Nuevo cliente",
+          code:"new"
+        });
+
         return array;
       },
       productsListForSelect() {
@@ -787,6 +798,15 @@
 
         }
         return tax;
+      }
+    },
+    watch:{
+      selectedCustomer()
+      {
+        if (this.selectedCustomer.code === "new") {
+          this.clientForm = true;
+          return;
+        }
       }
     },
     created() {

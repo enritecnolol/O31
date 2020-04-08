@@ -53,7 +53,7 @@
     methods:{
       save()
       {
-        if(this.name == "" || this.phone == "" || this.email == "" || this.enrollment == "" || this.observation == "")
+        if(this.name == "" || this.phone == "" || this.email == "" || this.enrollment == "")
         {
           toastr.warning('Revisar los campos obligatorio');
           return;
