@@ -301,7 +301,6 @@
         ListItbis:[],
         termNote:"",
         discount:0,
-        loading:false
       };
     },
     methods: {
@@ -504,7 +503,7 @@
           return;
         }
 
-        if(this.term === "" || this.term === "new")
+        if( !this.term || this.term === "new")
         {
           toastr.warning("Es necesario relacionar una condicion");
           return;

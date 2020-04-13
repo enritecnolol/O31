@@ -112355,8 +112355,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
       idCedula: "",
       ListItbis: [],
       termNote: "",
-      discount: 0,
-      loading: false
+      discount: 0
     };
   },
 
@@ -112541,7 +112540,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
         return;
       }
 
-      if (this.term === "" || this.term === "new") {
+      if (!this.term || this.term === "new") {
         toastr.warning("Es necesario relacionar una condicion");
         return;
       }
@@ -145970,7 +145969,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -145990,6 +145989,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__generalTable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__generalTable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__itemBody__ = __webpack_require__(677);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__itemBody___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__itemBody__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_v_money__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_v_money___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_v_money__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -146155,6 +146166,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+
+__WEBPACK_IMPORTED_MODULE_6_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_5_v_money___default.a, { precision: 4 });
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: { cardPanel: __WEBPACK_IMPORTED_MODULE_0__cardPanel___default.a, Datepicker: __WEBPACK_IMPORTED_MODULE_1_vuejs_datepicker__["a" /* default */], selectTerm: __WEBPACK_IMPORTED_MODULE_2__terms_selectTerm___default.a, generalTable: __WEBPACK_IMPORTED_MODULE_3__generalTable___default.a, itemBody: __WEBPACK_IMPORTED_MODULE_4__itemBody___default.a },
     data: function data() {
@@ -146171,20 +146185,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 discount: 0,
                 impost: 0,
                 totalNet: 0
-            }]
+            }],
+            money: {
+                decimal: ".",
+                thousands: ",",
+                prefix: "RD$ ",
+                precision: 2,
+                masked: false
+            },
+            amount: 0
         };
     },
 
     methods: {
-        addrow: function addrow() {
-            this.items.push({
-                typeExpenses: "",
-                gross: 0,
-                discount: 0,
-                impost: 0,
-                totalNet: 0
-            });
-        },
         changeTerm: function changeTerm(_ref) {
             var id = _ref.id,
                 number_days = _ref.number_days;
@@ -146221,6 +146234,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     created: function created() {
+        this.fetchSupplier();
         this.invoiceDate = new Date();
         this.dueDate = new Date();
     }
@@ -146509,13 +146523,21 @@ var render = function() {
                       _c("tr", [
                         _c("td", [_vm._v("Tipo de gasto")]),
                         _vm._v(" "),
-                        _c("td", [_vm._v("Importe bruto")]),
+                        _c("td", { staticStyle: { "text-align": "right" } }, [
+                          _vm._v("Importe bruto")
+                        ]),
                         _vm._v(" "),
-                        _c("td", [_vm._v("Descuento")]),
+                        _c("td", { staticStyle: { "text-align": "right" } }, [
+                          _vm._v("Descuento")
+                        ]),
                         _vm._v(" "),
-                        _c("td", [_vm._v("Impuesto")]),
+                        _c("td", { staticStyle: { "text-align": "right" } }, [
+                          _vm._v("Impuesto")
+                        ]),
                         _vm._v(" "),
-                        _c("td", [_vm._v("Total Neto")])
+                        _c("td", { staticStyle: { "text-align": "right" } }, [
+                          _vm._v("Total Neto")
+                        ])
                       ])
                     ]),
                     _vm._v(" "),
@@ -146545,92 +146567,77 @@ var render = function() {
               "div",
               {
                 staticClass: "col-md-12",
-                staticStyle: { "margin-top": "20px" }
+                staticStyle: { "margin-top": "10px" }
               },
               [
-                _c("div", {}, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary btn-sm",
-                      staticStyle: { width: "150px" },
-                      on: { click: _vm.addrow }
-                    },
-                    [
-                      _c("i", { staticClass: "fas fa-cart-arrow-down" }),
-                      _vm._v(" Agregar fila\n                        ")
-                    ]
-                  )
+                _c("div", { staticClass: "float-left" }, [
+                  _c("textarea", {
+                    staticClass: "form-control",
+                    staticStyle: { width: "470px" },
+                    attrs: {
+                      placeholder: "Aqui va lo terminos o acuerdo...",
+                      id: "terms",
+                      rows: "4"
+                    }
+                  })
                 ]),
                 _vm._v(" "),
-                _c("hr")
+                _c("div", { staticClass: "float-right" }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-5 col-form-label",
+                        attrs: { for: "methodPay" }
+                      },
+                      [_vm._v("Forma de pago")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm" }, [
+                      _c(
+                        "select",
+                        {
+                          staticClass: "form-control form-control-sm",
+                          attrs: { id: "methodPay" }
+                        },
+                        [
+                          _c("option", { attrs: { value: "01" } }, [
+                            _vm._v("01 | Credito Fiscal")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "02" } }, [
+                            _vm._v("02 | Facturas de Consumo")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "03" } }, [
+                            _vm._v("03 | Notas de Debito")
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                ])
               ]
             ),
             _vm._v(" "),
+            _c("div", { staticClass: "col-md-12" }, [_c("hr")]),
+            _vm._v(" "),
             _c("div", { staticClass: "col-md-12" }, [
               _c("div", { staticClass: "float-right" }, [
-                _c("div", { staticClass: "form-group row" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col-sm-5 col-form-label",
-                      attrs: { for: "methodPay" }
-                    },
-                    [_vm._v("Forma de pago")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-sm" }, [
-                    _c(
-                      "select",
-                      {
-                        staticClass: "form-control form-control-sm",
-                        attrs: { id: "methodPay" }
-                      },
-                      [
-                        _c("option", { attrs: { value: "01" } }, [
-                          _vm._v("01 | Credito Fiscal")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "02" } }, [
-                          _vm._v("02 | Facturas de Consumo")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "03" } }, [
-                          _vm._v("03 | Notas de Debito")
-                        ])
-                      ]
-                    )
-                  ])
+                _c("button", { staticClass: "btn btn-primary btn-sm" }, [
+                  _c("i", { staticClass: "far fa-file-alt" }),
+                  _vm._v(
+                    "\n                            Salvar\n                        "
+                  )
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "form-group row" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col-sm-5 col-form-label",
-                      attrs: { for: "typeRetentions" }
-                    },
-                    [_vm._v("Tipo de retenciones")]
-                  ),
+                _c("button", { staticClass: "btn btn-success btn-sm" }, [
+                  _c("i", { staticClass: "far fa-file-alt" }),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-sm" }, [
-                    _c(
-                      "select",
-                      {
-                        staticClass: "form-control form-control-sm",
-                        attrs: { id: "typeRetentions" }
-                      },
-                      [
-                        _c("option", { attrs: { value: "01" } }, [
-                          _vm._v("01 | Credito Fiscal")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "02" } }, [
-                          _vm._v("02 | Facturas de Consumo")
-                        ])
-                      ]
-                    )
-                  ])
+                  _c("i", { staticClass: "fas fa-paper-plane" }),
+                  _vm._v(
+                    "\n                            Salvar y enviar\n                        "
+                  )
                 ])
               ])
             ])
@@ -146737,7 +146744,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -146762,9 +146769,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['index', 'item']
+    props: ['index', 'item'],
+    data: function data() {
+        return {
+
+            money: {
+                decimal: ".",
+                thousands: ",",
+                prefix: "RD$ ",
+                precision: 2,
+                masked: false
+            }
+        };
+    }
 });
 
 /***/ }),
@@ -146775,48 +146823,130 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("tr", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "td",
+      { staticStyle: { width: "15%" } },
+      [
+        _c(
+          "money",
+          _vm._b(
+            {
+              staticClass: "form-control form-control-sm float-right",
+              staticStyle: { "text-align": "right" },
+              model: {
+                value: _vm.item.gross,
+                callback: function($$v) {
+                  _vm.$set(_vm.item, "gross", $$v)
+                },
+                expression: "item.gross"
+              }
+            },
+            "money",
+            _vm.money,
+            false
+          )
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "td",
+      { staticStyle: { width: "15%" } },
+      [
+        _c(
+          "money",
+          _vm._b(
+            {
+              staticClass: "form-control form-control-sm float-right",
+              staticStyle: { "text-align": "right" },
+              model: {
+                value: _vm.item.discount,
+                callback: function($$v) {
+                  _vm.$set(_vm.item, "discount", $$v)
+                },
+                expression: "item.discount"
+              }
+            },
+            "money",
+            _vm.money,
+            false
+          )
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "td",
+      { staticStyle: { width: "15%" } },
+      [
+        _c(
+          "money",
+          _vm._b(
+            {
+              staticClass: "form-control form-control-sm float-right",
+              staticStyle: { "text-align": "right" },
+              model: {
+                value: _vm.item.impost,
+                callback: function($$v) {
+                  _vm.$set(_vm.item, "impost", $$v)
+                },
+                expression: "item.impost"
+              }
+            },
+            "money",
+            _vm.money,
+            false
+          )
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "td",
+      { staticStyle: { width: "15%" } },
+      [
+        _c(
+          "money",
+          _vm._b(
+            {
+              staticClass: "form-control form-control-sm float-right",
+              staticStyle: { "text-align": "right" },
+              model: {
+                value: _vm.item.totalNet,
+                callback: function($$v) {
+                  _vm.$set(_vm.item, "totalNet", $$v)
+                },
+                expression: "item.totalNet"
+              }
+            },
+            "money",
+            _vm.money,
+            false
+          )
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", [
-        _c("select", { staticClass: "form-control form-control-sm" }, [
-          _c("option", { attrs: { value: "01" } }, [
-            _vm._v("Comprobante normal")
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("td", { staticStyle: { width: "15%" } }, [
-        _c("input", {
-          staticClass: "form-control form-control-sm",
-          attrs: { type: "text" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("td", { staticStyle: { width: "15%" } }, [
-        _c("input", {
-          staticClass: "form-control form-control-sm",
-          attrs: { type: "text" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("td", { staticStyle: { width: "15%" } }, [
-        _c("input", {
-          staticClass: "form-control form-control-sm",
-          attrs: { type: "text" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("td", { staticStyle: { width: "15%" } }, [
-        _c("input", {
-          staticClass: "form-control form-control-sm",
-          attrs: { type: "text" }
-        })
+    return _c("td", [
+      _c("select", { staticClass: "form-control form-control-sm" }, [
+        _c("option", { attrs: { value: "01" } }, [
+          _vm._v("Comprobante normal")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "01" } }, [_vm._v("Gasto menores")])
       ])
     ])
   }

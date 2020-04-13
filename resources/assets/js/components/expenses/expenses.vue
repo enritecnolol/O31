@@ -103,10 +103,10 @@
                             <template slot="table-header">
                                 <tr>
                                     <td>Tipo de gasto</td>
-                                    <td>Importe bruto</td>
-                                    <td>Descuento</td>
-                                    <td>Impuesto</td>
-                                    <td>Total Neto</td>
+                                    <td style="text-align:right;">Importe bruto</td>
+                                    <td style="text-align:right;">Descuento</td>
+                                    <td style="text-align:right;">Impuesto</td>
+                                    <td style="text-align:right;">Total Neto</td>
                                 </tr>
                             </template>
                             <template slot="table-body">
@@ -120,15 +120,16 @@
                             </template>
                         </general-table>
                     </div>
-                    <div class="col-md-12" style="margin-top: 20px">
-                        <div class>
-                            <button class="btn btn-primary btn-sm" @click="addrow" style="width: 150px">
-                                <i class="fas fa-cart-arrow-down" /> Agregar fila
-                            </button>
+                    <div class="col-md-12" style="margin-top: 10px">
+                        <div class="float-left">
+                            <textarea
+                                    placeholder="Aqui va lo terminos o acuerdo..."
+                                    class="form-control"
+                                    id="terms"
+                                    rows="4"
+                                    style="width:470px;"
+                            />
                         </div>
-                        <hr />
-                    </div>
-                    <div class="col-md-12">
                         <div class="float-right">
                             <div class="form-group row">
                                 <label for="methodPay" class="col-sm-5 col-form-label">Forma de pago</label>
@@ -140,15 +141,22 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="typeRetentions" class="col-sm-5 col-form-label">Tipo de retenciones</label>
-                                <div class="col-sm">
-                                    <select id="typeRetentions" class="form-control form-control-sm">
-                                        <option value="01">01 | Credito Fiscal</option>
-                                        <option value="02" >02 | Facturas de Consumo</option>
-                                    </select>
-                                </div>
-                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="float-right">
+                            <button class="btn btn-primary btn-sm">
+                                <i class="far fa-file-alt" />
+                                Salvar
+                            </button>
+                            <button class="btn btn-success btn-sm">
+                                <i class="far fa-file-alt" />
+                                <i class="fas fa-paper-plane" />
+                                Salvar y enviar
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -163,6 +171,9 @@
     import selectTerm from "../terms/selectTerm";
     import generalTable from "../generalTable";
     import itemBody from "./itemBody";
+    import money from "v-money";
+    import Vue from "vue";
+    Vue.use(money, { precision: 4 });
     export default {
         components:{cardPanel, Datepicker, selectTerm, generalTable, itemBody},
         data()
@@ -182,19 +193,18 @@
                         impost: 0,
                         totalNet: 0,
                     }
-                ]
+                ],
+                money: {
+                    decimal: ".",
+                    thousands: ",",
+                    prefix: "RD$ ",
+                    precision: 2,
+                    masked: false
+                },
+                amount:0
             }
         },
         methods:{
-            addrow() {
-                this.items.push({
-                    typeExpenses: "",
-                    gross: 0,
-                    discount: 0,
-                    impost: 0,
-                    totalNet: 0,
-                });
-            },
             changeTerm({ id, number_days }) {
                 if (number_days === "") {
                     return;
@@ -229,6 +239,7 @@
             },
         },
         created() {
+            this.fetchSupplier();
             this.invoiceDate = new Date();
             this.dueDate = new Date();
         }
