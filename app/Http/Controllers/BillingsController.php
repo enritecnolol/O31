@@ -37,8 +37,9 @@ class BillingsController extends Controller
             $facture->note = $request->note;
             $facture->email = $request->email;
             $facture->brute = $request->subtotal;
-            $facture->desc = 0;
+            $facture->desc = $request->discount;
             $facture->itbis = $request->tax;
+            $facture->discount_percent = $request->discountPercent;
             $facture->total_facture = $request->total;
             $facture->open_balance = $request->total;
             $facture->type_sale = 'personalizado';
@@ -128,12 +129,12 @@ class BillingsController extends Controller
                     'fiscal' => ['ncf' => $nfc, 'NFCDueDate' => $NFCDueDate, 'config' => $config->generacomprobante],
                     'invoice_id' => $facture->id
                 ];
-                $pdf = PDF::loadView('emails.invoice', compact($dataPDF, 'dataPDF'))->setPaper('a4', 'landscape');
+                $pdf = PDF::loadView('emails.invoice', compact( 'dataPDF'))->setPaper('a4', 'landscape');
 
                 $email = $request->email;
                 $fecha = date("Y-m-d", strtotime($request->invoice_date));
                 $dataMail = ['customer' => $request->client_id['label'], 'facture' => $request->invoice_number, 'auth_id' => Auth::id(), 'invoice_id' => $facture->id];
-                Mail::send('emails.invoicemail', compact($dataMail, 'dataMail'), function ($message) use ($email, $pdf, $fecha) {
+                Mail::send('emails.invoicemail', compact( 'dataMail'), function ($message) use ($email, $pdf, $fecha) {
                     $message->to($email);
                     $message->subject('Factura '. $fecha );
                     $message->attachData($pdf->output(), 'fecha.pdf');
@@ -170,6 +171,8 @@ class BillingsController extends Controller
             $facture->email = $request->email;
             $facture->brute = $request->subtotal;
             $facture->itbis = $request->tax;
+            $facture->desc = $request->discount;
+            $facture->discount_percent = $request->discountPercent;
             $facture->total_facture = $request->total;
             $facture->open_balance = $request->total;
             $facture->update();

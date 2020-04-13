@@ -117,6 +117,7 @@ class EstimatesController extends Controller
             $estimate->total = $request->total;
             $estimate->tax = $request->tax;
             $estimate->subtotal = $request->subtotal;
+            $estimate->discount = $request->discount;
             $estimate->save();
 
             foreach ($request->details as $detail)
@@ -183,7 +184,7 @@ class EstimatesController extends Controller
             }
 
             $estimate = Estimate::find($request->id);
-            $estimate->estimatenumber= $request->estimateNumber;
+            $estimate->estimatenumber = $request->estimateNumber;
             $estimate->estimatedate = date("Y-m-d", strtotime($request->estimateDate));
             $estimate->duedate = date("Y-m-d", strtotime($request->dueDate));
             $estimate->client_id = $request->client_id['code'];
@@ -192,6 +193,8 @@ class EstimatesController extends Controller
             $estimate->email = $request->email;
             $estimate->subtotal = $request->subtotal;
             $estimate->total = $request->total;
+            $estimate->tax = $request->tax;
+            $estimate->discount = $request->discount;
             $estimate->update();
 
             foreach ($request->details as $detail)
@@ -389,6 +392,8 @@ class EstimatesController extends Controller
             $newEstimate->email = $estimate->email;
             $newEstimate->subtotal = $estimate->subtotal;
             $newEstimate->total = $estimate->total;
+            $newEstimate->tax = $estimate->tax;
+            $newEstimate->discount = $estimate->discount;
             $newEstimate->save();
 
             foreach ($estiamteDetails as $detail)

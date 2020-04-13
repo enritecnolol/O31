@@ -105,7 +105,6 @@
                             <th style='text-align:left;font-weight: bold; border-bottom: 1px solid black; font-size: 12px'>Descripción</th>
                             <th style='font-weight: bold; border-bottom: 1px solid black; font-size: 12px;text-align: right'>Cantidad</th>
                             <th style='font-weight: bold; border-bottom: 1px solid black; font-size: 12px;text-align: right'>Precio</th>
-                            <th style='font-weight: bold; border-bottom: 1px solid black; font-size: 12px;text-align: right'>Descuento</th>
                             <th style='font-weight: bold; border-bottom: 1px solid black; font-size: 12px;text-align: right'>Importe</th>
                         </tr>
                         </thead>
@@ -120,7 +119,6 @@
                                 <td style="width: 40%;text-align:left;font-size: 11px;border-left: 1px solid black">{{$detail['description']}}</td>
                                 <td style="width: 10%;text-align:right;font-size: 11px;border-left: 1px solid black">{{$detail['quantity']}}</td>
                                 <td style="width: 15%;text-align:right;font-size: 11px;border-left: 1px solid black">{{number_format($detail['price'], 2, '.', ',')}}</td>
-                                <td style="width: 10%;text-align:right;font-size: 11px;border-left: 1px solid black">{{number_format($detail['discount'], 2, '.', ',')}}</td>
                                 <td style="width: 10%;text-align:right;font-size: 11px;border-left: 1px solid black">{{number_format($detail['amount'], 2, '.', ',')}}</td>
                             </tr>
                         @endforeach
@@ -135,6 +133,13 @@
                                     <div>
                                         <div class="" style="margin-top: 10px;text-align: left"><b>SubTotal:</b></div>
                                         <div class="" style="margin-top: 10px;text-align: right">RD$ {{number_format($dataPDF['data']['subtotal'], 2, '.', ',')}}</div>
+                                    </div>
+                                    <div>
+                                        <div class="" style="margin-top: 10px;text-align: left"><b>Descuento:</b></div>
+                                        <div class="" style="margin-top: 10px;text-align: right">RD$ {{number_format($dataPDF['data']['discount'], 2, '.', ',')}}</div>
+                                    </div>
+                                        <div class="" style="margin-top: 10px;text-align: left"><b>Impuestos:</b></div>
+                                        <div class="" style="margin-top: 10px;text-align: right">RD$ {{number_format($dataPDF['data']['tax'], 2, '.', ',')}}</div>
                                     </div>
                                     <div class="">
                                         <hr>

@@ -152,7 +152,13 @@
         <hr />
       </div>
       <div class="col-md-12" style="margin-top: 15px">
-        <estimate-total :subTotal="subTotal" :total="total" :tax="tax"  />
+        <estimate-total
+                :subTotal="subTotal"
+                :discount-percent="discount"
+                :total="total"
+                :tax="tax"
+                @ChangeDiscountApplied="ChangeDiscountApplied"
+        />
         <div class="float-left">
           <div class="form-group">
             <label for="NoteTextArea">Nota:</label>
@@ -229,10 +235,15 @@
         codeEstimate: "",
         email: "",
         settings: {},
-        ListItbis:[]
+        ListItbis:[],
+        discount:0
       };
     },
     methods: {
+      ChangeDiscountApplied(amount)
+      {
+        this.discount = amount
+      },
       itbisList()
       {
         axios.post("/impuestoref/datos/producto")
@@ -347,6 +358,7 @@
                   email: this.email,
                   note: this.note,
                   subtotal: this.subTotal,
+                  discount:this.discountTotal,
                   tax: this.tax,
                   total: this.total,
                   details: this.reduceItems,
@@ -386,7 +398,8 @@
           note: "",
           address: "",
           codeEstimate: "",
-          email: ""
+          email: "",
+          discount:0
         });
       },
       ClientsDate() {
@@ -411,6 +424,7 @@
         this.codeEstimate = this.dataEdit.estimatenumber;
         this.email = this.dataEdit.email;
         this.items = this.itemsEditFormat(this.dataEdit.estimate_details);
+        this.discount = this.dataEdit.discount_percent;
       },
       getProducts() {
         axios
@@ -497,7 +511,13 @@
       },
       total()
       {
-        return this.subTotal + this.tax;
+        return this.subTotal - this.discountTotal  + this.tax;
+      },
+      discountTotal()
+      {
+        let discount = this.discount/100;
+        discount = this.subTotal * discount;
+        return discount;
       },
       subTotal() {
         let total = 0;
@@ -540,8 +560,10 @@
             }
           }
 
-          var price = this.items[index].price *
-                  this.items[index].quantity;
+          var price = this.items[index].price * this.items[index].quantity;
+          var discount = this.discount / 100;
+          var TotalDesc = price * discount;
+          price = price - TotalDesc;
 
           if (this.settings.impuesto === "incluido")
           {

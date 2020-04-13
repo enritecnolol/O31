@@ -359,6 +359,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/inventory/Adjustments', 'InventoryAdjustmentsController@store');
     Route::get('/inventory/Adjustments/list', 'InventoryAdjustmentsController@getList');
     Route::get('/inventory/Adjustments/dataInfo', 'InventoryAdjustmentsController@getData');
+    /*=================================\- Gastos y egresos -/======================================================*/
+    Route::get('/expenses', 'ExpensesController@index');
 });
 
 Auth::routes();

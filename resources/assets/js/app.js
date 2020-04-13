@@ -72,6 +72,7 @@ Vue.component('returns-purchase', require('./components/returnPurchases/returnPu
 Vue.component('invoice-history', require('./components/invoiceHistory/invoiceHistory'));
 Vue.component('products-manager', require('./components/productsManager/productsManager'));
 Vue.component('inventory-adjustment', require('./components/InventoryAdjustments/InventoryAdjustments'));
+Vue.component('expenses-card', require('./components/expenses/expenses'));
 
 Vue.prototype.moment = moment;
 Vue.prototype.$toastr = toastr;

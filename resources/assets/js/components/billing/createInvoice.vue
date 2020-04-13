@@ -193,7 +193,7 @@
         <hr />
       </div>
       <div class="col-md-12" style="margin-top: 15px">
-        <estimate-total :subTotal="subTotal" :total="total" :discount="discount" :tax="tax"/>
+        <estimate-total :subTotal="subTotal" :discount-percent="discount" :total="total" :tax="tax" @ChangeDiscountApplied="ChangeDiscountApplied"/>
         <div class="float-left">
           <div class="row">
             <div class="col-md-4">
@@ -299,10 +299,16 @@
         settings: {},
         idCedula:"",
         ListItbis:[],
-        termNote:""
+        termNote:"",
+        discount:0,
+        loading:false
       };
     },
     methods: {
+      ChangeDiscountApplied(amount)
+      {
+        this.discount = amount
+      },
       duplicate(id)
       {
         axios.get('/invoices/duplicate', {
@@ -526,6 +532,7 @@
           return;
         }
         let url = this.createdOrEdit ? "/invoice/edit" : "/invoice";
+        this.loadingStatus(true);
         axios
                 .post(url, {
                   id: this.createdOrEdit ? this.dataEdit.id : this.dataEdit,
@@ -544,7 +551,10 @@
                   tiponfc: this.type_ncf,
                   datancf: this.data_ncf,
                   term:this.term,
-                  term_note:this.termNote
+                  term_note:this.termNote,
+                  discount:this.discountTotal,
+                  discountPercent: this.discount
+
                 })
                 .then(response => {
                   if (
@@ -565,8 +575,11 @@
                 })
                 .catch(error => {
                   toastr.warning(error.response.data.message);
-                  console.log(error.response.data.message);
-                });
+                })
+                .finally(() => {
+                  this.loadingStatus(false);
+                })
+        ;
       },
       reset() {
         var today = new Date();
@@ -593,7 +606,8 @@
           address: "",
           codeEstimate: "",
           email: "",
-          termNote:""
+          termNote:"",
+          discount:0
         });
       },
       ClientsDate() {
@@ -625,7 +639,8 @@
         this.email = this.dataEdit.email;
         this.items = this.itemsEditFormat(this.dataEdit.invoice_details);
         this.note = this.dataEdit.note;
-        this.termNote = this.dataEdit.term_note
+        this.termNote = this.dataEdit.term_note;
+        this.discount = this.dataEdit.discount_percent;
       },
       getProducts() {
         axios
@@ -731,7 +746,13 @@
       },
       total()
       {
-        return this.subTotal + this.tax;
+        return this.subTotal - this.discountTotal  + this.tax;
+      },
+      discountTotal()
+      {
+        let discount = this.discount/100;
+        discount = this.subTotal * discount;
+        return discount;
       },
       subTotal() {
         let total = 0;
@@ -744,9 +765,7 @@
               porciento:0
             }
           }
-
-          var price = this.items[index].price *
-                  this.items[index].quantity;
+          var price = this.items[index].price * this.items[index].quantity;
 
           if (this.settings.impuesto === "incluido")
           {
@@ -756,20 +775,7 @@
           }
 
         }
-
         return total;
-      },
-      discount() {
-        let discount = 0;
-
-        for (var index in this.items) {
-          discount =
-                  discount +
-                  this.items[index].price *
-                  this.items[index].quantity *
-                  (this.items[index].discount / 100);
-        }
-        return discount;
       },
       tax() {
         let tax = 0;
@@ -786,8 +792,10 @@
             }
           }
 
-          var price = this.items[index].price *
-                  this.items[index].quantity;
+          var price = this.items[index].price * this.items[index].quantity;
+          var discount = this.discount / 100;
+          var TotalDesc = price * discount;
+          price = price - TotalDesc;
 
           if (this.settings.impuesto === "incluido")
           {
