@@ -112563,6 +112563,11 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
         toastr.warning("La factura no posee articulos vinculados");
         return;
       }
+
+      var r = confirm("Estas seguro que quieres guardar la factura en 0 ?");
+      if (r == false) {
+        return;
+      }
       var url = this.createdOrEdit ? "/invoice/edit" : "/invoice";
       this.loadingStatus(true);
       axios.post(url, {

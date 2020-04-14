@@ -306,7 +306,7 @@ class EstimatesController extends Controller
     public function getEstimateData(Request $request)
     {
         $estimate = Estimate::find($request->estimate_id);
-        $estimate->estimate_details =
+        $details =
             DB::connection('client')
                 ->table('estimatedetails')
                 ->join('products','products.id','=','estimatedetails.product_id')
@@ -327,7 +327,16 @@ class EstimatesController extends Controller
                     'impuestoref_id'
                 )
                 ->get();
+        if(count($details) == 0)
+        {
+            $details = DB::connection('client')
+                ->table('estimatedetails')
+                ->where('estimate_id', $request->estimate_id)
+                ->get();
+        }
 
+        $estimate->estimate_details = $details;
+        
         return $estimate;
     }
 
