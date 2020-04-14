@@ -19300,6 +19300,57 @@ var LaravelVuePagination_component = normalizeComponent(
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(388)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(390)
+/* template */
+var __vue_template__ = __webpack_require__(395)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/terms/selectTerm.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3e125b27", Component.options)
+  } else {
+    hotAPI.reload("data-v-3e125b27", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
 //! moment.js locale configuration
 
 ;(function (global, factory) {
@@ -19393,7 +19444,7 @@ var LaravelVuePagination_component = normalizeComponent(
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21190,7 +21241,7 @@ function isnan (val) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -21241,7 +21292,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -21282,57 +21333,6 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-541b0aac", Component.options)
   } else {
     hotAPI.reload("data-v-541b0aac", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(388)
-}
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(390)
-/* template */
-var __vue_template__ = __webpack_require__(395)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/terms/selectTerm.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3e125b27", Component.options)
-  } else {
-    hotAPI.reload("data-v-3e125b27", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -36219,7 +36219,7 @@ if (typeof module !== 'undefined' && module.exports && typeof DO_NOT_EXPORT_CODE
   return cpt;
 }));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18).Buffer))
 
 /***/ }),
 /* 154 */
@@ -36487,7 +36487,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(161);
-module.exports = __webpack_require__(665);
+module.exports = __webpack_require__(675);
 
 
 /***/ }),
@@ -36503,9 +36503,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_toastr___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__node_modules_toastr__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_MoneyFormat__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_MoneyFormat___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_MoneyFormat__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuedraggable__ = __webpack_require__(662);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuedraggable__ = __webpack_require__(672);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vuedraggable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_mouse_menu__ = __webpack_require__(664);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_mouse_menu__ = __webpack_require__(674);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_mouse_menu___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vue_mouse_menu__);
 
 /**
@@ -36578,7 +36578,7 @@ Vue.component('returns-purchase', __webpack_require__(593));
 Vue.component('invoice-history', __webpack_require__(603));
 Vue.component('products-manager', __webpack_require__(613));
 Vue.component('inventory-adjustment', __webpack_require__(638));
-Vue.component('expenses-card', __webpack_require__(672));
+Vue.component('expenses-card', __webpack_require__(662));
 
 Vue.prototype.moment = __WEBPACK_IMPORTED_MODULE_1_moment___default.a;
 Vue.prototype.$toastr = __WEBPACK_IMPORTED_MODULE_2__node_modules_toastr___default.a;
@@ -37955,12 +37955,12 @@ var map = {
 	"./en-nz.js": 53,
 	"./eo": 54,
 	"./eo.js": 54,
-	"./es": 16,
+	"./es": 17,
 	"./es-do": 55,
 	"./es-do.js": 55,
 	"./es-us": 56,
 	"./es-us.js": 56,
-	"./es.js": 16,
+	"./es.js": 17,
 	"./et": 57,
 	"./et.js": 57,
 	"./eu": 58,
@@ -95568,7 +95568,7 @@ else make_xlsx_lib(XLSX);
 /*exported XLS, ODS */
 var XLS = XLSX, ODS = XLSX;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11), __webpack_require__(17).Buffer, __webpack_require__(147)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11), __webpack_require__(18).Buffer, __webpack_require__(147)))
 
 /***/ }),
 /* 326 */
@@ -104836,7 +104836,7 @@ module.exports = ZStream;
 (9)
 }));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17).Buffer, __webpack_require__(11)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18).Buffer, __webpack_require__(11)))
 
 /***/ }),
 /* 330 */
@@ -107659,15 +107659,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_v_money__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_v_money___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_v_money__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuejs_datepicker__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__table_estimate__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__table_estimate__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__table_estimate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__table_estimate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ItemBody__ = __webpack_require__(155);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ItemBody___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__ItemBody__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__clientForm__ = __webpack_require__(156);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__clientForm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__clientForm__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Estimatetotal__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Estimatetotal__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Estimatetotal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__Estimatetotal__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__terms_selectTerm__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__terms_selectTerm__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__terms_selectTerm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__terms_selectTerm__);
 //
 //
@@ -111154,7 +111154,7 @@ exports.push([module.i, "\n.green {\n  color: green;\n}\n.red{\n  color: red;\n}
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__table_estimate__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__table_estimate__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__table_estimate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__table_estimate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuejs_datepicker__ = __webpack_require__(9);
 //
@@ -112047,11 +112047,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__estimate_ItemBody___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__estimate_ItemBody__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__estimate_clientForm__ = __webpack_require__(156);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__estimate_clientForm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__estimate_clientForm__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__estimate_Estimatetotal__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__estimate_Estimatetotal__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__estimate_Estimatetotal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__estimate_Estimatetotal__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__estimate_table_estimate__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__estimate_table_estimate__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__estimate_table_estimate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__estimate_table_estimate__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__terms_selectTerm__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__terms_selectTerm__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__terms_selectTerm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__terms_selectTerm__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__modal_modalBig__ = __webpack_require__(411);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__modal_modalBig___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__modal_modalBig__);
@@ -120358,7 +120358,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__generalTable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__generalTable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment_locale_es__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment_locale_es__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment_locale_es___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_moment_locale_es__);
 //
 //
@@ -123689,7 +123689,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_select___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_select__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__itemBody__ = __webpack_require__(522);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__itemBody___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__itemBody__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__estimate_Estimatetotal__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__estimate_Estimatetotal__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__estimate_Estimatetotal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__estimate_Estimatetotal__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_select_dist_vue_select_css__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_select_dist_vue_select_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vue_select_dist_vue_select_css__);
@@ -125832,7 +125832,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__totalPurchase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__totalPurchase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_select_dist_vue_select_css__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_select_dist_vue_select_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vue_select_dist_vue_select_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__terms_selectTerm__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__terms_selectTerm__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__terms_selectTerm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__terms_selectTerm__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__generalTable__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__generalTable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__generalTable__);
@@ -138294,6 +138294,1083 @@ if (false) {
 /* 662 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(663)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(665)
+/* template */
+var __vue_template__ = __webpack_require__(671)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-3ab5ef08"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/expenses/expenses.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3ab5ef08", Component.options)
+  } else {
+    hotAPI.reload("data-v-3ab5ef08", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 663 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(664);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("7199565a", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3ab5ef08\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./expenses.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3ab5ef08\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./expenses.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 664 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 665 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__cardPanel__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__cardPanel___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__cardPanel__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuejs_datepicker__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__terms_selectTerm__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__terms_selectTerm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__terms_selectTerm__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__generalTable__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__generalTable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__generalTable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__itemBody__ = __webpack_require__(666);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__itemBody___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__itemBody__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_v_money__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_v_money___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_v_money__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+__WEBPACK_IMPORTED_MODULE_6_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_5_v_money___default.a, { precision: 4 });
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: { cardPanel: __WEBPACK_IMPORTED_MODULE_0__cardPanel___default.a, Datepicker: __WEBPACK_IMPORTED_MODULE_1_vuejs_datepicker__["a" /* default */], selectTerm: __WEBPACK_IMPORTED_MODULE_2__terms_selectTerm___default.a, generalTable: __WEBPACK_IMPORTED_MODULE_3__generalTable___default.a, itemBody: __WEBPACK_IMPORTED_MODULE_4__itemBody___default.a },
+    data: function data() {
+        return {
+            supplierList: [],
+            supplier: "",
+            type_ncf: "",
+            invoiceDate: "",
+            term: "",
+            dueDate: "",
+            items: [{
+                typeExpenses: "",
+                gross: 0,
+                discount: 0,
+                impost: 0,
+                totalNet: 0
+            }],
+            money: {
+                decimal: ".",
+                thousands: ",",
+                prefix: "RD$ ",
+                precision: 2,
+                masked: false
+            },
+            amount: 0
+        };
+    },
+
+    methods: {
+        changeTerm: function changeTerm(_ref) {
+            var id = _ref.id,
+                number_days = _ref.number_days;
+
+            if (number_days === "") {
+                return;
+            }
+            this.term = id;
+            var today = new Date();
+            var dueDate = new Date();
+            dueDate.setDate(today.getDate() + number_days);
+            this.dueDate = dueDate;
+        },
+        fetchSupplier: function fetchSupplier() {
+            var _this = this;
+
+            axios.get("/supplier/list/select").then(function (response) {
+                _this.supplierList = response.data;
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+    },
+    computed: {
+        suppliers: function suppliers() {
+            var array = [];
+            this.supplierList.forEach(function (element) {
+                array.push({
+                    label: element.name,
+                    code: element.id
+                });
+            });
+            return array;
+        }
+    },
+    created: function created() {
+        this.fetchSupplier();
+        this.invoiceDate = new Date();
+        this.dueDate = new Date();
+    }
+});
+
+/***/ }),
+/* 666 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(667)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(669)
+/* template */
+var __vue_template__ = __webpack_require__(670)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-79386642"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/expenses/itemBody.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-79386642", Component.options)
+  } else {
+    hotAPI.reload("data-v-79386642", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 667 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(668);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("5e445e78", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-79386642\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./itemBody.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-79386642\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./itemBody.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 668 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 669 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['index', 'item'],
+    data: function data() {
+        return {
+
+            money: {
+                decimal: ".",
+                thousands: ",",
+                prefix: "RD$ ",
+                precision: 2,
+                masked: false
+            }
+        };
+    }
+});
+
+/***/ }),
+/* 670 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("tr", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "td",
+      { staticStyle: { width: "15%" } },
+      [
+        _c(
+          "money",
+          _vm._b(
+            {
+              staticClass: "form-control form-control-sm float-right",
+              staticStyle: { "text-align": "right" },
+              model: {
+                value: _vm.item.gross,
+                callback: function($$v) {
+                  _vm.$set(_vm.item, "gross", $$v)
+                },
+                expression: "item.gross"
+              }
+            },
+            "money",
+            _vm.money,
+            false
+          )
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "td",
+      { staticStyle: { width: "15%" } },
+      [
+        _c(
+          "money",
+          _vm._b(
+            {
+              staticClass: "form-control form-control-sm float-right",
+              staticStyle: { "text-align": "right" },
+              model: {
+                value: _vm.item.discount,
+                callback: function($$v) {
+                  _vm.$set(_vm.item, "discount", $$v)
+                },
+                expression: "item.discount"
+              }
+            },
+            "money",
+            _vm.money,
+            false
+          )
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "td",
+      { staticStyle: { width: "15%" } },
+      [
+        _c(
+          "money",
+          _vm._b(
+            {
+              staticClass: "form-control form-control-sm float-right",
+              staticStyle: { "text-align": "right" },
+              model: {
+                value: _vm.item.impost,
+                callback: function($$v) {
+                  _vm.$set(_vm.item, "impost", $$v)
+                },
+                expression: "item.impost"
+              }
+            },
+            "money",
+            _vm.money,
+            false
+          )
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "td",
+      { staticStyle: { width: "15%" } },
+      [
+        _c(
+          "money",
+          _vm._b(
+            {
+              staticClass: "form-control form-control-sm float-right",
+              staticStyle: { "text-align": "right" },
+              model: {
+                value: _vm.item.totalNet,
+                callback: function($$v) {
+                  _vm.$set(_vm.item, "totalNet", $$v)
+                },
+                expression: "item.totalNet"
+              }
+            },
+            "money",
+            _vm.money,
+            false
+          )
+        )
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("select", { staticClass: "form-control form-control-sm" }, [
+        _c("option", { attrs: { value: "01" } }, [
+          _vm._v("Comprobante normal")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "01" } }, [_vm._v("Gasto menores")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-79386642", module.exports)
+  }
+}
+
+/***/ }),
+/* 671 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "card-panel",
+    [
+      _c("template", { slot: "body" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-7" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-2 col-form-label",
+                        attrs: { for: "supplier" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                    Proveedor:\n                                "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-sm", staticStyle: { padding: "0" } },
+                      [
+                        _c("v-select", {
+                          attrs: { options: _vm.suppliers },
+                          model: {
+                            value: _vm.supplier,
+                            callback: function($$v) {
+                              _vm.supplier = $$v
+                            },
+                            expression: "supplier"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-2 col-form-label",
+                        attrs: { for: "NCF_type" }
+                      },
+                      [_vm._v("Tipo NCF:")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-sm", staticStyle: { padding: "0" } },
+                      [
+                        _c(
+                          "select",
+                          {
+                            staticClass: "form-control form-control-sm",
+                            attrs: { id: "NCF_type" }
+                          },
+                          [
+                            _c("option", { attrs: { value: "01" } }, [
+                              _vm._v("01 | Credito Fiscal")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "option",
+                              { attrs: { value: "02", selected: "" } },
+                              [_vm._v("02 | Facturas de Consumo")]
+                            ),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "03" } }, [
+                              _vm._v("03 | Notas de Debito")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "04" } }, [
+                              _vm._v("04 | Notas de Credito")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "11" } }, [
+                              _vm._v("11 | Provedores Informales")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "12" } }, [
+                              _vm._v("12 | Registro Unico de Ingresos")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "13" } }, [
+                              _vm._v("13 | Registro de Gastos Menores")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "14" } }, [
+                              _vm._v("14 | Regímenes Especiales de Tributación")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "15" } }, [
+                              _vm._v("15 | Comprobantes Gubernamentales")
+                            ])
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-2 col-form-label",
+                        attrs: { for: "ncf" }
+                      },
+                      [_vm._v("NCF:")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-sm", staticStyle: { padding: "0" } },
+                      [
+                        _c("input", {
+                          staticClass: "form-control form-control-sm",
+                          staticStyle: { width: "250px" },
+                          attrs: { type: "text" }
+                        })
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-2 col-form-label",
+                        attrs: { for: "invoiceNo" }
+                      },
+                      [_vm._v("Factura No.")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-sm", staticStyle: { padding: "0" } },
+                      [
+                        _c("input", {
+                          staticClass: "form-control form-control-sm",
+                          staticStyle: { width: "250px" },
+                          attrs: { type: "text" }
+                        })
+                      ]
+                    )
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-5" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-4 col-form-label",
+                        attrs: { for: "document" }
+                      },
+                      [_vm._v("Documento No.")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm" }, [
+                      _c("input", {
+                        staticClass: "form-control form-control-sm",
+                        attrs: { type: "text", id: "document" }
+                      })
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c("label", { staticClass: "col-sm-4 col-form-label" }, [
+                      _vm._v(
+                        "\n                                    Fecha:\n                                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-sm" },
+                      [
+                        _c("datepicker", {
+                          attrs: {
+                            "bootstrap-styling": true,
+                            "calendar-class": "form-control form-control-sm",
+                            format: "yyyy-MM-dd",
+                            name: "estimateDate"
+                          },
+                          model: {
+                            value: _vm.invoiceDate,
+                            callback: function($$v) {
+                              _vm.invoiceDate = $$v
+                            },
+                            expression: "invoiceDate"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-md-12" },
+                  [
+                    _c("select-term", {
+                      attrs: { termExternal: _vm.term, landscape: true },
+                      on: { changeTerm: _vm.changeTerm }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c("label", { staticClass: "col-sm-4 col-form-label" }, [
+                      _vm._v(
+                        "\n                                    Fecha Venc.\n                                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-sm" },
+                      [
+                        _c("datepicker", {
+                          attrs: {
+                            "bootstrap-styling": true,
+                            "calendar-class": "form-control form-control-sm",
+                            format: "yyyy-MM-dd",
+                            name: "estimateDate"
+                          },
+                          model: {
+                            value: _vm.dueDate,
+                            callback: function($$v) {
+                              _vm.dueDate = $$v
+                            },
+                            expression: "dueDate"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-md-12" },
+              [
+                _c(
+                  "general-table",
+                  { attrs: { responsive: false } },
+                  [
+                    _c("template", { slot: "table-header" }, [
+                      _c("tr", [
+                        _c("td", [_vm._v("Tipo de gasto")]),
+                        _vm._v(" "),
+                        _c("td", { staticStyle: { "text-align": "right" } }, [
+                          _vm._v("Importe bruto")
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticStyle: { "text-align": "right" } }, [
+                          _vm._v("Descuento")
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticStyle: { "text-align": "right" } }, [
+                          _vm._v("Impuesto")
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticStyle: { "text-align": "right" } }, [
+                          _vm._v("Total Neto")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "template",
+                      { slot: "table-body" },
+                      [
+                        _vm._l(_vm.items, function(item, index) {
+                          return [
+                            _c("itemBody", {
+                              key: index,
+                              attrs: { index: index, item: item }
+                            })
+                          ]
+                        })
+                      ],
+                      2
+                    )
+                  ],
+                  2
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "col-md-12",
+                staticStyle: { "margin-top": "10px" }
+              },
+              [
+                _c("div", { staticClass: "float-left" }, [
+                  _c("textarea", {
+                    staticClass: "form-control",
+                    staticStyle: { width: "470px" },
+                    attrs: {
+                      placeholder: "Aqui va lo terminos o acuerdo...",
+                      id: "terms",
+                      rows: "4"
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "float-right" }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-5 col-form-label",
+                        attrs: { for: "methodPay" }
+                      },
+                      [_vm._v("Forma de pago")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm" }, [
+                      _c(
+                        "select",
+                        {
+                          staticClass: "form-control form-control-sm",
+                          attrs: { id: "methodPay" }
+                        },
+                        [
+                          _c("option", { attrs: { value: "01" } }, [
+                            _vm._v("01 | Credito Fiscal")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "02" } }, [
+                            _vm._v("02 | Facturas de Consumo")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "03" } }, [
+                            _vm._v("03 | Notas de Debito")
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-12" }, [_c("hr")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "float-right" }, [
+                _c("button", { staticClass: "btn btn-primary btn-sm" }, [
+                  _c("i", { staticClass: "far fa-file-alt" }),
+                  _vm._v(
+                    "\n                            Salvar\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("button", { staticClass: "btn btn-success btn-sm" }, [
+                  _c("i", { staticClass: "far fa-file-alt" }),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "fas fa-paper-plane" }),
+                  _vm._v(
+                    "\n                            Salvar y enviar\n                        "
+                  )
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3ab5ef08", module.exports)
+  }
+}
+
+/***/ }),
+/* 672 */
+/***/ (function(module, exports, __webpack_require__) {
+
 module.exports =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -140170,7 +141247,7 @@ module.exports = Object.create || function create(O, Properties) {
 /***/ "a352":
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(663);
+module.exports = __webpack_require__(673);
 
 /***/ }),
 
@@ -141557,7 +142634,7 @@ if (typeof window !== "undefined" && "Vue" in window) {
 //# sourceMappingURL=vuedraggable.common.js.map
 
 /***/ }),
-/* 663 */
+/* 673 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -145255,7 +146332,7 @@ Sortable.mount(Remove, Revert);
 
 
 /***/ }),
-/* 664 */
+/* 674 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -145872,1093 +146949,10 @@ module.exports = function listToStyles (parentId, list) {
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 665 */
+/* 675 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 666 */,
-/* 667 */,
-/* 668 */,
-/* 669 */,
-/* 670 */,
-/* 671 */,
-/* 672 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(673)
-}
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(675)
-/* template */
-var __vue_template__ = __webpack_require__(676)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-3ab5ef08"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/expenses/expenses.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3ab5ef08", Component.options)
-  } else {
-    hotAPI.reload("data-v-3ab5ef08", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 673 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(674);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("7199565a", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3ab5ef08\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./expenses.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3ab5ef08\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./expenses.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 674 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 675 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__cardPanel__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__cardPanel___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__cardPanel__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuejs_datepicker__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__terms_selectTerm__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__terms_selectTerm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__terms_selectTerm__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__generalTable__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__generalTable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__generalTable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__itemBody__ = __webpack_require__(677);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__itemBody___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__itemBody__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_v_money__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_v_money___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_v_money__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-
-
-__WEBPACK_IMPORTED_MODULE_6_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_5_v_money___default.a, { precision: 4 });
-/* harmony default export */ __webpack_exports__["default"] = ({
-    components: { cardPanel: __WEBPACK_IMPORTED_MODULE_0__cardPanel___default.a, Datepicker: __WEBPACK_IMPORTED_MODULE_1_vuejs_datepicker__["a" /* default */], selectTerm: __WEBPACK_IMPORTED_MODULE_2__terms_selectTerm___default.a, generalTable: __WEBPACK_IMPORTED_MODULE_3__generalTable___default.a, itemBody: __WEBPACK_IMPORTED_MODULE_4__itemBody___default.a },
-    data: function data() {
-        return {
-            supplierList: [],
-            supplier: "",
-            type_ncf: "",
-            invoiceDate: "",
-            term: "",
-            dueDate: "",
-            items: [{
-                typeExpenses: "",
-                gross: 0,
-                discount: 0,
-                impost: 0,
-                totalNet: 0
-            }],
-            money: {
-                decimal: ".",
-                thousands: ",",
-                prefix: "RD$ ",
-                precision: 2,
-                masked: false
-            },
-            amount: 0
-        };
-    },
-
-    methods: {
-        changeTerm: function changeTerm(_ref) {
-            var id = _ref.id,
-                number_days = _ref.number_days;
-
-            if (number_days === "") {
-                return;
-            }
-            this.term = id;
-            var today = new Date();
-            var dueDate = new Date();
-            dueDate.setDate(today.getDate() + number_days);
-            this.dueDate = dueDate;
-        },
-        fetchSupplier: function fetchSupplier() {
-            var _this = this;
-
-            axios.get("/supplier/list/select").then(function (response) {
-                _this.supplierList = response.data;
-            }).catch(function (err) {
-                console.log(err);
-            });
-        }
-    },
-    computed: {
-        suppliers: function suppliers() {
-            var array = [];
-            this.supplierList.forEach(function (element) {
-                array.push({
-                    label: element.name,
-                    code: element.id
-                });
-            });
-            return array;
-        }
-    },
-    created: function created() {
-        this.fetchSupplier();
-        this.invoiceDate = new Date();
-        this.dueDate = new Date();
-    }
-});
-
-/***/ }),
-/* 676 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "card-panel",
-    [
-      _c("template", { slot: "body" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-7" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-sm-2 col-form-label",
-                        attrs: { for: "supplier" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                    Proveedor:\n                                "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "col-sm", staticStyle: { padding: "0" } },
-                      [
-                        _c("v-select", {
-                          attrs: { options: _vm.suppliers },
-                          model: {
-                            value: _vm.supplier,
-                            callback: function($$v) {
-                              _vm.supplier = $$v
-                            },
-                            expression: "supplier"
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-sm-2 col-form-label",
-                        attrs: { for: "NCF_type" }
-                      },
-                      [_vm._v("Tipo NCF:")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "col-sm", staticStyle: { padding: "0" } },
-                      [
-                        _c(
-                          "select",
-                          {
-                            staticClass: "form-control form-control-sm",
-                            attrs: { id: "NCF_type" }
-                          },
-                          [
-                            _c("option", { attrs: { value: "01" } }, [
-                              _vm._v("01 | Credito Fiscal")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "option",
-                              { attrs: { value: "02", selected: "" } },
-                              [_vm._v("02 | Facturas de Consumo")]
-                            ),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "03" } }, [
-                              _vm._v("03 | Notas de Debito")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "04" } }, [
-                              _vm._v("04 | Notas de Credito")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "11" } }, [
-                              _vm._v("11 | Provedores Informales")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "12" } }, [
-                              _vm._v("12 | Registro Unico de Ingresos")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "13" } }, [
-                              _vm._v("13 | Registro de Gastos Menores")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "14" } }, [
-                              _vm._v("14 | Regímenes Especiales de Tributación")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "15" } }, [
-                              _vm._v("15 | Comprobantes Gubernamentales")
-                            ])
-                          ]
-                        )
-                      ]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-sm-2 col-form-label",
-                        attrs: { for: "ncf" }
-                      },
-                      [_vm._v("NCF:")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "col-sm", staticStyle: { padding: "0" } },
-                      [
-                        _c("input", {
-                          staticClass: "form-control form-control-sm",
-                          staticStyle: { width: "250px" },
-                          attrs: { type: "text" }
-                        })
-                      ]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-sm-2 col-form-label",
-                        attrs: { for: "invoiceNo" }
-                      },
-                      [_vm._v("Factura No.")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "col-sm", staticStyle: { padding: "0" } },
-                      [
-                        _c("input", {
-                          staticClass: "form-control form-control-sm",
-                          staticStyle: { width: "250px" },
-                          attrs: { type: "text" }
-                        })
-                      ]
-                    )
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-5" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-sm-4 col-form-label",
-                        attrs: { for: "document" }
-                      },
-                      [_vm._v("Documento No.")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-sm" }, [
-                      _c("input", {
-                        staticClass: "form-control form-control-sm",
-                        attrs: { type: "text", id: "document" }
-                      })
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c("label", { staticClass: "col-sm-4 col-form-label" }, [
-                      _vm._v(
-                        "\n                                    Fecha:\n                                "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "col-sm" },
-                      [
-                        _c("datepicker", {
-                          attrs: {
-                            "bootstrap-styling": true,
-                            "calendar-class": "form-control form-control-sm",
-                            format: "yyyy-MM-dd",
-                            name: "estimateDate"
-                          },
-                          model: {
-                            value: _vm.invoiceDate,
-                            callback: function($$v) {
-                              _vm.invoiceDate = $$v
-                            },
-                            expression: "invoiceDate"
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "col-md-12" },
-                  [
-                    _c("select-term", {
-                      attrs: { termExternal: _vm.term, landscape: true },
-                      on: { changeTerm: _vm.changeTerm }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c("label", { staticClass: "col-sm-4 col-form-label" }, [
-                      _vm._v(
-                        "\n                                    Fecha Venc.\n                                "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "col-sm" },
-                      [
-                        _c("datepicker", {
-                          attrs: {
-                            "bootstrap-styling": true,
-                            "calendar-class": "form-control form-control-sm",
-                            format: "yyyy-MM-dd",
-                            name: "estimateDate"
-                          },
-                          model: {
-                            value: _vm.dueDate,
-                            callback: function($$v) {
-                              _vm.dueDate = $$v
-                            },
-                            expression: "dueDate"
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-md-12" },
-              [
-                _c(
-                  "general-table",
-                  { attrs: { responsive: false } },
-                  [
-                    _c("template", { slot: "table-header" }, [
-                      _c("tr", [
-                        _c("td", [_vm._v("Tipo de gasto")]),
-                        _vm._v(" "),
-                        _c("td", { staticStyle: { "text-align": "right" } }, [
-                          _vm._v("Importe bruto")
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticStyle: { "text-align": "right" } }, [
-                          _vm._v("Descuento")
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticStyle: { "text-align": "right" } }, [
-                          _vm._v("Impuesto")
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticStyle: { "text-align": "right" } }, [
-                          _vm._v("Total Neto")
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "template",
-                      { slot: "table-body" },
-                      [
-                        _vm._l(_vm.items, function(item, index) {
-                          return [
-                            _c("itemBody", {
-                              key: index,
-                              attrs: { index: index, item: item }
-                            })
-                          ]
-                        })
-                      ],
-                      2
-                    )
-                  ],
-                  2
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "col-md-12",
-                staticStyle: { "margin-top": "10px" }
-              },
-              [
-                _c("div", { staticClass: "float-left" }, [
-                  _c("textarea", {
-                    staticClass: "form-control",
-                    staticStyle: { width: "470px" },
-                    attrs: {
-                      placeholder: "Aqui va lo terminos o acuerdo...",
-                      id: "terms",
-                      rows: "4"
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "float-right" }, [
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-sm-5 col-form-label",
-                        attrs: { for: "methodPay" }
-                      },
-                      [_vm._v("Forma de pago")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-sm" }, [
-                      _c(
-                        "select",
-                        {
-                          staticClass: "form-control form-control-sm",
-                          attrs: { id: "methodPay" }
-                        },
-                        [
-                          _c("option", { attrs: { value: "01" } }, [
-                            _vm._v("01 | Credito Fiscal")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "02" } }, [
-                            _vm._v("02 | Facturas de Consumo")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "03" } }, [
-                            _vm._v("03 | Notas de Debito")
-                          ])
-                        ]
-                      )
-                    ])
-                  ])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-12" }, [_c("hr")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "float-right" }, [
-                _c("button", { staticClass: "btn btn-primary btn-sm" }, [
-                  _c("i", { staticClass: "far fa-file-alt" }),
-                  _vm._v(
-                    "\n                            Salvar\n                        "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("button", { staticClass: "btn btn-success btn-sm" }, [
-                  _c("i", { staticClass: "far fa-file-alt" }),
-                  _vm._v(" "),
-                  _c("i", { staticClass: "fas fa-paper-plane" }),
-                  _vm._v(
-                    "\n                            Salvar y enviar\n                        "
-                  )
-                ])
-              ])
-            ])
-          ])
-        ])
-      ])
-    ],
-    2
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3ab5ef08", module.exports)
-  }
-}
-
-/***/ }),
-/* 677 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(678)
-}
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(680)
-/* template */
-var __vue_template__ = __webpack_require__(681)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-79386642"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/expenses/itemBody.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-79386642", Component.options)
-  } else {
-    hotAPI.reload("data-v-79386642", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 678 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(679);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("5e445e78", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-79386642\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./itemBody.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-79386642\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./itemBody.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 679 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 680 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['index', 'item'],
-    data: function data() {
-        return {
-
-            money: {
-                decimal: ".",
-                thousands: ",",
-                prefix: "RD$ ",
-                precision: 2,
-                masked: false
-            }
-        };
-    }
-});
-
-/***/ }),
-/* 681 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("tr", [
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "td",
-      { staticStyle: { width: "15%" } },
-      [
-        _c(
-          "money",
-          _vm._b(
-            {
-              staticClass: "form-control form-control-sm float-right",
-              staticStyle: { "text-align": "right" },
-              model: {
-                value: _vm.item.gross,
-                callback: function($$v) {
-                  _vm.$set(_vm.item, "gross", $$v)
-                },
-                expression: "item.gross"
-              }
-            },
-            "money",
-            _vm.money,
-            false
-          )
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "td",
-      { staticStyle: { width: "15%" } },
-      [
-        _c(
-          "money",
-          _vm._b(
-            {
-              staticClass: "form-control form-control-sm float-right",
-              staticStyle: { "text-align": "right" },
-              model: {
-                value: _vm.item.discount,
-                callback: function($$v) {
-                  _vm.$set(_vm.item, "discount", $$v)
-                },
-                expression: "item.discount"
-              }
-            },
-            "money",
-            _vm.money,
-            false
-          )
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "td",
-      { staticStyle: { width: "15%" } },
-      [
-        _c(
-          "money",
-          _vm._b(
-            {
-              staticClass: "form-control form-control-sm float-right",
-              staticStyle: { "text-align": "right" },
-              model: {
-                value: _vm.item.impost,
-                callback: function($$v) {
-                  _vm.$set(_vm.item, "impost", $$v)
-                },
-                expression: "item.impost"
-              }
-            },
-            "money",
-            _vm.money,
-            false
-          )
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "td",
-      { staticStyle: { width: "15%" } },
-      [
-        _c(
-          "money",
-          _vm._b(
-            {
-              staticClass: "form-control form-control-sm float-right",
-              staticStyle: { "text-align": "right" },
-              model: {
-                value: _vm.item.totalNet,
-                callback: function($$v) {
-                  _vm.$set(_vm.item, "totalNet", $$v)
-                },
-                expression: "item.totalNet"
-              }
-            },
-            "money",
-            _vm.money,
-            false
-          )
-        )
-      ],
-      1
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("select", { staticClass: "form-control form-control-sm" }, [
-        _c("option", { attrs: { value: "01" } }, [
-          _vm._v("Comprobante normal")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "01" } }, [_vm._v("Gasto menores")])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-79386642", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

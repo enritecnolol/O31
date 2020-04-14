@@ -263,7 +263,7 @@ class BillingsController extends Controller
     public function getInvoiceData(Request $request)
     {
         $facture = Facture::find($request->invoice_id);
-        $facture->invoice_details = DB::connection('client')
+        $details = DB::connection('client')
             ->table('details')
             ->join('products','products.id','=','details.product_id')
             ->Leftjoin(
@@ -282,7 +282,16 @@ class BillingsController extends Controller
                 DB::connection('client')->raw('IFNULL(rangoimpuestos.porciento, 0) AS porciento'),
                 'impuestoref_id'
             )
-            ->get();
+            ->get() ;
+
+        if(count($details) == 0)
+        {
+            $details = DB::connection('client')
+                ->table('details')
+                ->where('invoice_id', $request->invoice_id)
+                ->get();
+        }
+        $facture->invoice_details = $details;
 
         return $facture;
     }
