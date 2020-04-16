@@ -361,7 +361,7 @@ class BillingsController extends Controller
             'fiscal' => ['ncf' => $facture->nfc, 'NFCDueDate' => $facture->due_date, 'config' => $config->generacomprobante],
             'invoice_id' => $request->invoice_id
         ];
-        return view('Print.invoice')->with(compact('dataPDF', $dataPDF));
+        return view('Print.invoice')->with(compact('dataPDF'));
     }
     public function ResentInvoice(Request $request)
     {

@@ -22,7 +22,8 @@
             <label>Desde:</label>
             <datepicker
               v-model="filter.from"
-              class="form-control form-control-sm"
+              :bootstrap-styling="true"
+              :calendar-class="'form-control form-control-sm'"
               :format="'yyyy-MM-dd'"
               name="from"
             />
@@ -31,7 +32,8 @@
             <label>Hasta:</label>
             <datepicker
               v-model="filter.to"
-              class="form-control form-control-sm"
+              :bootstrap-styling="true"
+              :calendar-class="'form-control form-control-sm'"
               :format="'yyyy-MM-dd'"
               name="to"
             />
@@ -40,14 +42,14 @@
             <label>Codigo de factura:</label>
             <input
               type="text"
-              class="form-control form-control-sm"
+              class="form-control"
               v-model="filter.codeEstimate"
               placeholder="#00000"
             />
           </div>
           <div class="col-md-3" style="margin-top: 10px">
             <label for="status">Estado:</label>
-            <select id="status" class="form-control form-control-sm" v-model="filter.status">
+            <select id="status" class="form-control" v-model="filter.status">
               <option value="ALL">Todas</option>
               <option value="COMPLETADO">Completado</option>
               <option value="DEUDA">Deuda</option>
@@ -122,6 +124,18 @@
                     >Editar</a>
                     <a
                       class="dropdown-item"
+                      href="#"
+                      onclick="return false;"
+                      @click="duplicate(item.id)"
+                    >Duplicar</a>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      onclick="return false;"
+                      @click="toPrint(item.id)"
+                    >Reimprimir</a>
+                    <a
+                      class="dropdown-item"
                       :class="item.paid_status === 'PAGADO' ? 'disabled' : ''"
                       href="#"
                       onclick="return false;"
@@ -164,6 +178,25 @@ export default {
     };
   },
   methods: {
+    toPrint(id) {
+      window.open("/invoice/print?invoice_id=" + id, "_blank");
+    },
+    duplicate(id)
+    {
+      axios.get('/invoices/duplicate', {
+        params:{
+          id:id
+        }
+      })
+              .then((response) => {
+                toastr.success(response.data.message)
+                this.getInvoice();
+              })
+              .catch((error) => {
+                toastr.warning(error.response.data.message);
+                console.log(error)
+              })
+    },
     TermTitle(id)
     {
       let found = this.termsList.find(e => e.id == id);

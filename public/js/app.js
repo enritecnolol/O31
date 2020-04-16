@@ -107857,6 +107857,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -107932,18 +107937,6 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
           break;
         }
       }).catch(function (error) {});
-    },
-    duplicateEstimate: function duplicateEstimate(id) {
-      axios.get('/estimate/duplicate', {
-        params: {
-          id: id
-        }
-      }).then(function (response) {
-        toastr.success(response.data.message);
-      }).catch(function (error) {
-        toastr.warning(error.response.data.message);
-        console.log(error);
-      });
     },
     changeTerm: function changeTerm(val) {
       if (val === "") {
@@ -110923,65 +110916,63 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "row", staticStyle: { "margin-top": "20px" } }, [
       _c("div", { staticClass: "col-md-12" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-warning btn-sm",
-            on: {
-              click: function($event) {
-                _vm.save(false)
-              }
-            }
-          },
-          [
-            _c("i", { staticClass: "far fa-file-alt" }),
-            _vm._v(
-              "\n        " +
-                _vm._s(_vm.dataEdit ? "Salvar" : "Guardar") +
-                "\n      "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-success btn-sm",
-            on: {
-              click: function($event) {
-                _vm.save(true)
-              }
-            }
-          },
-          [
-            _c("i", { staticClass: "far fa-file-alt" }),
-            _vm._v(" "),
-            _c("i", { staticClass: "fas fa-paper-plane" }),
-            _vm._v(
-              "\n        " +
-                _vm._s(_vm.dataEdit ? "Salvar" : "Guardar") +
-                " y enviar\n      "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _vm.dataEdit
-          ? _c(
-              "button",
-              {
-                staticClass: "btn btn-sm btn-primary",
-                on: {
-                  click: function($event) {
-                    _vm.duplicateEstimate(_vm.dataEdit.id)
-                  }
+        _c("div", { staticClass: "float-left" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-warning btn-sm",
+              on: {
+                click: function($event) {
+                  _vm.save(false)
                 }
-              },
-              [
-                _c("i", { staticClass: "fas fa-paste" }),
-                _vm._v(" Duplicar\n      ")
-              ]
-            )
-          : _vm._e()
+              }
+            },
+            [
+              _c("i", { staticClass: "far fa-file-alt" }),
+              _vm._v(
+                "\n          " +
+                  _vm._s(_vm.dataEdit ? "Salvar" : "Guardar") +
+                  "\n        "
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-success btn-sm",
+              on: {
+                click: function($event) {
+                  _vm.save(true)
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "far fa-file-alt" }),
+              _vm._v(" "),
+              _c("i", { staticClass: "fas fa-paper-plane" }),
+              _vm._v(
+                "\n          " +
+                  _vm._s(_vm.dataEdit ? "Salvar" : "Guardar") +
+                  " y enviar\n        "
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "float-right" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-danger btn-sm",
+              on: { click: _vm.createFormStatus }
+            },
+            [
+              _c("i", { staticClass: "fas fa-arrow-left" }),
+              _vm._v("\n          Cancelar\n        ")
+            ]
+          )
+        ])
       ])
     ])
   ])
@@ -111237,6 +111228,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -111256,6 +111254,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   methods: {
+    duplicateEstimate: function duplicateEstimate(id) {
+      axios.get('/estimate/duplicate', {
+        params: {
+          id: id
+        }
+      }).then(function (response) {
+        toastr.success(response.data.message);
+      }).catch(function (error) {
+        toastr.warning(error.response.data.message);
+        console.log(error);
+      });
+    },
     ChangeToInvoice: function ChangeToInvoice(id) {
       window.location.href = 'billing?convertToInvoice=' + id;
     },
@@ -111416,8 +111426,12 @@ var render = function() {
                   _c("label", [_vm._v("Desde:")]),
                   _vm._v(" "),
                   _c("datepicker", {
-                    staticClass: "form-control form-control-sm",
-                    attrs: { format: "yyyy-MM-dd", name: "from" },
+                    attrs: {
+                      "bootstrap-styling": true,
+                      "calendar-class": "form-control",
+                      format: "yyyy-MM-dd",
+                      name: "from"
+                    },
                     model: {
                       value: _vm.filter.from,
                       callback: function($$v) {
@@ -111437,8 +111451,12 @@ var render = function() {
                   _c("label", [_vm._v("Hasta:")]),
                   _vm._v(" "),
                   _c("datepicker", {
-                    staticClass: "form-control form-control-sm",
-                    attrs: { format: "yyyy-MM-dd", name: "to" },
+                    attrs: {
+                      "bootstrap-styling": true,
+                      "calendar-class": "form-control",
+                      format: "yyyy-MM-dd",
+                      name: "to"
+                    },
                     model: {
                       value: _vm.filter.to,
                       callback: function($$v) {
@@ -111463,7 +111481,7 @@ var render = function() {
                       expression: "filter.codeEstimate"
                     }
                   ],
-                  staticClass: "form-control form-control-sm",
+                  staticClass: "form-control",
                   attrs: { type: "text", placeholder: "#00000" },
                   domProps: { value: _vm.filter.codeEstimate },
                   on: {
@@ -111614,6 +111632,20 @@ var render = function() {
                                   }
                                 },
                                 [_vm._v("Editar")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "dropdown-item",
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.duplicateEstimate(item.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Duplicar")]
                               ),
                               _vm._v(" "),
                               _c(
@@ -112295,6 +112327,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -112362,18 +112398,6 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
   methods: {
     ChangeDiscountApplied: function ChangeDiscountApplied(amount) {
       this.discount = amount;
-    },
-    duplicate: function duplicate(id) {
-      axios.get('/invoices/duplicate', {
-        params: {
-          id: id
-        }
-      }).then(function (response) {
-        toastr.success(response.data.message);
-      }).catch(function (error) {
-        toastr.warning(error.response.data.message);
-        console.log(error);
-      });
     },
     changeTerm: function changeTerm(_ref) {
       var id = _ref.id,
@@ -113594,65 +113618,63 @@ var render = function() {
       },
       [
         _c("div", { staticClass: "col-md-12" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary btn-sm",
-              on: {
-                click: function($event) {
-                  _vm.save(false)
-                }
-              }
-            },
-            [
-              _c("i", { staticClass: "far fa-file-alt" }),
-              _vm._v(
-                "\n        " +
-                  _vm._s(_vm.createdOrEdit ? "Salvar" : "Guardar") +
-                  "\n      "
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-success btn-sm",
-              on: {
-                click: function($event) {
-                  _vm.save(true)
-                }
-              }
-            },
-            [
-              _c("i", { staticClass: "far fa-file-alt" }),
-              _vm._v(" "),
-              _c("i", { staticClass: "fas fa-paper-plane" }),
-              _vm._v(
-                "\n        " +
-                  _vm._s(_vm.createdOrEdit ? "Salvar" : "Guardar") +
-                  " y enviar\n      "
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _vm.createdOrEdit
-            ? _c(
-                "button",
-                {
-                  staticClass: "btn btn-success btn-sm",
-                  on: {
-                    click: function($event) {
-                      _vm.duplicate(_vm.dataEdit.id)
-                    }
+          _c("div", { staticClass: "float-left" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary btn-sm",
+                on: {
+                  click: function($event) {
+                    _vm.save(false)
                   }
-                },
-                [
-                  _c("i", { staticClass: "fas fa-paste" }),
-                  _vm._v("\n        Duplicar\n      ")
-                ]
-              )
-            : _vm._e()
+                }
+              },
+              [
+                _c("i", { staticClass: "far fa-file-alt" }),
+                _vm._v(
+                  "\n          " +
+                    _vm._s(_vm.createdOrEdit ? "Salvar" : "Guardar") +
+                    "\n        "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-success btn-sm",
+                on: {
+                  click: function($event) {
+                    _vm.save(true)
+                  }
+                }
+              },
+              [
+                _c("i", { staticClass: "far fa-file-alt" }),
+                _vm._v(" "),
+                _c("i", { staticClass: "fas fa-paper-plane" }),
+                _vm._v(
+                  "\n          " +
+                    _vm._s(_vm.createdOrEdit ? "Salvar" : "Guardar") +
+                    " y enviar\n        "
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "float-right" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger btn-sm",
+                on: { click: _vm.createFormStatus }
+              },
+              [
+                _c("i", { staticClass: "fas fa-arrow-left" }),
+                _vm._v("\n          Cancelar\n        ")
+              ]
+            )
+          ])
         ])
       ]
     )
@@ -113980,6 +114002,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -114002,6 +114038,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   methods: {
+    toPrint: function toPrint(id) {
+      window.open("/invoice/print?invoice_id=" + id, "_blank");
+    },
+    duplicate: function duplicate(id) {
+      var _this = this;
+
+      axios.get('/invoices/duplicate', {
+        params: {
+          id: id
+        }
+      }).then(function (response) {
+        toastr.success(response.data.message);
+        _this.getInvoice();
+      }).catch(function (error) {
+        toastr.warning(error.response.data.message);
+        console.log(error);
+      });
+    },
     TermTitle: function TermTitle(id) {
       var found = this.termsList.find(function (e) {
         return e.id == id;
@@ -114012,10 +114066,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return "";
     },
     getTermsList: function getTermsList() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get("/terms/list").then(function (response) {
-        _this.termsList = response.data;
+        _this2.termsList = response.data;
         console.log(response);
       }).catch(function (err) {
         console.log(err);
@@ -114047,7 +114101,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$emit("loading", val);
     },
     getInvoice: function getInvoice(page) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.loading(true);
       axios.get("/invoices/list", {
@@ -114056,18 +114110,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           page: page
         }
       }).then(function (response) {
-        _this2.tableData = response["data"];
+        _this3.tableData = response["data"];
       }).catch(function (error) {
         console.log(error);
       }).finally(function () {
-        _this2.loading(false);
+        _this3.loading(false);
       });
     },
     ClientsDate: function ClientsDate() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.post("/clientes/datos/tabla2").then(function (response) {
-        _this3.clientsData = response["data"];
+        _this4.clientsData = response["data"];
       }).catch(function (error) {
         console.log(error);
       });
@@ -114405,8 +114459,12 @@ var render = function() {
                   _c("label", [_vm._v("Desde:")]),
                   _vm._v(" "),
                   _c("datepicker", {
-                    staticClass: "form-control form-control-sm",
-                    attrs: { format: "yyyy-MM-dd", name: "from" },
+                    attrs: {
+                      "bootstrap-styling": true,
+                      "calendar-class": "form-control form-control-sm",
+                      format: "yyyy-MM-dd",
+                      name: "from"
+                    },
                     model: {
                       value: _vm.filter.from,
                       callback: function($$v) {
@@ -114426,8 +114484,12 @@ var render = function() {
                   _c("label", [_vm._v("Hasta:")]),
                   _vm._v(" "),
                   _c("datepicker", {
-                    staticClass: "form-control form-control-sm",
-                    attrs: { format: "yyyy-MM-dd", name: "to" },
+                    attrs: {
+                      "bootstrap-styling": true,
+                      "calendar-class": "form-control form-control-sm",
+                      format: "yyyy-MM-dd",
+                      name: "to"
+                    },
                     model: {
                       value: _vm.filter.to,
                       callback: function($$v) {
@@ -114452,7 +114514,7 @@ var render = function() {
                       expression: "filter.codeEstimate"
                     }
                   ],
-                  staticClass: "form-control form-control-sm",
+                  staticClass: "form-control",
                   attrs: { type: "text", placeholder: "#00000" },
                   domProps: { value: _vm.filter.codeEstimate },
                   on: {
@@ -114488,7 +114550,7 @@ var render = function() {
                           expression: "filter.status"
                         }
                       ],
-                      staticClass: "form-control form-control-sm",
+                      staticClass: "form-control",
                       attrs: { id: "status" },
                       on: {
                         change: function($event) {
@@ -114693,6 +114755,40 @@ var render = function() {
                                   }
                                 },
                                 [_vm._v("Editar")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "dropdown-item",
+                                  attrs: {
+                                    href: "#",
+                                    onclick: "return false;"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.duplicate(item.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Duplicar")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "dropdown-item",
+                                  attrs: {
+                                    href: "#",
+                                    onclick: "return false;"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.toPrint(item.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Reimprimir")]
                               ),
                               _vm._v(" "),
                               _c(

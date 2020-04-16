@@ -20,15 +20,21 @@
           </div>
           <div class="col-md-3">
             <label>Desde:</label>
-            <datepicker v-model="filter.from" class="form-control form-control-sm" :format="'yyyy-MM-dd'" name="from" />
+            <datepicker v-model="filter.from"
+                        :bootstrap-styling="true"
+                        :calendar-class="'form-control'"
+                        :format="'yyyy-MM-dd'" name="from" />
           </div>
           <div class="col-md-3">
             <label>Hasta:</label>
-            <datepicker v-model="filter.to" class="form-control form-control-sm" :format="'yyyy-MM-dd'" name="to" />
+            <datepicker v-model="filter.to"
+                        :bootstrap-styling="true"
+                        :calendar-class="'form-control'"
+                        :format="'yyyy-MM-dd'" name="to" />
           </div>
           <div class="col-md-3">
             <label>Codigo cotización:</label>
-            <input type="text" class="form-control form-control-sm" v-model="filter.codeEstimate" placeholder="#00000">
+            <input type="text" class="form-control" v-model="filter.codeEstimate" placeholder="#00000">
           </div>
         </div>
       </div>
@@ -66,6 +72,7 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#" @click="dataEdit(item.id)">Editar</a>
+                    <a class="dropdown-item" href="#" @click="duplicateEstimate(item.id)">Duplicar</a>
                     <a class="dropdown-item" href="#" @click="ChangeToInvoice(item.id)">Convertir en Factura</a>
                     <a class="dropdown-item" href="#">Eliminar</a>
                   </div>
@@ -97,6 +104,22 @@
       }
     },
     methods:{
+
+      duplicateEstimate(id)
+      {
+        axios.get('/estimate/duplicate', {
+          params:{
+            id:id
+          }
+        })
+                .then((response) => {
+                  toastr.success(response.data.message)
+                })
+                .catch((error) => {
+                  toastr.warning(error.response.data.message);
+                  console.log(error)
+                })
+      },
       ChangeToInvoice(id)
       {
         window.location.href = 'billing?convertToInvoice='+id;

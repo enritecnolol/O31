@@ -170,18 +170,23 @@
 
     <div class="row" style="margin-top: 20px">
       <div class="col-md-12">
-        <button class="btn btn-warning btn-sm" @click="save(false)">
-          <i class="far fa-file-alt" />
-          {{dataEdit ? 'Salvar' : 'Guardar'}}
-        </button>
-        <button class="btn btn-success btn-sm" @click="save(true)">
-          <i class="far fa-file-alt" />
-          <i class="fas fa-paper-plane" />
-          {{dataEdit ? 'Salvar' : 'Guardar'}} y enviar
-        </button>
-        <button class="btn btn-sm btn-primary" @click="duplicateEstimate(dataEdit.id)" v-if="dataEdit">
-          <i class="fas fa-paste" /> Duplicar
-        </button>
+        <div class="float-left">
+          <button class="btn btn-warning btn-sm" @click="save(false)">
+            <i class="far fa-file-alt" />
+            {{dataEdit ? 'Salvar' : 'Guardar'}}
+          </button>
+          <button class="btn btn-success btn-sm" @click="save(true)">
+            <i class="far fa-file-alt" />
+            <i class="fas fa-paper-plane" />
+            {{dataEdit ? 'Salvar' : 'Guardar'}} y enviar
+          </button>
+        </div>
+        <div class="float-right">
+          <button class="btn btn-danger btn-sm" @click="createFormStatus">
+            <i class="fas fa-arrow-left"/>
+            Cancelar
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -265,21 +270,6 @@
                   }
                 })
                 .catch(function(error) {});
-      },
-      duplicateEstimate(id)
-      {
-        axios.get('/estimate/duplicate', {
-          params:{
-            id:id
-          }
-        })
-                .then((response) => {
-                  toastr.success(response.data.message)
-                })
-                .catch((error) => {
-                  toastr.warning(error.response.data.message);
-                  console.log(error)
-                })
       },
       changeTerm(val) {
         if (val === "") {
