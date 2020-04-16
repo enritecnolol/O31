@@ -530,12 +530,15 @@
           toastr.warning("La factura no posee articulos vinculados");
           return;
         }
-
-        var r = confirm("Estas seguro que quieres guardar la factura en 0 ?");
-        if (r == false)
+        if(this.total === 0)
         {
-          return;
+          var r = confirm("Estas seguro que quieres guardar la factura en 0 ?");
+          if (r == false)
+          {
+            return;
+          }
         }
+
         let url = this.createdOrEdit ? "/invoice/edit" : "/invoice";
         this.loadingStatus(true);
         axios
