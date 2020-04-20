@@ -73,6 +73,10 @@
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#" @click="dataEdit(item.id)">Editar</a>
                     <a class="dropdown-item" href="#" @click="duplicateEstimate(item.id)">Duplicar</a>
+                    <a class="dropdown-item"
+                            href="#"
+                            onclick="return false;"
+                            @click="toPrint(item.id)">Reimprimir</a>
                     <a class="dropdown-item" href="#" @click="ChangeToInvoice(item.id)">Convertir en Factura</a>
                     <a class="dropdown-item" href="#">Eliminar</a>
                   </div>
@@ -104,7 +108,9 @@
       }
     },
     methods:{
-
+      toPrint(id) {
+        window.open("/estimate/print?estimate_id=" + id, "_blank");
+      },
       duplicateEstimate(id)
       {
         axios.get('/estimate/duplicate', {

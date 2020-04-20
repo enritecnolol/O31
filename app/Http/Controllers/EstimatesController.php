@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
 use App\Client_database;
 use App\Core\ClientDbSwitcher;
 use App\Estimate;
 use App\EstimateDetail;
+use App\Term;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -336,7 +338,7 @@ class EstimatesController extends Controller
         }
 
         $estimate->estimate_details = $details;
-        
+
         return $estimate;
     }
 
@@ -427,5 +429,50 @@ class EstimatesController extends Controller
             DB::connection('client')->rollBack();
             return response()->json($e, 400);
         }
+    }
+
+    public function printEstimate(Request $request)
+    {
+        $estimate = Estimate::find($request->estimate_id);
+        $details =
+            DB::connection('client')
+                ->table('estimatedetails')
+                ->join('products','products.id','=','estimatedetails.product_id')
+                ->Leftjoin(
+                    'impuestosrefs',
+                    'products.impuestoref_id',
+                    'impuestosrefs.id'
+                )
+                ->Leftjoin(
+                    'rangoimpuestos',
+                    'rangoimpuestos.referenciaitbis_id',
+                    DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta')
+                )
+                ->where('estimate_id', $request->estimate_id)
+                ->select('estimatedetails.*',
+                    DB::connection('client')->raw('IFNULL(impuestosrefs.descripcion, "") AS itbis_description'),
+                    DB::connection('client')->raw('IFNULL(rangoimpuestos.porciento, 0) AS porciento'),
+                    'impuestoref_id'
+                )
+                ->get();
+        if(count($details) == 0)
+        {
+            $details = DB::connection('client')
+                ->table('estimatedetails')
+                ->where('estimate_id', $request->estimate_id)
+                ->get();
+        }
+
+        $estimate->details = json_decode($details, true);
+        $client = Client::find($estimate->client_id);
+        $company = DB::connection('client')->table('configuracions')->first();
+
+        $dataPDF = [
+            'data' => $estimate,
+            'company' => $company,
+            'client' => $client
+        ];
+
+        return view('Print.estimate')->with(compact('dataPDF'));
     }
 }

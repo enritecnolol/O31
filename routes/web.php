@@ -272,6 +272,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/estimate/edit', 'EstimatesController@edit');
     Route::get('/estimate/find', 'EstimatesController@getEstimateData');
     Route::get('/estimate/duplicate', 'EstimatesController@duplicateEstimate');
+    Route::get('/estimate/print', 'EstimatesController@printEstimate');
     /*=================================\- Facturacion -/======================================================*/
     Route::get('/billing', 'BillingsController@index');
     Route::post('/invoice', 'BillingsController@store');

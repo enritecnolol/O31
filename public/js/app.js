@@ -107910,7 +107910,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
       email: "",
       settings: {},
       ListItbis: [],
-      discount: 0
+      discount: 0,
+      term: ""
     };
   },
 
@@ -107938,13 +107939,14 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
         }
       }).catch(function (error) {});
     },
-    changeTerm: function changeTerm(val) {
-      if (val === "") {
-        return;
-      }
+    changeTerm: function changeTerm(_ref) {
+      var id = _ref.id,
+          number_days = _ref.number_days;
+
+      this.term = id;
       var today = new Date();
       var dueDate = new Date();
-      dueDate.setDate(today.getDate() + val);
+      dueDate.setDate(today.getDate() + number_days);
       this.dueDate = dueDate;
     },
     itemsEditFormat: function itemsEditFormat(items) {
@@ -108099,9 +108101,9 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
     removeElement: function removeElement(index) {
       this.items.splice(index, 1);
     },
-    replaceElement: function replaceElement(_ref) {
-      var index = _ref.index,
-          item = _ref.item;
+    replaceElement: function replaceElement(_ref2) {
+      var index = _ref2.index,
+          item = _ref2.item;
 
       this.items.splice(index, 1, item);
     },
@@ -110579,7 +110581,12 @@ var render = function() {
             _c(
               "div",
               { staticClass: "col-md-4" },
-              [_c("select-term", { on: { changeTerm: _vm.changeTerm } })],
+              [
+                _c("select-term", {
+                  attrs: { "term-external": _vm.term },
+                  on: { changeTerm: _vm.changeTerm }
+                })
+              ],
               1
             ),
             _vm._v(" "),
@@ -111235,6 +111242,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -111254,6 +111265,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   methods: {
+    toPrint: function toPrint(id) {
+      window.open("/estimate/print?estimate_id=" + id, "_blank");
+    },
     duplicateEstimate: function duplicateEstimate(id) {
       axios.get('/estimate/duplicate', {
         params: {
@@ -111646,6 +111660,23 @@ var render = function() {
                                   }
                                 },
                                 [_vm._v("Duplicar")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "dropdown-item",
+                                  attrs: {
+                                    href: "#",
+                                    onclick: "return false;"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.toPrint(item.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Reimprimir")]
                               ),
                               _vm._v(" "),
                               _c(

@@ -42,7 +42,7 @@
       <div class="col-md-12" v-show="!clientForm">
         <div class="row">
           <div class="col-md-4">
-            <select-term @changeTerm="changeTerm" />
+            <select-term @changeTerm="changeTerm" :term-external="term" />
           </div>
           <div class="col-md-4">
             <label>
@@ -241,7 +241,8 @@
         email: "",
         settings: {},
         ListItbis:[],
-        discount:0
+        discount:0,
+        term:""
       };
     },
     methods: {
@@ -271,13 +272,11 @@
                 })
                 .catch(function(error) {});
       },
-      changeTerm(val) {
-        if (val === "") {
-          return;
-        }
+      changeTerm({id, number_days}) {
+        this.term = id;
         var today = new Date();
         var dueDate = new Date();
-        dueDate.setDate(today.getDate() + val);
+        dueDate.setDate(today.getDate() + number_days);
         this.dueDate = dueDate;
       },
       itemsEditFormat(items) {

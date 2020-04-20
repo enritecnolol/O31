@@ -354,13 +354,15 @@ class BillingsController extends Controller
         $facture->details = json_decode(DB::connection('client')->table('details')->where('invoice_id', $request->invoice_id)->get(), true);
         $client = Client::find($facture->client);
         $facture->client_name = $client->nombre;
-
+        $term = Term::find($facture->term_id);
         $dataPDF = [
             'data' => $facture ,
             'company' => $config,
             'fiscal' => ['ncf' => $facture->nfc, 'NFCDueDate' => $facture->due_date, 'config' => $config->generacomprobante],
-            'invoice_id' => $request->invoice_id
+            'invoice_id' => $request->invoice_id,
+            'term_days' => $term->number_days ? $term->number_days : 0
         ];
+
         return view('Print.invoice')->with(compact('dataPDF'));
     }
     public function ResentInvoice(Request $request)
