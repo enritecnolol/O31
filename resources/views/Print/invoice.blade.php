@@ -180,21 +180,6 @@
                                 </tr>
                                 </tbody>
                             </table>
-{{--                            <div class="">--}}
-{{--                                <div class="">--}}
-{{--                                    <div style="margin-top: 10px;">--}}
-{{--                                        <div class="">--}}
-{{--                                            <b style="text-align: left">SubTotal:</b>--}}
-{{--                                            <p style="text-align: right"></p>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="">--}}
-{{--                                        <hr>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="" style="text-align: right"><b>Monto Total:</b></div>--}}
-{{--                                    <div class="" style="text-align: right">RD$ {{number_format($dataPDF['data']['total_facture'], 2, '.', ',')}}</div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
                         </div>
                     </div>
                     <div class="">

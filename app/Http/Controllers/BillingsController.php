@@ -127,9 +127,10 @@ class BillingsController extends Controller
                     'data' => $request,
                     'company' => $config,
                     'fiscal' => ['ncf' => $nfc, 'NFCDueDate' => $NFCDueDate, 'config' => $config->generacomprobante],
-                    'invoice_id' => $facture->id
+                    'invoice_id' => $facture->id,
+                    'term_days' => $term->number_days
                 ];
-                $pdf = PDF::loadView('emails.invoice', compact( 'dataPDF'))->setPaper('a4', 'landscape');
+                $pdf = PDF::loadView('emails.invoice', compact( 'dataPDF'))->setPaper('a4');
 
                 $email = $request->email;
                 $fecha = date("Y-m-d", strtotime($request->invoice_date));

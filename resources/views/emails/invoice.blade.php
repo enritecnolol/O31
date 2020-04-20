@@ -19,12 +19,12 @@
         }
         @page {
             margin: 5px;
-            size: landscape;
+            size: portrait;
         }
         @media print and (width: 8.5in) and (height: 11in) {
             @page {
                 margin: 10px;
-                size: landscape;
+                size: portrait;
             }
         }
         div#footer {
@@ -63,12 +63,15 @@
                 </div>
                 <div class="" style="margin-top: 20px">
                     <b>{{$dataPDF['company']->nombreempresa}} <br></b>
-                    <b>{{$dataPDF['company']->telefono}} </b>
-                    <p>{{$dataPDF['company']->pais}}, {{$dataPDF['company']->ciudad}} {{$dataPDF['company']->direccion}}</p>
+                    <p>
+                        {{$dataPDF['company']->telefono}} <br> {{$dataPDF['company']->pais}},
+                        <br> {{$dataPDF['company']->ciudad}}
+                        <br>{{$dataPDF['company']->direccion}}
+                    </p>
                 </div>
                 <div class="">
                     <div class="">
-                        <h3>Factura</h3>
+                        <h2>Factura</h2>
                     </div>
                     <hr>
                 </div>
@@ -76,22 +79,58 @@
                     <table width="100%">
                         <tbody>
                         <tr>
-                            <td><b>Cliente: </b>{{$dataPDF['data']['client_id']['label']}}</td>
-                            <td><b>Fecha estimada: </b> {{date("d-m-Y", strtotime($dataPDF['data']['invoice_date']))}}</td>
-                            <td><b>Fecha vencimiento: </b> {{ date("d-m-Y", strtotime($dataPDF['data']['due_date'])) }}</td>
+                            <td style="width: 68%"><b>Cliente: </b> {{$dataPDF['data']['client_id']['label']}}</td>
+                            <td>
+
+                                <table width="100%">
+                                    <tbody>
+                                    <tr>
+                                        <td><b>No. Factura: </b></td>
+                                        <td style="text-align: right">#{{$dataPDF['invoice_id']}} </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
                         </tr>
                         <tr>
-                            <td><b>No. Factura: </b> #{{$dataPDF['invoice_id']}}</td>
-                            <td><b>Dirección: </b> {{$dataPDF['data']['address']}}</td>
-                            <td><b>Email :</b> {{$dataPDF['data']['email']}}</td>
+                            <td style="width: 68%"><b>Direccion: </b>&emsp;{{$dataPDF['data']['address']}}</td>
+                            <td>
+                                <table width="100%">
+                                    <tbody>
+                                    <tr>
+                                        <td><b>Fecha: </b></td>
+                                        <td style="text-align: right">{{date("d-m-Y", strtotime($dataPDF['data']['invoice_date']))}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
                         </tr>
-                        @if($dataPDF['fiscal']['config'] == 'si')
-                            <tr>
-                                <td><b>NCF: </b> {{$dataPDF['fiscal']['ncf']}}</td>
-                                <td><b>Fecha vencimiento NCF: </b> {{$dataPDF['fiscal']['NFCDueDate']}}</td>
-                                <td></td>
-                            </tr>
-                        @endif
+                        <tr>
+                            <td style="width: 68%"><b>Email: </b>&emsp;{{$dataPDF['data']['email']}}</td>
+                            <td>
+                                <table width="100%">
+                                    <tbody>
+                                    <tr>
+                                        <td><b>Condicion: </b></td>
+                                        <td style="text-align: right">@if($dataPDF['term_days']  == 0) Contado @else Credito {{$dataPDF['term_days']}} dias @endif</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 68%"><b>RNC/Cedula: </b>&emsp;{{$dataPDF['fiscal']['ncf']}}</td>
+                            <td>
+                                <table width="100%">
+                                    <tbody>
+                                    <tr>
+                                        <td><b>Fecha vencimiento: </b> </td>
+                                        <td style="text-align: right">{{ date("d-m-Y", strtotime($dataPDF['data']['due_date'])) }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -127,36 +166,39 @@
                 </div>
                 <div class="" style="margin-top: 15px">
                     <div class="">
-                        <div style="float: right;width: 200px;height: 150px;box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);border-radius: 10px 10px 10px 10px;">
-                            <div class="">
-                                <div class="">
-                                    <div>
-                                        <div class="" style="margin-top: 10px;text-align: left"><b>SubTotal:</b></div>
-                                        <div class="" style="margin-top: 10px;text-align: right">RD$ {{number_format($dataPDF['data']['subtotal'], 2, '.', ',')}}</div>
-                                    </div>
-                                    <div>
-                                        <div class="" style="margin-top: 10px;text-align: left"><b>Descuento:</b></div>
-                                        <div class="" style="margin-top: 10px;text-align: right">RD$ {{number_format($dataPDF['data']['discount'], 2, '.', ',')}}</div>
-                                    </div>
-                                        <div class="" style="margin-top: 10px;text-align: left"><b>Impuestos:</b></div>
-                                        <div class="" style="margin-top: 10px;text-align: right">RD$ {{number_format($dataPDF['data']['tax'], 2, '.', ',')}}</div>
-                                    </div>
-                                    <div class="">
+                        <div style="float: right;width: 200px;height: auto;box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);border-radius: 10px 10px 10px 10px;">
+                            <table  width="100%">
+                                <tbody>
+                                <tr>
+                                    <td style="text-align: left"><b>SubTotal:</b></td>
+                                    <td style="text-align: right">$ {{number_format($dataPDF['data']['subtotal'], 2, '.', ',')}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left"><b>Descuento:</b></td>
+                                    <td style="text-align: right">$ {{number_format($dataPDF['data']['discount'], 2, '.', ',')}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left"><b>Impuesto:</b></td>
+                                    <td style="text-align: right">$ {{number_format($dataPDF['data']['tax'], 2, '.', ',')}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
                                         <hr>
-                                    </div>
-                                    <div>
-                                        <div class="" style="text-align: left"><b>Monto Total:</b></div>
-                                        <div class="" style="text-align: right">RD$ {{number_format($dataPDF['data']['total'], 2, '.', ',')}}</div>
-                                    </div>
-                                </div>
-                            </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left"><b>Total:</b></td>
+                                    <td style="text-align: right">RD$ {{number_format($dataPDF['data']['total'], 2, '.', ',')}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+                </div>
+                <div class="">
                     <div class="">
-                        <div class="">
-                            <label><b>Nota:</b></label>
-                            <p>{{$dataPDF['data']['note']}}</p>
-                        </div>
+                        <label><b>Nota:</b></label>
+                        <p>{{$dataPDF['data']['note']}}</p>
                     </div>
                 </div>
             </div>
