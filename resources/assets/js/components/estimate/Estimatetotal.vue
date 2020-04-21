@@ -87,7 +87,7 @@
       },
       desc()
       {
-        if(this.desc < 0)
+        if(this.desc < 0 || this.desc == "")
         {
           this.desc = 0;
           return;
