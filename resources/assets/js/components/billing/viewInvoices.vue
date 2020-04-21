@@ -152,6 +152,11 @@
               </td>
             </tr>
           </template>
+          <template slot="bottom-down">
+            <div class="float-left">
+              Mostando {{dataSize}} de 10
+            </div>
+          </template>
         </table-invoice>
       </div>
     </div>

@@ -45,9 +45,10 @@
             @pageChange="getEstimate">
           <template slot="table-header">
             <th>No. cotización</th>
-            <th style="text-align: center">Fecha cotización</th>
-            <th style="text-align: center">Fecha de vencimiento</th>
-            <th style="text-align: center">Cliente</th>
+            <th>Fecha cotización</th>
+            <th>Condicion</th>
+            <th>Fecha de vencimiento</th>
+            <th>Cliente</th>
             <th style="text-align: right">Total</th>
             <th style="text-align: center">Confirmación</th>
             <th />
@@ -59,10 +60,11 @@
               </th>
             </tr>
             <tr v-for="(item, index) in tableData.data">
-              <th>{{item.estimatenumber}}</th>
-              <td style="text-align: center">{{moment(item.estimatedate).format('DD-MM-YYYY')}}</td>
-              <td style="text-align: center">{{moment(item.duedate).format('DD-MM-YYYY')}}</td>
-              <td style="text-align: center">{{toShowClient(item.client_id)}}</td>
+              <th>#{{item.id}}</th>
+              <td>{{moment(item.estimatedate).format('DD-MM-YYYY')}}</td>
+              <td>{{TermTitle(item.term_id)}}</td>
+              <td>{{moment(item.duedate).format('DD-MM-YYYY')}}</td>
+              <td>{{toShowClient(item.client_id)}}</td>
               <td style="text-align: right">{{parseFloat(item.total).formatMoney(2)}}</td>
               <td style="text-align: center"><i style="font-size: 20px" :class="item.confirmation ? 'fas fa-check-circle green' : 'fas fa-ban red'" /></td>
               <td>
@@ -84,6 +86,11 @@
               </td>
             </tr>
           </template>
+          <template slot="bottom-down">
+            <div class="float-left">
+              Mostando {{dataSize}} de 10
+            </div>
+          </template>
         </table-estimate>
       </div>
     </div>
@@ -104,10 +111,31 @@
           from:'',
           to:'',
           codeEstimate:''
-        }
+        },
+        termsList:[]
       }
     },
     methods:{
+      TermTitle(id)
+      {
+        let found = this.termsList.find(e => e.id == id);
+        if(found)
+        {
+          return found.name;
+        }
+        return "";
+      },
+      getTermsList() {
+        axios
+                .get("/terms/list")
+                .then(response => {
+                  this.termsList = response.data;
+                  console.log(response);
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+      },
       toPrint(id) {
         window.open("/estimate/print?estimate_id=" + id, "_blank");
       },
@@ -230,7 +258,8 @@
     },
     created(){
       this.getEstimate();
-      this.ClientsDate()
+      this.ClientsDate();
+      this.getTermsList();
     }
   }
 </script>

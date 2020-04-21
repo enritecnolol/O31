@@ -10,6 +10,7 @@
       <slot name="table-body" />
       </tbody>
     </table>
+    <slot name="bottom-down"/>
     <pagination
             v-if="paginate"
         align="right"

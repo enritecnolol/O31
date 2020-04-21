@@ -5,104 +5,103 @@
         <div class="float-left">
           <h3>{{clientForm ? 'Crear cliente' : 'Cotización'}}</h3>
         </div>
-        <div class="float-right">
+        <div class="float-right" v-if="!clientForm">
           <button class="btn btn-sm btn-primary" @click="createFormStatus">Lista de cotizaciones</button>
         </div>
-      </div>
-      <div class="col-md-12">
-        <hr />
-      </div>
-      <div class="col-md-6" v-show="!clientForm">
-        <label>
-          Cliente
-          <span style="color:red">*</span>
-        </label>
-        <v-select v-model="selectedCustomer" :options="clientsListForSelect" @input="setSelected" />
-        <div class="text-center createCustomer" style="color: #007bff">
-          <span style="cursor: pointer" @click="clientForm = !clientForm">
-            <i class="fas fa-user-plus" /> Crear cliente
-          </span>
-        </div>
-      </div>
-      <div class="col-md-6" v-show="!clientForm">
-        <div class="form-group">
-          <label for="TexInputEmail">
-            Email:
-            <span style="color:red">*</span>
-          </label>
-          <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  v-model="email"
-                  id="TexInputEmail"
-                  style="width: 300px;"
-          />
-        </div>
-      </div>
-      <div class="col-md-12" v-show="!clientForm">
-        <div class="row">
-          <div class="col-md-4">
-            <select-term @changeTerm="changeTerm" :term-external="term" />
-          </div>
-          <div class="col-md-4">
-            <label>
-              Fecha estimada:
-              <span style="color:red">*</span>
-            </label>
-            <datepicker
-                    v-model="estimateDate"
-                    class="form-control form-control-sm"
-                    :format="'yyyy-MM-dd'"
-                    name="estimateDate"
-            />
-          </div>
-          <div class="col-md-4">
-            <label>
-              Fecha vencimiento:
-              <span style="color:red">*</span>
-            </label>
-            <datepicker
-                    v-model="dueDate"
-                    class="form-control form-control-sm"
-                    :format="'yyyy-MM-dd'"
-                    name="dueDate"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="col-md-5" v-show="!clientForm">
-        <div class="form-group">
-          <label for="Textarea1">
-            Dirección:
-            <span style="color:red">*</span>
-          </label>
-          <textarea class="form-control" id="Textarea1" rows="3" v-model="address" />
-        </div>
-      </div>
-      <div class="col-md-2" v-show="!clientForm">
-        <div class="form-group">
-          <label for="TexInput1">
-            No. Cotización
-            <span style="color:red">*</span>
-          </label>
-          <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  placeholder="#0000"
-                  v-model="codeEstimate"
-                  id="TexInput1"
-          />
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12" style="margin-bottom: 20px" v-if="clientForm">
-        <div class="float-right">
+        <div class="float-right" v-else>
           <button class="btn-sm btn-warning" @click="hideClientForm">
             <i class="fas fa-angle-left" /> Volver
           </button>
         </div>
       </div>
+      <div class="col-md-12">
+        <hr />
+      </div>
+      <div class="col-md-12" v-show="!clientForm">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">
+                    Cliente:
+                    <span style="color:red">*</span>
+                  </label>
+                  <div class="col-sm" style="padding: 0">
+                    <v-select v-model="selectedCustomer" :options="clientsListForSelect" @input="setSelected" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label for="Textarea1" class="col-sm-2 col-form-label">
+                    Dirección:
+                    <span style="color:red">*</span>
+                  </label>
+                  <textarea class="form-control col-sm" id="Textarea1" rows="1" v-model="address" />
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label for="TexInputEmail" class="col-sm-2 col-form-label">
+                    Email:
+                    <span style="color:red">*</span>
+                  </label>
+                  <input
+                          type="text"
+                          maxlength="50"
+                          class="form-control form-control-sm col-sm"
+                          v-model="email"
+                          id="TexInputEmail"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">
+                    Fecha:
+                    <span style="color:red">*</span>
+                  </label>
+                  <div class="col-sm">
+                    <datepicker
+                            :bootstrap-styling="true"
+                            v-model="estimateDate"
+                            :calendar-class="'form-control form-control-sm'"
+                            :format="'yyyy-MM-dd'"
+                            name="estimateDate"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <select-term @changeTerm="changeTerm" :termExternal="term" :landscape="true"/>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">
+                    Vencimiento:
+                  </label>
+                  <div class="col-sm">
+                    <datepicker
+                            :bootstrap-styling="true"
+                            v-model="dueDate"
+                            :calendar-class="'form-control form-control-sm'"
+                            :format="'yyyy-MM-dd'"
+                            name="dueDate"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-12">
         <client-form v-if="clientForm" @hideForm="clientForm = false" />
       </div>
@@ -168,7 +167,7 @@
       </div>
     </div>
 
-    <div class="row" style="margin-top: 20px">
+    <div class="row" style="margin-top: 20px" v-show="!clientForm">
       <div class="col-md-12">
         <div class="float-left">
           <button class="btn btn-warning btn-sm" @click="save(false)">
@@ -242,7 +241,8 @@
         settings: {},
         ListItbis:[],
         discount:0,
-        term:""
+        term:"",
+        rnc:""
       };
     },
     methods: {
@@ -322,7 +322,6 @@
       save(send) {
         if (
                 this.selectedCustomer === "" ||
-                this.codeEstimate === "" ||
                 this.email === "" ||
                 this.address === "" ||
                 this.selectedCustomer === ""
@@ -351,11 +350,13 @@
                   tax: this.tax,
                   total: this.total,
                   details: this.reduceItems,
-                  send: send
+                  send: send,
+                  term_id:this.term
                 })
                 .then(response => {
                   toastr.success("Datos guardado correctamente");
                   this.reset();
+                  this.$emit("createFormStatus", false);
                 })
                 .catch(error => {
                   toastr.warning(error.response.data.message);
@@ -414,6 +415,7 @@
         this.email = this.dataEdit.email;
         this.items = this.itemsEditFormat(this.dataEdit.estimate_details);
         this.discount = this.dataEdit.discount_percent;
+        this.term = this.dataEdit.term_id;
       },
       getProducts() {
         axios
@@ -486,6 +488,11 @@
             code: this.clientsData[index].id
           });
         }
+        array.push({
+          label:"Nuevo cliente",
+          code:"new"
+        });
+
         return array;
       },
       productsListForSelect() {
@@ -563,6 +570,15 @@
 
         }
         return tax;
+      }
+    },
+    watch:{
+      selectedCustomer()
+      {
+        if (this.selectedCustomer.code === "new") {
+          this.clientForm = true;
+          return;
+        }
       }
     },
     created() {

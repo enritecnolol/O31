@@ -569,6 +569,7 @@
                   }
                   toastr.success("Datos guardado correctamente");
                   this.reset();
+                  this.$emit("createFormStatus", false);
                 })
                 .catch(error => {
                   toastr.warning(error.response.data.message);

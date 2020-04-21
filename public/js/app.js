@@ -107861,7 +107861,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -107911,7 +107910,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
       settings: {},
       ListItbis: [],
       discount: 0,
-      term: ""
+      term: "",
+      rnc: ""
     };
   },
 
@@ -107994,7 +107994,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
     save: function save(send) {
       var _this3 = this;
 
-      if (this.selectedCustomer === "" || this.codeEstimate === "" || this.email === "" || this.address === "" || this.selectedCustomer === "") {
+      if (this.selectedCustomer === "" || this.email === "" || this.address === "" || this.selectedCustomer === "") {
         toastr.warning("por favor llenar los datos necesarios");
         return;
       }
@@ -108018,10 +108018,12 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
         tax: this.tax,
         total: this.total,
         details: this.reduceItems,
-        send: send
+        send: send,
+        term_id: this.term
       }).then(function (response) {
         toastr.success("Datos guardado correctamente");
         _this3.reset();
+        _this3.$emit("createFormStatus", false);
       }).catch(function (error) {
         toastr.warning(error.response.data.message);
       }).finally(function () {
@@ -108077,6 +108079,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
       this.email = this.dataEdit.email;
       this.items = this.itemsEditFormat(this.dataEdit.estimate_details);
       this.discount = this.dataEdit.discount_percent;
+      this.term = this.dataEdit.term_id;
     },
     getProducts: function getProducts() {
       var _this6 = this;
@@ -108147,6 +108150,11 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
           code: this.clientsData[index].id
         });
       }
+      array.push({
+        label: "Nuevo cliente",
+        code: "new"
+      });
+
       return array;
     },
     productsListForSelect: function productsListForSelect() {
@@ -108222,6 +108230,14 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
         }
       }
       return tax;
+    }
+  },
+  watch: {
+    selectedCustomer: function selectedCustomer() {
+      if (this.selectedCustomer.code === "new") {
+        this.clientForm = true;
+        return;
+      }
     }
   },
   created: function created() {
@@ -108740,7 +108756,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -108751,6 +108767,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -108820,6 +108837,8 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
+      _vm._t("bottom-down"),
+      _vm._v(" "),
       _vm.paginate
         ? _c("pagination", {
             attrs: {
@@ -108832,7 +108851,7 @@ var render = function() {
           })
         : _vm._e()
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
@@ -110450,118 +110469,33 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "float-right" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-sm btn-primary",
-              on: { click: _vm.createFormStatus }
-            },
-            [_vm._v("Lista de cotizaciones")]
-          )
-        ])
+        !_vm.clientForm
+          ? _c("div", { staticClass: "float-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-primary",
+                  on: { click: _vm.createFormStatus }
+                },
+                [_vm._v("Lista de cotizaciones")]
+              )
+            ])
+          : _c("div", { staticClass: "float-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn-sm btn-warning",
+                  on: { click: _vm.hideClientForm }
+                },
+                [
+                  _c("i", { staticClass: "fas fa-angle-left" }),
+                  _vm._v(" Volver\n        ")
+                ]
+              )
+            ])
       ]),
       _vm._v(" "),
       _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: !_vm.clientForm,
-              expression: "!clientForm"
-            }
-          ],
-          staticClass: "col-md-6"
-        },
-        [
-          _vm._m(1),
-          _vm._v(" "),
-          _c("v-select", {
-            attrs: { options: _vm.clientsListForSelect },
-            on: { input: _vm.setSelected },
-            model: {
-              value: _vm.selectedCustomer,
-              callback: function($$v) {
-                _vm.selectedCustomer = $$v
-              },
-              expression: "selectedCustomer"
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "text-center createCustomer",
-              staticStyle: { color: "#007bff" }
-            },
-            [
-              _c(
-                "span",
-                {
-                  staticStyle: { cursor: "pointer" },
-                  on: {
-                    click: function($event) {
-                      _vm.clientForm = !_vm.clientForm
-                    }
-                  }
-                },
-                [
-                  _c("i", { staticClass: "fas fa-user-plus" }),
-                  _vm._v(" Crear cliente\n        ")
-                ]
-              )
-            ]
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: !_vm.clientForm,
-              expression: "!clientForm"
-            }
-          ],
-          staticClass: "col-md-6"
-        },
-        [
-          _c("div", { staticClass: "form-group" }, [
-            _vm._m(2),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.email,
-                  expression: "email"
-                }
-              ],
-              staticClass: "form-control form-control-sm",
-              staticStyle: { width: "300px" },
-              attrs: { type: "text", id: "TexInputEmail" },
-              domProps: { value: _vm.email },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.email = $event.target.value
-                }
-              }
-            })
-          ])
-        ]
-      ),
       _vm._v(" "),
       _c(
         "div",
@@ -110578,174 +110512,178 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              { staticClass: "col-md-4" },
-              [
-                _c("select-term", {
-                  attrs: { "term-external": _vm.term },
-                  on: { changeTerm: _vm.changeTerm }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-md-4" },
-              [
-                _vm._m(3),
+            _c("div", { staticClass: "col-md-8" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-sm", staticStyle: { padding: "0" } },
+                      [
+                        _c("v-select", {
+                          attrs: { options: _vm.clientsListForSelect },
+                          on: { input: _vm.setSelected },
+                          model: {
+                            value: _vm.selectedCustomer,
+                            callback: function($$v) {
+                              _vm.selectedCustomer = $$v
+                            },
+                            expression: "selectedCustomer"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ]),
                 _vm._v(" "),
-                _c("datepicker", {
-                  staticClass: "form-control form-control-sm",
-                  attrs: { format: "yyyy-MM-dd", name: "estimateDate" },
-                  model: {
-                    value: _vm.estimateDate,
-                    callback: function($$v) {
-                      _vm.estimateDate = $$v
-                    },
-                    expression: "estimateDate"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-md-4" },
-              [
-                _vm._m(4),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.address,
+                          expression: "address"
+                        }
+                      ],
+                      staticClass: "form-control col-sm",
+                      attrs: { id: "Textarea1", rows: "1" },
+                      domProps: { value: _vm.address },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.address = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ]),
                 _vm._v(" "),
-                _c("datepicker", {
-                  staticClass: "form-control form-control-sm",
-                  attrs: { format: "yyyy-MM-dd", name: "dueDate" },
-                  model: {
-                    value: _vm.dueDate,
-                    callback: function($$v) {
-                      _vm.dueDate = $$v
-                    },
-                    expression: "dueDate"
-                  }
-                })
-              ],
-              1
-            )
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: !_vm.clientForm,
-              expression: "!clientForm"
-            }
-          ],
-          staticClass: "col-md-5"
-        },
-        [
-          _c("div", { staticClass: "form-group" }, [
-            _vm._m(5),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.email,
+                          expression: "email"
+                        }
+                      ],
+                      staticClass: "form-control form-control-sm col-sm",
+                      attrs: {
+                        type: "text",
+                        maxlength: "50",
+                        id: "TexInputEmail"
+                      },
+                      domProps: { value: _vm.email },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.email = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ])
+            ]),
             _vm._v(" "),
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.address,
-                  expression: "address"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { id: "Textarea1", rows: "3" },
-              domProps: { value: _vm.address },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.address = $event.target.value
-                }
-              }
-            })
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: !_vm.clientForm,
-              expression: "!clientForm"
-            }
-          ],
-          staticClass: "col-md-2"
-        },
-        [
-          _c("div", { staticClass: "form-group" }, [
-            _vm._m(6),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.codeEstimate,
-                  expression: "codeEstimate"
-                }
-              ],
-              staticClass: "form-control form-control-sm",
-              attrs: { type: "text", placeholder: "#0000", id: "TexInput1" },
-              domProps: { value: _vm.codeEstimate },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.codeEstimate = $event.target.value
-                }
-              }
-            })
+            _c("div", { staticClass: "col-md-4" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-sm" },
+                      [
+                        _c("datepicker", {
+                          attrs: {
+                            "bootstrap-styling": true,
+                            "calendar-class": "form-control form-control-sm",
+                            format: "yyyy-MM-dd",
+                            name: "estimateDate"
+                          },
+                          model: {
+                            value: _vm.estimateDate,
+                            callback: function($$v) {
+                              _vm.estimateDate = $$v
+                            },
+                            expression: "estimateDate"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-md-12" },
+                  [
+                    _c("select-term", {
+                      attrs: { termExternal: _vm.term, landscape: true },
+                      on: { changeTerm: _vm.changeTerm }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c("label", { staticClass: "col-sm-4 col-form-label" }, [
+                      _vm._v(
+                        "\n                  Vencimiento:\n                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-sm" },
+                      [
+                        _c("datepicker", {
+                          attrs: {
+                            "bootstrap-styling": true,
+                            "calendar-class": "form-control form-control-sm",
+                            format: "yyyy-MM-dd",
+                            name: "dueDate"
+                          },
+                          model: {
+                            value: _vm.dueDate,
+                            callback: function($$v) {
+                              _vm.dueDate = $$v
+                            },
+                            expression: "dueDate"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ])
+              ])
+            ])
           ])
         ]
       )
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _vm.clientForm
-        ? _c(
-            "div",
-            {
-              staticClass: "col-md-12",
-              staticStyle: { "margin-bottom": "20px" }
-            },
-            [
-              _c("div", { staticClass: "float-right" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn-sm btn-warning",
-                    on: { click: _vm.hideClientForm }
-                  },
-                  [
-                    _c("i", { staticClass: "fas fa-angle-left" }),
-                    _vm._v(" Volver\n        ")
-                  ]
-                )
-              ])
-            ]
-          )
-        : _vm._e(),
-      _vm._v(" "),
       _c(
         "div",
         { staticClass: "col-md-12" },
@@ -110921,67 +110859,82 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "row", staticStyle: { "margin-top": "20px" } }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "float-left" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-warning btn-sm",
-              on: {
-                click: function($event) {
-                  _vm.save(false)
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: !_vm.clientForm,
+            expression: "!clientForm"
+          }
+        ],
+        staticClass: "row",
+        staticStyle: { "margin-top": "20px" }
+      },
+      [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "float-left" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning btn-sm",
+                on: {
+                  click: function($event) {
+                    _vm.save(false)
+                  }
                 }
-              }
-            },
-            [
-              _c("i", { staticClass: "far fa-file-alt" }),
-              _vm._v(
-                "\n          " +
-                  _vm._s(_vm.dataEdit ? "Salvar" : "Guardar") +
-                  "\n        "
-              )
-            ]
-          ),
+              },
+              [
+                _c("i", { staticClass: "far fa-file-alt" }),
+                _vm._v(
+                  "\n          " +
+                    _vm._s(_vm.dataEdit ? "Salvar" : "Guardar") +
+                    "\n        "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-success btn-sm",
+                on: {
+                  click: function($event) {
+                    _vm.save(true)
+                  }
+                }
+              },
+              [
+                _c("i", { staticClass: "far fa-file-alt" }),
+                _vm._v(" "),
+                _c("i", { staticClass: "fas fa-paper-plane" }),
+                _vm._v(
+                  "\n          " +
+                    _vm._s(_vm.dataEdit ? "Salvar" : "Guardar") +
+                    " y enviar\n        "
+                )
+              ]
+            )
+          ]),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-success btn-sm",
-              on: {
-                click: function($event) {
-                  _vm.save(true)
-                }
-              }
-            },
-            [
-              _c("i", { staticClass: "far fa-file-alt" }),
-              _vm._v(" "),
-              _c("i", { staticClass: "fas fa-paper-plane" }),
-              _vm._v(
-                "\n          " +
-                  _vm._s(_vm.dataEdit ? "Salvar" : "Guardar") +
-                  " y enviar\n        "
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "float-right" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-danger btn-sm",
-              on: { click: _vm.createFormStatus }
-            },
-            [
-              _c("i", { staticClass: "fas fa-arrow-left" }),
-              _vm._v("\n          Cancelar\n        ")
-            ]
-          )
+          _c("div", { staticClass: "float-right" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger btn-sm",
+                on: { click: _vm.createFormStatus }
+              },
+              [
+                _c("i", { staticClass: "fas fa-arrow-left" }),
+                _vm._v("\n          Cancelar\n        ")
+              ]
+            )
+          ])
         ])
-      ])
-    ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -110995,8 +110948,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", [
-      _vm._v("\n        Cliente\n        "),
+    return _c("label", { staticClass: "col-sm-2 col-form-label" }, [
+      _vm._v("\n                  Cliente:\n                  "),
       _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
     ])
   },
@@ -111004,44 +110957,37 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "TexInputEmail" } }, [
-      _vm._v("\n          Email:\n          "),
-      _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
-    ])
+    return _c(
+      "label",
+      { staticClass: "col-sm-2 col-form-label", attrs: { for: "Textarea1" } },
+      [
+        _vm._v("\n                  Dirección:\n                  "),
+        _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
+      ]
+    )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", [
-      _vm._v("\n            Fecha estimada:\n            "),
-      _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
-    ])
+    return _c(
+      "label",
+      {
+        staticClass: "col-sm-2 col-form-label",
+        attrs: { for: "TexInputEmail" }
+      },
+      [
+        _vm._v("\n                  Email:\n                  "),
+        _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
+      ]
+    )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", [
-      _vm._v("\n            Fecha vencimiento:\n            "),
-      _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "Textarea1" } }, [
-      _vm._v("\n          Dirección:\n          "),
-      _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "TexInput1" } }, [
-      _vm._v("\n          No. Cotización\n          "),
+    return _c("label", { staticClass: "col-sm-4 col-form-label" }, [
+      _vm._v("\n                  Fecha:\n                  "),
       _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
     ])
   }
@@ -111246,6 +111192,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -111260,11 +111213,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         from: '',
         to: '',
         codeEstimate: ''
-      }
+      },
+      termsList: []
     };
   },
 
   methods: {
+    TermTitle: function TermTitle(id) {
+      var found = this.termsList.find(function (e) {
+        return e.id == id;
+      });
+      if (found) {
+        return found.name;
+      }
+      return "";
+    },
+    getTermsList: function getTermsList() {
+      var _this = this;
+
+      axios.get("/terms/list").then(function (response) {
+        _this.termsList = response.data;
+        console.log(response);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
     toPrint: function toPrint(id) {
       window.open("/estimate/print?estimate_id=" + id, "_blank");
     },
@@ -111293,7 +111266,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$emit('loading', val);
     },
     getEstimate: function getEstimate(page) {
-      var _this = this;
+      var _this2 = this;
 
       this.loading(true);
       var url = page ? '/estimate/list?page=' + page : '/estimate/list';
@@ -111302,18 +111275,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           filters: this.filter
         }
       }).then(function (response) {
-        _this.tableData = response['data'];
+        _this2.tableData = response['data'];
       }).catch(function (error) {
         console.log(error);
       }).finally(function () {
-        _this.loading(false);
+        _this2.loading(false);
       });
     },
     ClientsDate: function ClientsDate() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.post('/clientes/datos/tabla2').then(function (response) {
-        _this2.clientsData = response['data'];
+        _this3.clientsData = response['data'];
       }).catch(function (error) {
         console.log(error);
       });
@@ -111372,6 +111345,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   created: function created() {
     this.getEstimate();
     this.ClientsDate();
+    this.getTermsList();
   }
 });
 
@@ -111527,17 +111501,13 @@ var render = function() {
               _c("template", { slot: "table-header" }, [
                 _c("th", [_vm._v("No. cotización")]),
                 _vm._v(" "),
-                _c("th", { staticStyle: { "text-align": "center" } }, [
-                  _vm._v("Fecha cotización")
-                ]),
+                _c("th", [_vm._v("Fecha cotización")]),
                 _vm._v(" "),
-                _c("th", { staticStyle: { "text-align": "center" } }, [
-                  _vm._v("Fecha de vencimiento")
-                ]),
+                _c("th", [_vm._v("Condicion")]),
                 _vm._v(" "),
-                _c("th", { staticStyle: { "text-align": "center" } }, [
-                  _vm._v("Cliente")
-                ]),
+                _c("th", [_vm._v("Fecha de vencimiento")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Cliente")]),
                 _vm._v(" "),
                 _c("th", { staticStyle: { "text-align": "right" } }, [
                   _vm._v("Total")
@@ -111576,9 +111546,9 @@ var render = function() {
                   _vm._v(" "),
                   _vm._l(_vm.tableData.data, function(item, index) {
                     return _c("tr", [
-                      _c("th", [_vm._v(_vm._s(item.estimatenumber))]),
+                      _c("th", [_vm._v("#" + _vm._s(item.id))]),
                       _vm._v(" "),
-                      _c("td", { staticStyle: { "text-align": "center" } }, [
+                      _c("td", [
                         _vm._v(
                           _vm._s(
                             _vm.moment(item.estimatedate).format("DD-MM-YYYY")
@@ -111586,13 +111556,15 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _c("td", { staticStyle: { "text-align": "center" } }, [
+                      _c("td", [_vm._v(_vm._s(_vm.TermTitle(item.term_id)))]),
+                      _vm._v(" "),
+                      _c("td", [
                         _vm._v(
                           _vm._s(_vm.moment(item.duedate).format("DD-MM-YYYY"))
                         )
                       ]),
                       _vm._v(" "),
-                      _c("td", { staticStyle: { "text-align": "center" } }, [
+                      _c("td", [
                         _vm._v(_vm._s(_vm.toShowClient(item.client_id)))
                       ]),
                       _vm._v(" "),
@@ -111709,7 +111681,17 @@ var render = function() {
                   })
                 ],
                 2
-              )
+              ),
+              _vm._v(" "),
+              _c("template", { slot: "bottom-down" }, [
+                _c("div", { staticClass: "float-left" }, [
+                  _vm._v(
+                    "\n            Mostando " +
+                      _vm._s(_vm.dataSize) +
+                      " de 10\n          "
+                  )
+                ])
+              ])
             ],
             2
           )
@@ -112658,6 +112640,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
         }
         toastr.success("Datos guardado correctamente");
         _this3.reset();
+        _this3.$emit("createFormStatus", false);
       }).catch(function (error) {
         toastr.warning(error.response.data.message);
       }).finally(function () {
@@ -114047,6 +114030,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -114320,7 +114308,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -114331,6 +114319,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -114400,6 +114389,8 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
+      _vm._t("bottom-down"),
+      _vm._v(" "),
       _vm.pagination
         ? _c("pagination", {
             attrs: {
@@ -114412,7 +114403,7 @@ var render = function() {
           })
         : _vm._e()
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
@@ -114873,7 +114864,17 @@ var render = function() {
                   })
                 ],
                 2
-              )
+              ),
+              _vm._v(" "),
+              _c("template", { slot: "bottom-down" }, [
+                _c("div", { staticClass: "float-left" }, [
+                  _vm._v(
+                    "\n            Mostando " +
+                      _vm._s(_vm.dataSize) +
+                      " de 10\n          "
+                  )
+                ])
+              ])
             ],
             2
           )

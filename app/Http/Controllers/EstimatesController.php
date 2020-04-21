@@ -109,7 +109,7 @@ class EstimatesController extends Controller
 
         try{
             $estimate = new Estimate();
-            $estimate->estimatenumber = $request->estimateNumber;
+            $estimate->estimatenumber = "NaN";
             $estimate->estimatedate = date("Y-m-d", strtotime($request->estimateDate));
             $estimate->duedate = date("Y-m-d", strtotime($request->dueDate));
             $estimate->client_id = $request->client_id['code'];
@@ -120,6 +120,7 @@ class EstimatesController extends Controller
             $estimate->tax = $request->tax;
             $estimate->subtotal = $request->subtotal;
             $estimate->discount = $request->discount;
+            $estimate->term_id = $request->term_id;
             $estimate->save();
 
             foreach ($request->details as $detail)
