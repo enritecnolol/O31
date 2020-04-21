@@ -17,10 +17,10 @@
                   style="margin-top: 10px;text-align: right;"
           >
             <div class="float-left">
-              <input type="number" class="form-control form-control-sm" style="width: 50px" v-model="desc">
+              <input type="number" class="form-control form-control-sm" style="width: 80px" v-model="desc">
             </div>
             <div class="float-right">
-              RD${{parseFloat(discountApplied).formatMoney(2)}}
+              RD${{parseFloat(discountApplied).formatMoney(2)}} 
             </div>
           </div>
 

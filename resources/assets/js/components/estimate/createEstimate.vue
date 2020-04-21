@@ -587,10 +587,7 @@
       this.itbisList();
       this.ClientsDate();
       var today = new Date();
-      var dueDate = new Date();
-      dueDate.setDate(today.getDate() + 5);
       this.estimateDate = today;
-      this.dueDate = dueDate;
     }
   };
 </script>

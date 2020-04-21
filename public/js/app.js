@@ -108246,10 +108246,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("v-select", __WEBPACK_IMPO
     this.itbisList();
     this.ClientsDate();
     var today = new Date();
-    var dueDate = new Date();
-    dueDate.setDate(today.getDate() + 5);
     this.estimateDate = today;
-    this.dueDate = dueDate;
   }
 });
 
@@ -109803,7 +109800,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control form-control-sm",
-                    staticStyle: { width: "50px" },
+                    staticStyle: { width: "80px" },
                     attrs: { type: "number" },
                     domProps: { value: _vm.desc },
                     on: {
@@ -109821,7 +109818,7 @@ var render = function() {
                   _vm._v(
                     "\n            RD$" +
                       _vm._s(parseFloat(_vm.discountApplied).formatMoney(2)) +
-                      "\n          "
+                      " \n          "
                   )
                 ])
               ]
