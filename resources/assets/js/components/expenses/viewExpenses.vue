@@ -133,7 +133,7 @@
                                     <a
                                             class="dropdown-item"
                                             href="#"
-                                            :class="item.invoice_status === 'COMPLETADO' ? 'disabled' : ''"
+                                            :class="item.payment_process === 'COMPLETADO' ? 'disabled' : ''"
                                             onclick="return false;"
                                             @click="toPay(item)"
                                     >Pago de gasto</a>
@@ -193,6 +193,9 @@
             },
             toPay(item)
             {
+                if(item.payment_process === "COMPLETADO"){
+                    return;
+                }
                 let url = item.supplier_id != null ? 'supplier='+item.supplier_id : 'expense='+item.id+'&name_supplier='+item.name_supplier;
                 console.log(item.supplier_id)
                 window.open("/expenses/payment?" + url , "_blank");
