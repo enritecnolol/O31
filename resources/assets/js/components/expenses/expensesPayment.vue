@@ -368,6 +368,26 @@
                                 code: found.id
                             };
                         }
+                        if(this.getUrlVars(window.location.href)["expense"])
+                        {
+                            this.supplier = {
+                                label: this.getUrlVars(window.location.href)["name_supplier"],
+                                code:null
+                            };
+
+                            axios
+                                .get("/expenses/supplier", {
+                                    params: {
+                                        expense_id: parseInt(this.getUrlVars(window.location.href)["expense"])
+                                    }
+                                })
+                                .then(response => {
+                                    this.supplierExpenses = this.ExpensesDataFormat(response["data"]);
+                                })
+                                .catch(error => {
+                                    console.log(error);
+                                });
+                        }
                     })
                     .catch(err => {
                         console.log(err);

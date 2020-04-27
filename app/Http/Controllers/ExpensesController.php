@@ -195,11 +195,17 @@ class ExpensesController extends Controller
 
     public function SupplierExpenses(Request $request)
     {
-        $Expenses = DB::connection('client')
-            ->table('expenses')
-            ->where('supplier_id' , (int) $request->supplier_id)
-            ->where('invoice_balance', '>', 0)
-        ;
+        if($request->supplier_id)
+        {
+            $Expenses = DB::connection('client')
+                ->table('expenses')
+                ->where('supplier_id' , (int) $request->supplier_id)
+                ->where('invoice_balance', '>', 0);
+        }else{
+            $Expenses = DB::connection('client')
+                ->table('expenses')
+                ->where('id' , (int) $request->expense_id);
+        }
 
         return $Expenses->get();
     }
