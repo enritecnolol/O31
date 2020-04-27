@@ -4,7 +4,7 @@
     <div class="form-group" :class="landscape ? 'row' : ''">
       <label for="terms" :class="landscape ? 'col-sm-4 col-form-label' : 'form-control-label'" >Condicion :</label>
       <div :class="landscape ? 'col-sm' : ''" >
-        <select class="form-control" id="terms" v-model="term"  style="width: 250px;">
+        <select class="form-control" id="terms" v-model="term">
           <option value>seleccionar</option>
           <template v-for="(item, index) in termsList">
             <option :value="item.id" :key="index">{{item.name}}</option>

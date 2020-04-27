@@ -362,6 +362,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/inventory/Adjustments/dataInfo', 'InventoryAdjustmentsController@getData');
     /*=================================\- Gastos y egresos -/======================================================*/
     Route::get('/expenses', 'ExpensesController@index');
+    Route::post('/expenses', 'ExpensesController@store');
+    Route::get('/expenses/list', 'ExpensesController@ListPagination');
+    Route::get('/expenses/print', 'ExpensesController@printExpenses');
+    Route::get('/type_expenses/list', 'ExpensesController@typeExpensesList');
+    Route::get('/expenses/supplier', 'ExpensesController@SupplierExpenses');
+    Route::get('/expenses/payment', 'ExpensesController@PaymentIndex');
+    Route::post('/expenses/payment', 'ExpensesController@paymentExpensesStore');
 });
 
 Auth::routes();

@@ -1,0 +1,16 @@
+@extends('main.app')
+@section('tittle','SofiaRD | Pago de factura')
+
+@section('titulo')
+    <h3 style="color: white"><i class="fas fa-arrow-circle-right"></i> Pago de gastos</h3>
+@endsection
+@section('aside')
+    @include('caja.siderbar')
+@endsection
+@section('content')
+    <expenses-payment />
+@endsection
+
+@section('scriptp')
+    <script src="/js/app.js"></script>
+@endsection

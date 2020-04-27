@@ -12,6 +12,8 @@
       </tbody>
       <slot name="table-footer" />
     </table>
+    <hr>
+    <slot name="bottom-down"/>
     <pagination
       v-if="paginate"
       align="right"
