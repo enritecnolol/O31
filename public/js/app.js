@@ -138976,7 +138976,7 @@ __WEBPACK_IMPORTED_MODULE_5_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_4_v_mo
             this.loadingStatus(true);
             var url = this.editData ? '/expenses/edit' : '/expenses';
             axios.post(url, {
-                id: this.editData.id,
+                id: this.editData ? this.editData.id : null,
                 supplier: this.supplier,
                 invoiceDate: this.invoiceDate,
                 name_supplier: this.nameSupplier,
@@ -140709,7 +140709,7 @@ var render = function() {
               [
                 _vm.loading
                   ? _c("tr", [
-                      _c("td", { attrs: { colspan: "8" } }, [
+                      _c("td", { attrs: { colspan: "9" } }, [
                         _c("div", { staticClass: "text-center" }, [
                           _c("h3", [_vm._v("Cargando ...")])
                         ])
@@ -140884,7 +140884,7 @@ var render = function() {
                 _vm._v(" "),
                 _vm.dataSize == 0
                   ? _c("tr", [
-                      _c("td", { attrs: { colspan: "8" } }, [
+                      _c("td", { attrs: { colspan: "9" } }, [
                         _c("div", { staticClass: "text-center" }, [
                           _c("h3", [_vm._v("No hemos encontrado datos!!!")])
                         ])

@@ -75,7 +75,7 @@
                 </template>
                 <template slot="table-body">
                     <tr v-if="loading">
-                        <td colspan=8>
+                        <td colspan="9">
                             <div class="text-center">
                                 <h3>Cargando ...</h3>
                             </div>
@@ -141,7 +141,7 @@
                         </td>
                     </tr>
                     <tr v-if="dataSize == 0">
-                        <td colspan="8">
+                        <td colspan="9">
                             <div class="text-center">
                                 <h3>No hemos encontrado datos!!!</h3>
                             </div>

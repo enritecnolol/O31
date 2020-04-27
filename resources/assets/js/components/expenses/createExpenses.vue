@@ -288,7 +288,7 @@
                 this.loadingStatus(true);
                 let url = this.editData ? '/expenses/edit' : '/expenses';
                 axios.post(url, {
-                    id:this.editData.id,
+                    id:this.editData ? this.editData.id : null,
                     supplier:this.supplier,
                     invoiceDate:this.invoiceDate,
                     name_supplier:this.nameSupplier,
