@@ -313,6 +313,7 @@
                             toastr.warning(resp.data.notification , "Validador");
                         }
                         window.open("/expenses/print?expenses_id=" + resp.data.id, "_blank");
+                        this.createFormStatus();
                     })
                     .catch(err => {
                         if(err.response.data.message)
