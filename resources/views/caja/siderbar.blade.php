@@ -96,6 +96,9 @@
                     <li>
                         <a style="padding-left: 90px" href="/purchase/return">DEVOLUCIÓN DE COMPRA</a>
                     </li>
+                    <li>
+                        <a style="padding-left: 90px" href="/expenses">GASTOS</a>
+                    </li>
                 </ul>
             </li>
             <li>
