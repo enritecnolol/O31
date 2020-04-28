@@ -81,7 +81,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="width: 68%"><b>Tipo NCF: </b>&emsp;#{{$dataPDF['data']['type_ncf']}}</td>
+                            <td style="width: 68%"><b>Tipo NCF: </b>&emsp;{{$dataPDF['data']['type_expenses_name']}}</td>
                             <td>
                                 <table width="100%">
                                     <tbody>

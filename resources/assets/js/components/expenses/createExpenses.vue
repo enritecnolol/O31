@@ -19,7 +19,7 @@
                             Proveedor:
                         </label>
                         <div class="col-sm" style="padding: 0">
-                            <v-select v-model="supplier" :options="suppliers"/>
+                            <v-select v-model="supplier" :options="suppliers" taggable/>
                         </div>
                     </div>
                 </div>
@@ -38,42 +38,25 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group row">
-                        <label for="ncf" class="col-sm-3 col-form-label">NCF:</label>
+                        <label for="document" class="col-sm-3 col-form-label">Factura No.</label>
                         <div class="col-sm" style="padding: 0">
-                            <input type="text" class="form-control form-control-sm" style="width:250px" disabled>
+                            <input type="text" id="document" style="width:250px" class="form-control form-control-sm" maxlength="15" v-model="document">
                         </div>
                     </div>
                 </div>
-                <template v-if="!supplier">
-                    <div class="col-md-12">
-                        <div class="form-group row">
-                            <label for="nameSupplier" class="col-sm-3 col-form-label">Nombre provedor:</label>
-                            <div class="col-sm" style="padding: 0">
-                                <input type="text" class="form-control form-control-sm" style="width:250px" v-model="nameSupplier">
-                            </div>
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label for="ncf" class="col-sm-3 col-form-label">NCF:</label>
+                        <div class="col-sm" style="padding: 0">
+                            <input type="text" v-if="!fakeNCF && type_ncf!= '01'" v-model="ncf" class="form-control form-control-sm" style="width:250px" :disabled="type_ncf != '01'">
+                            <input type="text" v-else v-model="fakeNCF" class="form-control form-control-sm" style="width:250px" disabled>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="form-group row">
-                            <label for="rnc" class="col-sm-3 col-form-label">RNC:</label>
-                            <div class="col-sm" style="padding: 0">
-                                <input type="text" class="form-control form-control-sm" style="width:250px" v-model="rnc">
-                            </div>
-                        </div>
-                    </div>
-                </template>
+                </div>
             </div>
         </div>
         <div class="col-md-5">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group row">
-                        <label for="document" class="col-sm-4 col-form-label">Documento No.</label>
-                        <div class="col-sm">
-                            <input type="text" id="document" class="form-control form-control-sm" v-model="document">
-                        </div>
-                    </div>
-                </div>
                 <div class="col-md-12">
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label">
@@ -158,13 +141,8 @@
                                     style="text-align: right"
                             />
                         </td>
-                        <td style="width:15%;">
-                            <money
-                                    v-model="item.totalNet"
-                                    v-bind="money"
-                                    class="form-control form-control-sm float-right"
-                                    style="text-align: right"
-                            />
+                        <td style="width:15%;text-align: right">
+                            RD${{parseFloat(totalNet).formatMoney(2)}}
                         </td>
                     </tr>
                 </template>
@@ -257,7 +235,10 @@
                 },
                 amount:0,
                 payment:"",
-                type_expenses:[]
+                type_expenses:[],
+                ncf:"",
+                fakeNCF:"",
+                number_days_term:"",
             }
         },
         methods:{
@@ -285,6 +266,23 @@
                     toastr.warning("Por favor llenar los campos faltantes","Validador")
                     return;
                 }
+
+                if(this.type_ncf === "01")
+                {
+                    if(this.nfc === "")
+                    {
+                        toastr.warning("Por favor llenar los campos faltantes","Validador")
+                        return;
+                    }
+                }
+                if(!this.supplier.code)
+                {
+                    if(this.number_days_term > 0){
+                        toastr.warning("No se necesita un proveedor registrado para hacer registro a credito", "Validador")
+                        return;
+                    }
+                }
+
                 this.loadingStatus(true);
                 let url = this.editData ? '/expenses/edit' : '/expenses';
                 axios.post(url, {
@@ -299,12 +297,13 @@
                     grossAmount:this.item.gross,
                     discountAmount:this.item.discount,
                     taxAmount:this.item.tax,
-                    totalAmount:this.item.totalNet,
+                    totalAmount:this.totalNet,
                     invoiceNote:this.note,
                     term:this.term,
                     invoiceDue:this.dueDate,
                     payment:this.payment,
-                    send:send
+                    send:send,
+                    ncf:this.ncf
                 })
                     .then(resp => {
                         toastr.success( resp.data.message , "Validador");
@@ -320,7 +319,6 @@
                         {
                             toastr.error(err.response.data.message, "Validador")
                         }
-                        console.log(err)
                     })
                     .finally(() => {
                         this.loadingStatus(false);
@@ -334,6 +332,7 @@
                 var today = new Date();
                 var dueDate = new Date();
                 dueDate.setDate(today.getDate() + number_days);
+                this.number_days_term = number_days;
                 this.dueDate = dueDate;
             },
             fetchSupplier() {
@@ -378,6 +377,20 @@
                 this.term = this.editData.invoice_term_id;
                 this.dueDate = this.editData.invoice_due;
                 this.payment = this.editData.payment;
+            },
+            ncfSequence()
+            {
+                axios.get('/ncf/sequence', {
+                    params:{
+                        type_ncf:this.type_ncf
+                    }
+                })
+                .then(res => {
+                    this.fakeNCF = res.data.ncf
+                })
+                .catch(err => {
+                    toastr.error(err.response.data.message, "Validador")
+                })
             }
         },
         computed:{
@@ -401,6 +414,16 @@
                 });
                 return array;
             },
+            totalNet()
+            {
+                return (this.item.gross - this.item.discount) + this.item.tax;
+            }
+        },
+        watch:{
+            type_ncf()
+            {
+                this.ncfSequence();
+            }
         },
         created() {
             this.fetchSupplier();

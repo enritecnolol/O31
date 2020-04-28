@@ -27,19 +27,22 @@ class ExpensesController extends Controller
             $expenses = new Expenses();
             $expenses->invoice_date = date("Y-m-d", strtotime($request->invoiceDate));
             $expenses->user_id = Auth::id();
-            $expenses->supplier_id = $request->supplier['code'];
-            $expenses->name_supplier = $request->name_supplier;
+            if(!isNull($request->supplier['code']))
+            {
+                $expenses->supplier_id = $request->supplier['code'];
+            }else{
+                $expenses->name_supplier = $request->supplier['label'];
+            }
             $expenses->rnc = $request->rnc;
             $expenses->document = $request->document;
             $ncf = '';
             $aviso = '';
             $ncfDueDate = '';
             $config = DB::connection('client')->table('configuracions')->first();
-            if ($config->generacomprobante == 'si'){
+            if ($config->generacomprobante == 'si' && $request->type_ncf != '01'){
                 $expenses->type_ncf = $request->type_ncf;
 
                 $headers = DB::connection('client')->select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento");
-
                 foreach ($headers as $header)
                 {
                     $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc',$request->type_ncf);
@@ -67,6 +70,7 @@ class ExpensesController extends Controller
                 }
                 $expenses->ncf = $ncf;
             }
+            $expenses->ncf = $request->ncf;
             $expenses->type_expenses = $request->typeExpenses;
             $expenses->gross_amount = $request->grossAmount;
             $expenses->discount_amount = $request->discountAmount;
@@ -99,11 +103,24 @@ class ExpensesController extends Controller
     {
         DB::connection('client')->beginTransaction();
         try {
+            if(DB::connection('client')
+                ->table('payment_expense_item')
+                ->where('expense_id', $request->id)
+                ->first())
+            {
+                return response()->json([
+                    'message' => "No es posible editar este registro"
+                ],400);
+            }
             $expenses = Expenses::find($request->id);
             $expenses->invoice_date = date("Y-m-d", strtotime($request->invoiceDate));
             $expenses->user_id = Auth::id();
-            $expenses->supplier_id = $request->supplier['code'];
-            $expenses->name_supplier = $request->name_supplier;
+            if($request->supplier['code'])
+            {
+                $expenses->supplier_id = $request->supplier['code'];
+            }else{
+                $expenses->name_supplier = $request->supplier['label'];
+            }
             $expenses->rnc = $request->rnc;
             $expenses->document = $request->document;
             $expenses->type_expenses = $request->typeExpenses;
@@ -121,7 +138,8 @@ class ExpensesController extends Controller
 
             DB::connection('client')->commit();
             return response()->json([
-                "message" => "Ha sido Editado con exito"
+                "message" => "Ha sido Editado con exito",
+                "id" => $request->id
             ],200);
 
         }catch (\Exception $exception)
@@ -267,5 +285,48 @@ class ExpensesController extends Controller
             DB::connection('client')->rollback();
             return response()->json($e, 400);
         }
+    }
+
+    public function NCFSequence(Request $request)
+    {
+        $ncf = '';
+        $aviso = '';
+        $ncfDueDate = '';
+        $config = DB::connection('client')->table('configuracions')->first();
+        if ($config->generacomprobante == 'si'){
+            $headers = DB::connection('client')->select("SELECT * FROM `headersecuencias` WHERE DATE(now()) BETWEEN headersecuencias.fechaemision AND headersecuencias.fechavencimiento");
+            foreach ($headers as $header)
+            {
+                $details = Detallesecuencia::all()->where('header_secuencia_id', $header->id)->where('tipo_nfc',$request->type_ncf);
+                foreach ($details as $detail)
+                {
+                    if (($detail->actual + $detail->aviso) >= $detail->secuencia_final){
+                        $aviso = "En la Solicitud #". $header->id. " Serie: ". $detail->serie. ", Tipo de NCF: ".$request->type_ncf . " Se estan agotando";
+                    }
+                    if ($detail->actual < $detail->secuencia_final)
+                    {
+                        $ncfDueDate = $header->fechavencimiento;
+                        $ncf = $detail->serie."".$detail->tipo_nfc."".str_pad($detail->actual,8,"0",STR_PAD_LEFT);
+                        $d = Detallesecuencia::find($detail->id);
+                        $d->actual = $detail->actual+1;
+                        $d->update();
+                        break;
+                    }
+                }
+            }
+
+            if ($ncf == '')
+            {
+                return response()->json([
+                    'message' => 'No es posible completar la operacion por falta de comprobantes'
+                ],400);
+            }
+
+            return response()->json(["ncf" => $ncf], 200);
+        }
+
+        return response()->json([
+            'message' => 'Actualmente usted no pose el uso de comprobantes Activo'
+        ],400);
     }
 }

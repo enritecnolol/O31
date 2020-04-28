@@ -45,6 +45,10 @@
             createFormStatus(val)
             {
                 this.createForm = val;
+                if(!this.createForm)
+                {
+                    this.editData = null
+                }
             }
         }
     }
