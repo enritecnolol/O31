@@ -4,7 +4,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3>Recibir pago</h3>
+                        <h3>Pago de gastos</h3>
                     </div>
                     <div class="col-md-12">
                         <hr />

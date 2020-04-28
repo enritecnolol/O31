@@ -149427,7 +149427,7 @@ var render = function() {
         _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-12" }, [
-              _c("h3", [_vm._v("Recibir pago")])
+              _c("h3", [_vm._v("Pago de gastos")])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-12" }, [_c("hr")]),
