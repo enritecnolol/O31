@@ -1,74 +1,92 @@
 <template>
   <form @submit.prevent="save">
     <div class="row">
-      <div class="col-md-3">
-        <div class="form-group">
-          <label for="name" class="form-control-label">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label for="name" class="col-sm-3 col-form-label">
             Nombre:
             <span style="color: red">*</span>
           </label>
-          <input
-            :disabled="loading"
-            type="text"
-            v-model="form.name"
-            id="name"
-            placeholder
-            class="form-control form-control-sm"
-          />
+          <div class="col-sm">
+            <input
+                    :disabled="loading"
+                    type="text"
+                    v-model="form.name"
+                    id="name"
+                    placeholder
+                    class="form-control form-control-sm"
+            />
+          </div>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="form-group">
-          <label for="rnc" class="form-control-label">RNC:</label>
-          <input
-            :disabled="loading"
-            type="text"
-            v-model="form.rnc"
-            id="rnc"
-            placeholder
-            class="form-control form-control-sm"
-          />
+      <div class="col-md-6" />
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label for="rnc" class="col-sm-3 col-form-label">RNC:</label>
+          <div class="col-sm">
+            <input
+                    :disabled="loading"
+                    type="text"
+                    v-model="form.rnc"
+                    id="rnc"
+                    placeholder
+                    maxlength="15"
+                    style="width: 250px"
+                    class="form-control form-control-sm"
+            />
+          </div>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="form-group">
-          <label for="contact" class="form-control-label">Contacto:</label>
-          <input
-            :disabled="loading"
-            type="text"
-            v-model="form.contact"
-            id="contact"
-            placeholder
-            class="form-control form-control-sm"
-          />
+      <div class="col-md-6" />
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label for="contact" class="form-control-label col-sm-3">Contacto:</label>
+          <div class="col-sm">
+            <input
+                    :disabled="loading"
+                    type="text"
+                    v-model="form.contact"
+                    id="contact"
+                    placeholder
+                    class="form-control form-control-sm"
+            />
+          </div>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="form-group">
-          <label for="phone" class="form-control-label">Telefono:</label>
-          <input
-            :disabled="loading"
-            type="text"
-            v-model="form.phone"
-            id="phone"
-            placeholder
-            class="form-control form-control-sm"
-          />
+      <div class="col-md-6"></div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label for="phone" class="form-control-label col-sm-3">Telefono:</label>
+          <div class="col-sm">
+            <input
+                    :disabled="loading"
+                    type="text"
+                    v-model="form.phone"
+                    id="phone"
+                    placeholder
+                    class="form-control form-control-sm"
+                    style="width: 250px"
+            />
+          </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="form-group">
-          <label for="email" class="form-control-label">Correo electronico:</label>
-          <input
-            :disabled="loading"
-            type="email"
-            v-model="form.email"
-            id="email"
-            placeholder
-            class="form-control form-control-sm"
-          />
+      <div class="col-md-6"></div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label for="email" class="form-control-label col-sm-3">Correo electronico:</label>
+          <div class="col-sm">
+            <input
+                    :disabled="loading"
+                    type="email"
+                    v-model="form.email"
+                    id="email"
+                    placeholder
+                    class="form-control form-control-sm"
+            />
+          </div>
         </div>
       </div>
+      <div class="col-md-6" />
       <div class="col-md-6">
         <div class="form-group">
           <label for="observation" class="form-control-label">Observacion:</label>
