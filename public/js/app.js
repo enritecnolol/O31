@@ -36631,6 +36631,7 @@ Vue.component('products-manager', __webpack_require__(613));
 Vue.component('inventory-adjustment', __webpack_require__(638));
 Vue.component('expenses-card', __webpack_require__(662));
 Vue.component('expenses-payment', __webpack_require__(682));
+Vue.component('reporte-dgii-608-panel', __webpack_require__(702));
 
 Vue.prototype.moment = __WEBPACK_IMPORTED_MODULE_1_moment___default.a;
 Vue.prototype.$toastr = __WEBPACK_IMPORTED_MODULE_2__node_modules_toastr___default.a;
@@ -115239,6 +115240,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
+//
+//
+//
+//
 
 window.Vue = __webpack_require__(8);
 Vue.component('pagination', __webpack_require__(14));
@@ -115377,6 +115382,19 @@ Vue.component('pagination', __webpack_require__(14));
       }).finally(function () {
         _this2.loading = false;
       });
+    },
+    download: function download(filename, text) {
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+      element.setAttribute('download', filename);
+      element.setAttribute("target", "_blank");
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
     }
   },
   watch: {
@@ -115385,6 +115403,14 @@ Vue.component('pagination', __webpack_require__(14));
     }
   },
   computed: {
+    textDataFormat: function textDataFormat() {
+      var text = "";
+      for (var index in this.data.data) {
+        var build = String(this.data.data[index].rnc_nfc ? this.data.data[index].rnc_nfc : '') + "|" + String(1) + "|" + String(this.data.data[index].ncfdevolucion ? this.data.data[index].ncfdevolucion : this.data.data[index].nfc) + "|" + String(this.data.data[index].ncfdevolucion ? this.data.data[index].nfc : this.data.data[index].ncfdevolucion ? this.data.data[index].ncfdevolucion : '') + "|" + "01" + "|" + String(moment(this.data.data[index].date).format('YYYYMMDD')) + "|" + "" + "|" + String(this.data.data[index].brute) + "|" + String(this.data.data[index].itbis) + "|" + '' + "|" + '' + "|" + '' + "|" + '' + "|" + '' + "|" + '' + "|" + String(this.data.data[index].leycamarero) + "|" + String(this.data.data[index].Monto_efectivo) + "|" + String(0) + "|" + String(this.data.data[index].Monto_tarjeta) + "|" + '' + "|" + '' + "|" + '' + "|" + '' + "\n";
+        text += build;
+      }
+      return text;
+    },
     dataFormat: function dataFormat() {
       var array = [];
       for (var index in this.data.data) {
@@ -115985,6 +116011,24 @@ var render = function() {
                       [
                         _c("i", { staticClass: "fas fa-file-excel" }),
                         _vm._v(" Exportar Excel")
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.dataFormat.length !== 0
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm btn-dark",
+                        on: {
+                          click: function($event) {
+                            _vm.download("Formato607", _vm.textDataFormat)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-file-excel" }),
+                        _vm._v(" Exportar TXT")
                       ]
                     )
                   : _vm._e()
@@ -149996,6 +150040,701 @@ module.exports = function listToStyles (parentId, list) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 696 */,
+/* 697 */,
+/* 698 */,
+/* 699 */,
+/* 700 */,
+/* 701 */,
+/* 702 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(703)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(705)
+/* template */
+var __vue_template__ = __webpack_require__(706)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Reporte608/reportPanel.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-23f35b85", Component.options)
+  } else {
+    hotAPI.reload("data-v-23f35b85", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 703 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(704);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("6a16c776", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-23f35b85\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./reportPanel.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-23f35b85\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./reportPanel.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 704 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var escape = __webpack_require__(5);
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.loader {\n    position: fixed;\n    left: 0px;\n    top: 0px;\n    width: 100%;\n    height: 100%;\n    z-index: 9999;\n    background: url(" + escape(__webpack_require__(6)) + ") 50% 50% no-repeat rgb(249,249,249);\n    opacity: .8;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 705 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Reporte607_datePicker__ = __webpack_require__(433);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Reporte607_datePicker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Reporte607_datePicker__);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+window.Vue = __webpack_require__(8);
+Vue.component('pagination', __webpack_require__(14));
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        datePicker: __WEBPACK_IMPORTED_MODULE_0__Reporte607_datePicker___default.a
+    },
+    name: 'reporte-dgii-608-panel',
+    data: function data() {
+        return {
+            loading: false,
+            date: '',
+            reset: false,
+            MaxAmount: 0,
+            data: {},
+            text: '',
+            RNC: '',
+            tiponfc: '',
+            tableSize: '10'
+        };
+    },
+
+    methods: {
+        config: function config() {
+            var _this = this;
+
+            axios.post('/configuracion/sale').then(function (response) {
+                if (response.data[0]) {
+                    _this.RNC = response.data[0].rnc;
+                }
+            }).catch(function (error) {});
+        },
+        changeTableSize: function changeTableSize() {
+            this.getData(1);
+        },
+        changePage: function changePage(page) {
+            this.getData(page);
+        },
+        JSONToCSVConvertor: function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
+            console.log(JSONData);
+            var arrData = (typeof JSONData === 'undefined' ? 'undefined' : _typeof(JSONData)) != 'object' ? JSON.parse(JSONData) : JSONData;
+
+            var CSV = '';
+            //Set Report title in first row or line
+
+            CSV += ReportTitle + '\r\n\n';
+
+            //This condition will generate the Label/Header
+            if (ShowLabel) {
+                var row = "";
+
+                //This loop will extract the label from 1st index of on array
+                for (var index in arrData[0]) {
+
+                    //Now convert each value to string and comma-seprated
+                    row += index + ',';
+                }
+
+                row = row.slice(0, -1);
+
+                //append Label row with line break
+                CSV += row + '\r\n';
+            }
+
+            //1st loop is to extract each row
+            for (var i = 0; i < arrData.length; i++) {
+                var row = "";
+
+                //2nd loop will extract each column and convert it in string comma-seprated
+                for (var index in arrData[i]) {
+                    row += '"' + arrData[i][index] + '",';
+                }
+
+                row.slice(0, row.length - 1);
+
+                //add a line break after each row
+                CSV += row + '\r\n';
+            }
+
+            if (CSV == '') {
+                alert("Invalid data");
+                return;
+            }
+
+            //Generate a file name
+            var fileName = "Reporte";
+            //this will remove the blank-spaces from the title and replace it with an underscore
+            fileName += ReportTitle.replace(/ /g, "_");
+
+            //Initialize file format you want csv or xls
+            var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
+
+            // Now the little tricky part.
+            // you can use either>> window.open(uri);
+            // but this will not work in some browsers
+            // or you will not get the correct file extension
+
+            //this trick will generate a temp <a /> tag
+            var link = document.createElement("a");
+            link.setAttribute("target", "_blank");
+            link.href = uri;
+
+            //set the visibility hidden so it will not effect on your web-layout
+            link.style = "visibility:hidden";
+            link.download = fileName + ".csv";
+
+            //this part will append the anchor tag and remove it after automatic click
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        },
+        date_select: function date_select(i) {
+            this.date = i.date;
+        },
+        getData: function getData(page) {
+            var _this2 = this;
+
+            if (!this.RNC) {
+                toastr.warning("Coloque RNC");
+                return;
+            }
+            this.loading = true;
+            axios.get('/reporte608/data', {
+                params: {
+                    page: page,
+                    size: this.tableSize === 'all' ? this.data.total : this.tableSize,
+                    date: this.date,
+                    MaxAmount: this.MaxAmount,
+                    tiponfc: this.tiponfc
+                }
+            }).then(function (response) {
+                _this2.data = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            }).finally(function () {
+                _this2.loading = false;
+            });
+        },
+        download: function download(filename, text) {
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+            element.setAttribute("target", "_blank");
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        }
+    },
+    watch: {
+        tableSize: function tableSize() {
+            this.changeTableSize();
+        }
+    },
+    computed: {
+        textDataFormat: function textDataFormat() {
+            var text = "";
+            for (var index in this.data.data) {
+                var build = String(this.data.data[index].ncf) + "|" + String(moment(this.data.data[index].date).format('YYYYMMDD')) + "|" + "01 Deterioro de Factura Pre-Impresa" + "\n";
+                text += build;
+            }
+            return text;
+        },
+        dataFormat: function dataFormat() {
+            var array = [];
+            for (var index in this.data.data) {
+                array.push({
+                    'Numero de comprobante fiscal': this.data.data[index].ncf,
+                    'Fecha de comprobante': moment(this.data.data[index].date).format('YYYYMMDD'),
+                    'Tipo de Anulacion': "01 Deterioro de Factura Pre-Impresa"
+                });
+            }
+            return array;
+        }
+    },
+    created: function created() {
+        this.config();
+    }
+});
+
+/***/ }),
+/* 706 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "card", staticStyle: { "min-height": "500px" } }, [
+      _vm.loading ? _c("div", { staticClass: "loader" }) : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "container-fluid" }, [
+          _c("div", { staticClass: "row" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3" }, [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("label", [_vm._v("Periodo")]),
+                  _vm._v(" "),
+                  _c("date-picker", {
+                    attrs: { reset: _vm.reset },
+                    on: { date_select: _vm.date_select }
+                  })
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-5" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "tiponcf" } }, [
+                  _vm._v("Tipo ncf")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.tiponfc,
+                        expression: "tiponfc"
+                      }
+                    ],
+                    staticClass: "form-control form-control-sm",
+                    attrs: { id: "tiponcf" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.tiponfc = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "01" } }, [
+                      _vm._v("01 | Credito Fiscal")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "02" } }, [
+                      _vm._v("02 | Facturas de Consumo")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "03" } }, [
+                      _vm._v("03 | Notas de Debito")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "04" } }, [
+                      _vm._v("04 | Notas de Credito")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "11" } }, [
+                      _vm._v("11 | Provedores Informales")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "12" } }, [
+                      _vm._v("12 | Registro Unico de Ingresos")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "13" } }, [
+                      _vm._v("13 | Registro de Gastos Menores")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "14" } }, [
+                      _vm._v("14 | Regímenes Especiales de Tributación")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "15" } }, [
+                      _vm._v("15 | Comprobantes Gubernamentales")
+                    ])
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-5" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-primary",
+                  staticStyle: { "margin-top": "31px" },
+                  on: { click: _vm.getData }
+                },
+                [
+                  _c("i", { staticClass: "fas fa-file" }),
+                  _vm._v(" Generar Archivo")
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-2" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.tableSize,
+                        expression: "tableSize"
+                      }
+                    ],
+                    staticClass: "form-control form-control-sm",
+                    attrs: { id: "size" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.tableSize = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "20" } }, [_vm._v("20")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "30" } }, [_vm._v("30")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "all" } }, [_vm._v("Todos")])
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-md-12" },
+              [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c("table", { staticClass: "table" }, [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.data.data, function(item, index) {
+                        return _c("tr", [
+                          _c("td", [_vm._v(_vm._s(index + 1))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.ncf))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.date))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v("01 Deterioro de Factura Pre-Impresa")
+                          ])
+                        ])
+                      })
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("pagination", {
+                  attrs: {
+                    align: "right",
+                    data: _vm.data,
+                    limit: 1,
+                    "show-disabled": true
+                  },
+                  on: { "pagination-change-page": _vm.changePage }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "col-md-12",
+                staticStyle: { "margin-top": "15px" }
+              },
+              [
+                _vm.dataFormat.length !== 0
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm btn-success",
+                        on: {
+                          click: function($event) {
+                            _vm.JSONToCSVConvertor(
+                              _vm.dataFormat,
+                              "Formato de Envio de Comprobantes Fiscales Anulados\n  Periodo: " +
+                                _vm.moment(_vm.date).format("YYYYMM"),
+                              true
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-file-excel" }),
+                        _vm._v(" Exportar Excel")
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.dataFormat.length !== 0
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm btn-dark",
+                        on: {
+                          click: function($event) {
+                            _vm.download("Formato608", _vm.textDataFormat)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-file-excel" }),
+                        _vm._v(" Exportar TXT")
+                      ]
+                    )
+                  : _vm._e()
+              ]
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("h3", [_vm._v("Formato de Envio de Comprobantes Fiscales Anulados")]),
+      _vm._v(" "),
+      _c("hr")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [_c("br")])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [
+          _vm._v("Numero de comprobante fiscal")
+        ]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha de comprobante")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Tipo de Anulacion")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-23f35b85", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

@@ -307,6 +307,8 @@ Route::group(['middleware' => 'auth'], function () {
     /*=================================\- Reporteria607-/======================================================*/
     Route::get('/reporte607', 'Reporteria607Controller@index');
     Route::get('/report/607', 'Reporteria607Controller@getData');
+    Route::get('/reporte608', 'Reporteria607Controller@indexReport608');
+    Route::get('/reporte608/data', 'Reporteria607Controller@getDataReport608');
     /*=================================\- PRINT -/======================================================*/
     Route::get('/print', 'IndexController@printPage');
     Route::get('/print/ventas', 'IndexController@printVentasPage');

@@ -126,6 +126,10 @@
                       v-if="dataFormat.length !== 0"
                       @click="JSONToCSVConvertor(dataFormat,'Formato de Envio de Ventas de Bienes y Servicios\n RNC:'+RNC+'\n Periodo: '+ moment(date).format('YYYYMM'), true)">
                 <i class="fas fa-file-excel"></i> Exportar Excel</button>
+              <button class="btn btn-sm btn-dark"
+                      v-if="dataFormat.length !== 0"
+                      @click="download('Formato607', textDataFormat)">
+                <i class="fas fa-file-excel"></i> Exportar TXT</button>
             </div>
           </div>
         </div>
@@ -280,6 +284,19 @@
             .finally(() => {
               this.loading = false;
             });
+      },
+      download(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+        element.setAttribute("target", "_blank");
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
       }
     },
     watch:{
@@ -289,6 +306,39 @@
       }
     },
     computed:{
+      textDataFormat()
+      {
+        var text = "";
+        for(var index in this.data.data)
+        {
+          var build =  String(this.data.data[index].rnc_nfc ? this.data.data[index].rnc_nfc : '') + "|" +
+          String(1) + "|" +
+          String(this.data.data[index].ncfdevolucion ? this.data.data[index].ncfdevolucion: this.data.data[index].nfc) + "|" +
+          String(this.data.data[index].ncfdevolucion ?  this.data.data[index].nfc : this.data.data[index].ncfdevolucion ? this.data.data[index].ncfdevolucion : '')+ "|" +
+                  "01" + "|" +
+                  String(moment(this.data.data[index].date).format('YYYYMMDD')) + "|" +
+                  "" + "|" +
+                  String(this.data.data[index].brute) + "|" +
+                  String(this.data.data[index].itbis) + "|" +
+                  '' + "|" +
+                  '' + "|" +
+                  '' + "|" +
+                  '' + "|" +
+                  '' + "|" +
+                  '' + "|" +
+                  String(this.data.data[index].leycamarero) + "|" +
+                  String(this.data.data[index].Monto_efectivo) + "|" +
+                  String(0) + "|" +
+                  String(this.data.data[index].Monto_tarjeta) + "|" +
+                  '' + "|" +
+                  '' + "|" +
+                  '' + "|" +
+                  '' + "\n";
+          text += build;
+
+        }
+        return text;
+      },
       dataFormat()
       {
         let array = [];
