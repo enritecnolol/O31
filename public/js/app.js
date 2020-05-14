@@ -69382,7 +69382,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -69428,6 +69428,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         tittle: "Reporte 607"
       }, {
+        tittle: "Reporte 608"
+      }, {
         tittle: "Productos por meses"
       }],
       seleccionado: ""
@@ -69441,6 +69443,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     cardseleccionado: function cardseleccionado(i) {
       if (this.typereports[i.index].tittle === "Reporte 607") {
         window.location.href = "/reporte607";
+        return;
+      }
+      if (this.typereports[i.index].tittle === "Reporte 608") {
+        window.location.href = "/reporte608";
         return;
       }
       if (this.typereports[i.index].tittle === "Productos por meses") {
