@@ -267,7 +267,7 @@
                 {
                     var build =  String(this.data.data[index].ncf) + "|" +
                         String(moment(this.data.data[index].date).format('YYYYMMDD')) + "|" +
-                        "01 Deterioro de Factura Pre-Impresa" + "\n";
+                        "01" + "\n";
                     text += build;
                 }
                 return text;
@@ -280,7 +280,7 @@
                     array.push({
                         'Numero de comprobante fiscal' : this.data.data[index].ncf,
                         'Fecha de comprobante' : moment(this.data.data[index].date).format('YYYYMMDD'),
-                        'Tipo de Anulacion': "01 Deterioro de Factura Pre-Impresa"
+                        'Tipo de Anulacion': "01"
                     })
                 }
                 return array;

@@ -115412,7 +115412,7 @@ Vue.component('pagination', __webpack_require__(14));
     textDataFormat: function textDataFormat() {
       var text = "";
       for (var index in this.data.data) {
-        var build = String(this.data.data[index].rnc_nfc ? this.data.data[index].rnc_nfc : '') + "|" + String(1) + "|" + String(this.data.data[index].ncfdevolucion ? this.data.data[index].ncfdevolucion : this.data.data[index].nfc) + "|" + String(this.data.data[index].ncfdevolucion ? this.data.data[index].nfc : this.data.data[index].ncfdevolucion ? this.data.data[index].ncfdevolucion : '') + "|" + "01" + "|" + String(moment(this.data.data[index].date).format('YYYYMMDD')) + "|" + "" + "|" + String(this.data.data[index].brute) + "|" + String(this.data.data[index].itbis) + "|" + '' + "|" + '' + "|" + '' + "|" + '' + "|" + '' + "|" + '' + "|" + String(this.data.data[index].leycamarero) + "|" + String(this.data.data[index].Monto_efectivo) + "|" + String(0) + "|" + String(this.data.data[index].Monto_tarjeta) + "|" + '' + "|" + '' + "|" + '' + "|" + '' + "\n";
+        var build = String(this.data.data[index].rnc_nfc ? this.data.data[index].rnc_nfc : '') + "|" + String(1) + "|" + String(this.data.data[index].ncfdevolucion ? this.data.data[index].ncfdevolucion : this.data.data[index].nfc) + "|" + String(this.data.data[index].ncfdevolucion ? this.data.data[index].nfc : this.data.data[index].ncfdevolucion ? this.data.data[index].ncfdevolucion : '') + "|" + "01" + "|" + String(moment(this.data.data[index].date).format('YYYYMMDD')) + "|" + "" + "|" + String(this.data.data[index].brute) + "|" + String(this.data.data[index].itbis) + "|" + '0.00' + "|" + '0.00' + "|" + '0.00' + "|" + '0.00' + "|" + '0.00' + "|" + '0.00' + "|" + String(this.data.data[index].leycamarero) + "|" + String(this.data.data[index].Monto_efectivo) + "|" + String(0) + "|" + String(this.data.data[index].Monto_tarjeta) + "|" + '0.00' + "|" + '0.00' + "|" + '0.00' + "|" + '0.00' + "\n";
         text += build;
       }
       return text;
@@ -115430,20 +115430,20 @@ Vue.component('pagination', __webpack_require__(14));
           'Fecha de Retención': '',
           'Monto Facturado': this.data.data[index].brute,
           'ITBIS Facturado': this.data.data[index].itbis,
-          'ITBIS Retenido por Terceros': '',
-          'ITBIS Percibido': '',
-          'Retención Renta por Terceros': '',
-          'ISR Percibido': '',
-          'Impuesto Selectivo al Consumo': '',
-          'Otros Impuestos/Tasas': '',
+          'ITBIS Retenido por Terceros': '0.00',
+          'ITBIS Percibido': '0.00',
+          'Retención Renta por Terceros': '0.00',
+          'ISR Percibido': '0.00',
+          'Impuesto Selectivo al Consumo': '0.00',
+          'Otros Impuestos/Tasas': '0.00',
           'Monto Propina Legal': this.data.data[index].leycamarero,
           'Efectivo': this.data.data[index].Monto_efectivo,
           'Cheque/ Transferencia/ Depósito': 0,
           'Tarjeta Débito/Crédito': this.data.data[index].Monto_tarjeta,
-          'Venta a Crédito': '',
-          'Bonos o Certificados de Regalo': '',
-          'Permuta': '',
-          'Otras Formas de Ventas': ''
+          'Venta a Crédito': '0.00',
+          'Bonos o Certificados de Regalo': '0.00',
+          'Permuta': '0.00',
+          'Otras Formas de Ventas': '0.00'
         });
       }
       return array;
@@ -150410,7 +150410,7 @@ Vue.component('pagination', __webpack_require__(14));
         textDataFormat: function textDataFormat() {
             var text = "";
             for (var index in this.data.data) {
-                var build = String(this.data.data[index].ncf) + "|" + String(moment(this.data.data[index].date).format('YYYYMMDD')) + "|" + "01 Deterioro de Factura Pre-Impresa" + "\n";
+                var build = String(this.data.data[index].ncf) + "|" + String(moment(this.data.data[index].date).format('YYYYMMDD')) + "|" + "01" + "\n";
                 text += build;
             }
             return text;
@@ -150421,7 +150421,7 @@ Vue.component('pagination', __webpack_require__(14));
                 array.push({
                     'Numero de comprobante fiscal': this.data.data[index].ncf,
                     'Fecha de comprobante': moment(this.data.data[index].date).format('YYYYMMDD'),
-                    'Tipo de Anulacion': "01 Deterioro de Factura Pre-Impresa"
+                    'Tipo de Anulacion': "01"
                 });
             }
             return array;

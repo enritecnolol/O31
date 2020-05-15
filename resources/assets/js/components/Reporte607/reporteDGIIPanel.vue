@@ -94,18 +94,18 @@
                     <td>01</td>
                     <td>{{item.date}}</td>
                     <td></td>
-                    <td>{{item.total_facture}}</td>
-                    <td>{{item.itbis}}</td>
+                    <td style="text-align: right">{{parseFloat(item.total_facture).formatMoney(2)}}</td>
+                    <td style="text-align: right">{{item.itbis}}</td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>{{item.leycamarero}}</td>
-                    <td>{{item.Monto_efectivo}}</td>
-                    <td>0</td>
-                    <td>{{item.Monto_tarjeta}}</td>
+                    <td style="text-align: right">{{parseFloat(item.leycamarero).formatMoney(2)}}</td>
+                    <td style="text-align: right">{{parseFloat(item.Monto_efectivo).formatMoney(2)}}</td>
+                    <td style="text-align: right">0</td>
+                    <td style="text-align: right">{{parseFloat(item.Monto_tarjeta).formatMoney(2)}}</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -320,20 +320,20 @@
                   "" + "|" +
                   String(this.data.data[index].brute) + "|" +
                   String(this.data.data[index].itbis) + "|" +
-                  '' + "|" +
-                  '' + "|" +
-                  '' + "|" +
-                  '' + "|" +
-                  '' + "|" +
-                  '' + "|" +
+                  '0.00' + "|" +
+                  '0.00' + "|" +
+                  '0.00' + "|" +
+                  '0.00' + "|" +
+                  '0.00' + "|" +
+                  '0.00' + "|" +
                   String(this.data.data[index].leycamarero) + "|" +
                   String(this.data.data[index].Monto_efectivo) + "|" +
                   String(0) + "|" +
                   String(this.data.data[index].Monto_tarjeta) + "|" +
-                  '' + "|" +
-                  '' + "|" +
-                  '' + "|" +
-                  '' + "\n";
+                  '0.00' + "|" +
+                  '0.00' + "|" +
+                  '0.00' + "|" +
+                  '0.00' + "\n";
           text += build;
 
         }
@@ -354,20 +354,20 @@
             'Fecha de Retención': '',
             'Monto Facturado': this.data.data[index].brute,
             'ITBIS Facturado': this.data.data[index].itbis,
-            'ITBIS Retenido por Terceros': '',
-            'ITBIS Percibido': '',
-            'Retención Renta por Terceros': '',
-            'ISR Percibido': '',
-            'Impuesto Selectivo al Consumo': '',
-            'Otros Impuestos/Tasas': '',
+            'ITBIS Retenido por Terceros': '0.00',
+            'ITBIS Percibido': '0.00',
+            'Retención Renta por Terceros': '0.00',
+            'ISR Percibido': '0.00',
+            'Impuesto Selectivo al Consumo': '0.00',
+            'Otros Impuestos/Tasas': '0.00',
             'Monto Propina Legal': this.data.data[index].leycamarero,
             'Efectivo': this.data.data[index].Monto_efectivo,
             'Cheque/ Transferencia/ Depósito': 0,
             'Tarjeta Débito/Crédito': this.data.data[index].Monto_tarjeta,
-            'Venta a Crédito': '',
-            'Bonos o Certificados de Regalo': '',
-            'Permuta': '',
-            'Otras Formas de Ventas': '',
+            'Venta a Crédito': '0.00',
+            'Bonos o Certificados de Regalo': '0.00',
+            'Permuta': '0.00',
+            'Otras Formas de Ventas': '0.00',
           })
         }
         return array;
