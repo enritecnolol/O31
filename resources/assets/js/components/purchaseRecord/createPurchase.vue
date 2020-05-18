@@ -28,6 +28,7 @@
                       class="form-control form-control-sm"
                       placeholder="#0000"
                       style="width:130px;"
+                      maxlength="17"
               />
             </div>
           </div>
@@ -54,6 +55,7 @@
                       class="form-control form-control-sm"
                       style="width:150px;"
                       placeholder="#0000"
+                      maxlength="17"
               />
             </div>
           </div>
@@ -69,6 +71,7 @@
                       class="form-control form-control-sm"
                       style="width:250px;"
                       placeholder="#0000"
+                      maxlength="17"
               />
             </div>
           </div>

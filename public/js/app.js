@@ -126456,6 +126456,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -127376,7 +127379,11 @@ var render = function() {
                   ],
                   staticClass: "form-control form-control-sm",
                   staticStyle: { width: "130px" },
-                  attrs: { type: "text", placeholder: "#0000" },
+                  attrs: {
+                    type: "text",
+                    placeholder: "#0000",
+                    maxlength: "17"
+                  },
                   domProps: { value: _vm.documentNo },
                   on: {
                     input: function($event) {
@@ -127443,7 +127450,12 @@ var render = function() {
                   ],
                   staticClass: "form-control form-control-sm",
                   staticStyle: { width: "150px" },
-                  attrs: { id: "invoice", type: "text", placeholder: "#0000" },
+                  attrs: {
+                    id: "invoice",
+                    type: "text",
+                    placeholder: "#0000",
+                    maxlength: "17"
+                  },
                   domProps: { value: _vm.invoice },
                   on: {
                     input: function($event) {
@@ -127482,7 +127494,12 @@ var render = function() {
                   ],
                   staticClass: "form-control form-control-sm",
                   staticStyle: { width: "250px" },
-                  attrs: { id: "ncf", type: "text", placeholder: "#0000" },
+                  attrs: {
+                    id: "ncf",
+                    type: "text",
+                    placeholder: "#0000",
+                    maxlength: "17"
+                  },
                   domProps: { value: _vm.ncf },
                   on: {
                     input: function($event) {
