@@ -126439,7 +126439,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -127339,199 +127338,212 @@ var render = function() {
     _vm._v(" "),
     _vm._m(1),
     _vm._v(" "),
-    _c("div", { staticClass: "col-md-12" }, [
+    _c("div", { staticClass: "col-md-7" }, [
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-2" }, [
-          _c("div", { staticClass: "form-group" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "form-group row" }, [
             _vm._m(2),
             _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.documentNo,
-                  expression: "documentNo"
-                }
-              ],
-              staticClass: "form-control form-control-sm",
-              staticStyle: { width: "130px" },
-              attrs: { type: "text", placeholder: "#0000" },
-              domProps: { value: _vm.documentNo },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+            _c(
+              "div",
+              { staticClass: "col-sm", staticStyle: { padding: "0" } },
+              [
+                _c("v-select", {
+                  attrs: { options: _vm.suppliers },
+                  on: { input: _vm.setSelected },
+                  model: {
+                    value: _vm.supplier,
+                    callback: function($$v) {
+                      _vm.supplier = $$v
+                    },
+                    expression: "supplier"
                   }
-                  _vm.documentNo = $event.target.value
-                }
-              }
-            })
+                })
+              ],
+              1
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "form-group row" }, [
+            _c(
+              "label",
+              {
+                staticClass: "col-sm-3 col-form-label",
+                attrs: { for: "invoice" }
+              },
+              [_vm._v("Factura:")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-sm", staticStyle: { padding: "0" } },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.invoice,
+                      expression: "invoice"
+                    }
+                  ],
+                  staticClass: "form-control form-control-sm",
+                  staticStyle: { width: "150px" },
+                  attrs: { id: "invoice", type: "text", placeholder: "#0000" },
+                  domProps: { value: _vm.invoice },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.invoice = $event.target.value
+                    }
+                  }
+                })
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "form-group row" }, [
+            _c(
+              "label",
+              { staticClass: "col-sm-3 col-form-label", attrs: { for: "ncf" } },
+              [_vm._v("NCF:")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-sm", staticStyle: { padding: "0" } },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.ncf,
+                      expression: "ncf"
+                    }
+                  ],
+                  staticClass: "form-control form-control-sm",
+                  staticStyle: { width: "250px" },
+                  attrs: { id: "ncf", type: "text", placeholder: "#0000" },
+                  domProps: { value: _vm.ncf },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.ncf = $event.target.value
+                    }
+                  }
+                })
+              ]
+            )
           ])
         ])
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-md-4" }, [
-      _c(
-        "div",
-        { staticClass: "form-group" },
-        [
-          _vm._m(3),
-          _vm._v(" "),
-          _c("v-select", {
-            attrs: { options: _vm.suppliers },
-            on: { input: _vm.setSelected },
-            model: {
-              value: _vm.supplier,
-              callback: function($$v) {
-                _vm.supplier = $$v
-              },
-              expression: "supplier"
-            }
-          })
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-md-2" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "invoice" } }, [_vm._v("Factura:")]),
+    _c("div", { staticClass: "col-md-5" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "form-group row" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.kindPurchase,
+                      expression: "kindPurchase"
+                    }
+                  ],
+                  staticClass: "form-control form-control-sm",
+                  attrs: { id: "kind" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.kindPurchase = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { domProps: { value: "" } }, [
+                    _vm._v("Seleccionar")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "cash" } }, [
+                    _vm._v("De contado")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "credit" } }, [
+                    _vm._v("Credito")
+                  ])
+                ]
+              )
+            ])
+          ])
+        ]),
         _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.invoice,
-              expression: "invoice"
-            }
-          ],
-          staticClass: "form-control form-control-sm",
-          staticStyle: { width: "150px" },
-          attrs: { id: "invoice", type: "text", placeholder: "#0000" },
-          domProps: { value: _vm.invoice },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.invoice = $event.target.value
-            }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "ncf" } }, [_vm._v("NCF:")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.ncf,
-              expression: "ncf"
-            }
-          ],
-          staticClass: "form-control form-control-sm",
-          staticStyle: { width: "250px" },
-          attrs: { id: "ncf", type: "text", placeholder: "#0000" },
-          domProps: { value: _vm.ncf },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.ncf = $event.target.value
-            }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-md-2" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _vm._m(4),
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "form-group row" }, [
+            _vm._m(4),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-sm" },
+              [
+                _c("datepicker", {
+                  staticStyle: { width: "300px" },
+                  attrs: {
+                    "bootstrap-styling": true,
+                    format: "yyyy-MM-dd",
+                    name: "invoiceDate"
+                  },
+                  model: {
+                    value: _vm.invoiceDate,
+                    callback: function($$v) {
+                      _vm.invoiceDate = $$v
+                    },
+                    expression: "invoiceDate"
+                  }
+                })
+              ],
+              1
+            )
+          ])
+        ]),
         _vm._v(" "),
         _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.kindPurchase,
-                expression: "kindPurchase"
-              }
-            ],
-            staticClass: "form-control form-control-sm",
-            attrs: { id: "kind" },
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.kindPurchase = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
-              }
-            }
-          },
+          "div",
+          { staticClass: "col-md-12" },
           [
-            _c("option", { domProps: { value: "" } }, [_vm._v("Seleccionar")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "cash" } }, [_vm._v("De contado")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "credit" } }, [_vm._v("Credito")])
-          ]
+            _c("select-term", {
+              attrs: { termExternal: _vm.term, landscape: true },
+              on: { changeTerm: _vm.changeTerm }
+            })
+          ],
+          1
         )
       ])
     ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-md-4" }, [
-      _c(
-        "div",
-        { staticClass: "form-group" },
-        [
-          _vm._m(5),
-          _vm._v(" "),
-          _c("datepicker", {
-            staticClass: "form-control form-control-sm",
-            staticStyle: { width: "300px" },
-            attrs: { format: "yyyy-MM-dd", name: "invoiceDate" },
-            model: {
-              value: _vm.invoiceDate,
-              callback: function($$v) {
-                _vm.invoiceDate = $$v
-              },
-              expression: "invoiceDate"
-            }
-          })
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "col-md-4" },
-      [
-        _c("select-term", {
-          attrs: { termExternal: _vm.term },
-          on: { changeTerm: _vm.changeTerm }
-        })
-      ],
-      1
-    ),
     _vm._v(" "),
     _c(
       "div",
@@ -127697,37 +127709,40 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "documentNo" } }, [
-      _vm._v("\n            Documento no:\n            "),
-      _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
-    ])
+    return _c(
+      "label",
+      { staticClass: "col-sm-3 col-form-label", attrs: { for: "supplier" } },
+      [
+        _vm._v("\n            Proveedor:\n            "),
+        _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
+      ]
+    )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "supplier" } }, [
-      _vm._v("\n        Proveedor:\n        "),
-      _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
-    ])
+    return _c(
+      "label",
+      { staticClass: "col-sm-4 col-form-label", attrs: { for: "kind" } },
+      [
+        _vm._v("\n            Tipo:\n            "),
+        _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
+      ]
+    )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "kind" } }, [
-      _vm._v("\n        Tipo:\n        "),
-      _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "invoiceDate" } }, [
-      _vm._v("\n        Fecha fact:\n        "),
-      _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
-    ])
+    return _c(
+      "label",
+      { staticClass: "col-sm-4 col-form-label", attrs: { for: "invoiceDate" } },
+      [
+        _vm._v("\n            Fecha:\n            "),
+        _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
+      ]
+    )
   }
 ]
 render._withStripped = true

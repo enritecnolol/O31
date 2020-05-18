@@ -13,90 +13,89 @@
     <div class="col-md-12">
       <hr />
     </div>
-    <div class="col-md-12">
+    <div class="col-md-7">
       <div class="row">
-        <div class="col-md-2">
-          <div class="form-group">
-            <label for="documentNo">
-              Documento no:
+        <div class="col-md-12">
+          <div class="form-group row">
+            <label for="supplier" class="col-sm-3 col-form-label">
+              Proveedor:
               <span style="color:red;">*</span>
             </label>
-            <input
-              v-model="documentNo"
-              type="text"
-              class="form-control form-control-sm"
-              placeholder="#0000"
-              style="width:130px;"
-            />
+            <div class="col-sm" style="padding: 0">
+              <v-select v-model="supplier" :options="suppliers" @input="setSelected" />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group row">
+            <label for="invoice" class="col-sm-3 col-form-label">Factura:</label>
+            <div class="col-sm" style="padding: 0">
+              <input
+                      v-model="invoice"
+                      id="invoice"
+                      type="text"
+                      class="form-control form-control-sm"
+                      style="width:150px;"
+                      placeholder="#0000"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group row">
+            <label for="ncf" class="col-sm-3 col-form-label">NCF:</label>
+            <div class="col-sm" style="padding: 0">
+              <input
+                      v-model="ncf"
+                      id="ncf"
+                      type="text"
+                      class="form-control form-control-sm"
+                      style="width:250px;"
+                      placeholder="#0000"
+              />
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-4">
-      <div class="form-group">
-        <label for="supplier">
-          Proveedor:
-          <span style="color:red;">*</span>
-        </label>
-        <v-select v-model="supplier" :options="suppliers" @input="setSelected" />
+    <div class="col-md-5">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group row">
+            <label for="kind" class="col-sm-4 col-form-label">
+              Tipo:
+              <span style="color:red;">*</span>
+            </label>
+            <div class="col-sm">
+              <select class="form-control form-control-sm" id="kind" v-model="kindPurchase">
+                <option :value="''">Seleccionar</option>
+                <option value="cash">De contado</option>
+                <option value="credit">Credito</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group row">
+            <label for="invoiceDate" class="col-sm-4 col-form-label">
+              Fecha:
+              <span style="color:red;">*</span>
+            </label>
+            <div class="col-sm" >
+              <datepicker
+                      :bootstrap-styling="true"
+                      style="width:300px;"
+                      v-model="invoiceDate"
+                      :format="'yyyy-MM-dd'"
+                      name="invoiceDate"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <select-term @changeTerm="changeTerm" :termExternal="term" :landscape="true" />
+        </div>
       </div>
-    </div>
-    <div class="col-md-2">
-      <div class="form-group">
-        <label for="invoice">Factura:</label>
-        <input
-          v-model="invoice"
-          id="invoice"
-          type="text"
-          class="form-control form-control-sm"
-          style="width:150px;"
-          placeholder="#0000"
-        />
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="form-group">
-        <label for="ncf">NCF:</label>
-        <input
-          v-model="ncf"
-          id="ncf"
-          type="text"
-          class="form-control form-control-sm"
-          style="width:250px;"
-          placeholder="#0000"
-        />
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="form-group">
-        <label for="kind">
-          Tipo:
-          <span style="color:red;">*</span>
-        </label>
-        <select class="form-control form-control-sm" id="kind" v-model="kindPurchase">
-          <option :value="''">Seleccionar</option>
-          <option value="cash">De contado</option>
-          <option value="credit">Credito</option>
-        </select>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="form-group">
-        <label for="invoiceDate">
-          Fecha fact:
-          <span style="color:red;">*</span>
-        </label>
-        <datepicker
-          style="width:300px;"
-          v-model="invoiceDate"
-          class="form-control form-control-sm"
-          :format="'yyyy-MM-dd'"
-          name="invoiceDate"
-        />
-      </div>
-    </div>
-    <div class="col-md-4">
-      <select-term @changeTerm="changeTerm" :termExternal="term" />
     </div>
     <div class="col-md-12">
       <general-table :hover="true" :responsive="false">
