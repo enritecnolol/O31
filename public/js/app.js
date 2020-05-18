@@ -126439,6 +126439,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -127348,6 +127365,41 @@ var render = function() {
               "div",
               { staticClass: "col-sm", staticStyle: { padding: "0" } },
               [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.documentNo,
+                      expression: "documentNo"
+                    }
+                  ],
+                  staticClass: "form-control form-control-sm",
+                  staticStyle: { width: "130px" },
+                  attrs: { type: "text", placeholder: "#0000" },
+                  domProps: { value: _vm.documentNo },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.documentNo = $event.target.value
+                    }
+                  }
+                })
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "form-group row" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-sm", staticStyle: { padding: "0" } },
+              [
                 _c("v-select", {
                   attrs: { options: _vm.suppliers },
                   on: { input: _vm.setSelected },
@@ -127452,7 +127504,7 @@ var render = function() {
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "form-group row" }, [
-            _vm._m(3),
+            _vm._m(4),
             _vm._v(" "),
             _c("div", { staticClass: "col-sm" }, [
               _c(
@@ -127504,7 +127556,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "form-group row" }, [
-            _vm._m(4),
+            _vm._m(5),
             _vm._v(" "),
             _c(
               "div",
@@ -127704,6 +127756,19 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-12" }, [_c("hr")])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "col-sm-3 col-form-label", attrs: { for: "documentNo" } },
+      [
+        _vm._v("\n            Documento no:\n            "),
+        _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
+      ]
+    )
   },
   function() {
     var _vm = this

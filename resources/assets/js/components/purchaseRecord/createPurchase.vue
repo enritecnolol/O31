@@ -17,6 +17,23 @@
       <div class="row">
         <div class="col-md-12">
           <div class="form-group row">
+            <label for="documentNo" class="col-sm-3 col-form-label">
+              Documento no:
+              <span style="color:red;">*</span>
+            </label>
+            <div class="col-sm" style="padding: 0">
+              <input
+                      v-model="documentNo"
+                      type="text"
+                      class="form-control form-control-sm"
+                      placeholder="#0000"
+                      style="width:130px;"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group row">
             <label for="supplier" class="col-sm-3 col-form-label">
               Proveedor:
               <span style="color:red;">*</span>
