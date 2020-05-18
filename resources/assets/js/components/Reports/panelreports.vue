@@ -1,11 +1,21 @@
 <template>
-  <div class="container" style="margin-top:0;">
-    <div class="row" v-if="!seleccionado">
-      <template v-for="(item, index) in typereports">
-        <card :report="item" :key="index" :index="index" @seleccionado="cardseleccionado"></card>
-      </template>
+  <div class="container-fluid" style="margin-top:0;">
+    <div class="card" v-if="!seleccionado">
+      <div class="card-body">
+        <div class="row" >
+          <div class="col-md-12" style="margin-bottom: 20px">
+            <h2>Reportes Disponibles</h2>
+          </div>
+          <div class="col-md-12">
+            <hr>
+          </div>
+          <template v-for="(item, index) in typereports">
+            <card :report="item" :key="index" :index="index" @seleccionado="cardseleccionado"/>
+          </template>
+        </div>
+      </div>
     </div>
-    <div v-else>
+    <div v-if="seleccionado">
       <panel :seleccionado="seleccionado" @regresar="regresar" />
     </div>
   </div>
@@ -20,25 +30,32 @@ export default {
     return {
       typereports: [
         {
-          tittle: "Ventas"
+          tittle: "Ventas",
+          titulo:"Reportes de ventas"
         },
         {
-          tittle: "Productos"
+          tittle: "Productos",
+          titulo:"Reportes de ventas por productos"
         },
         {
-          tittle: "Comprobantes"
+          tittle: "Comprobantes",
+          titulo: "Reportes de comprobantes fiscales"
         },
         {
-          tittle: "Caja"
+          tittle: "Caja",
+          titulo: "Reporte de registros de caja"
         },
         {
-          tittle: "Reporte 607"
+          tittle: "Reporte 607",
+          titulo: "Reporte 607"
         },
         {
-          tittle: "Reporte 608"
+          tittle: "Reporte 608",
+          titulo: "Reporte 608"
         },
         {
-          tittle: "Productos por meses"
+          tittle: "Productos por meses",
+          titulo: "Reportes de productos vendidos por meses del año en curso"
         }
       ],
       seleccionado: ""

@@ -75,6 +75,7 @@ Vue.component('inventory-adjustment', require('./components/InventoryAdjustments
 Vue.component('expenses-card', require('./components/expenses/expenses'));
 Vue.component('expenses-payment', require('./components/expenses/expensesPayment'));
 Vue.component('reporte-dgii-608-panel', require('./components/Reporte608/reportPanel'));
+Vue.component('reporte-dgii-606-panel', require('./components/Report606/reportPanel'));
 
 Vue.prototype.moment = moment;
 Vue.prototype.$toastr = toastr;

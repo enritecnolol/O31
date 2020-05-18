@@ -8,7 +8,7 @@
     @include('caja.siderbar')
 @endsection
 @section('content')
-    <reporte-dgii-panel />
+    <reporte-dgii-606-panel />
 @endsection
 
 @section('scriptp')

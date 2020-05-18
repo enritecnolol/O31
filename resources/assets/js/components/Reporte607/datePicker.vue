@@ -2,15 +2,14 @@
   <div >
         <date-picker
             v-model="time3"
-            :type="'month'"
             :shortcuts="shortcuts"
             :lang="lang"
+            range
             confirm
             @confirm="change"
             @input="change"
             @change="change"
             placeholder="Select"
-            format="YYYY-MM"
         />
   </div>
 </template>
@@ -38,37 +37,37 @@
           {
             text: 'Hoy',
             onClick: () => {
-              this.time3 = [ moment(), moment() ]
+              this.time3 = [ moment().format("YYYY-MM-DD"), moment().format("YYYY-MM-DD") ]
             }
           },
           {
             text: 'Ayer',
             onClick: () => {
-              this.time3 = [ moment().subtract(1,'day'), moment().subtract(1,'day')]
+              this.time3 = [ moment().subtract(1,'day').format("YYYY-MM-DD") , moment().subtract(1,'day').format("YYYY-MM-DD")]
             }
           },
           {
             text: 'Semana Pasada',
             onClick: () => {
-              this.time3 = [ moment().subtract(1,'week').startOf('week'), moment().subtract(1,'week').endOf('week')]
+              this.time3 = [ moment().subtract(1,'week').startOf('week').format("YYYY-MM-DD"), moment().subtract(1,'week').endOf('week').format("YYYY-MM-DD")]
             }
           },
           {
             text: 'Mes',
             onClick: () => {
-              this.time3 = [ moment().startOf('month'), moment().endOf('month')]
+              this.time3 = [ moment().startOf('month').format("YYYY-MM-DD"), moment().endOf('month').format("YYYY-MM-DD")]
             }
           },
           {
             text: 'Mes Pasado',
             onClick: () => {
-              this.time3 = [ moment().subtract(1,'month').startOf('month'), moment().subtract(1,'month').endOf('month')]
+              this.time3 = [ moment().subtract(1,'month').startOf('month').format("YYYY-MM-DD"), moment().subtract(1,'month').endOf('month').format("YYYY-MM-DD")]
             }
           },
           {
             text: 'Este año',
             onClick: () => {
-              this.time3 = [ moment().startOf('year'), moment().endOf('year')]
+              this.time3 = [ moment().startOf('year').format("YYYY-MM-DD"), moment().endOf('year').format("YYYY-MM-DD")]
             }
           }
         ],

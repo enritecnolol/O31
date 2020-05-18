@@ -9,13 +9,13 @@
               <h3>Formato de Envio de Ventas de Bienes y Servicios </h3>
               <hr>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
               <div class="form-group">
                 <label>Periodo</label>
                 <date-picker @date_select="date_select" :reset="reset"/>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <div class="form-group">
                 <label for="MontoMaximoConsumo">Monto maximo de consumo</label>
                 <input type="number" min="0" class="form-control form-control-sm" id="MontoMaximoConsumo" placeholder="" v-model="MaxAmount">
@@ -85,32 +85,62 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr v-for="(item, index) in data.data">
-                    <td>{{index+1}}</td>
-                    <td>{{item.rnc_nfc}}</td>
-                    <td>1</td>
-                    <td>{{ item.ncfdevolucion ? item.ncfdevolucion: item.nfc }}</td>
-                    <td>{{ item.ncfdevolucion ?  item.nfc : item.ncfdevolucion }}</td>
-                    <td>01</td>
-                    <td>{{item.date}}</td>
-                    <td></td>
-                    <td style="text-align: right">{{parseFloat(item.total_facture).formatMoney(2)}}</td>
-                    <td style="text-align: right">{{item.itbis}}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td style="text-align: right">{{parseFloat(item.leycamarero).formatMoney(2)}}</td>
-                    <td style="text-align: right">{{parseFloat(item.Monto_efectivo).formatMoney(2)}}</td>
-                    <td style="text-align: right">0</td>
-                    <td style="text-align: right">{{parseFloat(item.Monto_tarjeta).formatMoney(2)}}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
+                  <template v-for="(item, index) in data.data">
+                    <template v-if="item.ncfdevolucion">
+                      <tr :key="index">
+                        <td>{{index+1}}</td>
+                        <td>{{item.rnc_nfc}}</td>
+                        <td>1</td>
+                        <td>{{ item.nfc }}</td>
+                        <td></td>
+                        <td>01</td>
+                        <td>{{item.date}}</td>
+                        <td></td>
+                        <td style="text-align: right">{{parseFloat(item.total_facture).formatMoney(2)}}</td>
+                        <td style="text-align: right">{{item.itbis}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align: right">{{parseFloat(item.leycamarero).formatMoney(2)}}</td>
+                        <td style="text-align: right">{{parseFloat(item.Monto_efectivo).formatMoney(2)}}</td>
+                        <td style="text-align: right">0</td>
+                        <td style="text-align: right">{{parseFloat(item.Monto_tarjeta).formatMoney(2)}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </template>
+                    <tr :key="index">
+                      <td>{{index+1}}</td>
+                      <td>{{item.rnc_nfc}}</td>
+                      <td>1</td>
+                      <td>{{ item.ncfdevolucion ? item.ncfdevolucion: item.nfc }}</td>
+                      <td>{{ item.ncfdevolucion ?  item.nfc : item.ncfdevolucion }}</td>
+                      <td>01</td>
+                      <td>{{item.date}}</td>
+                      <td></td>
+                      <td style="text-align: right">{{parseFloat(item.total_facture).formatMoney(2)}}</td>
+                      <td style="text-align: right">{{item.itbis}}</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td style="text-align: right">{{parseFloat(item.leycamarero).formatMoney(2)}}</td>
+                      <td style="text-align: right">{{parseFloat(item.Monto_efectivo).formatMoney(2)}}</td>
+                      <td style="text-align: right">0</td>
+                      <td style="text-align: right">{{parseFloat(item.Monto_tarjeta).formatMoney(2)}}</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </template>
                   </tbody>
                 </table>
               </div>
@@ -334,6 +364,35 @@
                   '0.00' + "|" +
                   '0.00' + "|" +
                   '0.00' + "\n";
+
+          if(this.data.data[index].ncfdevolucion)
+          {
+
+            text += build;
+            build =  String(this.data.data[index].rnc_nfc ? this.data.data[index].rnc_nfc : '') + "|" +
+                    String(1) + "|" +
+                    String(this.data.data[index].nfc) + "|" +
+                    ""+ "|" +
+                    "01" + "|" +
+                    String(moment(this.data.data[index].date).format('YYYYMMDD')) + "|" +
+                    "" + "|" +
+                    String(this.data.data[index].brute) + "|" +
+                    String(this.data.data[index].itbis) + "|" +
+                    '0.00' + "|" +
+                    '0.00' + "|" +
+                    '0.00' + "|" +
+                    '0.00' + "|" +
+                    '0.00' + "|" +
+                    '0.00' + "|" +
+                    String(this.data.data[index].leycamarero) + "|" +
+                    String(this.data.data[index].Monto_efectivo) + "|" +
+                    String(0) + "|" +
+                    String(this.data.data[index].Monto_tarjeta) + "|" +
+                    '0.00' + "|" +
+                    '0.00' + "|" +
+                    '0.00' + "|" +
+                    '0.00' + "\n";
+          }
           text += build;
 
         }
@@ -368,7 +427,34 @@
             'Bonos o Certificados de Regalo': '0.00',
             'Permuta': '0.00',
             'Otras Formas de Ventas': '0.00',
-          })
+          });
+          if(this.data.data[index].ncfdevolucion){
+            array.push({
+              'RNC/Cédula o Pasaporte' : this.data.data[index].rnc_nfc ? this.data.data[index].rnc_nfc : '',
+              'Tipo Identificación' : 1,
+              'Número Comprobante Fiscal': this.data.data[index].nfc ,
+              'Número Comprobante Fiscal Modificado': '',
+              'Tipo de Ingreso': '01',
+              'Fecha Comprobante': moment(this.data.data[index].date).format('YYYYMMDD'),
+              'Fecha de Retención': '',
+              'Monto Facturado': this.data.data[index].brute,
+              'ITBIS Facturado': this.data.data[index].itbis,
+              'ITBIS Retenido por Terceros': '0.00',
+              'ITBIS Percibido': '0.00',
+              'Retención Renta por Terceros': '0.00',
+              'ISR Percibido': '0.00',
+              'Impuesto Selectivo al Consumo': '0.00',
+              'Otros Impuestos/Tasas': '0.00',
+              'Monto Propina Legal': this.data.data[index].leycamarero,
+              'Efectivo': this.data.data[index].Monto_efectivo,
+              'Cheque/ Transferencia/ Depósito': 0,
+              'Tarjeta Débito/Crédito': this.data.data[index].Monto_tarjeta,
+              'Venta a Crédito': '0.00',
+              'Bonos o Certificados de Regalo': '0.00',
+              'Permuta': '0.00',
+              'Otras Formas de Ventas': '0.00',
+            });
+          }
         }
         return array;
       }

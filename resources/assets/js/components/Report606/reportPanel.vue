@@ -6,35 +6,13 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3>Formato de Envio de Ventas de Bienes y Servicios </h3>
+                            <h3>Formato de Envío de Compras de Bienes y Servicios</h3>
                             <hr>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Periodo</label>
                                 <date-picker @date_select="date_select" :reset="reset"/>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="MontoMaximoConsumo">Monto maximo de consumo</label>
-                                <input type="number" min="0" class="form-control form-control-sm" id="MontoMaximoConsumo" placeholder="" v-model="MaxAmount">
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="tiponcf">Tipo ncf</label>
-                                <select id="tiponcf" class="form-control form-control-sm" v-model="tiponfc">
-                                    <option value="01">01 | Credito Fiscal</option>
-                                    <option value="02">02 | Facturas de Consumo</option>
-                                    <option value="03">03 | Notas de Debito</option>
-                                    <option value="04">04 | Notas de Credito</option>
-                                    <option value="11">11 | Provedores Informales</option>
-                                    <option value="12">12 | Registro Unico de Ingresos</option>
-                                    <option value="13">13 | Registro de Gastos Menores</option>
-                                    <option value="14">14 | Regímenes Especiales de Tributación</option>
-                                    <option value="15">15 | Comprobantes Gubernamentales</option>
-                                </select>
                             </div>
                         </div>
                         <div class="col-md-5">
@@ -59,29 +37,29 @@
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">RNC/Cédula o Pasaporte</th>
-                                        <th scope="col">Tipo Identificación</th>
-                                        <th scope="col">Número Comprobante Fiscal</th>
-                                        <th scope="col">Número Comprobante Fiscal Modificado</th>
-                                        <th scope="col">Tipo de Ingreso</th>
+                                        <th scope="col">RNC o Cédula</th>
+                                        <th scope="col">Tipo Id</th>
+                                        <th scope="col">Tipo Bienes y Servicios Comprados</th>
+                                        <th scope="col">NCF</th>
+                                        <th scope="col">NCF ó Documento Modificado</th>
                                         <th scope="col">Fecha Comprobante</th>
-                                        <th scope="col">Fecha de Retención</th>
-                                        <th scope="col">Monto Facturado</th>
+                                        <th scope="col">Fecha Pago</th>
+                                        <th scope="col">Monto Facturado en Servicios</th>
+                                        <th scope="col">Monto Facturado en Bienes</th>
+                                        <th scope="col">Total Monto Facturado</th>
                                         <th scope="col">ITBIS Facturado</th>
-                                        <th scope="col">ITBIS Retenido por Terceros</th>
-                                        <th scope="col">ITBIS Percibido</th>
-                                        <th scope="col">Retención Renta por Terceros</th>
-                                        <th scope="col">ISR Percibido</th>
+                                        <th scope="col">ITBIS Retenido</th>
+                                        <th scope="col">ITBIS sujeto a Proporcionalidad (Art. 349)</th>
+                                        <th scope="col">ITBIS llevado al Costo</th>
+                                        <th scope="col">ITBIS por Adelantar</th>
+                                        <th scope="col">ITBIS percibido en compras</th>
+                                        <th scope="col">Tipo de Retención en ISR</th>
+                                        <th scope="col">Monto Retención Renta</th>
+                                        <th scope="col">ISR Percibido en compras</th>
                                         <th scope="col">Impuesto Selectivo al Consumo</th>
-                                        <th scope="col">Otros Impuestos/Tasas</th>
+                                        <th scope="col">Otros Impuesto/Tasas</th>
                                         <th scope="col">Monto Propina Legal</th>
-                                        <th scope="col">Efectivo</th>
-                                        <th scope="col">Cheque/ Transferencia/ Depósito</th>
-                                        <th scope="col">Tarjeta Débito/Crédito</th>
-                                        <th scope="col">Venta a Crédito</th>
-                                        <th scope="col">Bonos o Certificados de Regalo</th>
-                                        <th scope="col">Permuta</th>
-                                        <th scope="col">Otras Formas de Ventas</th>
+                                        <th scope="col">Forma de Pago</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -145,7 +123,7 @@
         components:{
             datePicker
         },
-        name:'reporte-dgii-panel',
+        name:'reporte-dgii-606-panel',
         data(){
             return{
                 loading:false,

@@ -13,8 +13,8 @@ class Reporteria607Controller extends Controller
     }
     public function getData(Request $request)
     {
-        $from_date = date("Y-m-d",strtotime($request->date."-1"));
-        $end_date = date("Y-m-t", strtotime($from_date));
+        $from_date = $request->date[0];
+        $end_date = $request->date[1];
 
         $data = DB::connection('client')
             ->table(DB::raw('factures as f'))
@@ -47,8 +47,8 @@ class Reporteria607Controller extends Controller
 
     public function getDataReport608(Request $request)
     {
-        $from_date = date("Y-m-d",strtotime($request->date."-1"));
-        $end_date = date("Y-m-t", strtotime($from_date));
+        $from_date = $request->date[0];
+        $end_date = $request->date[1];
 
         $data = DB::connection('client')
             ->table(DB::raw('devolucions as d'))
@@ -71,6 +71,11 @@ class Reporteria607Controller extends Controller
         $size = $request->size;
 
         return $data->paginate($size);
+    }
+
+    public function indexReport606()
+    {
+        return view('Reporte607.report606');
     }
 
 }
