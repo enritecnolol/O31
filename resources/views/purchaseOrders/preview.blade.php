@@ -74,7 +74,7 @@
                         <tr>
                             <td><b>No. Documento: </b> #{{$previewData['data']['document_no']}}</td>
                             <td><b>Orden de compra: </b> No relacionada</td>
-                            <td><b>Tipo de compra: </b> @if($previewData['data']['kind_purchase'] ==  "credit") Credito @else De contado @endif</td>
+                            <td><b>Tipo de compra: </b> @if($previewData['term_data']['number_days'] > 0) Credito {{ $previewData['term_data']['number_days']}} dias @else De contado @endif</td>
                         </tr>
                         @if($previewData['company']->generacomprobante == 'si')
                             <tr>

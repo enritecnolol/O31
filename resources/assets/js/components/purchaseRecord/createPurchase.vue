@@ -17,27 +17,8 @@
       <div class="row">
         <div class="col-md-12">
           <div class="form-group row">
-            <label for="documentNo" class="col-sm-3 col-form-label">
-              Documento no:
-              <span style="color:red;">*</span>
-            </label>
-            <div class="col-sm" style="padding: 0">
-              <input
-                      v-model="documentNo"
-                      type="text"
-                      class="form-control form-control-sm"
-                      placeholder="#0000"
-                      style="width:130px;"
-                      maxlength="17"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <div class="form-group row">
             <label for="supplier" class="col-sm-3 col-form-label">
               Proveedor:
-              <span style="color:red;">*</span>
             </label>
             <div class="col-sm" style="padding: 0">
               <v-select v-model="supplier" :options="suppliers" @input="setSelected" />
@@ -82,24 +63,40 @@
       <div class="row">
         <div class="col-md-12">
           <div class="form-group row">
-            <label for="kind" class="col-sm-4 col-form-label">
-              Tipo:
-              <span style="color:red;">*</span>
+            <label for="documentNo" class="col-sm-4 col-form-label">
+              Documento no:
             </label>
             <div class="col-sm">
-              <select class="form-control form-control-sm" id="kind" v-model="kindPurchase">
-                <option :value="''">Seleccionar</option>
-                <option value="cash">De contado</option>
-                <option value="credit">Credito</option>
-              </select>
+              <input
+                      v-model="documentNo"
+                      type="text"
+                      class="form-control form-control-sm"
+                      placeholder="#0000"
+                      style="width:130px;"
+                      maxlength="17"
+              />
             </div>
           </div>
         </div>
+<!--        <div class="col-md-12">-->
+<!--          <div class="form-group row">-->
+<!--            <label for="kind" class="col-sm-4 col-form-label">-->
+<!--              Tipo:-->
+<!--              <span style="color:red;">*</span>-->
+<!--            </label>-->
+<!--            <div class="col-sm">-->
+<!--              <select class="form-control form-control-sm" id="kind" v-model="kindPurchase">-->
+<!--                <option :value="''">Seleccionar</option>-->
+<!--                <option value="cash">De contado</option>-->
+<!--                <option value="credit">Credito</option>-->
+<!--              </select>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
         <div class="col-md-12">
           <div class="form-group row">
             <label for="invoiceDate" class="col-sm-4 col-form-label">
               Fecha:
-              <span style="color:red;">*</span>
             </label>
             <div class="col-sm" >
               <datepicker
@@ -114,6 +111,23 @@
         </div>
         <div class="col-md-12">
           <select-term @changeTerm="changeTerm" :termExternal="term" :landscape="true" />
+        </div>
+        <div class="col-md-12">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">
+              Fecha Venc.
+            </label>
+            <div class="col-sm">
+              <datepicker
+                      :disabled="true"
+                      :bootstrap-styling="true"
+                      v-model="dueDate"
+                      :calendar-class="'form-control form-control-sm'"
+                      :format="'yyyy-MM-dd'"
+                      name="estimateDate"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -197,6 +211,8 @@ export default {
       ncf: "",
       purchaseOrder: "",
       invoiceDate: "",
+      dueDate:"",
+      number_days_term:"",
       term: "",
       productsList: [],
       supplierData: "",
@@ -241,6 +257,7 @@ export default {
       this.invoice = this.editData.invoice;
       this.ncf = this.editData.ncf;
       this.invoiceDate = this.editData.invoice_date;
+      this.dueDate = this.editData.due_date;
       this.term = this.editData.term_id;
       this.kindPurchase = this.editData.kind_purchase;
       this.items = this.detailsFormat(this.editData.details);
@@ -259,6 +276,8 @@ export default {
       this.term = "";
       this.note = "";
       this.invoiceDate = "";
+      this.dueDate = "";
+      this.number_days_term = "";
       this.items = [
         {
           product: "",
@@ -296,6 +315,7 @@ export default {
           term_id: this.term,
           note: this.note,
           invoice_date: this.invoiceDate,
+          invoiceDue:this.dueDate,
           subtotal: this.subTotal,
           itbis: this.itbis,
           total: this.total,
@@ -331,6 +351,11 @@ export default {
         return;
       }
       this.term = id;
+      var today = new Date();
+      var dueDate = new Date();
+      dueDate.setDate(today.getDate() + number_days);
+      this.number_days_term = number_days;
+      this.dueDate = dueDate;
     },
     removeRow(index) {
       this.items.splice(index, 1);

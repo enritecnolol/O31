@@ -78,9 +78,18 @@
                     </li>
                 </ul>
             </li>
-            <li>
-                <a href="/inventory/Adjustments">
-                    <i class="fas fa-list-alt"></i><strong>AJUSTE DE INVENTARIO</strong></a>
+            <li class="has-sub">
+                <a class="js-arrow" href="#">
+                    <i class="fas fa-list-alt"></i><strong>INVENTARIO</strong>
+                    <span class="arrow">
+                        <i class="fas fa-angle-down"></i>
+                    </span>
+                </a>
+                <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none">
+                    <li>
+                        <a style="padding-left: 90px" href="/inventory/Adjustments">AJUSTE DE INVENTARIO</a>
+                    </li>
+                </ul>
             </li>
             <li class="has-sub">
                 <a class="js-arrow" href="#">

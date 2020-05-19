@@ -8,6 +8,7 @@ use App\purchaseDetail;
 use App\PurchasePayment;
 use App\purchases;
 use App\Supplier;
+use App\Term;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,6 +25,7 @@ class PurchasesController extends Controller
             $purchase->document_no = $request->document_no;
             $purchase->supplier_id = $request->supplier_id['code'];
             $purchase->invoice_date = date("Y-m-d", strtotime($request->invoice_date));
+            $purchase->due_date = date("Y-m-d", strtotime($request->invoiceDue));
             $purchase->invoice = $request->invoice;
             $purchase->ncf = $request->ncf;
             $purchase->purchase_order = $request->purchase_order;
@@ -36,7 +38,7 @@ class PurchasesController extends Controller
             $purchase->balance = $request->total;
             $purchase->payment_status = 'NO PAGADO';
             $purchase->kind_purchase = $request->kind_purchase;
-            if($request->kind_purchase == "cash")
+            if($request->number_days_term == 0)
             {
                 $purchase->balance = 0;
                 $purchase->payment_status = 'COMPLETADO';
@@ -266,10 +268,12 @@ class PurchasesController extends Controller
         $purchase->details = json_decode($purchaseDetails, true);
         $supplier = Supplier::find($purchase->supplier_id);
         $purchase->supplier_name = $supplier->name;
+        $term = Term::find($purchase->term_id);
 
         $previewData = [
           'company' => $config,
-          'data' => $purchase
+          'data' => $purchase,
+            'term_data' => $term
         ];
 
         return view('purchaseOrders.preview')

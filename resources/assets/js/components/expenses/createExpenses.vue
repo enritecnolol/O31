@@ -48,7 +48,7 @@
                     <div class="form-group row">
                         <label for="ncf" class="col-sm-3 col-form-label">NCF:</label>
                         <div class="col-sm" style="padding: 0">
-                            <input type="text" v-if="!fakeNCF && type_ncf!= '01'" v-model="ncf" class="form-control form-control-sm" style="width:250px" :disabled="type_ncf != '01'">
+                            <input type="text" v-if="!fakeNCF && type_ncf == '01'" v-model="ncf" class="form-control form-control-sm" style="width:250px">
                             <input type="text" v-else v-model="fakeNCF" class="form-control form-control-sm" style="width:250px" disabled>
                         </div>
                     </div>
@@ -422,7 +422,13 @@
         watch:{
             type_ncf()
             {
-                this.ncfSequence();
+                if(this.type_ncf !== '01')
+                {
+                    this.ncfSequence();
+                    return;
+                }
+
+                this.fakeNCF = "";
             }
         },
         created() {
