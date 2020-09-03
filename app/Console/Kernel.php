@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->command('recurring:bill')
-            ->dailyAt('13:00');
+            ->hourly();
     }
 
     /**
