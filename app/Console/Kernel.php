@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
          'App\Console\Commands\mysql',
+         'App\Console\Commands\SeRecurringBill',
     ];
 
     /**
@@ -26,6 +27,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->command('recurring:bill')
+            ->dailyAt('13:00');
     }
 
     /**

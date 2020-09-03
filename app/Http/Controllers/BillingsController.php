@@ -45,6 +45,11 @@ class BillingsController extends Controller
             $facture->type_sale = 'personalizado';
             $facture->status = 'DEUDA';
             $facture->paid_status = 'NO PAGADO';
+            $facture->recurring_bill = $request->recurring_bill;
+            if($request->recurring_bill)
+            {
+                $facture->send_recurring_bill = date("Y-m-d", strtotime($request->due_date));
+            }
             $term = Term::find($request->term);
             if($term->number_days == 0)
             {
@@ -176,6 +181,7 @@ class BillingsController extends Controller
             $facture->discount_percent = $request->discountPercent;
             $facture->total_facture = $request->total;
             $facture->open_balance = $request->total;
+            $facture->recurring_bill = $request->recurring_bill;
             $facture->update();
 
             foreach ($request->details as $detail)
