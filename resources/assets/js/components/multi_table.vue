@@ -82,6 +82,14 @@
           ${{ formatMoney(montoTotalProducto()) }}
         </div>
       </div>
+      <div class="col-md-12" v-if="seleccionado == 'Ventas' && headers.length != 0">
+        <div class="text-center">
+          <b>Total vendido:</b>
+          {{ cantidadFactura() }} -
+          <b>Monto total:</b>
+          ${{ formatMoney(montoTotalfactura()) }}
+        </div>
+      </div>
       <div class="col-md-12">
         <div class="pull-right">
           <button
@@ -276,10 +284,24 @@ export default {
       }
       return parseFloat(monto).toFixed(2);
     },
+    montoTotalfactura() {
+      var monto = 0;
+      for (var index in this.data) {
+        monto += parseFloat(this.data[index].monto_normal);
+      }
+      return parseFloat(monto).toFixed(2);
+    },
     cantidadProductos() {
       var total = 0;
       for (var index in this.data) {
         total = total + parseInt(this.data[index].cantidad_producto);
+      }
+      return total;
+    },
+    cantidadFactura() {
+      var total = 0;
+      for (var index in this.data) {
+        total +=1;
       }
       return total;
     },

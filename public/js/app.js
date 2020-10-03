@@ -70237,6 +70237,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -70394,10 +70402,24 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       }
       return parseFloat(monto).toFixed(2);
     },
+    montoTotalfactura: function montoTotalfactura() {
+      var monto = 0;
+      for (var index in this.data) {
+        monto += parseFloat(this.data[index].monto_normal);
+      }
+      return parseFloat(monto).toFixed(2);
+    },
     cantidadProductos: function cantidadProductos() {
       var total = 0;
       for (var index in this.data) {
         total = total + parseInt(this.data[index].cantidad_producto);
+      }
+      return total;
+    },
+    cantidadFactura: function cantidadFactura() {
+      var total = 0;
+      for (var index in this.data) {
+        total += 1;
       }
       return total;
     },
@@ -71827,6 +71849,23 @@ var render = function() {
                 _vm._v(
                   "\n        $" +
                     _vm._s(_vm.formatMoney(_vm.montoTotalProducto())) +
+                    "\n      "
+                )
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.seleccionado == "Ventas" && _vm.headers.length != 0
+          ? _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "text-center" }, [
+                _c("b", [_vm._v("Total vendido:")]),
+                _vm._v(
+                  "\n        " + _vm._s(_vm.cantidadFactura()) + " -\n        "
+                ),
+                _c("b", [_vm._v("Monto total:")]),
+                _vm._v(
+                  "\n        $" +
+                    _vm._s(_vm.formatMoney(_vm.montoTotalfactura())) +
                     "\n      "
                 )
               ])
