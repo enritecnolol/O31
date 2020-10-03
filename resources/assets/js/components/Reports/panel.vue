@@ -15,14 +15,14 @@
         <filters_ncf @nfc_select="nfc_select" v-if="seleccionado === 'Comprobantes'" />
         <filters_date @date_select="date_select" :reset="reset" :selected="seleccionado" />
         <filters_categories
-          @categories_select="categories_select"
-          v-if="seleccionado === 'Productos'"
-          :reset="reset"
+            @categories_select="categories_select"
+            v-if="seleccionado === 'Productos'"
+            :reset="reset"
         />
         <filters_products
-          @products_select="products_select"
-          v-if="seleccionado === 'Productos'"
-          :reset="reset"
+            @products_select="products_select"
+            v-if="seleccionado === 'Productos'"
+            :reset="reset"
         />
       </div>
       <filter_report @typereport="typereport" v-if="type_ncf === 'all'" />
@@ -33,10 +33,10 @@
               <i class="fas fa-search"></i> Buscar
             </button>
             <button
-              type="button"
-              class="btn btn-warning"
-              @click="resetFilter"
-              v-if="seleccionado === 'Productos'"
+                type="button"
+                class="btn btn-warning"
+                @click="resetFilter"
+                v-if="seleccionado === 'Productos'"
             >
               <i class="far fa-circle"></i> Limpiar
             </button>
@@ -50,11 +50,11 @@
               <div class="row" :key="index">
                 <div class="col-md-12">
                   <multi_table
-                    :data="table_data[index]"
-                    :headers="header"
-                    :seleccionado="seleccionado"
-                    :ncfs="ncfs"
-                    :index="index"
+                      :data="table_data[index]"
+                      :headers="header"
+                      :seleccionado="seleccionado"
+                      :ncfs="ncfs"
+                      :index="index"
                   />
                 </div>
               </div>
@@ -64,13 +64,13 @@
             <div class="row">
               <div class="col-md-12">
                 <multi_table
-                  :date="date"
-                  :products="products"
-                  :categories="category"
-                  :data="table_data"
-                  :headers="header"
-                  :ncf="ncf"
-                  :seleccionado="seleccionado"
+                    :date="date"
+                    :products="products"
+                    :categories="category"
+                    :data="table_data"
+                    :headers="header"
+                    :ncf="ncf"
+                    :seleccionado="seleccionado"
                 />
               </div>
             </div>
@@ -144,7 +144,10 @@ export default {
       this.treport = i.type;
     },
     date_select(i) {
-      this.date = i.date;
+      this.date = [
+        moment(i.date[0]).format("YYYY-MM-DD"),
+        moment(i.date[1]).format("YYYY-MM-DD")
+      ];
     },
     nfc_select(i) {
       this.type_ncf = i.ncf;
@@ -169,22 +172,22 @@ export default {
         }
         this.loading = true;
         axios
-          .post("/reportv2/comprobantes/fiscales", {
-            type_report: this.treport,
-            date: this.date,
-            ncf: this.type_ncf
-          })
-          .then(response => {
-            this.loading = false;
-            this.table_data = response.data["data"];
-            this.header = response.data["header"];
-            this.ncfs = response.data["ncfs"];
-            this.ncf = response.data["ncf"];
-          })
-          .catch(error => {
-            this.loading = false;
-            console.log(error);
-          });
+            .post("/reportv2/comprobantes/fiscales", {
+              type_report: this.treport,
+              date: this.date,
+              ncf: this.type_ncf
+            })
+            .then(response => {
+              this.loading = false;
+              this.table_data = response.data["data"];
+              this.header = response.data["header"];
+              this.ncfs = response.data["ncfs"];
+              this.ncf = response.data["ncf"];
+            })
+            .catch(error => {
+              this.loading = false;
+              console.log(error);
+            });
       } else {
         if (!this.date || this.date.length == 0) {
           toastr.warning("Seleccione un a fecha");
@@ -192,21 +195,21 @@ export default {
         }
         this.loading = true;
         axios
-          .post("/reportv2/return/data", {
-            date: this.date,
-            seleccionado: this.seleccionado,
-            categories: this.category,
-            products: this.products
-          })
-          .then(response => {
-            this.loading = false;
-            this.table_data = response.data["data"];
-            this.header = response.data["header"];
-          })
-          .catch(error => {
-            this.loading = false;
-            console.log(error);
-          });
+            .post("/reportv2/return/data", {
+              date: this.date,
+              seleccionado: this.seleccionado,
+              categories: this.category,
+              products: this.products
+            })
+            .then(response => {
+              this.loading = false;
+              this.table_data = response.data["data"];
+              this.header = response.data["header"];
+            })
+            .catch(error => {
+              this.loading = false;
+              console.log(error);
+            });
       }
     }
   },
@@ -234,7 +237,7 @@ export default {
   height: 100%;
   z-index: 9999;
   background: url("../../../../../public/loading2.gif") 50% 50% no-repeat
-    rgb(249, 249, 249);
+  rgb(249, 249, 249);
   opacity: 0.8;
 }
 </style>

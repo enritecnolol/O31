@@ -54,8 +54,9 @@ class Reporteriav2Controller extends Controller
     }
     public function returndata(Request $request)
     {
-        $fechainicio = new DateTime($request->date[0]);
-        $fechafin = new DateTime($request->date[1]);
+        $fechainicio = $request->date[0];
+        $fechafin = $request->date[1];
+
         if ($request->seleccionado == "Ventas")
         {
 //            $facturas = DB::connection('client')->select("SELECT id, date, IFNULL(factures.client, 'General') AS cliente, concat('$', format(brute, 2)) as bruto, concat('$', format(itbis, 2)) as itbis, concat('$', format(total_facture, 2)) as total_factura, type_sale FROM `factures` WHERE  date BETWEEN '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format('Y-m-d')."' ORDER BY `id` DESC");
@@ -72,7 +73,7 @@ class Reporteriav2Controller extends Controller
 FROM factures
 left join devolucions d on factures.id = d.factura_id
 left join clients c on factures.client = c.id
-WHERE  factures.date BETWEEN '".$fechainicio->format('Y-m-d')."' AND '".$fechafin->format('Y-m-d')."' ORDER BY `id` DESC");
+WHERE  factures.date BETWEEN '".$fechainicio."' AND '".$fechafin."' ORDER BY `id` DESC");
             $header = ["#Factura", "Fecha", "Cliente", "Bruto", "Itbis", "Total Factura", "Tipo de venta","Total devuelto","Total neto",""];
             return ['data' => $facturas, 'header' => $header];
         }

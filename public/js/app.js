@@ -69773,7 +69773,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.loader {\n  position: fixed;\n  left: 0px;\n  top: 0px;\n  width: 100%;\n  height: 100%;\n  z-index: 9999;\n  background: url(" + escape(__webpack_require__(6)) + ") 50% 50% no-repeat\n    rgb(249, 249, 249);\n  opacity: 0.8;\n}\n", ""]);
+exports.push([module.i, "\n.loader {\n  position: fixed;\n  left: 0px;\n  top: 0px;\n  width: 100%;\n  height: 100%;\n  z-index: 9999;\n  background: url(" + escape(__webpack_require__(6)) + ") 50% 50% no-repeat\n  rgb(249, 249, 249);\n  opacity: 0.8;\n}\n", ""]);
 
 // exports
 
@@ -69949,7 +69949,7 @@ Vue.component("downloadExcel", __WEBPACK_IMPORTED_MODULE_6_vue_json_excel___defa
       this.treport = i.type;
     },
     date_select: function date_select(i) {
-      this.date = i.date;
+      this.date = [moment(i.date[0]).format("YYYY-MM-DD"), moment(i.date[1]).format("YYYY-MM-DD")];
     },
     nfc_select: function nfc_select(i) {
       this.type_ncf = i.ncf;
