@@ -255,7 +255,7 @@ class ApisController extends Controller
         $resumenSemana = DB::connection('client')
             ->table('factures')
             ->leftJoin('devolucions', 'factures.id', '=', 'devolucions.factura_id')
-            ->whereRaw('factures.date between date_sub(now(),INTERVAL 1 WEEK) and now()')
+            ->whereRaw('factures.date between adddate(curdate(), INTERVAL 1-DAYOFWEEK(curdate()) DAY) and adddate(curdate(), INTERVAL 7-DAYOFWEEK(curdate()) DAY)')
             ->select(DB::raw('sum(ifnull(total_devolucion,0)) as total_devuelto, ifnull(SUM(total_facture),0) as venta_total, ifnull(SUM(total_facture),0) - sum(ifnull(total_devolucion,0)) as total_neto'))
             ->first();
 
