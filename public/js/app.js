@@ -70113,7 +70113,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.loader {\n  position: fixed;\n  left: 0px;\n  top: 0px;\n  width: 100%;\n  height: 100%;\n  z-index: 9999;\n  background: url(" + escape(__webpack_require__(6)) + ") 50% 50% no-repeat\n    rgb(249, 249, 249);\n  opacity: 0.8;\n}\n", ""]);
+exports.push([module.i, "\n.loader {\n  position: fixed;\n  left: 0px;\n  top: 0px;\n  width: 100%;\n  height: 100%;\n  z-index: 9999;\n  background: url(" + escape(__webpack_require__(6)) + ") 50% 50% no-repeat\n  rgb(249, 249, 249);\n  opacity: 0.8;\n}\n", ""]);
 
 // exports
 
@@ -70444,7 +70444,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     },
     openTab: function openTab() {
       if (this.seleccionado === "Ventas") {
-        window.open(window.location.origin + "/print/ventas?date=" + JSON.stringify(this.date) + "&seleccionado=Ventas");
+        window.open(window.location.origin + "/print/ventas?date=" + JSON.stringify(this.date) + "&seleccionado=Ventas" + "&totales=" + JSON.stringify(["", "", "", this.cantidadFactura(), "$" + this.formatMoney(this.montoTotalfactura())]));
       }
       window.open(window.location.origin + "/print?date=" + JSON.stringify(this.date) + "&products=" + JSON.stringify(this.products) + "&seleccionado=Productos" + "&categories=" + JSON.stringify(this.categories) + "&totales=" + JSON.stringify(["", "", "", this.cantidadProductos(), "$" + this.formatMoney(this.montoTotalProducto())]));
     },
@@ -71938,7 +71938,7 @@ var staticRenderFns = [
       _c("td", { attrs: { colspan: "3" } }, [
         _c("div", { staticClass: "text-center" }, [
           _c("i", { staticClass: "fa fa-exclamation-triangle" }),
-          _vm._v(" Por Favor aplicar un filtro\n              ")
+          _vm._v(" Por Favor aplicar un filtro\n            ")
         ])
       ])
     ])
@@ -71951,7 +71951,7 @@ var staticRenderFns = [
       _c("td", { attrs: { colspan: "3" } }, [
         _c("div", { staticClass: "text-center" }, [
           _c("i", { staticClass: "fa fa-exclamation-triangle" }),
-          _vm._v(" No se ha encontrado datos\n              ")
+          _vm._v(" No se ha encontrado datos\n            ")
         ])
       ])
     ])

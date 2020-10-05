@@ -4,71 +4,71 @@
     <div class="table-responsive" style="height: 500px;overflow-y: auto">
       <table class="table table-sm">
         <thead>
-          <template v-if="nfcleng2">
-            <tr>
-              <th
+        <template v-if="nfcleng2">
+          <tr>
+            <th
                 scope="col"
                 :colspan="headers.length"
                 class="text-center"
-              >{{tnfc(ncfs[index].tipo_nfc)}}</th>
-            </tr>
-          </template>
-          <tr>
-            <template v-for="(header, key) in headers">
-              <th scope="col" class="text-center" :key="key">{{header}}</th>
-            </template>
+            >{{tnfc(ncfs[index].tipo_nfc)}}</th>
           </tr>
+        </template>
+        <tr>
+          <template v-for="(header, key) in headers">
+            <th scope="col" class="text-center" :key="key">{{header}}</th>
+          </template>
+        </tr>
         </thead>
         <tbody>
-          <template v-if="headers.length == 0">
-            <tr>
-              <td colspan="3">
-                <div class="text-center">
-                  <i class="fa fa-exclamation-triangle"></i> Por Favor aplicar un filtro
-                </div>
+        <template v-if="headers.length == 0">
+          <tr>
+            <td colspan="3">
+              <div class="text-center">
+                <i class="fa fa-exclamation-triangle"></i> Por Favor aplicar un filtro
+              </div>
+            </td>
+          </tr>
+        </template>
+        <template v-if="data.length == 0 && headers.length > 0">
+          <tr>
+            <td colspan="3">
+              <div class="text-center">
+                <i class="fa fa-exclamation-triangle"></i> No se ha encontrado datos
+              </div>
+            </td>
+          </tr>
+        </template>
+
+        <template v-if="nfcleng">
+          <template v-for="(item, key) in data">
+            <tr :key="key">
+              <td>
+                <div class="text-left">{{item.slug}} | {{item.tipo}}</div>
+              </td>
+              <td>
+                <div class="text-center">{{item.cantidad}}</div>
+              </td>
+              <td>
+                <div class="text-right">${{parseFloat(item.total).toFixed(2)}}</div>
               </td>
             </tr>
           </template>
-          <template v-if="data.length == 0 && headers.length > 0">
-            <tr>
-              <td colspan="3">
-                <div class="text-center">
-                  <i class="fa fa-exclamation-triangle"></i> No se ha encontrado datos
-                </div>
+        </template>
+
+        <template v-else>
+          <template v-for="(item, key) in data">
+            <tr :key="key">
+              <template v-for="(tdteam, property, index) in item">
+                <td v-if="property != 'monto_normal'" :key="index">
+                  <div class="text-center">{{tdteam}}</div>
+                </td>
+              </template>
+              <td v-if="seleccionado == 'Ventas'">
+                <u style="color:blue;cursor:pointer;" @click="openDetalle(item)">Ver detalle</u>
               </td>
             </tr>
           </template>
-
-          <template v-if="nfcleng">
-            <template v-for="(item, key) in data">
-              <tr :key="key">
-                <td>
-                  <div class="text-left">{{item.slug}} | {{item.tipo}}</div>
-                </td>
-                <td>
-                  <div class="text-center">{{item.cantidad}}</div>
-                </td>
-                <td>
-                  <div class="text-right">${{parseFloat(item.total).toFixed(2)}}</div>
-                </td>
-              </tr>
-            </template>
-          </template>
-
-          <template v-else>
-            <template v-for="(item, key) in data">
-              <tr :key="key">
-                <template v-for="(tdteam, property, index) in item">
-                  <td v-if="property != 'monto_normal'" :key="index">
-                    <div class="text-center">{{tdteam}}</div>
-                  </td>
-                </template>
-                <td v-if="seleccionado == 'Ventas'">
-                  <u style="color:blue;cursor:pointer;" @click="openDetalle(item)">Ver detalle</u>
-                </td>
-              </tr>
-            </template>
-          </template>
+        </template>
         </tbody>
       </table>
       <br />
@@ -93,18 +93,18 @@
       <div class="col-md-12">
         <div class="pull-right">
           <button
-            type="button"
-            class="btn btn-success"
-            v-if="data.length > 0 && (seleccionado == 'Productos' || seleccionado == 'Ventas')"
-            @click="openTab"
+              type="button"
+              class="btn btn-success"
+              v-if="data.length > 0 && (seleccionado == 'Productos' || seleccionado == 'Ventas')"
+              @click="openTab"
           >
             <i class="fas fa-print"></i> Imprimir
           </button>
           <button
-            type="button"
-            class="btn btn-success"
-            @click="JSONToCSVConvertor(data,'Reporte de '+seleccionado, true)"
-            v-if="data.length > 0"
+              type="button"
+              class="btn btn-success"
+              @click="JSONToCSVConvertor(data,'Reporte de '+seleccionado, true)"
+              v-if="data.length > 0"
           >
             <i class="fas fa-file-excel"></i> Export
           </button>
@@ -144,19 +144,19 @@ export default {
   methods: {
     settings() {
       axios
-        .post("/configuracion/sale")
-        .then(response => {
-          for (var key in response["data"]) {
-            this.setting = response["data"][key];
-            return;
-          }
-        })
-        .catch(error => {});
+          .post("/configuracion/sale")
+          .then(response => {
+            for (var key in response["data"]) {
+              this.setting = response["data"][key];
+              return;
+            }
+          })
+          .catch(error => {});
     },
     JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
       console.log(JSONData);
       var arrData =
-        typeof JSONData != "object" ? JSON.parse(JSONData) : JSONData;
+          typeof JSONData != "object" ? JSON.parse(JSONData) : JSONData;
 
       var CSV = "";
       //Set Report title in first row or line
@@ -260,19 +260,19 @@ export default {
       if (id !== "General") {
         var nombre = "";
         axios
-          .post("/cliente/buscar/nombre", {
-            id: id
-          })
-          .then(response => {
-            for (var key in response.data) {
-              if (id == response.data[key].id) {
-                this.name = response.data[key].nombre;
+            .post("/cliente/buscar/nombre", {
+              id: id
+            })
+            .then(response => {
+              for (var key in response.data) {
+                if (id == response.data[key].id) {
+                  this.name = response.data[key].nombre;
+                }
               }
-            }
-          })
-          .catch(error => {
-            console.log(error);
-          });
+            })
+            .catch(error => {
+              console.log(error);
+            });
         return this.name;
       }
       return id;
@@ -313,20 +313,20 @@ export default {
         const negativeSign = amount < 0 ? "-" : "";
 
         let i = parseInt(
-          (amount = Math.abs(Number(amount) || 0).toFixed(decimalCount))
+            (amount = Math.abs(Number(amount) || 0).toFixed(decimalCount))
         ).toString();
         let j = i.length > 3 ? i.length % 3 : 0;
 
         return (
-          negativeSign +
-          (j ? i.substr(0, j) + thousands : "") +
-          i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) +
-          (decimalCount
-            ? decimal +
-              Math.abs(amount - i)
-                .toFixed(decimalCount)
-                .slice(2)
-            : "")
+            negativeSign +
+            (j ? i.substr(0, j) + thousands : "") +
+            i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) +
+            (decimalCount
+                ? decimal +
+                Math.abs(amount - i)
+                    .toFixed(decimalCount)
+                    .slice(2)
+                : "")
         );
       } catch (e) {
         console.log(e);
@@ -336,14 +336,22 @@ export default {
       if(this.seleccionado === "Ventas")
       {
         window.open(
-        window.location.origin +
-          "/print/ventas?date=" +
-          JSON.stringify(this.date) +
-          "&seleccionado=Ventas"
-          );
+            window.location.origin +
+            "/print/ventas?date=" +
+            JSON.stringify(this.date) +
+            "&seleccionado=Ventas" +
+            "&totales=" +
+            JSON.stringify([
+              "",
+              "",
+              "",
+              this.cantidadFactura(),
+              "$" + this.formatMoney(this.montoTotalfactura())
+            ])
+        );
       }
       window.open(
-        window.location.origin +
+          window.location.origin +
           "/print?date=" +
           JSON.stringify(this.date) +
           "&products=" +
@@ -372,23 +380,23 @@ export default {
       this.factureselect = facture;
       this.loading = true;
       axios
-        .get("/return/facture/detalle", {
-          params: {
-            facture: facture.id
-          }
-        })
-        .then(response => {
-          this.factureselect = response.data.facture;
-          this.details = response.data.detalle;
-        })
-        .catch(error => {
-          console.log(error);
-        })
-        .finally(() => {
-          console.log(facture);
-          this.loading = false;
-          $("#detallefactura").modal("show");
-        });
+          .get("/return/facture/detalle", {
+            params: {
+              facture: facture.id
+            }
+          })
+          .then(response => {
+            this.factureselect = response.data.facture;
+            this.details = response.data.detalle;
+          })
+          .catch(error => {
+            console.log(error);
+          })
+          .finally(() => {
+            console.log(facture);
+            this.loading = false;
+            $("#detallefactura").modal("show");
+          });
     }
   },
   computed: {
@@ -429,7 +437,7 @@ export default {
   height: 100%;
   z-index: 9999;
   background: url("../../../../public/loading2.gif") 50% 50% no-repeat
-    rgb(249, 249, 249);
+  rgb(249, 249, 249);
   opacity: 0.8;
 }
 </style>
