@@ -70444,7 +70444,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     },
     openTab: function openTab() {
       if (this.seleccionado === "Ventas") {
-        window.open(window.location.origin + "/print/ventas?date=" + JSON.stringify(this.date) + "&seleccionado=Ventas" + "&totales=" + JSON.stringify(["", "", "", this.cantidadFactura(), "$" + this.formatMoney(this.montoTotalfactura())]));
+        window.open(window.location.origin + "/print/ventas?date=" + JSON.stringify(this.date) + "&seleccionado=Ventas" + "&totales=" + JSON.stringify([this.cantidadFactura(), "", "", "", "", "$" + this.formatMoney(this.montoTotalfactura()), "", "", ""]));
       }
       window.open(window.location.origin + "/print?date=" + JSON.stringify(this.date) + "&products=" + JSON.stringify(this.products) + "&seleccionado=Productos" + "&categories=" + JSON.stringify(this.categories) + "&totales=" + JSON.stringify(["", "", "", this.cantidadProductos(), "$" + this.formatMoney(this.montoTotalProducto())]));
     },
@@ -123924,15 +123924,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             table_data: [],
             headers: [],
-            filterHeaders: [],
+            filterHeaders: ["monto_normal"],
             title: "",
-            date: []
+            date: [],
+            totales: []
         };
     },
 
@@ -123988,6 +123999,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var date = url.searchParams.get("date");
         this.date = JSON.parse(date);
         var seleccionado = url.searchParams.get("seleccionado");
+        this.totales = JSON.parse(url.searchParams.get("totales"));
         this.title = "Reporte de ventas";
         axios.post('/reportv2/return/data', {
             date: JSON.parse(date),
@@ -124115,35 +124127,67 @@ var render = function() {
                         _c(
                           "tbody",
                           { attrs: { id: "tbodydata" } },
-                          _vm._l(_vm.table_data, function(item, index) {
-                            return _c(
+                          [
+                            _vm._l(_vm.table_data, function(item, index) {
+                              return _c(
+                                "tr",
+                                { key: index },
+                                _vm._l(item, function(value, key) {
+                                  return _c(
+                                    "td",
+                                    {
+                                      key: key,
+                                      staticClass: "hide",
+                                      style: _vm.hidecolumn(key)
+                                        ? "display:none;"
+                                        : ""
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        {
+                                          style: _vm.constains(key)
+                                            ? "float:right;"
+                                            : ""
+                                        },
+                                        [_vm._v(_vm._s(value))]
+                                      )
+                                    ]
+                                  )
+                                })
+                              )
+                            }),
+                            _vm._v(" "),
+                            _c(
                               "tr",
-                              { key: index },
-                              _vm._l(item, function(value, key) {
+                              {
+                                staticStyle: {
+                                  "border-top": "1px solid black",
+                                  color: "black",
+                                  "font-weight": "bold",
+                                  "text-align": "left"
+                                }
+                              },
+                              _vm._l(_vm.totales, function(val, index) {
                                 return _c(
                                   "td",
-                                  {
-                                    key: key,
-                                    staticClass: "hide",
-                                    style: _vm.hidecolumn(key)
-                                      ? "display:none;"
-                                      : ""
-                                  },
+                                  { key: index, staticClass: "hide" },
                                   [
                                     _c(
-                                      "span",
+                                      "b",
                                       {
-                                        style: _vm.constains(key)
+                                        style: _vm.constains(val)
                                           ? "float:right;"
                                           : ""
                                       },
-                                      [_vm._v(_vm._s(value))]
+                                      [_vm._v(_vm._s(val))]
                                     )
                                   ]
                                 )
                               })
                             )
-                          })
+                          ],
+                          2
                         )
                       ]
                     )

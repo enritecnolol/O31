@@ -73,6 +73,16 @@
                                         <b :style="constains(val) ? 'float:right;' : ''">{{val}}</b>
                                     </td>
                                 </tr> -->
+                                <tr
+                                    style="border-top: 1px solid black;color: black;font-weight: bold;text-align: left;">
+                                  <td
+                                      class="hide"
+                                      v-for="(val, index) in totales"
+                                      :key="index"
+                                  >
+                                    <b :style="constains(val) ? 'float:right;' : ''">{{val}}</b>
+                                  </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -103,9 +113,10 @@ export default {
         return {
             table_data:[],
             headers:[],
-            filterHeaders:[],
+            filterHeaders:["monto_normal"],
             title:"",
-            date:[]
+            date:[],
+            totales:[]
         }
     },
     methods: {
@@ -156,6 +167,7 @@ export default {
         var date = url.searchParams.get("date");
         this.date = JSON.parse(date);
         var seleccionado = url.searchParams.get("seleccionado");
+      this.totales = JSON.parse(url.searchParams.get("totales"));
         this.title = "Reporte de ventas";
             axios.post('/reportv2/return/data' , {
                 date: JSON.parse(date),
@@ -173,7 +185,7 @@ export default {
                 });
     },
     created() {
-        
+
     },
 };
 </script>

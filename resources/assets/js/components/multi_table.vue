@@ -342,11 +342,15 @@ export default {
             "&seleccionado=Ventas" +
             "&totales=" +
             JSON.stringify([
-              "",
-              "",
-              "",
               this.cantidadFactura(),
-              "$" + this.formatMoney(this.montoTotalfactura())
+              "",
+              "",
+              "",
+              "",
+              "$" + this.formatMoney(this.montoTotalfactura()),
+              "",
+              "",
+              "",
             ])
         );
       }
