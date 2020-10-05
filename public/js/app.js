@@ -123924,16 +123924,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -123954,7 +123944,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         constains: function constains(str) {
             if (typeof str == "string" && str.indexOf('.') > -1) {
                 return true;
-            } else if (str == 'Monto' || str == 'Importe' || str == 'Precio' || str == 'precio' || str == 'Cantidad vendido' || str == 'cantidad_producto') {
+            } else if (str == 'bruto' || str == 'itbis' || str == 'total_devuelto' || str == 'total_factura' || str == 'total_neto' || str == 'cantidad_producto' || str == 'Bruto' || str == 'Itbis' || str == 'Total Factura' || str == 'Total devuelto' || str == 'Total neto') {
                 return true;
             } else if (Number.isInteger(str)) {
                 return true;

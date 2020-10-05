@@ -63,16 +63,6 @@
                                     <span :style="constains(key) ? 'float:right;' : ''" >{{value}}</span>
                                     </td>
                                 </tr>
-                                <!-- <tr
-                                        style="border-top: 1px solid black;color: black;font-weight: bold;text-align: left;">
-                                    <td
-                                            class="hide"
-                                            v-for="(val, index) in totales"
-                                            :key="index"
-                                    >
-                                        <b :style="constains(val) ? 'float:right;' : ''">{{val}}</b>
-                                    </td>
-                                </tr> -->
                                 <tr
                                     style="border-top: 1px solid black;color: black;font-weight: bold;text-align: left;">
                                   <td
@@ -126,7 +116,17 @@ export default {
             constains(str) {
                 if (typeof str == "string" && str.indexOf('.') > -1) {
                     return true;
-                }else if(str == 'Monto' || str == 'Importe'|| str == 'Precio'|| str == 'precio' || str == 'Cantidad vendido' || str == 'cantidad_producto'){
+                }else if(str == 'bruto' ||
+                    str == 'itbis'||
+                    str == 'total_devuelto'||
+                    str == 'total_factura' ||
+                    str == 'total_neto' ||
+                    str == 'cantidad_producto' ||
+                    str == 'Bruto'||
+                    str == 'Itbis'||
+                    str == 'Total Factura'||
+                    str == 'Total devuelto'||
+                    str == 'Total neto'){
                     return true;
                 }else if (Number.isInteger(str)){
                     return true;
@@ -167,7 +167,7 @@ export default {
         var date = url.searchParams.get("date");
         this.date = JSON.parse(date);
         var seleccionado = url.searchParams.get("seleccionado");
-      this.totales = JSON.parse(url.searchParams.get("totales"));
+        this.totales = JSON.parse(url.searchParams.get("totales"));
         this.title = "Reporte de ventas";
             axios.post('/reportv2/return/data' , {
                 date: JSON.parse(date),
