@@ -111,6 +111,7 @@
                 display: inline;
             }
         }
+        @media (min-width:992px){.modal-lg,.modal-xl{max-width:1140px}}
     </style>
 @endsection
 @section('tittle',' SofiaRD | Punto Venta')
@@ -170,6 +171,9 @@
                     </div>
                     <input type="text" placeholder="Codigo" id="codigo1" title="presionar INICIO para hacer focus aqui" v-model="codigop" class="form-control form-control-sm" autofocus @keyup.enter="codigopfactura">
                 </div>
+            </div>
+            <div v-show="cerrada !== 'C'" style="text-align: center; color: white; margin-bottom: 5px">
+                <textarea class="form-control" v-model="note" id="exampleFormControlTextarea1" rows="2" placeholder="Nota de factura"></textarea>
             </div>
         </div>
         <form action="" method="post" novalidate="novalidate">
@@ -236,8 +240,15 @@
                     </div>
                 </div>
             </div>
-            <button type="button" id="cancelarcompara" title="presionar PAGINA ABAJO" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar Compra</button>
-            <button data-toggle="modal" data-target="#pago" title="presione tecla FIN" type="button" style="height: 130px;background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
+            <div class="row" style="margin-bottom: 5px">
+                <div class="col-md-6">
+                    <button type="button" style="height: 40px" id="cancelarcompara" title="Limpiar Lista de Articulos" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar</button>
+                </div>
+                <div class="col-md-6">
+                    <button type="button" style="height: 40px" id="facturaPausa" title="Colocar la factura en espera" @click="facturaPausa" class="btn btn-warning btn-lg btn-block btn-sm"><i class="fas fa-pause"></i> En espera</button>
+                </div>
+            </div>
+            <button data-toggle="modal" data-target="#pago" title="presione tecla FIN" type="button" style="height: 120px;background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
                 <span id="payment-button-amount" style="font-size: 20px;color: whitesmoke"> Pagar <br><span style="color: whitesmoke;font-size: 30px">$ @{{ format2(parseFloat(neto ), '') }}</span></span>
                 <span id="payment-button-sending" style="display:none;">Sending…</span>
             </button>
@@ -267,14 +278,22 @@
                     </div>
                 </div>
             </div>
-            <button type="button" id="cancelarcompara" title="presionar PAGINA ABAJO" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar Compra</button>
-            <button data-toggle="modal" data-target="#pago" title="presione tecla FIN" type="button" style="height: 130px;background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
+            <div class="row" style="margin-bottom: 5px">
+                <div class="col-md-6">
+                    <button type="button" id="cancelarcompara" title="Limpiar Lista de Articulos" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar</button>
+                </div>
+                <div class="col-md-6">
+                    <button type="button" id="facturaPausa" title="Colocar la factura en espera" @click="facturaPausa" class="btn btn-warning btn-lg btn-block btn-sm"><i class="fas fa-pause"></i> En espera</button>
+                </div>
+            </div>
+            <button data-toggle="modal" data-target="#pago" title="presione tecla FIN" type="button" style="height: 120px;background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
                 <span id="payment-button-amount" style="font-size: 20px;color: whitesmoke"> Pagar <br><span style="color: whitesmoke;font-size: 30px">$ @{{ format2(parseFloat(neto ), '') }}</span></span>
                 <span id="payment-button-sending" style="display:none;">Sending…</span>
             </button>
         </div>
 
         <div v-else-if="cerrada === 'A' && neto <= 0 && datosticket  === ''" style="width: 320px;position: fixed;bottom: 10px;">
+            <button type="button" style="height: 40px" id="facturaPausa" title="Colocar la factura en espera" @click="facturaPausa" class="btn btn-warning btn-lg btn-block btn-sm"><i class="fas fa-pause"></i> Facturas en espera</button>
             <button data-toggle="modal" disabled data-target="#pago" type="button" style="height: 130px; background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
                 <span style="font-size: 24px"><span style="color: whitesmoke">Pagar <br></span><span style="color: whitesmoke;font-size: 30px">$&nbsp;@{{ format2(parseFloat(neto ), '')}}</span></span>
                 <span style="display:none;">Sending…</span>
@@ -418,6 +437,7 @@
     @include('modal.modelfacture')
     @include('modal.modelcliente')
     @include('modal.modalcrearcliente')
+    @include('modal.modalFacturasEnEspera')
 @endsection
 
 @section('scriptp')
@@ -586,7 +606,9 @@
                 lastid:'',
                 rncData:{},
                 loading:false,
-                rncDueDate:''
+                rncDueDate:'',
+                note:'',
+                ListaEnEspera:[]
             },
             mounted() {
                 _this = this;
@@ -601,6 +623,61 @@
                 },
             },
             methods:{
+                facturaPausa:function(){
+                    _this = this
+                    _this.ListaEnEspera = JSON.parse(localStorage.getItem("ListaEnEspera"))
+                    $('#FacturasEnPausa').modal('show');
+                },
+                agregarFacturaEspera:function(){
+                    _this = this
+                    var reference = prompt("Ingrese una referencia para esta factura en espera:");
+
+                    if (reference != null) {
+                        var pending  = localStorage.getItem("ListaEnEspera") == null ? [] : JSON.parse(localStorage.getItem("ListaEnEspera")) ;
+                        pending.push({
+                            reference: reference,
+                            list:_this.list,
+                            hora:moment().format("YYYY-MM-DD HH:mm:ss"),
+                            note:_this.note
+                        })
+                        localStorage.setItem("ListaEnEspera", JSON.stringify(pending));
+                        _this.carrito = {};
+                        _this.list = [];
+                        _this.clientedatos = '';
+                        _this.idcliente= '';
+                    }
+
+                    _this.ListaEnEspera = JSON.parse(localStorage.getItem("ListaEnEspera"))
+                },
+                reasignarFactura(data, index)
+                {
+                    _this = this
+
+                    if(_this.list.length != 0)
+                    {
+                        if (confirm("Actualmente tienes una factura en curso, deseas guardarla ?")) {
+                            _this.agregarFacturaEspera();
+                        } else {
+                            _this.carrito = {};
+                            _this.list = [];
+                            _this.clientedatos = '';
+                            _this.idcliente= '';
+                        }
+                    }
+
+                    _this.list = data.list;
+                    _this.note = data.note;
+                    _this.ListaEnEspera.splice(index, 1);
+                    localStorage.setItem("ListaEnEspera", JSON.stringify(_this.ListaEnEspera));
+                    $('#FacturasEnPausa').modal('hide');
+                },
+                removerFacturaPendiente(index)
+                {
+                    if (confirm("Estas seguro de borrar este Pedido ?")) {
+                        _this.ListaEnEspera.splice(index, 1);
+                        localStorage.setItem("ListaEnEspera", JSON.stringify(_this.ListaEnEspera));
+                    }
+                },
                 limpiar()
                 {
                     this.campodinero = 0;
@@ -666,7 +743,8 @@
                         lastid:'',
                         rncData:{},
                         loading:false,
-                        rncDueDate:''
+                        rncDueDate:'',
+                        note:''
                     });
                 },
                 format2(n, currency) {
