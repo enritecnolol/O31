@@ -2071,6 +2071,24 @@
                         }
                     }
                     return parseInt(total);
+                },
+                listLength:function()
+                {
+                    _this = this;
+                    var count = 0;
+                    for (const item in _this.list) {
+                        count++
+                    }
+                    return count;
+                },
+                ListaEnEsperaLenght:function()
+                {
+                    _this = this;
+                    var count = 0;
+                    for (const item in _this.ListaEnEspera) {
+                        count++
+                    }
+                    return count;
                 }
             }
         });

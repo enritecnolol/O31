@@ -11,14 +11,14 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-2">
-                            <button type="button" :disabled="!list.length > 0" @click="agregarFacturaEspera" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Agregar Factura a espera</button>
+                            <button type="button" :disabled="!listLength > 0" @click="agregarFacturaEspera" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Agregar Factura a espera</button>
                         </div>
                         <div class="col-md-12">
                             <hr>
                         </div>
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-12 text-center" v-if="ListaEnEspera.length == 0">
+                                <div class="col-md-12 text-center" v-if="ListaEnEsperaLenght == 0">
                                     <b>No hay facturas en espera en este momento</b>
                                 </div>
                                 <div class="col-md-4" v-for="(item, index) in ListaEnEspera">
