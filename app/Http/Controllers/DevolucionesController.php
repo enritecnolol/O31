@@ -62,18 +62,18 @@ WHERE factures.id = $request->id;");
             $factura = 'vacio';
             $detalle = 'vacio';
         }else{
-            $detalle = Detail::where('facture_id', $request->id);
+            $detalle = DB::connection('client')->table('details')->where('facture_id', $request->id)->get();
             if ($detalle == '[]'){
-                $detalle = Detail::where('invoice_id', $request->id)->orWhere('facture_id', $request->id);
+                $detalle = DB::connection('client')->table('details')->where('facture_id', $request->id)->orWhere('invoice_id', $request->id)->get();
                 if ($detalle == '[]') {
                     $detalle = 'vacio';
                 }
             }
         }
-        return [ 'factura' => $factura,
+        return [
+            'factura' => $factura,
             'detalle' => $detalle,
             'detalle_devolucion' => $detall_devolucion
-
         ];
     }
 
