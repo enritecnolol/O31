@@ -62,9 +62,9 @@ WHERE factures.id = $request->id;");
             $factura = 'vacio';
             $detalle = 'vacio';
         }else{
-            $detalle = Detail::all()->where('facture_id', $request->id);
+            $detalle = Detail::where('facture_id', $request->id);
             if ($detalle == '[]'){
-                $detalle = Detail::all()->where('invoice_id', $request->id);
+                $detalle = Detail::where('invoice_id', $request->id);
                 if ($detalle == '[]') {
                     $detalle = 'vacio';
                 }
