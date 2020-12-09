@@ -208,24 +208,30 @@ class   CajasController extends Controller
         }else{
             $ventasmes = number_format($ventasmes[0]->total);
         }
+        try {
 
-        if($email)
-        {
-            $data = array(
-                'fecha'=> $caja->fecha_apertura,
-                'totalvendido' => $totaldias,
-                'totalgastos' => $totalgasto,
-                'totaldevolucion' => $totaldevolucion,
-                'totalmes' => $ventasmes,
-                'compania' => $configs[0],
-            );
+            if($email)
+            {
+                $data = array(
+                    'fecha'=> $caja->fecha_apertura,
+                    'totalvendido' => $totaldias,
+                    'totalgastos' => $totalgasto,
+                    'totaldevolucion' => $totaldevolucion,
+                    'totalmes' => $ventasmes,
+                    'compania' => $configs[0],
+                );
 
-            Mail::send('emails.resumendia', $data, function ($message) use ($email){
-                $message->to($email)->subject(' CoffeBreakPOS | Resumen del Dia');
-            });
+                Mail::send('emails.resumendia', $data, function ($message) use ($email){
+                    $message->to($email)->subject(' CoffeBreakPOS | Resumen del Dia');
+                });
+            }
+
+            return 'Actualizado';
         }
-
-        return 'Actualizado';
+        catch (\Exception $e)
+        {
+            return 'Actualizado, Problema al enviar correo';
+        }
 
     }
     public function historico(){
