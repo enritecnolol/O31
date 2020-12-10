@@ -619,6 +619,13 @@
                     this.currentProductSelectId = ''
                 },
                 openInputQuantityModal:function (id){
+                    if(!this.setting.input_quantity_modal)
+                    {
+                        this.currentProductSelectId = id;
+                        this.inputQuantity = '1';
+                        this.pfactura();
+                        return
+                    }
                     this.currentProductSelectId = id;
                     for (const index in this.list) {
                         if(this.list[index]['id'] === id)
@@ -943,10 +950,13 @@
 
 
                 },
-                pfactura: function () {
+                pfactura: function (idsend) {
                     $('#quantityInput').modal('hide');
-
                     const id = this.currentProductSelectId;
+                    if(idsend)
+                    {
+                        const id = this.currentProductSelectId = idsend;
+                    }
                     const quantity = this.inputQuantity;
 
                     $("#tabeldiv").animate({scrollTop:$('#tabeldiv').prop("scrollHeight")},420);

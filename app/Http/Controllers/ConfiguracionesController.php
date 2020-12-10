@@ -47,6 +47,7 @@ class ConfiguracionesController extends Controller
         $configuracion->generacomprobante = $request->generacomprobante;
         $configuracion->leycamarero = $request->leycamarero;
         $configuracion->autoprint = $request->auto_print;
+        $configuracion->input_quantity_modal = $request->input_quantity_modal;
         $configuracion->user_id = Auth::id();
         $configuracion->save();
 
@@ -77,6 +78,7 @@ class ConfiguracionesController extends Controller
         $configuracion->generacomprobante = $request->generacomprobante;
         $configuracion->leycamarero = $request->leycamarero;
         $configuracion->autoprint = $request->auto_print;
+        $configuracion->input_quantity_modal = $request->input_quantity_modal;
         $configuracion->update();
 
 

@@ -142,6 +142,16 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="" class=" form-control-label"><strong>Modal de cantidad en punto de venta</strong></label>
+                                            <select required name="input_quantity_modal" class="form-control">
+                                                <option value="">Selecciona</option>
+                                                <option :value="true">Si</option>
+                                                <option :value="false">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer" style="background: white;box-shadow:rgb(136, 136, 136) 1px 1px 4px;">
@@ -272,6 +282,16 @@
                                         <div class="form-group">
                                             <label for="" class=" form-control-label"><strong>Impresion automatica</strong></label>
                                             <select required :disabled="editar == false" v-model="infoconfig.autoprint" name="auto_print" class="form-control">
+                                                <option value="">Selecciona</option>
+                                                <option :value="1">Si</option>
+                                                <option :value="0">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="" class=" form-control-label"><strong>Modal de cantidad en punto de venta</strong></label>
+                                            <select required :disabled="editar == false" v-model="infoconfig.input_quantity_modal" name="input_quantity_modal" class="form-control">
                                                 <option value="">Selecciona</option>
                                                 <option :value="1">Si</option>
                                                 <option :value="0">No</option>

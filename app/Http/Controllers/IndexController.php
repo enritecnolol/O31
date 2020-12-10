@@ -74,6 +74,8 @@ class IndexController extends Controller
 
         $config = DB::connection('client')->table('configuracions')->select('impuesto')->get();
 
+        $configFirst = DB::connection('client')->table('configuracions')->first();
+
         if ($config == '[]'){
             $config = 'vacio';
         }elseif($config == '[{"impuesto":"incluido"}]'){
