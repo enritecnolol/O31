@@ -953,9 +953,12 @@
                 pfactura: function (idsend) {
                     $('#quantityInput').modal('hide');
                     var id = this.currentProductSelectId;
-                    if(idsend)
+                    if(!this.setting.input_quantity_modal)
                     {
-                        id = this.currentProductSelectId = idsend;
+                        if(idsend)
+                        {
+                            id = this.currentProductSelectId = idsend;
+                        }
                     }
                     const quantity = this.inputQuantity;
 
