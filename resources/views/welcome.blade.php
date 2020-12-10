@@ -973,7 +973,6 @@
                         count : parseFloat(quantity).toFixed(2),
                         itbis : producto.porciento
                     };
-
                     const idp = parseFloat(producto.id);
 
                     function buscaid(prod) {
@@ -982,29 +981,55 @@
 
                     if (this.list.find(buscaid)){
 
-                        var count = this.list.find(buscaid).count;
-                        var contador = parseFloat(count) + 1;
+                        if(!this.setting.input_quantity_modal){
+                            var count = this.list.find(buscaid).count;
+                            var contador = parseFloat(count) + 1;
+
+                            if (_this.existenciarep == 'si')
+                            {
+                                if  (producto.compuesto == 'no')
+                                {
+                                    if  (contador > producto.existence)
+                                    {
+                                        contador = producto.existence;
+                                        toastr.warning('Producto agotado')
+                                    }
+                                }
+                            }
+                            const listid = this.list.find(buscaid).id;
+                            const total = contador * producto.price;
+
+                            this.list.map(function (dato){
+                                if (dato.id == listid) {
+                                    dato.count = parseFloat(contador);
+                                    dato.price = parseFloat(total).toFixed(2)
+                                }
+                                return dato
+                            });
+                            return;
+                        }
+
                         if (_this.existenciarep == 'si')
                         {
                             if  (producto.compuesto == 'no')
                             {
-                                if  (contador > producto.existence)
+                                if  (quantity > producto.existence)
                                 {
-                                    contador = producto.existence;
                                     toastr.warning('Producto agotado')
+                                    return;
                                 }
                             }
                         }
                         const listid = this.list.find(buscaid).id;
-                        const total = contador * producto.price;
 
                         this.list.map(function (dato){
                             if (dato.id == listid) {
-                                dato.count = parseFloat(contador);
-                                dato.price = parseFloat(total).toFixed(2)
+                                dato.count = parseFloat(quantity);
+                                dato.price = parseFloat(priceTotal).toFixed(2)
                             }
                             return dato
                         });
+
 
                         this.inputQuantity = '0'
 
