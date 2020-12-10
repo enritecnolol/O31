@@ -387,7 +387,7 @@
                                 <div class="row " style="">
                                     <template v-for="p in productosbuscados !== '' ? productosbuscados : productos" v-if="cerrada === 'A'">
                                         <div class="col-sm-2 col-xs-4">
-                                            <div class="card"  style="box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);width: 130px;margin-left: 10px;margin-right: 10px;max-height: 184px;" @click="pfactura(p.id)" :title="p.name">
+                                            <div class="card"  style="box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);width: 130px;margin-left: 10px;margin-right: 10px;max-height: 184px;" @click="openInputQuantityModal(p.id)" :title="p.name">
                                                 <div class="card-body" style="background: white;border-radius: 20px 20px 20px 20px;padding:0px">
                                                     <span class="badge badge-primary" style="position: absolute; top: -6px; left: -8px">@{{ p.barcode }}</span>
                                                     <div class="mx-auto d-block">
@@ -433,54 +433,41 @@
     <!--Modal para configurar el Pago-->
     @include('modal.ModalPagar')
     <!--/Modal para configurar el Pago-->
-    @include('productos.buscarmodal')
+{{--    @include('productos.buscarmodal')--}}
     @include('modal.modelfacture')
     @include('modal.modelcliente')
     @include('modal.modalcrearcliente')
     @include('modal.modalFacturasEnEspera')
+    @include('modal.modalInputQuantity')
 @endsection
 
 @section('scriptp')
 
 
     <script !src="">
-        $(document).ready(function(){
-            $("#codigo1").focus();
+        {{--$(document).ready(function(){--}}
+        {{--    $("#codigo1").focus();--}}
 
 
-            $('#funciona').slick({
-                infinite: false,
-                speed: 300,
-                slidesToShow: 5,
-                slidesToScroll: 4,
-                dots: true,
-                vertical: true,
-                verticalSwiping: true,
-            });
+        {{--    $('#funciona').slick({--}}
+        {{--        infinite: false,--}}
+        {{--        speed: 300,--}}
+        {{--        slidesToShow: 5,--}}
+        {{--        slidesToScroll: 4,--}}
+        {{--        dots: true,--}}
+        {{--        vertical: true,--}}
+        {{--        verticalSwiping: true,--}}
+        {{--    });--}}
 
-            var alerta = '{{$alerta}}';
-
-
-            dia = moment().format('DD-MM-YYYY');
+        {{--    var alerta = '{{$alerta}}';--}}
 
 
-            p = moment( dia +' '+ '10:00 PM', 'DD-MM-YYYY hh:mm A').utc().format();
+        {{--    dia = moment().format('DD-MM-YYYY');--}}
 
 
-            if (moment().isAfter(p)){
+        {{--    p = moment( dia +' '+ '10:00 PM', 'DD-MM-YYYY hh:mm A').utc().format();--}}
 
-                toastr.options = {
-                    "closeButton": true,
-                    "timeOut": "500000",
-                    "extendedTimeOut": "100000",
-                    "positionClass": "toast-top-center",
-                }
-                toastr.warning('Son las ' + moment().format('hh:mm A') + ' favor acordarse de cerrar la caja');
-            }
-
-            /*Cerrar caja antes de las 12*/
-
-        });
+        {{--});--}}
 
         $('body').keyup(function(e) {
             if(e.which === 35){
@@ -608,7 +595,9 @@
                 loading:false,
                 rncDueDate:'',
                 note:'',
-                ListaEnEspera:[]
+                ListaEnEspera:[],
+                inputQuantity:'0',
+                currentProductSelectId:''
             },
             mounted() {
                 _this = this;
@@ -623,6 +612,47 @@
                 },
             },
             methods:{
+                closeInputQuantityModal:function ()
+                {
+                    $('#quantityInput').modal('hide');
+                    this.inputQuantity = '0'
+                    this.currentProductSelectId = ''
+                },
+                openInputQuantityModal:function (id){
+                    this.currentProductSelectId = id;
+                    for (const index in this.list) {
+                        if(this.list[index]['id'] === id)
+                        {
+                            this.inputQuantity = this.list[index]['count'].toString();
+                            break;
+                        }
+                    }
+                    $('#quantityInput').modal('show');
+                },
+                addInputQuantity:function(item){
+                    _this = this
+
+                    if(_this.inputQuantity.includes("."))
+                    {
+                        var splitQuantity = _this.inputQuantity.split(".");
+                        if(splitQuantity[1].length === 2)
+                        {
+                            return;
+                        }
+
+                        if(item !== '.')
+                        {
+                            _this.inputQuantity = _this.inputQuantity + item;
+                        }
+                        return;
+                    }
+                    if(_this.inputQuantity === '0' && item !== '.')
+                    {
+                        _this.inputQuantity = item;
+                        return;
+                    }
+                    _this.inputQuantity = _this.inputQuantity + item;
+                },
                 facturaPausa:function(){
                     _this = this
                     _this.ListaEnEspera = JSON.parse(localStorage.getItem("ListaEnEspera"))
@@ -744,7 +774,9 @@
                         rncData:{},
                         loading:false,
                         rncDueDate:'',
-                        note:''
+                        note:'',
+                        Inputquantity:'0',
+                        currentProductSelectId:''
                     });
                 },
                 format2(n, currency) {
@@ -911,31 +943,34 @@
 
 
                 },
-                pfactura: function (id) {
+                pfactura: function () {
+                    $('#quantityInput').modal('hide');
+
+                    const id = this.currentProductSelectId;
+                    const quantity = this.inputQuantity;
+
                     $("#tabeldiv").animate({scrollTop:$('#tabeldiv').prop("scrollHeight")},420);
-                    var producto = this.productos[id];
+                    const producto = this.productos[id];
+                    const priceTotal = parseFloat(producto.price) * parseFloat(quantity);
                     this.carrito = {
                         id : producto.id,
                         name : producto.name,
-                        price : parseFloat(producto.price).toFixed(2),
+                        price : parseFloat(priceTotal).toFixed(2) ,
                         desc : 0,
-                        count : 1,
+                        count : parseFloat(quantity).toFixed(2),
                         itbis : producto.porciento
                     };
 
-                    var idp = parseFloat(producto.id);
+                    const idp = parseFloat(producto.id);
 
                     function buscaid(prod) {
                         return prod.id == idp;
                     }
-                    var cantidad = producto.existence;
-                    var bar = producto.barcode;
 
                     if (this.list.find(buscaid)){
 
                         var count = this.list.find(buscaid).count;
                         var contador = parseFloat(count) + 1;
-                        var cant = producto.existence - count;
                         if (_this.existenciarep == 'si')
                         {
                             if  (producto.compuesto == 'no')
@@ -947,8 +982,8 @@
                                 }
                             }
                         }
-                        var listid = this.list.find(buscaid).id;
-                        var total = contador * producto.price;
+                        const listid = this.list.find(buscaid).id;
+                        const total = contador * producto.price;
 
                         this.list.map(function (dato){
                             if (dato.id == listid) {
@@ -958,6 +993,8 @@
                             return dato
                         });
 
+                        this.inputQuantity = '0'
+
                     }else{
                         if (_this.existenciarep == 'si')
                         {
@@ -965,27 +1002,37 @@
                             {
                                 toastr.warning('Producto agotado')
                             }else {
+                                if  (producto.compuesto == 'no')
+                                {
+                                    if  (parseFloat(quantity) > producto.existence)
+                                    {
+                                        toastr.warning('Producto agotado')
+                                        return;
+                                    }
+                                }
                                 this.list.push(this.carrito)
+                                this.inputQuantity = '0'
                             }
                         }else {
                             this.list.push(this.carrito)
+                            this.inputQuantity = '0'
                         }
                     }
                 },
                 eliminarp: function (id) {
-                    var producto = this.productos[id]
-                    var idp = producto.id
+                    const producto = this.productos[id]
+                    const idp = producto.id
 
                     function buscaid(prod) {
                         return prod.id == idp;
                     }
                     if (this.list.find(buscaid)){
 
-                        var count = this.list.find(buscaid).count;
-                        var contador = count - 1 ;
-                        var listid = this.list.find(buscaid).id;
+                        const count = this.list.find(buscaid).count;
+                        const contador = count - 1 ;
+                        const listid = this.list.find(buscaid).id;
                         // var total = contador * producto.price;
-                        var total = this.list.find(buscaid).price - producto.price;
+                        const total = parseFloat(producto.price) * parseFloat(contador);
 
                         this.list.map(function(dato) {
 
@@ -997,7 +1044,7 @@
                         });
 
                     }if(this.list.find(buscaid)){
-                        if (this.list.find(buscaid).count == 0){
+                        if (this.list.find(buscaid).count < 0){
                             var index = this.list.indexOf(this.list.find(buscaid));
                             if (index > -1) {
                                 this.list.splice(index, 1);
@@ -1037,8 +1084,9 @@
                             return dato
                         });
 
-                    }if(this.list.find(buscaid)){
-                        if (this.list.find(buscaid).count == 0){
+                    }
+                    if(this.list.find(buscaid)){
+                        if (this.list.find(buscaid).count < 0){
                             var index = this.list.indexOf(this.list.find(buscaid));
                             if (index > -1) {
                                 this.list.splice(index, 1);
