@@ -134602,7 +134602,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -134771,216 +134771,226 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_v_money___default.a, { precision: 4 });
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['editData'],
-    components: { newCategory: __WEBPACK_IMPORTED_MODULE_1__categoryModal___default.a },
-    data: function data() {
-        return {
-            resetCostInput: false,
-            resetPriceInput: false,
-            money: {
-                decimal: ".",
-                thousands: ",",
-                prefix: "RD$ ",
-                precision: 2,
-                masked: false
-            },
-            code: '',
-            name: '',
-            price: 0,
-            cost: 0,
-            compositeProduct: 'no',
-            itbis: 0,
-            dataiItbisList: [],
-            category: '',
-            categoriesList: [],
-            filename: '',
-            file: '',
-            success: '',
-            status: true,
-            img: 'default.jpg',
-            saleConfig: false,
-            serviceConfig: false,
-            inventoryConfig: false,
-            purchaseConfig: false,
-            urlImg: "",
-            description: ""
-        };
+  props: ['editData'],
+  components: { newCategory: __WEBPACK_IMPORTED_MODULE_1__categoryModal___default.a },
+  data: function data() {
+    return {
+      resetCostInput: false,
+      resetPriceInput: false,
+      money: {
+        decimal: ".",
+        thousands: ",",
+        prefix: "RD$ ",
+        precision: 2,
+        masked: false
+      },
+      code: '',
+      name: '',
+      price: 0,
+      cost: 0,
+      compositeProduct: 'no',
+      itbis: 0,
+      dataiItbisList: [],
+      category: '',
+      categoriesList: [],
+      filename: '',
+      file: '',
+      success: '',
+      status: true,
+      img: 'default.jpg',
+      saleConfig: false,
+      serviceConfig: false,
+      inventoryConfig: false,
+      purchaseConfig: false,
+      urlImg: "",
+      description: "",
+      loading: false
+    };
+  },
+
+  methods: {
+    confirmProduct: function confirmProduct() {
+      var txt;
+      var r = confirm("Estas Seguro que quieres INACTIVAR este producto?");
+      if (r == true) {
+        txt = this.deleteProduct(this.editData.id);
+      }
     },
+    deleteProduct: function deleteProduct(id) {
+      var _this = this;
 
-    methods: {
-        confirmProduct: function confirmProduct() {
-            var txt;
-            var r = confirm("Estas Seguro que quieres INACTIVAR este producto?");
-            if (r == true) {
-                txt = this.deleteProduct(this.editData.id);
-            }
-        },
-        deleteProduct: function deleteProduct(id) {
-            var _this = this;
-
-            axios.post('/eliminar/producto', {
-                id: id
-            }).then(function (response) {
-                toastr.success(response.data.message);
-                _this.reset();
-                _this.$emit('refreshData');
-            }).catch(function (error) {
-                console.log(error.response.data.message);
-            });
-        },
-        goBack: function goBack() {
-            this.reset();
-            this.$emit('productForm');
-        },
-        onFileChange: function onFileChange(e) {
-            console.log(e);
-            this.filename = "Selected File: " + e.target.files[0].name;
-            this.file = e.target.files[0];
-            this.urlImg = URL.createObjectURL(this.file);
-        },
-        itbisList: function itbisList() {
-            var _this2 = this;
-
-            axios.post('/impuestoref/datos/producto').then(function (response) {
-                _this2.dataiItbisList = response.data;
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        getCategoriesList: function getCategoriesList() {
-            var _this3 = this;
-
-            axios.post('/ver/categoria').then(function (response) {
-                _this3.categoriesList = response["data"];
-                _this3.category = "";
-                if (_this3.editData) {
-                    _this3.completeForm();
-                }
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        save: function save(e) {
-            var _this4 = this;
-
-            e.preventDefault();
-            var config = {
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }
-            };
-            // form data
-            if (this.cost.toString().length > 12 || this.price.toString().length > 12) {
-                toastr.warning("Hemos encontrado una irregularidad en los numeros");
-                return;
-            }
-            var formData = new FormData();
-            if (this.editData) {
-                formData.append('id', this.editData.id);
-            }
-            formData.append('img', this.file);
-            formData.append('barcode', this.code);
-            formData.append('nombre', this.name);
-            formData.append('precio', this.price);
-            formData.append('cost', this.cost);
-            formData.append('refimpuestoid', this.itbis);
-            formData.append('categoria', this.category);
-            formData.append('subcategoria', '');
-            formData.append('compuesto', this.compositeProduct);
-            formData.append('estado', this.status ? 1 : 0);
-            formData.append('saleConfig', this.saleConfig ? 1 : 0);
-            formData.append('serviceConfig', this.serviceConfig ? 1 : 0);
-            formData.append('inventoryConfig', this.inventoryConfig ? 1 : 0);
-            formData.append('purchaseConfig', this.purchaseConfig ? 1 : 0);
-            formData.append('description', this.description);
-
-            // send upload request
-            var url = this.editData ? '/anja/' + this.editData.id : 'productos';
-            axios.post(url, formData, config).then(function (response) {
-                toastr.success(response.data.message);
-                _this4.reset();
-                _this4.$emit('refreshData');
-            }).catch(function (error) {
-                toastr.error(error.response.data.message);
-            });
-        },
-        back: function back() {
-            this.$emit('refreshData');
-        },
-        reset: function reset() {
-            this.file = "";
-            this.filename = "";
-            this.code = "";
-            this.name = "";
-            this.price = "";
-            this.cost = "";
-            this.itbis = "";
-            this.category = "";
-            this.compositeProduct = "";
-            this.saleConfig = false;
-            this.serviceConfig = false;
-            this.inventoryConfig = false;
-            this.purchaseConfig = false;
-            this.description = "";
-        },
-        completeForm: function completeForm() {
-            this.code = this.editData.barcode;
-            this.name = this.editData.name;
-            this.price = this.editData.price;
-            this.cost = this.editData.cost;
-            this.itbis = this.editData.impuestoref_id;
-            this.category = this.editData.categoria_id;
-            this.compositeProduct = this.editData.compuesto;
-            this.status = this.editData.estado;
-            this.img = this.editData.img;
-            this.saleConfig = this.editData.sale_config;
-            this.serviceConfig = this.editData.service_config;
-            this.inventoryConfig = this.editData.inventory_config;
-            this.purchaseConfig = this.editData.purchase_config;
-            this.description = this.editData.description;
-        }
+      axios.post('/eliminar/producto', {
+        id: id
+      }).then(function (response) {
+        toastr.success(response.data.message);
+        _this.reset();
+        _this.$emit('refreshData');
+      }).catch(function (error) {
+        console.log(error.response.data.message);
+      });
     },
-    watch: {
-        category: function category() {
-            if (this.category === "create") {
-                $('#newCategory').modal('show');
-            }
-        },
-        cost: function cost(newCost, oldCost) {
-            var _this5 = this;
-
-            if (newCost > 999999999.99) {
-                this.resetCostInput = true;
-                this.cost = oldCost;
-                setTimeout(function () {
-                    _this5.resetCostInput = false;
-                }, 1);
-            }
-        },
-        price: function price(newPrice, oldPrice) {
-            var _this6 = this;
-
-            if (newPrice > 999999999.99) {
-                this.resetPriceInput = true;
-                this.price = oldPrice;
-                setTimeout(function () {
-                    _this6.resetPriceInput = false;
-                }, 1);
-            }
-        }
+    goBack: function goBack() {
+      this.reset();
+      this.$emit('productForm');
     },
-    created: function created() {
-        this.itbisList();
-        this.getCategoriesList();
-        if (this.editData) {
-            this.completeForm();
+    onFileChange: function onFileChange(e) {
+      console.log(e);
+      this.filename = "Selected File: " + e.target.files[0].name;
+      this.file = e.target.files[0];
+      this.urlImg = URL.createObjectURL(this.file);
+    },
+    itbisList: function itbisList() {
+      var _this2 = this;
+
+      axios.post('/impuestoref/datos/producto').then(function (response) {
+        _this2.dataiItbisList = response.data;
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    getCategoriesList: function getCategoriesList() {
+      var _this3 = this;
+
+      axios.post('/ver/categoria').then(function (response) {
+        _this3.categoriesList = response["data"];
+        _this3.category = "";
+        if (_this3.editData) {
+          _this3.completeForm();
         }
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    save: function save(e) {
+      var _this4 = this;
+
+      e.preventDefault();
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      };
+      // form data
+      if (this.cost.toString().length > 12 || this.price.toString().length > 12) {
+        toastr.warning("Hemos encontrado una irregularidad en los numeros");
+        return;
+      }
+      var formData = new FormData();
+      if (this.editData) {
+        formData.append('id', this.editData.id);
+      }
+      formData.append('img', this.file);
+      formData.append('barcode', this.code);
+      formData.append('nombre', this.name);
+      formData.append('precio', this.price);
+      formData.append('cost', this.cost);
+      formData.append('refimpuestoid', this.itbis);
+      formData.append('categoria', this.category);
+      formData.append('subcategoria', '');
+      formData.append('compuesto', this.compositeProduct);
+      formData.append('estado', this.status ? 1 : 0);
+      formData.append('saleConfig', this.saleConfig ? 1 : 0);
+      formData.append('serviceConfig', this.serviceConfig ? 1 : 0);
+      formData.append('inventoryConfig', this.inventoryConfig ? 1 : 0);
+      formData.append('purchaseConfig', this.purchaseConfig ? 1 : 0);
+      formData.append('description', this.description);
+
+      // send upload request
+      var url = this.editData ? '/anja/' + this.editData.id : 'productos';
+      this.loading = true;
+      axios.post(url, formData, config).then(function (response) {
+        toastr.success(response.data.message);
+        _this4.reset();
+        _this4.$emit('refreshData');
+      }).catch(function (error) {
+        toastr.error(error.response.data.message);
+      }).finally(function () {
+        _this4.loading = false;
+      });
+    },
+    back: function back() {
+      this.$emit('refreshData');
+    },
+    reset: function reset() {
+      this.file = "";
+      this.filename = "";
+      this.code = "";
+      this.name = "";
+      this.price = "";
+      this.cost = "";
+      this.itbis = "";
+      this.category = "";
+      this.compositeProduct = "";
+      this.saleConfig = false;
+      this.serviceConfig = false;
+      this.inventoryConfig = false;
+      this.purchaseConfig = false;
+      this.description = "";
+    },
+    completeForm: function completeForm() {
+      this.code = this.editData.barcode;
+      this.name = this.editData.name;
+      this.price = this.editData.price;
+      this.cost = this.editData.cost;
+      this.itbis = this.editData.impuestoref_id;
+      this.category = this.editData.categoria_id;
+      this.compositeProduct = this.editData.compuesto;
+      this.status = this.editData.estado;
+      this.img = this.editData.img;
+      this.saleConfig = this.editData.sale_config;
+      this.serviceConfig = this.editData.service_config;
+      this.inventoryConfig = this.editData.inventory_config;
+      this.purchaseConfig = this.editData.purchase_config;
+      this.description = this.editData.description;
     }
+  },
+  watch: {
+    category: function category() {
+      if (this.category === "create") {
+        $('#newCategory').modal('show');
+      }
+    },
+    cost: function cost(newCost, oldCost) {
+      var _this5 = this;
+
+      if (newCost > 999999999.99) {
+        this.resetCostInput = true;
+        this.cost = oldCost;
+        setTimeout(function () {
+          _this5.resetCostInput = false;
+        }, 1);
+      }
+    },
+    price: function price(newPrice, oldPrice) {
+      var _this6 = this;
+
+      if (newPrice > 999999999.99) {
+        this.resetPriceInput = true;
+        this.price = oldPrice;
+        setTimeout(function () {
+          _this6.resetPriceInput = false;
+        }, 1);
+      }
+    }
+  },
+  created: function created() {
+    this.itbisList();
+    this.getCategoriesList();
+    if (this.editData) {
+      this.completeForm();
+    }
+  }
 });
 
 /***/ }),
@@ -135750,7 +135760,12 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-check-input",
-                  attrs: { type: "checkbox", id: "productSale" },
+                  attrs: {
+                    type: "checkbox",
+                    id: "productSale",
+                    title:
+                      "activar o deshabilitar para indicar que el producto de venta"
+                  },
                   domProps: {
                     checked: Array.isArray(_vm.saleConfig)
                       ? _vm._i(_vm.saleConfig, null) > -1
@@ -135800,7 +135815,12 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-check-input",
-                  attrs: { type: "checkbox", id: "ProductPurchase" },
+                  attrs: {
+                    type: "checkbox",
+                    id: "ProductPurchase",
+                    title:
+                      "activar o deshabilitar para indicar que el producto es de compra"
+                  },
                   domProps: {
                     checked: Array.isArray(_vm.purchaseConfig)
                       ? _vm._i(_vm.purchaseConfig, null) > -1
@@ -135852,7 +135872,12 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-check-input",
-                  attrs: { type: "checkbox", id: "ServiceProduct" },
+                  attrs: {
+                    type: "checkbox",
+                    id: "ServiceProduct",
+                    title:
+                      "activar o deshabilitar para indicar que el producto es de servicio"
+                  },
                   domProps: {
                     checked: Array.isArray(_vm.serviceConfig)
                       ? _vm._i(_vm.serviceConfig, null) > -1
@@ -135902,7 +135927,12 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-check-input",
-                  attrs: { type: "checkbox", id: "InventaryProduct" },
+                  attrs: {
+                    type: "checkbox",
+                    id: "InventaryProduct",
+                    title:
+                      "activar o deshabilitar para llevar el inventario del producto "
+                  },
                   domProps: {
                     checked: Array.isArray(_vm.inventoryConfig)
                       ? _vm._i(_vm.inventoryConfig, null) > -1

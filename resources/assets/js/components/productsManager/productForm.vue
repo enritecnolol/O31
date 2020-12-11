@@ -104,22 +104,28 @@
           </div>
           <div class="col-md-12">
             <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="productSale" v-model="saleConfig">
+              <input type="checkbox" class="form-check-input" id="productSale" v-model="saleConfig" title="activar o deshabilitar para indicar que el producto de venta">
               <label class="form-check-label" for="productSale">Producto de venta</label>
             </div>
             <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="ProductPurchase" v-model="purchaseConfig">
+              <input type="checkbox" class="form-check-input" id="ProductPurchase" v-model="purchaseConfig" title="activar o deshabilitar para indicar que el producto es de compra">
               <label class="form-check-label" for="ProductPurchase">Producto de compra</label>
             </div>
           </div>
           <div class="col-md-12">
             <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="ServiceProduct" v-model="serviceConfig">
+              <input type="checkbox" class="form-check-input" id="ServiceProduct" v-model="serviceConfig" title="activar o deshabilitar para indicar que el producto es de servicio">
               <label class="form-check-label" for="ServiceProduct">Producto de servicio</label>
             </div>
             <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="InventaryProduct" v-model="inventoryConfig">
-              <label class="form-check-label" for="InventaryProduct">Producto de inventario</label>
+              <input type="checkbox"
+                     class="form-check-input"
+                     id="InventaryProduct"
+                     v-model="inventoryConfig"
+                     title="activar o deshabilitar para llevar el inventario del producto ">
+              <label class="form-check-label"
+                     for="InventaryProduct"
+              >Producto de inventario</label>
             </div>
           </div>
           <div class="col-md-12 text-center">

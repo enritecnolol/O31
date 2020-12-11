@@ -250,7 +250,7 @@ class IndexController extends Controller
                 if ($request->existencias == 'si')
                 {
                     $producto = Product::find($d["id"]);
-                    if ($producto->compuesto == 'no')
+                    if ($producto->compuesto == 'si')
                     {
                         $producto->existence = $producto->existence - $d["count"];
                         $producto->update();

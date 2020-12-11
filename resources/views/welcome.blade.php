@@ -404,14 +404,11 @@
                                                     </div>
                                                 </template>
                                                 <template v-if="existenciarep === 'si'">
-                                                    <div class="overlay1" v-if="p.existence > 0 && p.compuesto === 'no'">
+                                                    <div class="overlay1" v-if="p.compuesto === 'no'">
                                                         <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
                                                     </div>
-                                                    <div class="overlay1" v-if="p.existence == 0 && p.compuesto === 'si'">
-                                                        <div class="text1"><i class="fa fa-plus fa-3x" id="plus"></i></div>
-                                                    </div>
-                                                    <div class="overlay2" v-else-if="p.existence == 0 && p.compuesto ==='no'">
-                                                        <div class="text1"><i class="fas fa-times fa-3x" id="plus"></i></div>
+                                                    <div class="overlay2" v-if="p.existence == 0 && p.compuesto === 'si'">
+                                                        <div class="text1"><i class="fa fa-times fa-3x" id="plus"></i></div>
                                                     </div>
                                                 </template>
                                             </div>
@@ -619,6 +616,13 @@
                     this.currentProductSelectId = ''
                 },
                 openInputQuantityModal:function (id){
+
+                    if(this.setting.controlinv === "si" && this.productos[id].compuesto == "si" && this.productos[id].existence == 0)
+                    {
+                        toastr.warning('Producto sin existencia');
+                        return;
+                    }
+
                     if(!this.setting.input_quantity_modal)
                     {
                         this.currentProductSelectId = id;
@@ -987,12 +991,12 @@
 
                             if (_this.existenciarep == 'si')
                             {
-                                if  (producto.compuesto == 'no')
+                                if  (producto.compuesto == 'si')
                                 {
                                     if  (contador > producto.existence)
                                     {
-                                        contador = producto.existence;
-                                        toastr.warning('Producto agotado')
+                                        toastr.warning('No hay productos suficientes, disponible: ' + producto.existence)
+                                        return;
                                     }
                                 }
                             }
@@ -1011,11 +1015,11 @@
 
                         if (_this.existenciarep == 'si')
                         {
-                            if  (producto.compuesto == 'no')
+                            if  (producto.compuesto == 'si')
                             {
                                 if  (quantity > producto.existence)
                                 {
-                                    toastr.warning('Producto agotado')
+                                    toastr.warning('No hay productos suficientes, disponible: ' + producto.existence)
                                     return;
                                 }
                             }
@@ -1036,15 +1040,16 @@
                     }else{
                         if (_this.existenciarep == 'si')
                         {
-                            if  (producto.compuesto == 'no' && producto.existence == 0)
+                            if  (producto.compuesto == 'si' && producto.existence == 0)
                             {
                                 toastr.warning('Producto agotado')
+                                return;
                             }else {
-                                if  (producto.compuesto == 'no')
+                                if  (producto.compuesto == 'si')
                                 {
                                     if  (parseFloat(quantity) > producto.existence)
                                     {
-                                        toastr.warning('Producto agotado')
+                                        toastr.warning('No hay productos suficientes, disponible: ' + producto.existence)
                                         return;
                                     }
                                 }
