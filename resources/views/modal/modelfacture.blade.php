@@ -11,10 +11,10 @@
                 <div id="myPrintArea" style="color: #000;margin: 0 auto;display: inline;width: 400px;">
                     <div class="row">
                         <div class="col-12">
-                            <div style="width: 400px;text-align: center;">
-                                <img :src="'imagenes/'+setting.img" width="100" alt="">
-                            </div>
-                            <h3 style="color: #000;width: 400px;text-align: center;">@{{ setting.nombreempresa }}</h3>
+{{--                            <div style="width: 400px;text-align: center;">--}}
+{{--                                <img :src="'imagenes/'+setting.img" width="100" alt="">--}}
+{{--                            </div>--}}
+                            <h2 style="color: #000;width: 400px;text-align: center;">@{{ setting.nombreempresa }}</h2>
                             <p style="width: 400px;text-align: center;">@{{ setting.pais }}, @{{ setting.ciudad }}, @{{ setting.direccion }} <br> @{{ setting.telefono }} </p>
                         </div>
                         <div class="col-12">
