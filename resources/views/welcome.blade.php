@@ -216,7 +216,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12" v-if="list.length != 0">
-                            <h5 style="float: left">items: @{{ cantidaditems }}</h5> <p style="float: right">@{{ cantidaditemsall }}</p>
+                            <h5 style="float: left">items: @{{ cantidaditems }}</h5>
+{{--                            <p style="float: right">@{{ cantidaditemsall }}</p>--}}
                         </div>
                         <div class="col-sm-12"><hr></div>
                         <div class="col-sm-12">
