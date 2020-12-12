@@ -437,6 +437,7 @@
     @include('modal.modalcrearcliente')
     @include('modal.modalFacturasEnEspera')
     @include('modal.modalInputQuantity')
+    @include('modal.modalPrintPedido')
 @endsection
 
 @section('scriptp')
@@ -504,6 +505,13 @@
                 var close = mode == "popup";
                 var options = { mode : mode, popClose : close};
                 $("div#myPrintArea").printArea(options);
+            });
+
+            $("#printPedidoOrden").click(function () {
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = { mode : mode, popClose : close};
+                $("div#myPrintAreaPedido").printArea(options);
             });
         });
     </script>
@@ -595,7 +603,8 @@
                 note:'',
                 ListaEnEspera:[],
                 inputQuantity:'0',
-                currentProductSelectId:''
+                currentProductSelectId:'',
+                printPedidoData:{}
             },
             mounted() {
                 _this = this;
@@ -610,6 +619,11 @@
                 },
             },
             methods:{
+                printPedido:function (item, index)
+                {
+                    $('#pedidoPrint').modal('show');
+                    this.printPedidoData = item;
+                },
                 closeInputQuantityModal:function ()
                 {
                     $('#quantityInput').modal('hide');

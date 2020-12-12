@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">LISTA DE FACTURAS EN ESPERA</h5>
+                <h5 class="modal-title" id="exampleModalLabel">LISTA DE PEDIDO</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -11,7 +11,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-2">
-                            <button type="button" :disabled="!listLength > 0" @click="agregarFacturaEspera" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Agregar Factura a espera</button>
+                            <button type="button" :disabled="!listLength > 0" @click="agregarFacturaEspera" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Agregar pedido</button>
                         </div>
                         <div class="col-md-12">
                             <hr>
@@ -37,8 +37,28 @@
                                             </ul>
                                         </div>
                                         <div class="card-footer">
-                                            <button type="button" class="btn btn-success" @click="reasignarFactura(item, index)"><i class="fas fa-reply"></i> Retomar</button>
-                                            <button type="button" class="btn btn-danger" @click="removerFacturaPendiente(index)"><i class="fas fa-trash"></i> Borrar</button>
+                                            <div class="row">
+                                                <div class="col-md-6" style="padding:0;">
+                                                    <button
+                                                            type="button"
+                                                            class="btn btn-success"
+                                                            style="width: 100%; margin-right: 2px"
+                                                            @click="reasignarFactura(item, index)"><i class="fas fa-reply"></i> Retomar</button>
+                                                </div>
+                                                <div class="col-md-6" style="padding:0;">
+                                                    <button
+                                                            type="button"
+                                                            class="btn btn-warning"
+                                                            style="width: 100%; margin-left: 2px"
+                                                            @click="printPedido(item, index)"><i class="fas fa-print"></i></button>
+                                                </div>
+                                                <div class="col-md-12" style="padding:0;">
+                                                    <button type="button"
+                                                            class="btn btn-danger"
+                                                            style="width: 100%; margin-top: 2px"
+                                                            @click="removerFacturaPendiente(index)"><i class="fas fa-trash"></i> Borrar</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
