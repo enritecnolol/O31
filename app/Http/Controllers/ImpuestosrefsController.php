@@ -23,7 +23,7 @@ class ImpuestosrefsController extends Controller
 //            $compararfecha  = DB::select("SELECT * FROM rangoimpuestos WHERE '".$fechainicio."' BETWEEN desde AND hasta");
 
 
-                $ref = new Impuestosref;
+                $ref = new Impuestosref();
                 $ref->codigo = $request->codigo;
                 $ref->descripcion = $request->descripcion;
                 $ref->identificador = $request->identificador;
@@ -51,15 +51,12 @@ class ImpuestosrefsController extends Controller
     public function datos(Request $request)
     {
         $iduser = Auth::id();
-        $ref = Impuestosref::where('codigo', $request->codigo);
+        $ref = DB::connection('client')->table('impuestosrefs')->where('codigo', $request->codigo)->first();
 
-        if($ref == '[]'){
+        if(!$ref){
             return 'no resultado con ese id';
         }else{
-            foreach ($ref as $ref){
-                $id = $ref->id;
-            }
-            $rango = Rangoimpuesto::all()->where('referenciaitbis_id', $id);
+            $rango = Rangoimpuesto::all()->where('referenciaitbis_id', $ref->id);
 
             if ($rango == '[]')
             {
