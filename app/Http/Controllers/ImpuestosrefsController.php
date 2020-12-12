@@ -24,8 +24,7 @@ class ImpuestosrefsController extends Controller
 
 
                 $ref = new Impuestosref;
-                $ref->id = $request->codigo;
-                $ref->codigo = 0;
+                $ref->codigo = $request->codigo;
                 $ref->descripcion = $request->descripcion;
                 $ref->identificador = $request->identificador;
                 $ref->user_id = Auth::id();
