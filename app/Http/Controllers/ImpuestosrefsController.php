@@ -51,7 +51,7 @@ class ImpuestosrefsController extends Controller
     public function datos(Request $request)
     {
         $iduser = Auth::id();
-        $ref = Impuestosref::all()->where('id', $request->codigo);
+        $ref = Impuestosref::where('codigo', $request->codigo);
 
         if($ref == '[]'){
             return 'no resultado con ese id';
