@@ -33,7 +33,7 @@
                                 <label><strong>NCF: </strong> </label>
                                 <label>@{{rncdevf}}</label>
                             </div>
-                            <template v-if="setting.generacomprobante=='si' && datancf.rnc">
+                            <template v-if="setting.generacomprobante=='si' && datancf.rnc && tiponfc!='02'">
                                 <div class="form-group text-left" style="margin: 0">
                                     <label><strong>Fecha vencimiento NCF: </strong> </label>
                                     <label>@{{rncDueDate}}</label>

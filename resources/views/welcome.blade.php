@@ -810,11 +810,6 @@
                 },
                 buscar_rnc()
                 {
-                    // if(this.datancf.rnc.length !== 9 || 11)
-                    // {
-                    //     toastr.warning("Revisar RNC")
-                    //     return;
-                    // }
                     _this = this
                     this.loading = true;
                     this.datancf.razon = "cargando...";
@@ -822,14 +817,14 @@
                         rnc: this.datancf.rnc
                     })
                         .then( (response) => {
-
-                            if (this.rncData == 0){
+                            let dataXML =  _this.convertirXmlEnObjeto($.parseXML(response.data));
+                            _this.rncData  = JSON.parse(dataXML['soap:Body']['GetContribuyentesResponse']['GetContribuyentesResult'])
+                            if (this.rncData == "0"){
                                 toastr.warning("No se ha encotrado este RNC")
                                 return;
                             }
-                            let dataXML =  _this.convertirXmlEnObjeto($.parseXML(response.data));
-                            _this.rncData  = JSON.parse(dataXML['soap:Body']['GetContribuyentesResponse']['GetContribuyentesResult'])
                             _this.datancf.razon = this.rncData['RGE_NOMBRE']
+                            console.log(this.rncData['RGE_NOMBRE']);
                         })
                         .catch(function (error) {
                             console.log(error)
