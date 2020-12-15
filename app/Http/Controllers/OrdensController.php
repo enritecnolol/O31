@@ -284,13 +284,15 @@ class OrdensController extends Controller
     public function allordenesabiertas()
     {
 //        $ordenes = Orden::all()->where('estado', 'Abierta');
-        $ordenes = DB::select("SELECT ordens.*, corotos.name FROM ordens, corotos WHERE ordens.estado = 'Abierta' AND ordens.mesa_id = corotos.id ORDER BY ordens.id ASC");
+        $ordenes = DB::connection('client')
+            ->select("SELECT ordens.*, corotos.name FROM ordens, corotos WHERE ordens.estado = 'Abierta' AND ordens.mesa_id = corotos.id ORDER BY ordens.id ASC");
         return $ordenes;
     }
     public function allordenesdetalle(Request $request)
     {
 //        $detalle = Details_orden::all()->where('orden_id', $request->id);
-        $detalle = DB::select("SELECT details_ordens.*, products.name, products.compuesto FROM details_ordens , products WHERE details_ordens.product_id = products.id and details_ordens.orden_id =".$request->id."");
+        $detalle = DB::connection('client')
+        ->select("SELECT details_ordens.*, products.name, products.compuesto FROM details_ordens , products WHERE details_ordens.product_id = products.id and details_ordens.orden_id =".$request->id."");
         return $detalle;
     }
     public function cambioestadoordenitem(Request $request)

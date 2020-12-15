@@ -10,8 +10,17 @@
                         </div>
                     </div>
                 </div>
-                <formcamarero :camareros="camareros" @actualizar="allcamareros" v-show="camareroform == true"></formcamarero>
-                <tablacamarero :camareros="camareros" :camarerospaginate="camarerospaginate" :pagination="pagination" @datospaginare="datostablacamarero" @editar="editar" @eliminar="eliminar"></tablacamarero>
+                <formcamarero
+                    :camareros="camareros"
+                    @actualizar="allcamareros"
+                    v-show="camareroform == true"></formcamarero>
+                <tablacamarero
+                    :camareros="camareros"
+                    :camarerospaginate="camarerospaginate"
+                    :pagination="pagination"
+                    @datospaginare="datostablacamarero"
+                    @editar="editar"
+                    @eliminar="eliminar"></tablacamarero>
             </div>
         </div>
     </div>

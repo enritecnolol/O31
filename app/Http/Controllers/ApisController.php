@@ -354,7 +354,11 @@ class ApisController extends Controller
     public function allproduct()
     {
         $id = Auth::id();
-        $productos = DB::connection('client')->table('products')
+        $productos = DB::connection('client')
+            ->table('products')
+            ->where('estado', true)
+            ->where('sale_config', true)
+            ->orWhere('service_config', true)
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
             ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
 //            ->where('products.user_id', $id)

@@ -242,6 +242,9 @@
                 </div>
             </div>
             <div class="row" style="margin-bottom: 5px">
+                <div class="col-md-12">
+                    <button type="button" style="height: 40px; margin-bottom: 2px" id="preFact" title="Imprimir PreFactura" @click="openPreFactura" class="btn btn-primary btn-lg btn-block btn-sm"><i class="fas fa-print"></i> PrecFatura</button>
+                </div>
                 <div class="col-md-6">
                     <button type="button" style="height: 40px" id="cancelarcompara" title="Limpiar Lista de Articulos" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar</button>
                 </div>
@@ -438,6 +441,7 @@
     @include('modal.modalFacturasEnEspera')
     @include('modal.modalInputQuantity')
     @include('modal.modalPrintPedido')
+    @include('modal.modalPreFactura')
 @endsection
 
 @section('scriptp')
@@ -512,6 +516,13 @@
                 var close = mode == "popup";
                 var options = { mode : mode, popClose : close};
                 $("div#myPrintAreaPedido").printArea(options);
+            });
+
+            $("#imprimirPreFactura").click(function () {
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = { mode : mode, popClose : close};
+                $("div#myPrintAreaPreFactura").printArea(options);
             });
         });
     </script>
@@ -619,6 +630,14 @@
                 },
             },
             methods:{
+                closePrefactura:function ()
+                {
+                    $('#formatoPreFactura').modal('hide');
+                },
+                openPreFactura:function ()
+                {
+                    $('#formatoPreFactura').modal('show');
+                },
                 printPedido:function (item, index)
                 {
                     $('#pedidoPrint').modal('show');
@@ -698,6 +717,7 @@
                         })
                         localStorage.setItem("ListaEnEspera", JSON.stringify(pending));
                         _this.carrito = {};
+                        _this.note = '';
                         _this.list = [];
                         _this.clientedatos = '';
                         _this.idcliente= '';
