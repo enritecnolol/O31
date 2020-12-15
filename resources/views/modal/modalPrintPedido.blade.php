@@ -18,12 +18,14 @@
                         </div>
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12" style="width: 400px;">
                                     <b>Referecia: </b> @{{ printPedidoData.reference }}
                                 </div>
 
                                 <div class="col-md-12">
-                                    <b>Nota: </b> <p>@{{ printPedidoData.note }}</p>
+                                    <div style="width: 400px;">
+                                        <b>Nota: </b> <p>@{{ printPedidoData.note }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

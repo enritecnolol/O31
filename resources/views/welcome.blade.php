@@ -173,6 +173,9 @@
                 </div>
             </div>
             <div v-show="cerrada !== 'C'" style="text-align: center; color: white; margin-bottom: 5px">
+                <input type="text" v-model="reference" class="form-control form-control-sm" placeholder="referencia:">
+            </div>
+            <div v-show="cerrada !== 'C'" style="text-align: center; color: white; margin-bottom: 5px">
                 <textarea class="form-control" v-model="note" id="exampleFormControlTextarea1" rows="2" placeholder="Nota de factura"></textarea>
             </div>
         </div>
@@ -243,13 +246,29 @@
             </div>
             <div class="row" style="margin-bottom: 5px">
                 <div class="col-md-12">
-                    <button type="button" style="height: 40px; margin-bottom: 2px" id="preFact" title="Imprimir PreFactura" @click="openPreFactura" class="btn btn-primary btn-lg btn-block btn-sm"><i class="fas fa-print"></i> PreFactura</button>
+                    <button
+                            type="button"
+                            style="height: 40px; margin-bottom: 2px"
+                            id="preFact"
+                            title="Imprimir PreFactura"
+                            @click="openPreFactura"
+                            class="btn btn-primary btn-lg btn-block btn-sm"><i class="fas fa-print"></i> PreFactura</button>
                 </div>
                 <div class="col-md-6">
-                    <button type="button" style="height: 40px" id="cancelarcompara" title="Limpiar Lista de Articulos" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar</button>
+                    <button type="button"
+                            style="height: 40px"
+                            id="cancelarcompara"
+                            title="Limpiar Lista de Articulos"
+                            @click="cancelarcompra"
+                            class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar</button>
                 </div>
                 <div class="col-md-6">
-                    <button type="button" style="height: 40px" id="facturaPausa" title="Colocar la factura en espera" @click="facturaPausa" class="btn btn-warning btn-lg btn-block btn-sm"><i class="fas fa-pause"></i> En espera</button>
+                    <button type="button"
+                            style="height: 40px"
+                            id="facturaPausa"
+                            title="Colocar la factura en espera"
+                            @click="facturaPausa"
+                            class="btn btn-warning btn-lg btn-block btn-sm"><i class="fas fa-pause"></i> En espera</button>
                 </div>
             </div>
             <button data-toggle="modal" data-target="#pago" title="presione tecla FIN" type="button" style="height: 120px;background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
@@ -284,10 +303,18 @@
             </div>
             <div class="row" style="margin-bottom: 5px">
                 <div class="col-md-6">
-                    <button type="button" id="cancelarcompara" title="Limpiar Lista de Articulos" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar</button>
+                    <button type="button"
+                            id="cancelarcompara"
+                            title="Limpiar Lista de Articulos"
+                            @click="cancelarcompra"
+                            class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar</button>
                 </div>
                 <div class="col-md-6">
-                    <button type="button" id="facturaPausa" title="Colocar la factura en espera" @click="facturaPausa" class="btn btn-warning btn-lg btn-block btn-sm"><i class="fas fa-pause"></i> En espera</button>
+                    <button type="button"
+                            id="facturaPausa"
+                            title="Colocar la factura en espera"
+                            @click="facturaPausa"
+                            class="btn btn-warning btn-lg btn-block btn-sm"><i class="fas fa-pause"></i> En espera</button>
                 </div>
             </div>
             <button data-toggle="modal" data-target="#pago" title="presione tecla FIN" type="button" style="height: 120px;background: rgb(66, 150, 50);" class="btn btn-lg  btn-block">
@@ -612,6 +639,7 @@
                 loading:false,
                 rncDueDate:'',
                 note:'',
+                reference:'',
                 ListaEnEspera:[],
                 inputQuantity:'0',
                 currentProductSelectId:'',
@@ -705,10 +733,17 @@
                 },
                 agregarFacturaEspera:function(){
                     _this = this
-                    var reference = prompt("Ingrese una referencia para esta factura en espera:");
+
+                    var reference = null;
+                    if(_this.reference)
+                    {
+                        reference = _this.reference
+                    }else{
+                        reference = prompt("Ingrese una referencia para esta factura en espera:");
+                    }
 
                     if (reference != null) {
-                        var pending  = localStorage.getItem("ListaEnEspera") == null ? [] : JSON.parse(localStorage.getItem("ListaEnEspera")) ;
+                        var pending  = localStorage.getItem("ListaEnEspera") == null ? [] : JSON.parse(localStorage.getItem("ListaEnEspera"));
                         pending.push({
                             reference: reference,
                             list:_this.list,
@@ -716,13 +751,9 @@
                             note:_this.note
                         })
                         localStorage.setItem("ListaEnEspera", JSON.stringify(pending));
-                        _this.carrito = {};
-                        _this.note = '';
-                        _this.list = [];
-                        _this.clientedatos = '';
-                        _this.idcliente= '';
+                        _this.carrito = {};_this.list = [];
+                        _this.note = '';_this.reference = '';_this.clientedatos = '';_this.idcliente= '';
                     }
-
                     _this.ListaEnEspera = JSON.parse(localStorage.getItem("ListaEnEspera"))
                 },
                 reasignarFactura(data, index)
@@ -743,6 +774,7 @@
 
                     _this.list = data.list;
                     _this.note = data.note;
+                    _this.reference = data.reference;
                     _this.ListaEnEspera.splice(index, 1);
                     localStorage.setItem("ListaEnEspera", JSON.stringify(_this.ListaEnEspera));
                     $('#FacturasEnPausa').modal('hide');
@@ -821,6 +853,7 @@
                         loading:false,
                         rncDueDate:'',
                         note:'',
+                        reference:'',
                         Inputquantity:'0',
                         currentProductSelectId:''
                     });
@@ -917,6 +950,8 @@
                         _this.list = [];
                         _this.clientedatos = '';
                         _this.idcliente= '';
+                        _this.reference= '';
+                        _this.note= '';
                     }
                 },
                 cargarcategoria: function () {
