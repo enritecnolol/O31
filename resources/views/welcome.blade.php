@@ -243,7 +243,7 @@
             </div>
             <div class="row" style="margin-bottom: 5px">
                 <div class="col-md-12">
-                    <button type="button" style="height: 40px; margin-bottom: 2px" id="preFact" title="Imprimir PreFactura" @click="openPreFactura" class="btn btn-primary btn-lg btn-block btn-sm"><i class="fas fa-print"></i> PrecFatura</button>
+                    <button type="button" style="height: 40px; margin-bottom: 2px" id="preFact" title="Imprimir PreFactura" @click="openPreFactura" class="btn btn-primary btn-lg btn-block btn-sm"><i class="fas fa-print"></i> PreFactura</button>
                 </div>
                 <div class="col-md-6">
                     <button type="button" style="height: 40px" id="cancelarcompara" title="Limpiar Lista de Articulos" @click="cancelarcompra" class="btn btn-danger btn-lg btn-block btn-sm"><i class="fas fa-ban"></i> Cancelar</button>
