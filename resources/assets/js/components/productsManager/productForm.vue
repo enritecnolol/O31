@@ -279,7 +279,7 @@ export default {
       }
       formData.append('img', this.file);
       formData.append('barcode', this.code);
-      formData.append('nombre', this.name);
+      formData.append('nombre', this.name.replace("'", ""));
       formData.append('precio', this.price);
       formData.append('cost', this.cost);
       formData.append('refimpuestoid', this.itbis);
@@ -291,7 +291,7 @@ export default {
       formData.append('serviceConfig', this.serviceConfig ? 1 : 0);
       formData.append('inventoryConfig', this.inventoryConfig ? 1 : 0);
       formData.append('purchaseConfig', this.purchaseConfig ? 1 : 0);
-      formData.append('description', this.description);
+      formData.append('description', this.description.replace("'", ""));
 
       // send upload request
       let url = this.editData ? '/anja/' + this.editData.id : 'productos';

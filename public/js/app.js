@@ -66533,7 +66533,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -66548,6 +66548,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__formcamarero___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__formcamarero__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tablacamarero__ = __webpack_require__(244);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tablacamarero___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__tablacamarero__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -134892,7 +134901,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_v_money___default.a, { precision: 4 });
       }
       formData.append('img', this.file);
       formData.append('barcode', this.code);
-      formData.append('nombre', this.name);
+      formData.append('nombre', this.name.replace("'", ""));
       formData.append('precio', this.price);
       formData.append('cost', this.cost);
       formData.append('refimpuestoid', this.itbis);
@@ -134904,7 +134913,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_v_money___default.a, { precision: 4 });
       formData.append('serviceConfig', this.serviceConfig ? 1 : 0);
       formData.append('inventoryConfig', this.inventoryConfig ? 1 : 0);
       formData.append('purchaseConfig', this.purchaseConfig ? 1 : 0);
-      formData.append('description', this.description);
+      formData.append('description', this.description.replace("'", ""));
 
       // send upload request
       var url = this.editData ? '/anja/' + this.editData.id : 'productos';
