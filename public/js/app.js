@@ -134901,7 +134901,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_v_money___default.a, { precision: 4 });
       }
       formData.append('img', this.file);
       formData.append('barcode', this.code);
-      formData.append('nombre', this.name.replace("'", ""));
+      formData.append('nombre', this.name);
       formData.append('precio', this.price);
       formData.append('cost', this.cost);
       formData.append('refimpuestoid', this.itbis);
@@ -134913,7 +134913,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_v_money___default.a, { precision: 4 });
       formData.append('serviceConfig', this.serviceConfig ? 1 : 0);
       formData.append('inventoryConfig', this.inventoryConfig ? 1 : 0);
       formData.append('purchaseConfig', this.purchaseConfig ? 1 : 0);
-      formData.append('description', this.description.replace("'", ""));
+      formData.append('description', this.description);
 
       // send upload request
       var url = this.editData ? '/anja/' + this.editData.id : 'productos';
