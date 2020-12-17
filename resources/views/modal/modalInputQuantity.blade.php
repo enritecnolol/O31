@@ -11,7 +11,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <h2>Cantidad: @{{ inputQuantity }}</h2>
+                            <h2>@{{ inputQuantity }}</h2>
                         </div>
                         <div class="col-md-12">
                             <hr>
@@ -87,6 +87,24 @@
                                     class="btn btn-secondary"
                                     @click="addInputQuantity('.')"
                                     style="width: 100%;height: 100px;margin-bottom: 5px;font-size: 50px">.</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    @click="addInputQuantity('.25')"
+                                    style="width: 100%;height: 100px;margin-bottom: 5px;font-size: 50px">.25</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    @click="addInputQuantity('.50')"
+                                    style="width: 100%;height: 100px;margin-bottom: 5px;font-size: 50px">.50</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    @click="addInputQuantity('.75')"
+                                    style="width: 100%;height: 100px;margin-bottom: 5px;font-size: 50px">.75</button>
                         </div>
                     </div>
                 </div>
