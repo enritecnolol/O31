@@ -63,27 +63,28 @@
                             <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
                         </div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-4">
                         <div class="form-group">
                             <label for="banco" class="control-label mb-1">Banco</label>
                             <input id="banco" name="banco" v-model="banco" class="form-control cc-exp" type="text">
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-4">
                         <div class="form-group">
                             <label for="numtarjeta" class="control-label mb-1">Num.Tarjeta <span style="color: red">*</span></label>
-                            <input id="numtarjeta"  name="numtarjeta" type="text" class="form-control cc-exp" maxlength="16"  v-model="Numtarjeta" data-val="true" data-val-required="Please enter the card expiration" >
+                            <input id="numtarjeta"  name="numtarjeta" type="text" class="form-control cc-exp" maxlength="4"  v-model="Numtarjeta" data-val="true" data-val-required="Please enter the card expiration" >
                             <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
                         </div>
                     </div>
-                    <div class="col-8">
-                        <label for="auth" class="control-label mb-1">Autorización<span style="color: red">*</span></label>
-                        <div class="input-group">
-                            <input id="auth" name="auth"  v-model="auth" maxlength="20" type="text" class="form-control cc-cvc">
-                        </div>
-                    </div>
+                </div>
+                <div class="row">
+
+{{--                    <div class="col-8">--}}
+{{--                        <label for="auth" class="control-label mb-1">Autorización<span style="color: red">*</span></label>--}}
+{{--                        <div class="input-group">--}}
+{{--                            <input id="auth" name="auth"  v-model="auth" maxlength="20" type="text" class="form-control cc-cvc">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </div>
                 <div class="row" v-if="setting.generacomprobante == 'si'">
                     <div class="col-md-12">

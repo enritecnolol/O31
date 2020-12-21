@@ -1216,7 +1216,9 @@
                 },
                 facturar:function () {
                     if (this.montotarjeta > 0){
-                        if (this.tipotarjeta === '' ||  this.auth === '' || this.Numtarjeta === ''){
+                        if (this.tipotarjeta === ''
+                            // ||  this.auth === ''
+                            || this.Numtarjeta === ''){
                             alert('Faltan Datos por Llenar')
                             return;
                         }
