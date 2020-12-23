@@ -204,28 +204,27 @@ class ApisController extends Controller
     public function productosporcategoria(Request $request){
         if ($request->id == 0)
         {
-            $productos = DB::connection('client')
+            return DB::connection('client')
                 ->table('products')
                 ->where('estado', true)
-                ->where('sale_config', true)
-                ->orWhere('service_config', true)
+//                ->where('sale_config', true)
+//                ->orWhere('service_config', true)
                 ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
                 ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
                 ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
-            return $productos;
+
         }
 
-        $productos = DB::connection('client')
+        return DB::connection('client')
             ->table('products')
             ->where('categoria_id', $request->id)
             ->where('estado', true)
-            ->where('sale_config', true)
-            ->orWhere('service_config', true)
+//            ->where('sale_config', true)
+//            ->orWhere('service_config', true)
             ->Leftjoin('impuestosrefs', 'products.impuestoref_id', 'impuestosrefs.id')
             ->Leftjoin('rangoimpuestos', 'rangoimpuestos.referenciaitbis_id', DB::connection('client')->raw('impuestosrefs.id AND CURDATE() BETWEEN rangoimpuestos.desde AND rangoimpuestos.hasta'))
-            ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->get();
+            ->select(DB::connection('client')->raw('products.*, IFNULL(rangoimpuestos.porciento, 0) AS porciento, IFNULL(impuestosrefs.descripcion, "") AS descripcion'))->toSql();
 
-        return $productos;
     }
     public function productosporcategoriaordenes(Request $request){
 
