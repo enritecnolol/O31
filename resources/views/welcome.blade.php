@@ -178,6 +178,22 @@
             <div v-show="cerrada !== 'C'" style="text-align: center; color: white; margin-bottom: 5px">
                 <textarea class="form-control" v-model="note" id="exampleFormControlTextarea1" rows="2" placeholder="Nota de factura"></textarea>
             </div>
+            <div v-show="cerrada !== 'C'" style="margin-bottom: 5px">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button
+                            type="button"
+                            @click="donde_consumo = 'llevar'"
+                            class="btn btn-primary"
+                            :class="donde_consumo == 'llevar' ? 'active' : ''"
+                    ><i class="fas fa-truck"></i> Para llevar</button>
+                    <button
+                            type="button"
+                            @click="donde_consumo = 'aqui'"
+                            class="btn btn-primary"
+                            :class="donde_consumo == 'aqui' ? 'active' : ''"
+                    ><i class="fas fa-utensils"></i> Comer aquí</button>
+                </div>
+            </div>
         </div>
         <form action="" method="post" novalidate="novalidate">
             <div class="form-group has-success">
@@ -643,7 +659,8 @@
                 ListaEnEspera:[],
                 inputQuantity:'0',
                 currentProductSelectId:'',
-                printPedidoData:{}
+                printPedidoData:{},
+                donde_consumo:'aqui'
             },
             mounted() {
                 _this = this;
@@ -747,12 +764,14 @@
                         pending.push({
                             reference: reference,
                             list:_this.list,
+                            donde_consumo:_this.donde_consumo,
                             hora:moment().format("YYYY-MM-DD HH:mm:ss"),
                             note:_this.note
                         })
                         localStorage.setItem("ListaEnEspera", JSON.stringify(pending));
                         _this.carrito = {};_this.list = [];
                         _this.note = '';_this.reference = '';_this.clientedatos = '';_this.idcliente= '';
+                        _this.donde_consumo= 'aqui';
                     }
                     _this.ListaEnEspera = JSON.parse(localStorage.getItem("ListaEnEspera"))
                 },
@@ -769,22 +788,17 @@
                             _this.list = [];
                             _this.clientedatos = '';
                             _this.idcliente= '';
+                            _this.donde_consumo= 'aqui';
                         }
                     }
 
                     _this.list = data.list;
                     _this.note = data.note;
                     _this.reference = data.reference;
+                    _this.donde_consumo = data.donde_consumo;
                     _this.ListaEnEspera.splice(index, 1);
                     localStorage.setItem("ListaEnEspera", JSON.stringify(_this.ListaEnEspera));
                     $('#FacturasEnPausa').modal('hide');
-                },
-                removerFacturaPendiente(index)
-                {
-                    if (confirm("Estas seguro de borrar este Pedido ?")) {
-                        _this.ListaEnEspera.splice(index, 1);
-                        localStorage.setItem("ListaEnEspera", JSON.stringify(_this.ListaEnEspera));
-                    }
                 },
                 limpiar()
                 {
@@ -855,7 +869,9 @@
                         note:'',
                         reference:'',
                         Inputquantity:'0',
-                        currentProductSelectId:''
+                        currentProductSelectId:'',
+                        donde_consumo:'aqui',
+                        printPedidoData:{}
                     });
                 },
                 format2(n, currency) {
@@ -2212,7 +2228,7 @@
                     _this = this;
                     let porciento = 0;
                     porciento = (_this.bruto - _this.totaldescuento) * 0.10;
-                    return _this.setting.leycamarero == "si" ? parseFloat(porciento).toFixed(2) : 0 ;
+                    return _this.setting.leycamarero == "si" && _this.donde_consumo == "aqui" ? parseFloat(porciento).toFixed(2) : 0 ;
                 },
                 puntosagenerar:function () {
                     _this = this;

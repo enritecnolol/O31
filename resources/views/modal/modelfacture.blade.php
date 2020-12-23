@@ -29,6 +29,10 @@
                                 <label><strong>Fecha: </strong> </label>
                                 <label><?php echo date('d-m-Y h:i:s A')?></label>
                             </div>
+                            <div class="form-group text-left" style="margin: 0">
+                                <label><strong>Consumo: </strong> </label>
+                                <label>@{{ printPedidoData.donde_consumo == 'llevar' ? 'Para llevar' : 'Comer aquí' }}</label>
+                            </div>
                             <div class="form-group text-left" v-if="setting.generacomprobante=='si'" style="margin: 0">
                                 <label><strong>NCF: </strong> </label>
                                 <label>@{{rncdevf}}</label>

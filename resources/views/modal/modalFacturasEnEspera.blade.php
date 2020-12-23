@@ -25,8 +25,8 @@
                                     <div class="card" style="width: 18rem;">
                                         <div class="card-header">
                                             <b>Referencia: </b> @{{ item.reference }}<br>
+                                            <b>Consumo: </b> @{{ item.donde_consumo == 'llevar' ? 'Para llevar' : 'Comer aquí' }}<br>
                                             <b>Fecha: </b> @{{ item.hora }}
-
                                         </div>
                                         <div class="card-body" style="padding: 0 !important;">
                                             <h6 class="card-subtitle mb-2 text-muted" style="margin-top: 5px;margin-left: 2px;"><b>Nota:</b> @{{ item.note }}</h6>
@@ -51,12 +51,6 @@
                                                             class="btn btn-warning"
                                                             style="width: 100%; margin-left: 2px"
                                                             @click="printPedido(item, index)"><i class="fas fa-print"></i></button>
-                                                </div>
-                                                <div class="col-md-12" style="padding:0;">
-                                                    <button type="button"
-                                                            class="btn btn-danger"
-                                                            style="width: 100%; margin-top: 2px"
-                                                            @click="removerFacturaPendiente(index)"><i class="fas fa-trash"></i> Borrar</button>
                                                 </div>
                                             </div>
                                         </div>

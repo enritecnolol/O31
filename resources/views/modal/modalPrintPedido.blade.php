@@ -21,7 +21,9 @@
                                 <div class="col-md-12" style="width: 400px;">
                                     <b>Referecia: </b> @{{ printPedidoData.reference }}
                                 </div>
-
+                                <div class="col-md-12" style="width: 400px;">
+                                    <b>Consumo: </b> @{{ printPedidoData.donde_consumo == 'llevar' ? 'Para llevar' : 'Comer aquí' }}
+                                </div>
                                 <div class="col-md-12">
                                     <div style="width: 400px;">
                                         <b>Nota: </b> <p>@{{ printPedidoData.note }}</p>

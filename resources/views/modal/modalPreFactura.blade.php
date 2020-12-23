@@ -23,6 +23,12 @@
                                 <label><?php echo date('d-m-Y h:i:s A')?></label>
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="form-group text-left" style="margin: 0">
+                                <label><strong>Consumo: </strong> </label>
+                                <label>@{{ printPedidoData.donde_consumo == 'llevar' ? 'Para llevar' : 'Comer aquí' }}</label>
+                            </div>
+                        </div>
                         <hr>
                         <div class="col-12">
                             <div style="margin-bottom: 5px;clear:both;">
