@@ -725,7 +725,7 @@
                     if(_this.inputQuantity.includes("."))
                     {
                         var splitQuantity = _this.inputQuantity.split(".");
-                        if(splitQuantity[1].length === 2)
+                        if(splitQuantity[1].length === 3)
                         {
                             return;
                         }
