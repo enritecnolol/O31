@@ -36,10 +36,10 @@ class AdminController extends Controller
         $client_database = new Client_database();
         $client_database->auth_id = 0;
         $client_database->name = $request->database;
-        $client_database->host = $request->host;
-        $client_database->port = $request->port;
-        $client_database->username = $request->username;
-        $client_database->password = $request->password;
+        $client_database->host =  Config::get("database.connections.auth.host");
+        $client_database->port =  Config::get("database.connections.auth.port");
+        $client_database->username =  Config::get("database.connections.auth.username");
+        $client_database->password =  Config::get("database.connections.auth.password");
         $client_database->save();
 
         User::create([

@@ -13,7 +13,7 @@ class CreateTableRangoImpuesto extends Migration
      */
     public function up()
     {
-        Schema::create('rangoimpuestos', function (Blueprint $table) {
+        Schema::connection('client')->create('rangoimpuestos', function (Blueprint $table) {
             $table->increments('id');
             $table->date('desde');
             $table->date('hasta');

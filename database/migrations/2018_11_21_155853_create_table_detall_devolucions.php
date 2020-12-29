@@ -13,11 +13,11 @@ class CreateTableDetallDevolucions extends Migration
      */
     public function up()
     {
-        Schema::create('detalle_devolucions', function (Blueprint $table) {
+        Schema::connection('client')->create('detalle_devolucions', function (Blueprint $table) {
             $table->increments('id');
             $table->dateTime('date');
-            $table->string('name_product');
-            $table->integer('quanlity');
+            $table->string('name_product')->nullable($value = true);
+            $table->float('quanlity');
             $table->integer('price');
             $table->float('itbis');
             $table->float('bruto');

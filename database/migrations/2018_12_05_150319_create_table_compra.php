@@ -13,11 +13,11 @@ class CreateTableCompra extends Migration
      */
     public function up()
     {
-        Schema::create('compras', function (Blueprint $table) {
+        Schema::connection('client')->create('compras', function (Blueprint $table) {
             $table->increments('id');
             $table->date('fecha');
             $table->string('vendedor');
-            $table->integer('cantidad');
+            $table->float('cantidad');
             $table->longText('nota');
             $table->integer('user_id');
             $table->timestamps();

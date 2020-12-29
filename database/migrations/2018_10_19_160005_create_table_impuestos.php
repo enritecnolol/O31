@@ -13,7 +13,7 @@ class CreateTableImpuestos extends Migration
      */
     public function up()
     {
-        Schema::create('impuestos', function (Blueprint $table) {
+        Schema::connection('client')->create('impuestos', function (Blueprint $table) {
             $table->increments('id');
             $table->date('desde');
             $table->date('hasta');

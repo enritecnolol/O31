@@ -13,10 +13,10 @@ class CreateTableProducts extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::connection('client')->create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('price');
+            $table->float('price');
             $table->string('barcode')->unique();
             $table->string('img');
             $table->integer('existence')->nullable($value = true);
@@ -28,6 +28,13 @@ class CreateTableProducts extends Migration
             $table->integer('categoria_id');
             $table->integer('subcategoria_id')->nullable($value = true);
             $table->integer('user_id');
+            $table->boolean('estado')->default(1);
+            $table->boolean('sale_config')->nullable($value = true);;
+            $table->boolean('service_config')->nullable($value = true);;
+            $table->boolean('inventory_config')->nullable($value = true);;
+            $table->boolean('purchase_config')->nullable($value = true);;
+            $table->float('cost')->default(0.00);
+            $table->longText('description')->nullable($value = true);;
             $table->timestamps();
         });
     }

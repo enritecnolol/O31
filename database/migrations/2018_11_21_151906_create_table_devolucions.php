@@ -13,13 +13,13 @@ class CreateTableDevolucions extends Migration
      */
     public function up()
     {
-        Schema::create('devolucions', function (Blueprint $table) {
+        Schema::connection('client')->create('devolucions', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date');
             $table->integer('client')->nullable($value = true);
             $table->float('brute');
             $table->float('itbis');
-            $table->integer('total_devolucion');
+            $table->float('total_devolucion');
             $table->integer('Monto_efectivo')->nullable($value = true);
             $table->integer('factura_id');
             $table->integer('caja_id');

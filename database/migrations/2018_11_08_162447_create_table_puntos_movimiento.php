@@ -13,7 +13,7 @@ class CreateTablePuntosMovimiento extends Migration
      */
     public function up()
     {
-        Schema::create('puntosmovimientos', function (Blueprint $table) {
+        Schema::connection('client')->create('puntosmovimientos', function (Blueprint $table) {
             $table->increments('id');
             $table->dateTime('fecha');
             $table->integer('cliente_id');

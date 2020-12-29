@@ -13,7 +13,7 @@ class CreateTableSubcategoria extends Migration
      */
     public function up()
     {
-        Schema::create('subcategorias', function (Blueprint $table) {
+        Schema::connection('client')->create('subcategorias', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
             $table->string('img');

@@ -13,7 +13,7 @@ class CreateTableConfiguracionTipoTarjeta extends Migration
      */
     public function up()
     {
-        Schema::create('configtjs', function (Blueprint $table) {
+        Schema::connection('client')->create('configtjs', function (Blueprint $table) {
             $table->increments('id');
             $table->json('config');
             $table->integer('tarjeta_id');

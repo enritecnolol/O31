@@ -14,48 +14,16 @@
             <input type="email" class="form-control form-control-sm" v-model="email" />
           </div>
         </div>
-      </div>
-      <div class="row">
         <div class="col-md-6">
           <div class="form-group">
             <label for>Password cliente</label>
             <input type="password" v-model="pass" class="form-control form-control-sm" />
           </div>
         </div>
-      </div>
-      <div class="row">
         <div class="col-md-6">
           <div class="form-group">
             <label for>Base de datos</label>
             <input type="text" maxlength="50" class="form-control form-control-sm" v-model="database" />
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for>Host</label>
-            <input type="text" class="form-control form-control-sm" v-model="host" />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for>Port</label>
-            <input type="text" class="form-control form-control-sm" v-model="port" />
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for>UserName</label>
-            <input type="text" class="form-control form-control-sm" v-model="username" />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for>Password</label>
-            <input type="text" class="form-control form-control-sm" v-model="password" />
           </div>
         </div>
       </div>
@@ -158,11 +126,7 @@ export default {
         !this.namec ||
         !this.email ||
         !this.pass ||
-        !this.database ||
-        !this.host ||
-        !this.port ||
-        !this.username ||
-        !this.password
+        !this.database
       ) {
         toastr.warning("Por Favor llenar todos los datos");
         return;
@@ -173,10 +137,6 @@ export default {
           email: this.email,
           pass: this.pass,
           database: this.database,
-          host: this.host,
-          port: this.port,
-          username: this.username,
-          password: this.password
         })
         .then(response => {
           toastr.success("Los datos se han guardado");
@@ -189,11 +149,7 @@ export default {
     },
     edit() {
       if (
-        !this.item.datab ||
-        !this.item.host ||
-        !this.item.port ||
-        !this.item.username ||
-        !this.item.password
+        !this.item.datab
       ) {
         toastr.warning("Por Favor llenar todos los datos");
         return;

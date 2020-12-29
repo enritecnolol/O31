@@ -13,7 +13,7 @@ class CreateTableImpuestosref extends Migration
      */
     public function up()
     {
-        Schema::create('impuestosrefs', function (Blueprint $table) {
+        Schema::connection('client')->create('impuestosrefs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('codigo');
             $table->string('descripcion');

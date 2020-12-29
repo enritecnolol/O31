@@ -13,7 +13,7 @@ class CreateTableMeses extends Migration
      */
     public function up()
     {
-        Schema::create('meses', function (Blueprint $table) {
+        Schema::connection('meses')->create('meses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('mes');
             $table->timestamps();

@@ -13,7 +13,7 @@ class CreateTableTipoComprobante extends Migration
      */
     public function up()
     {
-        Schema::create('tipocomprobantes', function (Blueprint $table){
+        Schema::connection('client')->create('tipocomprobantes', function (Blueprint $table){
             $table->increments('id');
             $table->string('nombre');
             $table->timestamps();

@@ -13,7 +13,7 @@ class CreateTableEntradacomprobantes extends Migration
      */
     public function up()
     {
-        Schema::create('entradacomprobantes', function (Blueprint $table) {
+        Schema::connection('client')->create('entradacomprobantes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('tiponcf_id');
             $table->string('ncf_ncf')->nullable($value = true);

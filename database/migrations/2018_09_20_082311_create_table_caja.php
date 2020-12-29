@@ -13,7 +13,7 @@ class CreateTableCaja extends Migration
      */
     public function up()
     {
-        Schema::create('cajas', function (Blueprint $table) {
+        Schema::connection('client')->create('cajas', function (Blueprint $table) {
             $table->increments('id');
             $table->date('fecha_apertura');
             $table->time('hora_apertura');

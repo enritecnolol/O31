@@ -13,7 +13,7 @@ class CreateTableTipoTarjeta extends Migration
      */
     public function up()
     {
-        Schema::create('tipotarjetas', function (Blueprint $table) {
+        Schema::connection('client')->create('tipotarjetas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('codigo');
             $table->string('nombre');

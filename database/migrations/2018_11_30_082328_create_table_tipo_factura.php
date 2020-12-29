@@ -13,7 +13,7 @@ class CreateTableTipoFactura extends Migration
      */
     public function up()
     {
-        Schema::create('tipofacturas', function (Blueprint $table) {
+        Schema::connection('client')->create('tipofacturas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
             $table->integer('user_id');

@@ -14,8 +14,8 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <formclient v-if="formview" @saved="refresh" :item="selected"></formclient>
-                            <tableadmin :headers="header" :datas="data" @selected="edititem"></tableadmin>
+                            <formclient v-if="formview" @saved="refresh" :item="selected"/>
+                            <tableadmin :headers="header" :datas="data" @selected="edititem" />
                         </div>
                     </div>
                 </div>

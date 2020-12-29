@@ -13,7 +13,7 @@ class CreateTableConfiguraciones extends Migration
      */
     public function up()
     {
-        Schema::create('configuracions', function (Blueprint $table) {
+        Schema::connection('client')->create('configuracions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombreempresa');
             $table->string('telefono');
@@ -30,6 +30,8 @@ class CreateTableConfiguraciones extends Migration
             $table->integer('config_clp_punt_generar')->nullable($value = true);
             $table->string('leycamarero');
             $table->string('rnc')->nullable($value = true);
+            $table->boolean('autoprint')->default(0);
+            $table->boolean('input_quantity_modal')->default(0);
             $table->integer('user_id');
             $table->timestamps();
         });

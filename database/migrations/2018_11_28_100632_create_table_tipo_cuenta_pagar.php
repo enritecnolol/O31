@@ -13,7 +13,7 @@ class CreateTableTipoCuentaPagar extends Migration
      */
     public function up()
     {
-        Schema::create('tcxps', function (Blueprint $table) {
+        Schema::connection('client')->create('tcxps', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
             $table->integer('user_id');

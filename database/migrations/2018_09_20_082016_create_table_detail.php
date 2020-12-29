@@ -13,13 +13,13 @@ class CreateTableDetail extends Migration
      */
     public function up()
     {
-        Schema::create('details', function (Blueprint $table) {
+        Schema::connection('client')->create('details', function (Blueprint $table) {
             $table->increments('id');
             $table->dateTime('date');
             $table->string('name_product');
             $table->float('descuento');
-            $table->integer('quanlity');
-            $table->integer('price');
+            $table->float('quanlity');
+            $table->float('price');
             $table->float('depot');
             $table->float('impost');
             $table->integer('product_id');

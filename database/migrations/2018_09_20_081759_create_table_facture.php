@@ -13,7 +13,7 @@ class CreateTableFacture extends Migration
      */
     public function up()
     {
-        Schema::create('factures', function (Blueprint $table) {
+        Schema::connection('client')->create('factures', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date');
             $table->string('box');
@@ -48,6 +48,11 @@ class CreateTableFacture extends Migration
             $table->string('paid_status')->nullable($value = true);
             $table->integer('caja_id');
             $table->integer('user_id');
+            $table->integer('term_id')->nullable($value = true);;
+            $table->longText('term_note')->nullable($value = true);;
+            $table->integer('discount_percent')->nullable($value = true);;
+            $table->boolean('recurring_bill')->default(0);
+            $table->date('send_recurring_bill')->nullable($value = true);
             $table->timestamps();
         });
     }

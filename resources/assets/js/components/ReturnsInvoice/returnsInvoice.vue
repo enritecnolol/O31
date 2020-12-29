@@ -254,7 +254,14 @@
       },
       clientName(client)
       {
-        let found = this.clientsData.find(e => e.id == client);
+        let found;
+        for (const index in this.clientsData) {
+          if(this.clientsData[index].id == client)
+          {
+            found = this.clientsData[index];
+            break;
+          }
+        }
         return found ? found.nombre :"General"
       },
       formatMoment(datetime)

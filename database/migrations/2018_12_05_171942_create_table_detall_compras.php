@@ -13,7 +13,7 @@ class CreateTableDetallCompras extends Migration
      */
     public function up()
     {
-        Schema::create('detalle_compras', function (Blueprint $table) {
+        Schema::connection('client')->create('detalle_compras', function (Blueprint $table) {
             $table->increments('id');
             $table->date('fecha');
             $table->integer('product_id');

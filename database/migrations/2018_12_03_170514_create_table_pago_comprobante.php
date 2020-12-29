@@ -13,7 +13,7 @@ class CreateTablePagoComprobante extends Migration
      */
     public function up()
     {
-        Schema::create('pagocomprobantes', function (Blueprint $table) {
+        Schema::connection('client')->create('pagocomprobantes', function (Blueprint $table) {
             $table->increments('id');
             $table->date('fecha');
             $table->integer('entradacomprobante_id');

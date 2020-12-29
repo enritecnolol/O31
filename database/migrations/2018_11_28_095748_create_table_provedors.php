@@ -13,7 +13,7 @@ class CreateTableProvedors extends Migration
      */
     public function up()
     {
-        Schema::create('provedors', function (Blueprint $table) {
+        Schema::connection('client')->create('provedors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
             $table->string('razon_social')->nullable($value = true);
