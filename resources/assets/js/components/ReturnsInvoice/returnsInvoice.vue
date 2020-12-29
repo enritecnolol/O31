@@ -262,6 +262,7 @@
             break;
           }
         }
+        console.log(found)
         return found ? found.nombre :"General"
       },
       formatMoment(datetime)
