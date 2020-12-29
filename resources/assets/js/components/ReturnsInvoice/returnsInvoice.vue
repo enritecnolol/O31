@@ -254,7 +254,12 @@
       },
       clientName(client)
       {
-        let found;
+        let found = null;
+        if(this.clientsData == "vacio")
+        {
+          return "general";
+        }
+
         for (const index in this.clientsData) {
           if(this.clientsData[index].id == client)
           {
@@ -262,8 +267,6 @@
             break;
           }
         }
-        console.log(found)
-        console.log(this.clientsData)
         return found ? found.nombre :"General"
       },
       formatMoment(datetime)
