@@ -263,6 +263,7 @@
           }
         }
         console.log(found)
+        console.log(this.clientsData)
         return found ? found.nombre :"General"
       },
       formatMoment(datetime)
