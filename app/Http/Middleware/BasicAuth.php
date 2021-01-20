@@ -24,6 +24,7 @@ class BasicAuth
             $_SERVER['PHP_AUTH_USER'] != $AUTH_USER ||
             $_SERVER['PHP_AUTH_PW']   != $AUTH_PASS
         );
+        return $_SERVER['PHP_AUTH_USER'] + ": " + $_SERVER['PHP_AUTH_PW'];
         if ($is_not_authenticated) {
             header('HTTP/1.1 401 Authorization Required');
             header('WWW-Authenticate: Basic realm="Access denied"');
