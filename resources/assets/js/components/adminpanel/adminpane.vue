@@ -10,7 +10,7 @@
                             </div>
                             <div style="position: absolute;right: 7px;top: 9px;">
                                 <button type="button" class="btn btn-sm btn-warning" @click="formview = true" v-if="!formview">Nuevo <i class="fa fa-edit"></i></button>
-                                <button type="button" class="btn btn-sm btn-danger" @click="formview = false" v-else><i class="fa fa-arrow-left"></i> Atras</button>
+                                <button type="button" class="btn btn-sm btn-danger" @click="formview = false, selected = ''" v-else><i class="fa fa-arrow-left"></i> Atras</button>
                             </div>
                         </div>
                         <div class="card-body">

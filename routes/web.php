@@ -31,8 +31,11 @@ Route::group(['middleware'=>'basicAuth'],function () {
 Route::get('/confirmationEstimate', 'EstimatesController@confirmationEstimate');
 Route::post('/confirmationEstimate', 'EstimatesController@confirmationEstimateDB');
 
+Route::get('/account/deactivated', function () {
+    return view('account_deactivated');
+});
 /*=================================\- Admin -/======================================================*/
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'CheckServicesStatus']], function () {
 
     /*=================================\Pagina inicio/======================================================*/
     Route::get('/', 'IndexController@index'); //pagina donde se vende
@@ -374,6 +377,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/expenses/payment', 'ExpensesController@PaymentIndex');
     Route::post('/expenses/payment', 'ExpensesController@paymentExpensesStore');
     Route::get('/ncf/sequence', 'ExpensesController@NCFSequence');
+
 });
 
 Auth::routes();
