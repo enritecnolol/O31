@@ -17,7 +17,7 @@ class BasicAuth
     {
         $AUTH_USER = 'admin';
         $AUTH_PASS = 'admin';
-        header('WWW-Authenticate: Basic realm="Access denied",Cache-Control: no-cache, must-revalidate, max-age=0');
+        header('WWW-Authenticate: Basic realm="User Visible Realm", charset="UTF-8"');
         $has_supplied_credentials = !(empty($_SERVER['PHP_AUTH_USER']) && empty($_SERVER['PHP_AUTH_PW']));
         $is_not_authenticated = (
             !$has_supplied_credentials ||
