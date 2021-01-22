@@ -300,7 +300,14 @@
                                 </div>
                             </div>
                             <div class="header-button-item mr-0 js-sidebar-btn">
-                                <i class="zmdi zmdi-menu"></i>
+                                <a href="{{ route('logout') }}"onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    <i class="zmdi zmdi-power"></i>Logout
+                                </a>
+                                {{--{{ Auth::user()->name }}--}}
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
                             </div>
                             <div class="setting-menu js-right-sidebar d-none d-lg-block">
                                 <div class="account-dropdown__body">

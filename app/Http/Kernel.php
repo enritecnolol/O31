@@ -60,6 +60,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'basicAuth' => \App\Http\Middleware\BasicAuth::class,
-        'CheckServicesStatus' => \App\Http\Middleware\CheckServicesStatus::class
+        'CheckServicesStatus' => \App\Http\Middleware\CheckServicesStatus::class,
+        'admin' => \App\Http\Middleware\IsAdmin::class
     ];
 }

@@ -46,6 +46,9 @@ class LoginController extends Controller
 
     public function authenticated()
     {
+        if (Auth::user() &&  Auth::user()->admin == 1) {
+            return redirect('admin');
+        }
         return redirect('dashboard');
     }
 }

@@ -19,14 +19,6 @@ use Illuminate\Support\Facades\Route;
 //Route::post('/login', 'Auth\Authcontroller@login');
 
 /*=================================\- Admin -/======================================================*/
-Route::group(['middleware'=>'basicAuth'],function () {
-
-    Route::get('/admin', 'AdminController@index');
-    Route::post('/user/list', 'AdminController@userlist');
-    Route::post('/user/connection/store', 'AdminController@store');
-    Route::post('/user/connection/edit', 'AdminController@edit');
-
-});
 
 Route::get('/confirmationEstimate', 'EstimatesController@confirmationEstimate');
 Route::post('/confirmationEstimate', 'EstimatesController@confirmationEstimateDB');
@@ -35,8 +27,16 @@ Route::get('/account/deactivated', function () {
     return view('account_deactivated');
 });
 /*=================================\- Admin -/======================================================*/
-Route::group(['middleware' => ['auth', 'CheckServicesStatus']], function () {
+Route::group(['middleware'=>['auth','admin']],function () {
 
+    Route::get('/admin', 'AdminController@index');
+    Route::post('/user/list', 'AdminController@userlist');
+    Route::post('/user/connection/store', 'AdminController@store');
+    Route::post('/user/connection/edit', 'AdminController@edit');
+
+});
+
+Route::group(['middleware' => ['auth', 'CheckServicesStatus']], function () {
     /*=================================\Pagina inicio/======================================================*/
     Route::get('/', 'IndexController@index'); //pagina donde se vende
     Route::post('/productos/index', 'IndexController@productos'); //productos index
