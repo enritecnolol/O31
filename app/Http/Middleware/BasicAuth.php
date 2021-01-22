@@ -17,7 +17,7 @@ class BasicAuth
     {
         $AUTH_USER = 'admin';
         $AUTH_PASS = 'admin';
-        header('WWW-Authenticate: Basic realm="User Visible Realm", charset="UTF-8"');
+        header('WWW-Authenticate: Basic realm="nmrs_m7VKmomQ2YM3:", charset="UTF-8"');
         $has_supplied_credentials = !(empty($_SERVER['PHP_AUTH_USER']) && empty($_SERVER['PHP_AUTH_PW']));
         $is_not_authenticated = (
             !$has_supplied_credentials ||
