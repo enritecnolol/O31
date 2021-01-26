@@ -1,5 +1,5 @@
 @extends('main.app')
-@section('tittle','SofiaRD | Configuración | Cliente preferencial')
+@section('tittle','O31 | Configuración | Cliente preferencial')
 
 @section('titulo')
     <h3 style="color: white"><i class="fas fa-arrow-circle-right"></i> Cliente Preferencial</h3>

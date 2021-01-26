@@ -1,5 +1,5 @@
 @extends('main.app')
-@section('tittle','SofiaRD | Gastos y egresos')
+@section('tittle','O31 | Gastos y egresos')
 
 @section('titulo')
     <h3 style="color: white"><i class="fas fa-arrow-circle-right"></i> Gastos y egresos</h3>

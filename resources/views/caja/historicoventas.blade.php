@@ -63,7 +63,7 @@
         }
     </style>
 @endsection
-@section('tittle','SofiaRD | Historico de Venta')
+@section('tittle','O31 | Historico de Venta')
 
 
 @section('aside')

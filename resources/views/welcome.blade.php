@@ -114,7 +114,7 @@
         @media (min-width:992px){.modal-lg,.modal-xl{max-width:1140px}}
     </style>
 @endsection
-@section('tittle',' SofiaRD | Punto Venta')
+@section('tittle',' O31 | Punto Venta')
 
 @section('titulo')
     <div class="" style="width: 90%">

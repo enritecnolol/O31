@@ -1,5 +1,5 @@
 @include('layouts.header')
-@section('tittle', 'SofiaRD | Login')
+@section('tittle', 'O31 | Login')
 <body class="animsition">
 <div class="page-wrapper">
     <div class="page-content--bge5" style="overflow: scroll">
@@ -8,7 +8,7 @@
                 <div class="login-content">
                     <div class="login-logo">
                         <a href="#">
-                            <img src="{{ URL::asset('SOFIA.png')}}" style="width: 200px" alt="CoolAdmin">
+                            <img src="{{ URL::asset('loginPNG.png')}}" style="width: 200px" alt="CoolAdmin">
                         </a>
                     </div>
                     <div class="login-form">
@@ -40,7 +40,7 @@
 
                                 </label>
                             </div>
-                            <button class="au-btn au-btn--block au-btn--blue m-b-20" type="submit">Iniciar Sesion</button>
+                            <button class="au-btn au-btn--block au-btn--blue m-b-20" style="border-radius: 10px 10px 10px 10px;" type="submit"><i class="fas fa-sign-in-alt"></i> Iniciar Sesion</button>
                         </form>
                     </div>
                 </div>

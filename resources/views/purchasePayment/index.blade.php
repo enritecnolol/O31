@@ -1,5 +1,5 @@
 @extends('main.app')
-@section('tittle','SofiaRD | Pago de compra')
+@section('tittle','O31 | Pago de compra')
 
 @section('titulo')
     <h3 style="color: white"><i class="fas fa-arrow-circle-right"></i> Pago de compra</h3>

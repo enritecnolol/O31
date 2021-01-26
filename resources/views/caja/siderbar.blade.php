@@ -9,6 +9,14 @@
                 <a href="/">
                     <i class="fas fa-shopping-cart"></i><strong>PUNTO DE VENTA</strong></a>
             </li>
+            <li>
+                <a href="/comanda">
+                    <i class="fas fa-utensils"></i><strong>COMANDA</strong></a>
+            </li>
+            <li>
+                <a href="/camareros">
+                    <i class="fas fa-users"></i><strong>CAMAREROS</strong></a>
+            </li>
             <li class="has-sub">
                 <a class="js-arrow" href="#">
                     <i class="fas fa-book"></i></i><strong>CATALOGO</strong>

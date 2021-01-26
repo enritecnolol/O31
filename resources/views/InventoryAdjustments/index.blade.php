@@ -1,5 +1,5 @@
 @extends('main.app')
-@section('tittle','SofiaRD | Ajuste de inventario')
+@section('tittle','O31 | Ajuste de inventario')
 
 @section('titulo')
     <h3 style="color: white"><i class="fas fa-arrow-circle-right"></i> Ajuste de inventario</h3>

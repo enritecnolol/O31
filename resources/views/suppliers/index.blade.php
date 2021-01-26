@@ -1,5 +1,5 @@
 @extends('main.app')
-@section('tittle','SofiaRD | Suplidores')
+@section('tittle','O31 | Suplidores')
 
 @section('titulo')
     <h3 style="color: white"><i class="fas fa-arrow-circle-right"></i> Proveedores</h3>

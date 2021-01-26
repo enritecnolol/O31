@@ -1,5 +1,5 @@
 @extends('main.app')
-@section('tittle','SofiaRD | Cuadre caja')
+@section('tittle','O31 | Cuadre caja')
 @section('titulo')
     <h3 style="color: white">Cuadre de Caja</h3>
 @endsection

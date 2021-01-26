@@ -1,5 +1,5 @@
 @extends('main.app')
-@section('tittle','SofiaRD | Configuración de sistema')
+@section('tittle','O31 | Configuración de sistema')
 
 @section('titulo')
     <h3 style="color: white"><i class="fas fa-arrow-circle-right"></i> Configuración</h3>

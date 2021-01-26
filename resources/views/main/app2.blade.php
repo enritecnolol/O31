@@ -78,12 +78,12 @@
 <body class="animsition">
 <div class="page-wrapper">
     <!-- HEADER DESKTOP-->
-    <header class="header-desktop3 d-none d-lg-block" style="height:55px">
+    <header class="header-desktop3 d-none d-lg-block" style="height:55px; background: #393a3c !important">
         <div class="section__content section__content--p35">
             <div class="header3-wrap">
                 <div class="header__logo">
                     <a href="/dashboard">
-                        <span style="color: white; font-size: x-large"> <span style="font-weight: 600">ADG</span>POS</span>
+                        <span style="color: white; font-size: x-large"> <span style="font-weight: 600">POS</span>O31</span>
                     </a>
                 </div>
                 <div class="header__navbar">
@@ -184,7 +184,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="copyright">
-                            <p>Sistema diseñado por <a href="http://adgsystems.com.do/">ADGsystems</a>.</p>
+                            <p>Sistema diseñado por <a href="https://www.linkedin.com/in/tomas-enrique-crespo-de-leon-934a24174/">Tomas Crespo</a>.</p>
                         </div>
                     </div>
                 </div>

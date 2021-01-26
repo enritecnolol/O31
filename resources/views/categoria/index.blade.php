@@ -1,5 +1,5 @@
 @extends('main.app')
-@section('tittle','SofiaRD | Categoria')
+@section('tittle','O31 | Categoria')
 
 @section('titulo')
     <h3 style="color: white">Categorias</h3>

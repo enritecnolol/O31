@@ -1,5 +1,5 @@
 @include('layouts.header')
-@section('tittle', 'SofiaRD | confirmacion de cotizacion')
+@section('tittle', 'O31 | confirmacion de cotizacion')
 <body class="animsition">
 <div class="page-wrapper" id="Vue">
     <div class="loader" v-if="loading"></div>

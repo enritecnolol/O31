@@ -1,5 +1,5 @@
 @extends('main.app')
-@section('tittle','SofiaRD | Devolución de compra')
+@section('tittle','O31 | Devolución de compra')
 
 @section('titulo')
     <h3 style="color: white"><i class="fas fa-arrow-circle-right"></i> Devolución de compra</h3>

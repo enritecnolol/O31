@@ -1,5 +1,5 @@
 @extends('main.app')
-@section('tittle','SofiaRD | Gastos')
+@section('tittle','O31 | Gastos')
 
 @section('titulo')
     <h3 style="color: white"><i class="fas fa-arrow-circle-right"></i> Entrada de Comprobante</h3>
