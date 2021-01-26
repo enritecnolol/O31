@@ -13,7 +13,7 @@ class CreateTableTypeNfc extends Migration
      */
     public function up()
     {
-        Schema::create('type_ncf', function (Blueprint $table) {
+        Schema::connection('client')->create('type_ncf', function (Blueprint $table) {
             $table->increments('id');
             $table->string('tipo');
             $table->string('slug');

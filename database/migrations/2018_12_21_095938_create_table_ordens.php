@@ -13,12 +13,13 @@ class CreateTableOrdens extends Migration
      */
     public function up()
     {
-        Schema::create('ordens', function (Blueprint $table) {
+        Schema::connection('client')->create('ordens', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('mesa_id');
             $table->integer('num_invitado');
             $table->string('estado');
             $table->integer('subtotal');
+            $table->string('camarero');
             $table->dateTime('fecha_apertura');
             $table->dateTime('fecha_cierre')->nullable($value = true);
             $table->integer('user_id');

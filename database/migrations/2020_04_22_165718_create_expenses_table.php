@@ -13,13 +13,15 @@ class CreateExpensesTable extends Migration
      */
     public function up()
     {
-        Schema::create('expenses', function (Blueprint $table) {
+        Schema::connection('client')->connection('client')->create('expenses', function (Blueprint $table) {
             $table->increments('id');
             $table->date('invoice_date');
             $table->integer('user_id');
             $table->integer('supplier_id');
             $table->string('ncf');
+            $table->string('document');
             $table->string('type_ncf');
+            $table->string('type_expenses');
             $table->float('gross_amount',12,2);
             $table->float('discount_amount',12,2);
             $table->float('tax_amount',12,2);
@@ -29,6 +31,10 @@ class CreateExpensesTable extends Migration
             $table->longText('invoice_note');
             $table->integer('invoice_term_id');
             $table->date('invoice_due');
+            $table->string('name_supplier');
+            $table->string('rnc');
+            $table->string('payment');
+            $table->string('payment_process');
             $table->timestamps();
         });
     }

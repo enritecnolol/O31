@@ -13,7 +13,7 @@ class CreateTableTerms extends Migration
      */
     public function up()
     {
-        Schema::create('terms', function (Blueprint $table) {
+        Schema::connection('client')->create('terms', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->integer('number_days');

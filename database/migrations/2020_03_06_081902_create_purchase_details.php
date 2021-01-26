@@ -13,7 +13,7 @@ class CreatePurchaseDetails extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_details', function (Blueprint $table) {
+        Schema::connection('client')->create('purchase_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('quantity');
             $table->float('price',12,2);

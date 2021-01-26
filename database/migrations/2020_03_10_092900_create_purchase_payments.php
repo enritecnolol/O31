@@ -13,7 +13,7 @@ class CreatePurchasePayments extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_payments', function (Blueprint $table) {
+        Schema::connection('client')->create('purchase_payments', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date_payment');
             $table->float('amount',12,2);

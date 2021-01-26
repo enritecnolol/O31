@@ -13,7 +13,7 @@ class CreateTablePaymentMethods extends Migration
      */
     public function up()
     {
-        Schema::create('payment_methods', function (Blueprint $table) {
+        Schema::connection('client')->create('payment_methods', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->timestamps();

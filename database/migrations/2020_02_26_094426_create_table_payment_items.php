@@ -13,7 +13,7 @@ class CreateTablePaymentItems extends Migration
      */
     public function up()
     {
-        Schema::create('payment_items', function (Blueprint $table) {
+        Schema::connection('client')->create('payment_items', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('invoice_id')->nullable($value = true);
             $table->float('original_amount', 12,2);

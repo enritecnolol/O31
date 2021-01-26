@@ -13,7 +13,7 @@ class CreateTableEstimates extends Migration
      */
     public function up()
     {
-        Schema::create('estimates', function (Blueprint $table) {
+        Schema::connection('client')->create('estimates', function (Blueprint $table) {
             $table->increments('id');
             $table->string('estimatenumber');
             $table->date('estimatedate');
@@ -23,7 +23,10 @@ class CreateTableEstimates extends Migration
             $table->longText('note')->nullable($value= true);
             $table->string('email')->nullable($value= true);
             $table->float('subtotal', 12, 2);
+            $table->float('tax', 12, 2);
+            $table->float('discount', 12, 2);
             $table->float('total', 12, 2);
+            $table->integer('term_id');
             $table->boolean('confirmation');
             $table->timestamp('confirmation_at')->nullable($value= true);
             $table->timestamps();

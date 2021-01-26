@@ -13,7 +13,7 @@ class CreateTableDetailsOrdens extends Migration
      */
     public function up()
     {
-        Schema::create('details_ordens', function (Blueprint $table) {
+        Schema::connection('client')->create('details_ordens', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('orden_id');
             $table->integer('product_id');
@@ -21,6 +21,7 @@ class CreateTableDetailsOrdens extends Migration
             $table->float('itbis');
             $table->float('bruto');
             $table->string('estado')->nullable($value = true);
+            $table->string('camarero');
             $table->integer('user_id');
             $table->timestamps();
         });

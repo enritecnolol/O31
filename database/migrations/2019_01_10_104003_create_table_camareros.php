@@ -13,7 +13,7 @@ class CreateTableCamareros extends Migration
      */
     public function up()
     {
-        Schema::create('camareros', function (Blueprint $table) {
+        Schema::connection('client')->create('camareros', function (Blueprint $table) {
             $table->increments('id');
             $table->string('codigo');
             $table->string('nombre');

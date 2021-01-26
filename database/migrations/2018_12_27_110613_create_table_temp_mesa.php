@@ -13,7 +13,7 @@ class CreateTableTempMesa extends Migration
      */
     public function up()
     {
-        Schema::create('mesa_temps', function (Blueprint $table) {
+        Schema::connection('client')->create('mesa_temps', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('coroto_id');
             $table->integer('invitados');

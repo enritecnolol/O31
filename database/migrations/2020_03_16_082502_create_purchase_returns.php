@@ -13,7 +13,7 @@ class CreatePurchaseReturns extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_returns', function (Blueprint $table) {
+        Schema::connection('client')->create('purchase_returns', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date');
             $table->float('total_return',12,2);

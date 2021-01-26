@@ -13,7 +13,7 @@ class CreateTableInvoiceItems extends Migration
      */
     public function up()
     {
-        Schema::create('invoice_items', function (Blueprint $table) {
+        Schema::connection('client')->create('invoice_items', function (Blueprint $table) {
             $table->increments('id');
             $table->string('product')->nullable($value = true);
             $table->text('description')->nullable($value = true);

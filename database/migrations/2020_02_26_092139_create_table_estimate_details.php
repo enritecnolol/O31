@@ -13,7 +13,7 @@ class CreateTableEstimateDetails extends Migration
      */
     public function up()
     {
-        Schema::create('estimatedetails', function (Blueprint $table) {
+        Schema::connection('client')->create('estimatedetails', function (Blueprint $table) {
             $table->increments('id');
             $table->string('product')->nullable($value = true);
             $table->longText('description')->nullable($value = true);

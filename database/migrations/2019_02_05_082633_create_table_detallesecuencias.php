@@ -13,7 +13,7 @@ class CreateTableDetallesecuencias extends Migration
      */
     public function up()
     {
-        Schema::create('detallesecuencias', function (Blueprint $table) {
+        Schema::connection('client')->create('detallesecuencias', function (Blueprint $table) {
             $table->increments('id');
             $table->string('serie');
             $table->string('tipo_nfc');

@@ -13,7 +13,7 @@ class CreateTableHeadersecuencias extends Migration
      */
     public function up()
     {
-        Schema::create('headersecuencias', function (Blueprint $table) {
+        Schema::connection('client')->create('headersecuencias', function (Blueprint $table) {
             $table->increments('id');
             $table->date('fechaemision');
             $table->date('fechavencimiento');

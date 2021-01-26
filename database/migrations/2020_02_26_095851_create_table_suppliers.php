@@ -13,7 +13,7 @@ class CreateTableSuppliers extends Migration
      */
     public function up()
     {
-        Schema::create('suppliers', function (Blueprint $table) {
+        Schema::connection('client')->create('suppliers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('rnc')->nullable($value = true);

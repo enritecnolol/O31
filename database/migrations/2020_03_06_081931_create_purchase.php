@@ -13,7 +13,7 @@ class CreatePurchase extends Migration
      */
     public function up()
     {
-        Schema::create('purchases', function (Blueprint $table) {
+        Schema::connection('client')->create('purchases', function (Blueprint $table) {
             $table->increments('id');
             $table->string('document_no');
             $table->integer('supplier_id');

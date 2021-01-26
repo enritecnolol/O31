@@ -13,7 +13,7 @@ class CreatePurchaseOrders extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_orders', function (Blueprint $table) {
+        Schema::connection('client')->create('purchase_orders', function (Blueprint $table) {
             $table->increments('id');
             $table->string('document_no');
             $table->integer('supplier_id');

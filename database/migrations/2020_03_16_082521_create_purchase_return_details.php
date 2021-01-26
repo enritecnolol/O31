@@ -13,7 +13,7 @@ class CreatePurchaseReturnDetails extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_returns_details', function (Blueprint $table) {
+        Schema::connection('client')->create('purchase_returns_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id');
             $table->integer('quantity');

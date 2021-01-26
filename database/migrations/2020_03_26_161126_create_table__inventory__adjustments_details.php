@@ -13,7 +13,7 @@ class CreateTableInventoryAdjustmentsDetails extends Migration
      */
     public function up()
     {
-        Schema::create('inventory_adjustments_details', function (Blueprint $table) {
+        Schema::connection('client')->create('inventory_adjustments_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id');
             $table->integer('quantity');

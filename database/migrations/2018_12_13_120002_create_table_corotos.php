@@ -13,7 +13,7 @@ class CreateTableCorotos extends Migration
      */
     public function up()
     {
-        Schema::create('corotos', function (Blueprint $table) {
+        Schema::connection('client')->create('corotos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable($value = true);
             $table->string('img');
